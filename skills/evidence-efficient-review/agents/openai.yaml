@@ -1,0 +1,4 @@
+interface:
+  display_name: "Evidence-Efficient Review"
+  short_description: "Review implementations and specs with one evidence model"
+  default_prompt: "Use $evidence-efficient-review to audit this implementation or specification against its explicit target with minimal redundant context."

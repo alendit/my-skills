@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Architecture Doc"
+  short_description: "Scan a repo and maintain architecture docs"
+  default_prompt: "Use $project-architecture-doc to scan this repository and create or update docs/architecture.md."
