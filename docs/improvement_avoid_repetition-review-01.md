@@ -16,6 +16,17 @@ Reviewed scope:
 
 The unrelated untracked `docs/improvement-right-feedback.md` was not reviewed.
 
+## Remediation disposition
+
+Both findings are **remediated in the current working tree, pending a fresh
+independent Tick**. The original findings below remain unchanged as the
+historical review record.
+
+| Finding | Disposition | Current proof |
+|---|---|---|
+| P1 / R1 guide authority | Remediated | `skills/technical-note-series/SKILL.md:39-44` limits guide authority to series-owned reading paths, running-example identity, teaching vocabulary, scope, and navigation, then requires stable contract-ID links and explanatory-only goal/architecture orientation. `references/research-and-reader-journey.md:120-132` defines the same owner boundary. `references/validation-and-review.md:25-28,47` verifies the link/label and makes it a required cross-note coherence cell. |
+| P2 / fresh publication review | Remediated | `skills/technical-note-series/SKILL.md:70-82` requires a fresh independent evidence-efficient review after validation for every pass and routes candidate/unknown cells through review-fixpoint until a fresh review clears them. `references/validation-and-review.md:59-72` requires the same closure while leaving numbering, commits, reviewer selection, remediation repetition, and stop rules with review-fixpoint. |
+
 ## R1–R8 coverage ledger
 
 | Row | Status | Evidence |

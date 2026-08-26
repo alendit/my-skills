@@ -22,6 +22,11 @@ at the described revision. Verify authoritative external links, relative links,
 navigation, fenced code, tables, diagrams, and heading hierarchy. Run available
 documentation checks and `git diff --check` on the selected scope.
 
+For every project or feature goal mentioned in the guide or notes, verify its
+stable contract-ID link and owning source when a normative contract exists.
+Verify that plain-language orientation is labeled explanatory and does not
+restate acceptance requirements.
+
 Tests support specific claims; they do not automatically prove prose. Read the
 assertions and owning path closely enough to state the observed invariant. When
 a claim cannot be verified, weaken, qualify, or remove it.
@@ -39,7 +44,7 @@ supplies these documentation cells:
 | Boundary accuracy | Owners, non-owners, dependencies, and crossing data are exact. |
 | Example correctness | The running example and result are observed and consistent. |
 | Time and certainty | Current fact, rationale, limitation, non-goal, and direction remain distinct. |
-| Cross-note coherence | Shared definitions and navigation have one guide authority; notes do not compensate with copies. |
+| Cross-note coherence | Series-owned reading paths, running-example identity, teaching vocabulary, scope, and navigation have one guide authority; project or feature goals link stable contract IDs to their owning source, and plain-language orientation is explanatory rather than normative. |
 | Implementation traceability | Implementation maps reach current authoritative files and symbols. |
 | Scope honesty | The pass neither claims speculative coverage nor permanent series completion. |
 | Link and navigation integrity | Guide paths, prerequisites, and relative links resolve. |
@@ -51,17 +56,20 @@ not be silently converted into passing evidence.
 
 ## Compose with repository review workflows
 
-Use `$evidence-efficient-review` for one independent review of the selected
-publication scope. Supply audience, learning outcomes, revision, files, guide
-authority, running example, known uncertainties, validation, severity policy,
-and the matrix above. Request actionable factual, pedagogical, structural, and
-coherence findings rather than stylistic preference.
+After validation, use `$evidence-efficient-review` for a fresh independent
+review of every selected publication pass. Supply audience, learning outcomes,
+revision, files, guide authority, running example, known uncertainties,
+validation, severity policy, and the matrix above. Request actionable factual,
+pedagogical, structural, and coherence findings rather than stylistic
+preference.
 
-This skill does not define review numbering, commits, remediation repetition,
-reviewer selection, or stop mechanics. When the caller requests an iterative
-fixed-point workflow, compose with `$review-fixpoint`; that workflow owns those
-mechanics. Keep them out of the guide and notes. Do not claim independent or
-cross-model review when it did not occur.
+If any required cell is `candidate` or `unknown`, repair its owning guide or
+note, rerun affected validation, and continue through `$review-fixpoint` until
+a fresh review clears every required cell. This reference defines the required
+publication closure, not general workflow mechanics: `$review-fixpoint` owns
+review numbering, commits, reviewer selection, remediation repetition, and stop
+rules. Keep those mechanics out of the guide and notes. Do not claim independent
+or cross-model review when it did not occur.
 
 ## Reject publication defects
 

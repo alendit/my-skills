@@ -117,11 +117,19 @@ newcomer path stays compact while optional depth grows.
 
 ## Make the guide authoritative
 
-Create or update the guide before drafting notes. It is the sole authority for:
+Create or update the guide before drafting notes. It is the sole authority only
+for series-owned material:
 
 - recommended reading order, foundational path, extensions, and latest frontier;
-- shared project goal, running example, architecture overview, and vocabulary;
-- series scope, shared non-goals, and links to deeper reference material.
+- running-example identity and expected result;
+- teaching vocabulary; and
+- series scope, shared non-goals, navigation, and links to deeper reference
+  material.
+
+When the project or feature goal has a normative contract, link stable contract
+IDs to its owning source. A plain-language project goal or architecture overview
+may orient readers, but label it as explanatory and do not restate acceptance
+requirements or become a second authority.
 
 Notes link to these definitions and navigation instead of recreating them.
 Each note owns only its distinct reader question, layer-specific explanation,
