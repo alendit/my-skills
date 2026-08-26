@@ -9,6 +9,13 @@ the target repository, but preserve the outcomes without duplicating them.
   direction. If work stopped after the package, the project should be better
   off than if it had not been built; individual internal slices need not meet
   that test.
+- Treat non-local impact as an architecture signal only when causal ownership,
+  dependency, state, or test evidence supports it, not because work spans many
+  files or takes effort. Bound the smallest proper correction and do it now
+  when it fits the accepted scope. Defer only with current-contract-satisfying,
+  non-worsening containment and one authorized durable follow-up. Reevaluate a
+  worsening fix for the smallest architecture-preserving correction; when no
+  bounded safe route fits, stop for an explicit scope decision.
 - Match flexibility to evidence. Make likely changes cheap, keep uncertain
   decisions local and reversible, and model stable behavior directly. Add an
   abstraction only for a real, substitutable contract that makes a likely
@@ -62,3 +69,6 @@ the target repository, but preserve the outcomes without duplicating them.
     would permit changing it?
 11. Which focused scenarios prove stable behavior without freezing private
     representation?
+12. For a causal non-local architecture signal, is the smallest proper
+    correction done now, safely contained with one authorized durable
+    follow-up, reevaluated if worsening, or stopped for explicit scope?

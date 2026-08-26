@@ -82,7 +82,9 @@ Give the implementer enough context once:
 - accepted existing behavior that must not regress;
 - explicit non-goals and prohibited plastering fixes;
 - evidence class, shared capture helpers, localization signals, external
-  evidence status when applicable, and reporting format; and
+  evidence status when applicable, and reporting format;
+- known architectural follow-up IDs and the authority boundary for any ledger
+  mutation; and
 - whether the implementer may commit.
 
 Explicitly instruct the implementer to use tokens economically without
@@ -123,6 +125,26 @@ Treat this as implementation feedback to the specification, not resistance to
 the task. Preserve genuinely distinct limits and evidence when they protect
 real work or public behavior.
 
+## Route Architectural Scope Decisions
+
+When implementation or parent review exposes non-local impact, uncertain
+ownership, mechanism-coupled tests, or a local fix that may preserve an
+architectural problem, read
+[references/architectural-scope-decision.md](references/architectural-scope-decision.md)
+completely. Do not infer an architecture defect from effort or file count.
+
+The primary supervisor qualifies the signal, bounds the proper correction, and
+accepts one of the reference's four branches within the caller-approved
+package. The implementer supplies evidence and a proposal but has no acceptance
+or scope-expansion authority. If no bounded non-worsening route fits, stop for
+the caller's scope decision before production changes.
+
+Do not accept a safe-deferral branch until the current contract passes, every
+applicable non-worsening disposition is proved, and the authorized durable
+follow-up is read back. External or otherwise separately controlled ledger
+writes require their own authorization. Preserve the resulting decision record
+and follow-up delta for slice and package handoff.
+
 ## Run Each Slice
 
 For every slice:
@@ -136,12 +158,15 @@ For every slice:
 3. Require a compact handoff: changed files; contract IDs established; scenario
    results with observable invariant, evidence class, shared capture helpers,
    and localization signal; affected-test dispositions; external evidence
-   status; and any design concern. The implementer does not approve its own
-   work.
+   status; any architectural-scope decision record; follow-up IDs created,
+   updated, closed, stale, or unchanged-but-relevant; and any design concern.
+   The implementer does not approve its own work.
 4. Independently inspect the actual diff, owning code, adjacent consumers,
    tests, error placement, cleanup, state lifetime, documentation impact, and
-   unintended compatibility or fallback paths. Do not accept the implementer's
-   summary as evidence by itself.
+   unintended compatibility or fallback paths. For a routed architectural
+   decision, verify its causal evidence, correction bound, branch, and durable
+   follow-up read-back. Do not accept the implementer's summary as evidence by
+   itself.
 5. When the review finds a defect, send corrective guidance to the same
    implementer. State:
    - the concrete evidence;
@@ -192,8 +217,11 @@ After the final slice:
    of the changes.
 3. Confirm no partial implementer work, unresolved feedback, overlapping write,
    or unintended dirty state remains.
-4. Report the accepted slices, important review corrections, verification,
-   commits or pending changes, and any genuine remaining limitation.
+4. Confirm every architectural-scope decision has an accepted branch and that
+   no unauthorized or unverified ledger mutation is credited as durable.
+5. Report the accepted slices, important review corrections, verification,
+   follow-up ledger delta, commits or pending changes, and any genuine remaining
+   limitation.
 
 Stop when this package is accepted. Do not continue into unrelated cleanup or
 a broader review unless the user separately requests it.

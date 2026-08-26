@@ -80,6 +80,28 @@ single requirement authority, keep workflow mechanics in this skill, and apply
 the reference's evidence classes and result vocabulary to every phase decision.
 Use its test-stability rules when a design changes.
 
+## Route Architectural Scope Decisions
+
+When remediation or review exposes non-local impact, uncertain ownership,
+mechanism-coupled tests, or a local fix that may preserve an architectural
+problem, read
+[the architectural scope decision authority](../supervised-implementer-loop/references/architectural-scope-decision.md)
+completely. Do not copy its decision, non-worsening, or ledger tables into this
+skill or a feature specification.
+
+During Tock, qualify the signal, bound the proper correction, and propose one
+branch under primary acceptance. Record the decision and any authorized
+follow-up delta. A safe deferral is incomplete until the durable record is read
+back; external or otherwise separately controlled ledger mutations retain their
+own authorization boundary. Stop for explicit package-scope authority when the
+linked decision requires a scope stop.
+
+During Tick, independently audit every relevant decision without adopting the
+Tock author's classification. Verify signal qualification, correction bound,
+non-worsening dispositions, stable follow-up identity, durable read-back,
+lifecycle status, and finding classification. Tick reports follow-up deltas but
+never creates, updates, closes, or marks a ledger record stale.
+
 ## Tock — Remediate the Latest Review
 
 Map every finding to its owning contract ID. Update the owning matrix row once,
@@ -122,6 +144,11 @@ For each finding:
 7. Map the completed work back to every review item. Do not call a finding
    closed because one narrow test passes.
 
+For a routed architectural decision, preserve the accepted branch record and
+follow-up delta in the Tock handoff. Do not relabel a current finding, required
+unknown, worsening correction, or external product-contract failure as a
+follow-up merely to complete remediation.
+
 Apply the breaking-cleanup rules in
 [references/phase-mechanics.md](references/phase-mechanics.md). Redesign the
 owning boundary when a local repair would preserve faulty ownership.
@@ -136,6 +163,8 @@ the remediation author's claims. Supply a repository-specific review request:
   dispositions, explicit non-goals, and architecture ownership guidance;
 - the latest numbered review and its reviewed baseline;
 - current conformance/evidence authorities and canonical gates;
+- architectural-scope decision records, the selected durable ledger authority,
+  and follow-up deltas relevant to the reviewed scope;
 - the P0-P3 functional and architectural finding policy below;
 - the deterministic Fixed-Point Rule and required external-capability status as
   the whole-scope completion contract; and
@@ -149,6 +178,12 @@ overturned, or dependency impact is uncertain.
 The review must audit each previous finding for exact closure and cover the
 broader selected-stage goal through current contract evidence. Create the next
 numbered review and preserve earlier reviews.
+
+For every relevant architectural-scope decision, audit the linked authority's
+qualification record and correction bound. For deferral, also verify every
+non-worsening disposition, the stable dedupe identity, authorized durable
+read-back, current lifecycle status, and handoff visibility. Missing required
+evidence remains `unknown`; it is not a non-gating improvement.
 
 The Tick must also challenge the specification and its tests for accidental
 complexity. Explicitly inspect for requirements that force nonessential
@@ -174,6 +209,9 @@ The review document must:
 - assess progress toward the selected stage and repository goal;
 - report deterministic-gate, external-compatibility, and observational-telemetry
   status with their distinct decision effects;
+- distinguish current findings and required unknowns from legitimate
+  non-gating architectural follow-ups, and report follow-up IDs created,
+  updated, closed, stale, or unchanged-but-relevant;
 - list focused supporting evidence and the required architecture self-check;
   and
 - avoid security framing, validation-date disputes, Git cleanliness, README
@@ -206,16 +244,29 @@ establishes all of the following on the current tree:
 1. every prior finding is closed at its owning boundary;
 2. no P0-P3 functional or architectural finding remains;
 3. no compatibility shim, obsolete fallback, silent downgrade, or duplicated
-   semantic authority remains in the reviewed scope;
+   semantic authority was introduced by the accepted change or remains where
+   the current contract prohibits it;
 4. realistic public compositions and owner-level invariants agree;
 5. resource and performance bounds measure the real work rather than hiding it;
-6. current architecture/profile docs describe the implementation; and
+6. current architecture/profile docs describe the implementation;
 7. relevant deterministic focused and complete functional checks pass on the
-   exact reviewed revision.
+   exact reviewed revision;
+8. no required coverage remains `unknown`, no accepted correction worsens an
+   architectural-scope dimension, and no activated follow-up remains open; and
+9. no valid external `product-contract-failure` remains unresolved.
 
 Create the next numbered review even when it reports zero findings; that review
 is the durable deterministic fixed-point witness. Stop code remediation rather
 than inventing lower-value work.
+
+A legitimate non-gating architectural follow-up may coexist with
+`deterministic-fixed-point` only when the Tick verifies that the current
+contract is satisfied, required deterministic cells are cleared, the accepted
+change is non-worsening, the deferral has an authorized durable record, and the
+follow-up has not been activated as current scope. Current P0-P3 findings,
+required unknowns, worsening corrections, unresolved external
+`product-contract-failure`, and activated follow-ups remain gating. Reporting a
+follow-up never closes or downgrades a finding.
 
 Separately report every required external capability as `capability-confirmed`,
 `capability-unconfirmed`, or `external-contract-failed` under the linked

@@ -92,6 +92,8 @@ compact evidence:
 - the authoritative contract matrix, architecture ownership, and public entry
   points;
 - prior finding identifiers and dispositions;
+- relevant architectural-scope decision records, the selected durable ledger
+  authority, and follow-up deltas;
 - changed, added, and contract-named tests, classified as contract or mechanism
   evidence; and
 - cheap searches for forbidden paths, duplicated authorities, compatibility
@@ -158,6 +160,35 @@ the required cells and scenario portfolio in the specification reference.
 Inspect the semantic owner and a realistic public composition, record the cell,
 then move to the next; do not replace sequential coverage with one broad scan.
 
+## Audit Architectural Scope Classifications
+
+When the reviewed work claims architectural impact or defers an architectural
+correction, read
+[the architectural scope decision authority](../supervised-implementer-loop/references/architectural-scope-decision.md)
+completely. Use it only to audit evidence and classification. A reviewer never
+selects remediation, accepts a deferral, creates or mutates a follow-up record,
+or authorizes package scope.
+
+Require causal source, dependency, state, or test evidence before accepting a
+non-local impact as an architecture signal; effort, file count, inherent public
+composition, and implementation friction are insufficient. Audit the recorded
+proper-correction bound without expanding it into a redesign.
+
+For a claimed deferral, independently verify current-contract satisfaction,
+every applicable non-worsening disposition, stable semantic identity and
+deduplication, authorized durable read-back, current lifecycle state, activation
+state, and handoff visibility. Report records created, updated, closed, stale,
+or unchanged-but-relevant as observed deltas; never perform those mutations.
+
+Classify a source-proven current contract violation, unresolved P0-P3 defect,
+worsening correction, valid external `product-contract-failure`, or activated
+follow-up as a current finding under the caller's severity policy. Keep missing
+required evidence `unknown`. An evidenced improvement outside the current
+contract is not a P2 merely because it is attractive: report it as a non-gating
+architectural improvement only when the linked authority qualifies it, and
+otherwise omit it or retain the concrete unanswered question. Never relabel a
+current finding or unknown as a follow-up to produce a zero-finding decision.
+
 ## Maintain A Coverage Ledger
 
 Keep compact external state so later cells do not require reconstructing prior
@@ -174,6 +205,11 @@ Evidence: <source proof, scenario, focused test, reproducer, or measurement>
 Evidence status: <pass/fail; external freshness/failure state; or observational>
 Decision role: <what this evidence can establish or block>
 Test kind: contract | mechanism | not-applicable
+Review classification: current finding | required unknown |
+                       non-gating architectural improvement | not-applicable
+Architectural decision: <record identity and audited branch, or not-applicable>
+Follow-up state: <stable ID, durable read-back, lifecycle/activation state,
+                  observed delta, or not-applicable>
 Status: cleared | candidate | unknown | not-applicable
 Next question: <only when unresolved>
 ```
@@ -193,6 +229,13 @@ The statuses have distinct meanings:
 
 Unknown is not cleared. Zero confirmed findings with unknown required coverage
 is an incomplete review, not a fixed point.
+
+Use `candidate` while a possible current defect still needs proof. A confirmed
+finding is a review result backed by its cell evidence, not a new cleared
+status. Use `non-gating architectural improvement` only when the current
+contract is cleared and the improvement's causal qualification is evidenced.
+That classification does not approve deferral or substitute for an authorized
+durable follow-up.
 
 For incremental review, invalidate a cell when its target, owner, relevant
 consumer, evidence, or dependency contract changed. Prefer symbol-level impact
@@ -222,6 +265,11 @@ For each candidate:
 
 Report only reproduced or source-proven findings. Keep speculative concerns as
 unknown review questions rather than inflating the finding list.
+
+Do not assign P2 or any other severity solely because an unrelated improvement
+would be valuable. Severity requires a current target violation and the impact
+required by the caller's policy. An unactivated follow-up is not a current
+target merely because its ledger record is visible.
 
 Do not implement remediation during the review. Temporary diagnostic probes
 must stay within authorization, remain clearly disposable, and not become
@@ -259,6 +307,8 @@ Return or draft the caller's requested artifact with:
 - the authoritative contract-matrix delta and required specification-cell
   dispositions when the target is a specification;
 - coverage ledger or a compact coverage summary;
+- architectural-scope classification and observed follow-up-ledger delta,
+  including stable IDs, read-back/lifecycle state, and any laundering rejection;
 - unresolved unknowns, if any;
 - focused and complete verification evidence; and
 - progress toward the explicit target and applicable architecture self-check.

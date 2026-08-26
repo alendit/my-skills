@@ -54,7 +54,7 @@ Use this result vocabulary:
 
 | Result | Meaning |
 |---|---|
-| `deterministic-fixed-point` | A fresh independent Tick finds no P0-P3 defect in the deterministic contract, all required deterministic cells are cleared, and exact-revision gates pass. |
+| `deterministic-fixed-point` | A fresh independent Tick finds no P0-P3 defect, all required deterministic cells are cleared, exact-revision gates pass, and no valid external product-contract failure or activated follow-up remains unresolved. Legitimate non-gating architectural follow-ups may remain visible. |
 | `capability-confirmed` | Every required external capability has current or reusable successful evidence under its identity and freshness rule. |
 | `capability-unconfirmed` | Required initial evidence is missing or has status `stale`, `unavailable`, `authentication-or-configuration-failure`, `provider-or-infrastructure-failure`, or `inconclusive-timeout`. The capability has not passed or failed. |
 | `external-contract-failed` | A valid external run produced `product-contract-failure`; the external contract is false and must return to design or remediation. |
@@ -65,7 +65,9 @@ convert missing credentials, provider unavailability, infrastructure failure,
 or timeout into a product finding. Never report missing initial evidence as a
 pass. The remediation loop may stop at `deterministic-fixed-point` when no code
 defect remains, but the handoff must retain `capability-unconfirmed` and must not
-claim the capability or `Done`.
+claim the capability or `Done`. A valid `product-contract-failure` prevents
+`deterministic-fixed-point` until the contradicted contract returns through
+design or remediation.
 
 ## Separate external scenarios
 
