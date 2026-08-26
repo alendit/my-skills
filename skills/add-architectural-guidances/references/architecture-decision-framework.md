@@ -4,6 +4,16 @@ Use this reference when revising the skill or when a user asks for the reasoning
 behind the compact architecture guidance. Do not copy this whole file into a
 target `AGENTS.md`; extract only the shortest rules that fit that repo.
 
+## Contents
+
+- Available Information
+- Local And Reversible Before Abstract
+- Work Packages
+- Compatibility And Legacy Paths
+- Error Handling
+- Tests As Architecture Signal
+- State Lifetime And Mutability
+
 ## Available Information
 
 Architecture decisions should match what is actually known.

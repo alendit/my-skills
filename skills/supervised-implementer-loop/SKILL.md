@@ -1,6 +1,13 @@
 ---
 name: supervised-implementer-loop
-description: Implement one non-trivial work package through ordered, dependent slices using one persistent subagent while the main agent independently reviews, corrects, validates, and accepts each slice. Use when the user asks to reuse one implementer, review every implementation slice, make later work rely on accepted earlier fixes, or keep implementation token-efficient. Do not use for review-only work, small direct edits, or genuinely independent parallel packages.
+description: >-
+  Implement one non-trivial work package through ordered, dependent slices
+  using one persistent subagent while the main agent independently reviews,
+  corrects, validates, and accepts each slice. Use when the user asks to reuse
+  one implementer, review every implementation slice, make later work rely on
+  accepted earlier fixes, or keep implementation token-efficient. Do not use
+  for review-only work, small direct edits, or genuinely independent parallel
+  packages.
 ---
 
 # Supervised Implementer Loop
@@ -20,16 +27,20 @@ the fixed-point reviewer.
 
 ## Establish The Work Package
 
+Read
+[references/contract-and-scenario-package.md](references/contract-and-scenario-package.md)
+before defining slices. Build its contract-first package matrix from stable
+contract IDs and keep it as the package's requirement authority.
+
 1. Inspect the current tree, user-supplied requirements, repository guidance,
    and existing changes. Begin at the first unmet requirement and preserve
    unrelated user work.
-2. State the package outcome, architectural invariants, explicit non-goals,
-   required evidence, and authorization or commit boundaries.
-3. For every material conceptual entity, state its owner, physical
-   representation, lifetime, transaction boundary, public surface, metric
-   definition, and named evidence. Mark genuinely inapplicable links rather
-   than inventing machinery to fill them.
-4. Divide the package into coherent, ordered slices. Each accepted slice must
+2. State the package outcome, matrix rows, explicit non-goals, evidence lanes,
+   and authorization or commit boundaries.
+3. Put private representation, fields, plumbing, and numeric defaults in the
+   conditional implementation appendix unless a row states why correctness
+   requires them.
+4. Divide the matrix rows into coherent, ordered slices. Each accepted slice must
    leave the project in a useful state and establish invariants on which later
    slices may safely rely.
 5. Keep uncertain decisions local and reversible. Ask only when a missing
@@ -66,12 +77,12 @@ of continuity and ask before replacing it.
 Give the implementer enough context once:
 
 - the complete package outcome and ordered slice map;
-- the current slice and its acceptance criteria;
+- the current slice's contract IDs and scenario-portfolio entries;
 - architectural owners, invariants, and dependency direction;
 - accepted existing behavior that must not regress;
 - explicit non-goals and prohibited plastering fixes;
-- expected focused tests, their contract/mechanism classification, and
-  reporting format; and
+- evidence class, shared capture helpers, localization signals, external
+  evidence status when applicable, and reporting format; and
 - whether the implementer may commit.
 
 Explicitly instruct the implementer to use tokens economically without
@@ -85,33 +96,12 @@ repository state. Do not repopulate the agent's context on later slices.
 
 ## Design Tests To Survive Simplification
 
-Classify relevant tests before changing them:
-
-- **Contract tests** protect stable public semantics, ownership, boundedness,
-  and recovery. Split a semantic contract into focused partitions, and cover
-  adjacent boundaries when applicable: exact/one-over, success/failure,
-  first/repeated invocation, and clean retry after abort.
-- **Mechanism tests** are temporary evidence for the current implementation and
-  may be replaced or deleted when the design simplifies.
-
-Apply the alternate-implementation check: could a simpler independently
-designed correct implementation pass this test? If not, do not make it durable
-unless the mechanism is an explicit stable contract. Avoid public metrics or
-test machinery without an operational consumer.
-
-Before constructing an exact/one-over witness, prove the target boundary is
-reachable under every earlier public admission bound. Never raise or bypass an
-upstream limit solely to reach a later defensive check. Test the earliest
-observable public contract publicly and keep an otherwise unreachable
-serializer or ABI ceiling in a disposable owner-local mechanism test. Repeat a
-failure/recovery case far enough to distinguish local settlement from cleanup
-that occurs only when the outer entry ends.
-
-When the specification or design changes, require the implementer to list
-affected tests as `retain`, `strengthen`, `replace`, or `delete`, then make the
-corresponding edits. Replacing obsolete mechanism evidence is a design
-correction, not a regression. Conformance labels must be accompanied by a
-concise assertion-level coverage description; the label alone is not evidence.
+Use the reference's scenario portfolio, evidence lanes, and test-stability
+rules. Each slice should use a small set of observable scenarios, not an
+assertion inventory. Reuse capture helpers without promoting their private
+fields into the contract. Keep deterministic acceptance independent from
+credential availability and report external capability and composition
+statuses separately.
 
 ## Stop For Spec-Induced Accidental Complexity
 
@@ -122,8 +112,11 @@ states without distinct semantics or operational consumers. At that checkpoint:
 1. identify the stable public behavior, ownership, boundedness, and recovery
    actually required;
 2. propose the smallest cohesive owner that can satisfy them;
-3. identify the exact specification wording and tests that must change; and
-4. wait for the parent acceptance authority to approve the corrected contract
+3. for every exact limit, require its correctness role, workload basis,
+   resource estimate, exact/one-over consequence, and revision trigger; route an
+   unjustified number to the private appendix;
+4. identify the owning contract row and tests that must change; and
+5. wait for the parent acceptance authority to approve the corrected contract
    before continuing that design-sensitive work.
 
 Treat this as implementation feedback to the specification, not resistance to
@@ -140,9 +133,11 @@ For every slice:
 2. Let the implementer edit and run focused validation. Do not perform
    overlapping writes or Git operations in the shared workspace. Non-mutating
    preparation may continue, but formally review only a completed slice.
-3. Require a compact handoff: changed files, behavior established, tests run,
-   affected-test dispositions, assertion-level coverage, and any design
-   concern. The implementer does not approve its own work.
+3. Require a compact handoff: changed files; contract IDs established; scenario
+   results with observable invariant, evidence class, shared capture helpers,
+   and localization signal; affected-test dispositions; external evidence
+   status; and any design concern. The implementer does not approve its own
+   work.
 4. Independently inspect the actual diff, owning code, adjacent consumers,
    tests, error placement, cleanup, state lifetime, documentation impact, and
    unintended compatibility or fallback paths. Do not accept the implementer's
@@ -191,7 +186,8 @@ For every slice:
 
 After the final slice:
 
-1. Map the resulting tree back to every package requirement.
+1. Map the resulting tree back to every package-matrix row and its named
+   scenario status.
 2. Run the package-level verification required by the repository and the risk
    of the changes.
 3. Confirm no partial implementer work, unresolved feedback, overlapping write,

@@ -2,6 +2,13 @@
 
 Use this structure for `docs/architecture.md`. Adapt names to the repository, but preserve the progressive discovery shape.
 
+## Contents
+
+- Required Order
+- Mermaid Guidance
+- Component Ordering Heuristic
+- Quality Bar
+
 ## Required Order
 
 1. `# Architecture`
@@ -17,6 +24,9 @@ Use this structure for `docs/architecture.md`. Adapt names to the repository, bu
    - Capture architectural rules that must remain true, such as source of truth, ownership, identity handles, concurrency rules, and replaceable transport or UI boundaries.
    - Include supported/unsupported environment constraints when they are architectural, not just setup notes.
    - Keep this section grounded in code, durable docs, or clearly labeled inference.
+   - Link stable feature contract IDs to their normative source. Describe the
+     architecture owner and join here, but do not reproduce feature acceptance
+     requirements.
 5. `## Repository Mapping`
    - Map major source directories/packages to their architectural roles.
    - State what each area is allowed to depend on and what it must stay free of.
@@ -50,7 +60,14 @@ Use this structure for `docs/architecture.md`. Adapt names to the repository, bu
 11. `## Change Management`
    - List architectural changes that require updating this document alongside code.
    - Keep the list short and based on boundaries that would break users, integrations, stored data, or source-of-truth assumptions.
-12. `## Architecture Discussion`
+12. `## Implementation Appendix` when needed
+   - Isolate volatile private representation such as field names, collection
+     shape, diagnostic plumbing, or current helper decomposition.
+   - Label exact limits as justified normative bounds or private defaults. A
+     normative value must record correctness role, workload basis, resource
+     estimate, boundary consequence, and revision trigger.
+   - Omit this section when private detail does not materially help maintainers.
+13. `## Architecture Discussion`
    - Review against local architecture guidance.
    - Cover ownership, coupling, dependency direction, side-effect placement, abstraction quality, interface semantics, and testability.
    - End with the delta between current architecture and architectural vision.
@@ -98,3 +115,6 @@ Adjust when the repository's real architecture makes a later category central to
 - Use source paths as evidence, but do not let folder names replace responsibility descriptions.
 - Keep exhaustive API/tool inventories in README or generated docs unless the architecture depends on the inventory shape.
 - If you include a rule such as "must fail explicitly" or "must not guess", point to the component that enforces it or label it as architectural intent.
+- Link to the owning feature contract instead of copying its acceptance matrix.
+- Keep review and commit workflow in repository process guidance, not this
+  architecture document.

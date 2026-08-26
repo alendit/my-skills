@@ -1,6 +1,11 @@
 ---
 name: evidence-efficient-review
-description: Review an implementation, architecture, or specification against an explicit target with one evidence model and minimal repeated context. Use for broad codebase reviews, pre-implementation specification audits, post-remediation audits, fixed-point review phases, and rebaselining. Do not use for implementing fixes or narrow diff acceptance.
+description: >-
+  Review an implementation, architecture, or specification against an explicit
+  target with one evidence model and minimal repeated context. Use for broad
+  codebase reviews, pre-implementation specification audits, post-remediation
+  audits, fixed-point review phases, and rebaselining. Do not use for
+  implementing fixes or narrow diff acceptance.
 ---
 
 # Evidence-Efficient Review
@@ -54,39 +59,28 @@ unreviewed inherited behavior remains possible.
 
 ## Review Specifications Before Implementation
 
-For architecture notes, stage overviews, or slice contracts, normalize every
-material conceptual entity into this chain:
+For architecture notes, stage overviews, or slice contracts, read
+[references/specification-review.md](references/specification-review.md) before
+building the dossier. Its normalization is the required first review operation:
+create one authoritative contract-and-evidence matrix, then review its contract
+rows and required specification cells sequentially. Do not begin by accepting
+the proposal's section structure or expanding every conceptual entity into a
+private representation.
 
-```text
-owner -> physical representation -> lifetime -> transaction boundary ->
-public surface -> metric definition -> named evidence
-```
-
-Require each link to be concrete enough to implement and test. Mark a link not
-applicable only with a reason. Check joins to accepted earlier contracts and
-planned downstream consumers, but do not force future detail into the current
-slice merely to fill the chain.
-
-Challenge the specification itself:
-
-- distinguish a semantic requirement from one possible transaction, counter,
-  field, capability, or test vocabulary;
-- require a separate resource dimension or metric only when it enforces a
-  genuinely distinct bound or has an operational consumer;
-- reject circular admission plans, impossible representations, owner gaps, and
-  evidence that cannot observe the stated contract;
-- prefer one cohesive owner over parallel subsystems created only to mirror
-  documentation classifications; and
-- permit simplification when it preserves the project goal, stable public
-  semantics, boundedness, ownership, and recovery.
+Keep durable observable contracts separate from a conditional implementation
+appendix. Require mechanisms and exact limits to state why correctness depends
+on them. Classify every named proof as a deterministic release gate, external
+compatibility evidence, or observational telemetry, and preserve the distinct
+status and completion effect defined in the reference.
 
 Review ordered documents one at a time. Carry cleared cells forward so later
 documents build on accepted earlier decisions. Reopen an earlier decision only
 when a downstream join or current-source fact concretely invalidates it.
 
-When wording is defective, provide explicit replacement or insertion text (or
-an equally concrete formulation). Do not report vague findings such as
-"improve clarity" or "strengthen the transaction description."
+When wording is defective, provide explicit replacement or insertion text. For
+duplicate authority, name the owning matrix row and the copies to delete or
+replace with ID references. Do not report vague findings such as "improve
+clarity" or "strengthen the transaction description."
 
 ## Build A Compact Review Dossier
 
@@ -95,7 +89,8 @@ compact evidence:
 
 - status, history, baseline-to-current diff, and changed symbols;
 - outlines of changed owners and adjacent consumers before exact range reads;
-- target requirements, architecture ownership, and public entry points;
+- the authoritative contract matrix, architecture ownership, and public entry
+  points;
 - prior finding identifiers and dispositions;
 - changed, added, and contract-named tests, classified as contract or mechanism
   evidence; and
@@ -128,49 +123,12 @@ answer.
 
 ## Audit Promised Closure First
 
-In an incremental post-remediation review, complete prior-finding disposition
-before broad new-defect exploration:
-
-1. Extract each prior finding's violated invariant, reproducer, semantic owner,
-   and required owning correction into a compact checklist.
-2. For each finding, trace the original negative scenario through the current
-   owner, including the exact order of admission, mutation, commit, abort, and
-   cleanup operations when applicable.
-3. Compare the implemented boundary with the required correction. A nearby new
-   mechanism, updated documentation, or green named regression does not prove
-   that the required boundary moved or became exact.
-4. Re-run the original reproducer or a smaller equivalent when source ordering
-   alone does not establish closure.
-5. Mark the finding closed only after owner evidence and its public composition
-   agree. Otherwise report incomplete closure before searching for unrelated
-   defects.
-
-Record this compact closure proof before declaring the disposition complete:
-
-```text
-Prior finding: <identifier>
-Required boundary: <invariant and owning correction from the prior review>
-Current proof: <exact source order/range or rerun reproducer>
-Disposition: closed | incomplete | recurrent | unknown
-```
-
-Do not batch several findings into a generic “repairs are present” conclusion.
-For a temporal or transactional finding, `Current proof` must spell out the
-actual ordered calls and name where the exact admission capability is acquired
-relative to mutation and commit. Tests or documentation alone cannot supply
-that proof.
-
-After disposition, challenge interactions among the changed owners and sample
-the highest-risk invalidated contract cells. Carry unchanged cleared cells from
-the prior review instead of reconstructing them from the full source tree.
-
-Before branching into unrelated latent defects, audit the changed transaction
-itself. Enumerate every operation newly inserted, removed, or reordered between
-admission and the first irreversible mutation. For each operation, prove that
-its failure modes and resource costs are covered by the acquired capability or
-remain rollback-safe. This delta audit takes precedence over exploring an
-unchanged downstream limit: a credible new defect does not compensate for
-missing a defect introduced by the remediation under review.
+For implementation review, read
+[references/implementation-review.md](references/implementation-review.md).
+In incremental mode, apply its promised-closure proof and remediation-delta
+audit before broad new-defect exploration. Disposition every prior finding
+individually; neither a nearby mechanism nor a green named regression proves
+that the owning boundary moved.
 
 ## Preserve Independence Without Reviewer Fan-Out
 
@@ -194,61 +152,11 @@ that pass to the uncertainty instead of restarting the review.
 
 ## Review Contract Cells Sequentially
 
-Derive review cells from the selected target: supported behaviors, ownership
-boundaries, public routes, resource policies, failure contracts, performance
-bounds, and negative constraints. For each applicable cell:
-
-1. State the target claim and semantic owner.
-2. Trace the owner through adapters and representative public consumers.
-3. Inspect only the source ranges needed to answer the current question.
-4. Challenge the applicable seams below.
-5. Check owner evidence and at least one realistic composed boundary when the
-   contract is public or cross-component.
-6. Record the result before moving to the next cell.
-
-Use these adversarial dimensions when relevant, without forcing every dimension
-onto every contract:
-
-- authority and dependency direction;
-- admission before mutation;
-- begin, commit, abort, drop, recovery, and retry completeness;
-- ownership, transfer, reclamation, and state lifetime;
-- exact, one-over, partition, schedule, or scaling boundaries;
-- expected-error placement versus unexpected-error surfacing;
-- identity and provenance across representations or bridges;
-- substitutability across selected variants and routes;
-- owner behavior versus public composition;
-- hidden physical ceilings or duplicated policy;
-- obsolete fallback, compatibility, or silent downgrade paths; and
-- complexity accounting against real work rather than timing alone.
-
-For test evidence, apply these additional checks:
-
-- A contract test should protect stable public semantics, ownership,
-  boundedness, or recovery. Prefer focused semantic partitions and adjacent
-  boundaries over one heroic catch-all witness.
-- Ask whether a simpler independently designed correct implementation could
-  pass the test. If not, the test freezes mechanism unless that mechanism is an
-  explicit stable contract.
-- Compare each test name with its actual assertions; do not credit a broader
-  claim than the assertions establish.
-- Prove that a boundary witness can reach its claimed owner without violating
-  an earlier admission bound. Do not raise or bypass the earlier bound merely
-  to exercise a later defensive mechanism. Keep the stable public test at the
-  earliest observable contract and test an otherwise unreachable serializer or
-  ABI ceiling locally as disposable mechanism evidence.
-- Do not credit a conformance label without an assertion-level coverage
-  description.
-- Challenge internal metrics that have no operational consumer, and assertions
-  tied to field layout, counter vocabulary, or the current transaction
-  decomposition.
-- Challenge spec-induced accidental complexity. When a simpler owner or
-  contract still advances the explicit project goal, recommend correcting the
-  specification rather than implementing evidence vocabulary literally.
-
-Inspect history only when it answers a live question such as regression
-classification, incomplete prior closure, or the intended invariant. Do not
-front-load repository archaeology.
+For implementation review, apply the contract-cell, seam, and test-evidence
+rules in the linked implementation reference. For specification review, apply
+the required cells and scenario portfolio in the specification reference.
+Inspect the semantic owner and a realistic public composition, record the cell,
+then move to the next; do not replace sequential coverage with one broad scan.
 
 ## Maintain A Coverage Ledger
 
@@ -256,15 +164,25 @@ Keep compact external state so later cells do not require reconstructing prior
 reasoning. Each cell records:
 
 ```text
-Contract: <target claim or identifier>
+Contract: <stable identifier and single normative source>
 Revision: <reviewed revision>
 Dependencies: <owners and consumers actually inspected>
 Dimensions: <applicable seams challenged>
-Evidence: <source proof, focused test, or reproducer>
+Evidence class: deterministic gate | external compatibility |
+                observational telemetry | not-applicable
+Evidence: <source proof, scenario, focused test, reproducer, or measurement>
+Evidence status: <pass/fail; external freshness/failure state; or observational>
+Decision role: <what this evidence can establish or block>
 Test kind: contract | mechanism | not-applicable
 Status: cleared | candidate | unknown | not-applicable
 Next question: <only when unresolved>
 ```
+
+For external compatibility evidence, record capability identity, freshness
+window, evidence age, and reuse decision. For telemetry, record its baseline and
+threshold or mark it observational. For a specification, also record the
+required specification-cell dispositions from the linked reference; they are
+coverage, not optional commentary.
 
 The statuses have distinct meanings:
 
@@ -338,6 +256,8 @@ Return or draft the caller's requested artifact with:
 - confirmed findings with severity, proof, owner, and principled fix direction;
 - exact proposed wording when the reviewed target is a specification and the
   defect can be corrected locally in prose;
+- the authoritative contract-matrix delta and required specification-cell
+  dispositions when the target is a specification;
 - coverage ledger or a compact coverage summary;
 - unresolved unknowns, if any;
 - focused and complete verification evidence; and

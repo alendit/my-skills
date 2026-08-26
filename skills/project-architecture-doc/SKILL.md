@@ -1,6 +1,10 @@
 ---
 name: project-architecture-doc
-description: Create or update a repository's docs/architecture.md by scanning the existing project, documenting the current architecture progressively from overview to recursive component details, adding Mermaid diagrams, and ending with an architecture-guidance review plus the delta between current implementation and architectural vision. Use when the user asks to generate, refresh, maintain, or review project architecture documentation from code and repo docs.
+description: >-
+  Create or update a repository's docs/architecture.md from current code and
+  durable docs, progressively covering overview, components, boundaries,
+  diagrams, and architecture vision. Use when the user asks to generate,
+  refresh, maintain, or review project architecture documentation.
 ---
 
 # Project Architecture Doc
@@ -31,10 +35,18 @@ Create or update `docs/architecture.md` from the repository's real current state
    - Use recursive subsections when a component has meaningful subcomponents.
    - Include optional sections only when evidence supports them; combine or omit empty sections.
    - If `docs/architecture.md` exceeds 200 lines, add a concise table of contents immediately after the opening description.
-     Use semantic section labels with line ranges, for example:
-     - overview component 1: L8-L24
-     - overview component 2: L26-L41
-     - details component 1: L43-L105
+     Use stable Markdown heading anchors, for example
+     `[Architecture Overview](#architecture-overview)`. Never maintain line
+     ranges as navigation.
+   - When feature contracts exist, link to their stable contract IDs and owning
+     source rather than restating acceptance requirements.
+   - Keep durable architecture facts in the main document. Put private fields,
+     collection shape, diagnostic plumbing, and other volatile representation
+     detail in the implementation appendix only when it materially helps
+     maintainers.
+   - Make an exact limit normative only when its correctness role, workload
+     basis, resource estimate, boundary consequence, and revision trigger are
+     documented. Otherwise label it as a private implementation default.
 
 5. End with architecture discussion.
    - Evaluate the current architecture against the repo's architecture guidance, especially ownership, dependency direction, side-effect placement, semantic interfaces, coupling, and testability.
@@ -43,7 +55,7 @@ Create or update `docs/architecture.md` from the repository's real current state
 
 6. Verify the result.
    - Re-read the final document for broken references, duplicate sections, Mermaid syntax plausibility, and stale claims.
-   - If the document has a table of contents, verify the referenced line ranges still match the final content.
+   - If the document has a table of contents, verify every heading-anchor link.
    - Run the repo's formatting or docs checks when available and cheap.
    - Report what was verified and any areas that remain uncertain.
 
@@ -51,6 +63,8 @@ Create or update `docs/architecture.md` from the repository's real current state
 
 - Do not invent components that are not present in code or durable docs.
 - Do not turn the document into an implementation plan, task list, or changelog.
+- Do not copy review numbering, commit policy, reviewer selection, remediation
+  repetition, or other fixpoint mechanics into the architecture document.
 - Keep technology detail concrete enough to orient maintainers, but keep the main architecture story component-centered.
 - Use absolute or repo-root-relative paths consistently, following the repository's existing docs style.
 - If existing architecture docs conflict with code, document the current code and call out the conflict in the final discussion.

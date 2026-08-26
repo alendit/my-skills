@@ -1,6 +1,12 @@
 ---
 name: review-fixpoint
-description: Alternate independent implementation reviews with principled remediation until the selected clojure-wasm stage reaches a functional and architectural fixed point. Use in this repository when asked to address the latest numbered stage review, review remediations, create the next review, run another review round, continue the tick-tock or tick-toc loop, or keep iterating until no actionable implementation defects remain.
+description: >-
+  Alternate independent implementation reviews with principled remediation
+  until the selected clojure-wasm stage reaches a functional and architectural
+  fixed point. Use in this repository when asked to address the latest numbered
+  stage review, review remediations, create the next review, run another review
+  round, continue the tick-tock or tick-toc loop, or keep iterating until no
+  actionable implementation defects remain.
 ---
 
 # Review Fixpoint
@@ -15,7 +21,8 @@ Drive one repository-local loop with two alternating phases:
   the remediation is one non-trivial package with ordered dependent slices.
 
 Continue until a fresh Tick finds no P0-P3 functional or architectural defect.
-Passing tests alone is not a fixed point.
+Passing tests alone is not a deterministic fixed point. Required external
+capabilities must also be confirmed before claiming the capability or `Done`.
 
 This skill owns phase selection, repository-specific policy, phase commits, and
 the fixed-point decision. The called skills own review mechanics and supervised
@@ -56,7 +63,7 @@ After phase selection, repeat this state machine:
 Tock: remediate latest review
   -> verify the current tree
   -> Tick: independently review and create review N+1
-       -> zero findings: fixed point, stop
+       -> zero findings: deterministic fixed point, report external status
        -> findings: preserve review N+1, return to Tock
 ```
 
@@ -64,32 +71,21 @@ Never declare a fixed point immediately after Tock. Only the following fresh
 Tick can establish it. Finish and verify remediation before starting that Tick;
 do not review a partially edited tree.
 
-## Keep Tests Stable Across Redesigns
+## Use One Contract And Evidence Boundary
 
-Prevent regression-test thrashing by separating durable contracts from current
-mechanisms:
-
-- **Contract tests** protect stable public semantics, ownership, boundedness,
-  and recovery. Partition each semantic contract into focused cases instead of
-  relying on one broad witness, and cover adjacent boundaries when applicable:
-  exact/one-over, success/failure, first/repeated invocation, and clean retry
-  after abort.
-- **Mechanism tests** may probe a current decomposition during development, but
-  are explicitly disposable when the owning design simplifies. Before keeping
-  a test, ask whether a simpler independently designed correct implementation
-  could pass it. If not, retain it only when that mechanism is itself a stable
-  contract.
-
-Whenever a specification or owning design changes, classify affected tests as
-`retain`, `strengthen`, `replace`, or `delete`. Replacing or deleting an obsolete
-mechanism test is a design correction, not a regression. A conformance label is
-only an index: fixed-point evidence must describe the assertions that establish
-the contract.
+Read
+[references/contract-and-evidence-boundary.md](references/contract-and-evidence-boundary.md)
+before either phase. Treat the normalized contract-and-evidence matrix as the
+single requirement authority, keep workflow mechanics in this skill, and apply
+the reference's evidence classes and result vocabulary to every phase decision.
+Use its test-stability rules when a design changes.
 
 ## Tock — Remediate the Latest Review
 
-Treat every finding as a complete requirement across implementation, focused
-tests, current architecture/profile documentation, and public behavior.
+Map every finding to its owning contract ID. Update the owning matrix row once,
+then change implementation, evidence, or documentation only where that
+artifact's distinct responsibility changed. Replace copied normative prose with
+ID references instead of synchronizing several requirement descriptions.
 
 Before translating review vocabulary into new limits, counters, capabilities,
 or transaction states, run a design checkpoint. Ask whether each mechanism has
@@ -119,25 +115,16 @@ For each finding:
    class, add bounded property, partition, schedule, or scaling coverage rather
    than only the named example. Classify affected existing tests and apply the
    alternate-implementation check above before adding new witnesses.
-6. Update `docs/architecture.md` and the selected stage's current contract
-   documents when ownership, semantics, ABI, resource policy, or complexity
-   changes.
+6. Update `docs/architecture.md` and the selected stage's owning contract row
+   when ownership, semantics, ABI, resource policy, or complexity changes. Keep
+   feature-specific targets and evidence status there, but do not copy this
+   skill's review numbering, commits, reviewer selection, or stop mechanics.
 7. Map the completed work back to every review item. Do not call a finding
    closed because one narrow test passes.
 
-Prefer breaking cleanup. This project has no external Rust-source or persisted
-module compatibility requirement. Do not add or retain:
-
-- deprecated aliases or compatibility re-exports;
-- older ABI decoders, dual transports, or migration switches;
-- silent defaults, normalization of impossible states, or speculative stale
-  behavior;
-- reproducer-specific branches or message/token whitelists;
-- raised, reset, discounted, or bypassed limits that conceal excess work; or
-- native fast paths that bypass a defective ordinary Clojure primitive.
-
-If the local repair would preserve the faulty ownership model, redesign the
-owning boundary instead.
+Apply the breaking-cleanup rules in
+[references/phase-mechanics.md](references/phase-mechanics.md). Redesign the
+owning boundary when a local repair would preserve faulty ownership.
 
 ## Tick — Review the Current Implementation
 
@@ -145,12 +132,13 @@ Use `$evidence-efficient-review`. Start from current source and behavior, not
 the remediation author's claims. Supply a repository-specific review request:
 
 - the selected stage scope and exact reviewed revision;
-- its target-authoritative overview, slice/work-package contracts, explicit
-  non-goals, and architecture ownership guidance;
+- its normalized contract-and-evidence matrix, required specification-cell
+  dispositions, explicit non-goals, and architecture ownership guidance;
 - the latest numbered review and its reviewed baseline;
 - current conformance/evidence authorities and canonical gates;
 - the P0-P3 functional and architectural finding policy below;
-- the Fixed-Point Rule as the whole-scope completion contract; and
+- the deterministic Fixed-Point Rule and required external-capability status as
+  the whole-scope completion contract; and
 - the next numbered review path and required document shape.
 
 Use incremental mode only when the previous review is trustworthy and change
@@ -170,6 +158,12 @@ vocabulary, or the current transaction decomposition. Recommend simplifying
 the specification when that preserves the project goal and a stable semantic
 contract.
 
+When external capability matters, independently disposition the minimal
+endpoint-capability probe and the composed semantic scenario defined by the
+contract matrix. Apply its identity and freshness rule to reused evidence.
+Classify unavailable execution without calling it a pass or product defect; a
+valid `product-contract-failure` returns the contract to design or remediation.
+
 The review document must:
 
 - lead with the current functional decision and reviewed revision;
@@ -178,6 +172,8 @@ The review document must:
 - distinguish regressions from inherited defects;
 - name the owning fix and explicitly reject plastering alternatives;
 - assess progress toward the selected stage and repository goal;
+- report deterministic-gate, external-compatibility, and observational-telemetry
+  status with their distinct decision effects;
 - list focused supporting evidence and the required architecture self-check;
   and
 - avoid security framing, validation-date disputes, Git cleanliness, README
@@ -189,63 +185,23 @@ and cannot negate a concrete behavior reproducer.
 
 ## Preserve Review Independence
 
-Do not use the remediation author as the sole reviewer. When the primary
-authored or supervised Tock and delegation is available, use one fresh
-read-only reviewer for the complete Tick. Reuse it across sequential contract
-cells; do not fan the same scope out to subsystem agents merely for breadth.
-
-Give the reviewer the neutral dossier required by
-`$evidence-efficient-review`, not the remediation author's expected answer.
-Have the primary verify material candidate findings and severity instead of
-duplicating the complete review. Add a second reviewer only for a concrete
-unresolved dispute, ambiguous cross-owner evidence, or an explicitly requested
-challenge, and scope that pass to the uncertainty.
-
-Delegated reviewers need enough reasoning depth for independent defect
-discovery. Honor explicit reviewer-model instructions; otherwise follow the
-environment's current model-selection and memory guidance, asking when the
-choice is materially unclear. Do not enable fast mode unless the user
-explicitly requests it for the current task. Run a fresh QA pass on each new
-review or substantial remediation.
-
-When the primary did not author or supervise the implementation, it may apply
-`$evidence-efficient-review` directly without spawning a reviewer.
+Read and apply the independence rules in the phase-mechanics reference. Never
+use the remediation author as the sole reviewer. Give one fresh reviewer the
+neutral dossier and have the primary verify material candidates; add another
+reviewer only for a concrete unresolved dispute.
 
 ## Verify Each Tock
 
-During implementation, run focused checks proportional to each changed owner.
-After parent acceptance, create the Tock phase commit, then run the selected
-stage's canonical clean-revision command set once on that exact commit. Avoid
-running equivalent complete suites both immediately before and after the phase
-commit merely to reproduce the same evidence. A Tock is not ready for Tick
-until the exact-commit gate passes; if it fails, return to remediation,
-checkpoint the correction according to repository policy, and rerun the gate
-before review.
-
-At minimum preserve:
-
-- focused owner tests and public regressions;
-- formatting and warning-denying Clippy;
-- debug and optimized all-target tests;
-- the current conformance/fixture checks; and
-- benchmark assertions relevant to structural behavior.
-
-Keep verbose successful gate output out of review context. Record the exact
-revision, command, exit status, concise counts or identity, and only the failure
-tail when diagnosis is required.
-
-Use exact counters, forms, errors, spans, retained counts, and complexity bounds
-where they are contractual. Treat wall-clock timings as diagnostic.
-
-The phase-commit rule above is mandatory for the normal loop. Do not push or
-publish unless the user explicitly asks. If the caller explicitly requests a
-no-commit remediation pass, honor that narrower instruction and leave the
-pending phase clearly uncommitted for the caller's checkpoint.
+Read and apply the exact-revision gate in the phase-mechanics reference. A Tock
+is ready for Tick only after its focused checks and canonical deterministic gate
+pass on the accepted phase commit. The contract-and-evidence boundary governs
+external evidence and unthresholded telemetry; neither is silently promoted to
+a deterministic gate.
 
 ## Fixed-Point Rule
 
-Declare a fixed point only after a fresh independent Tick establishes all of
-the following on the current tree:
+Declare `deterministic-fixed-point` only after a fresh independent Tick
+establishes all of the following on the current tree:
 
 1. every prior finding is closed at its owning boundary;
 2. no P0-P3 functional or architectural finding remains;
@@ -254,10 +210,19 @@ the following on the current tree:
 4. realistic public compositions and owner-level invariants agree;
 5. resource and performance bounds measure the real work rather than hiding it;
 6. current architecture/profile docs describe the implementation; and
-7. relevant focused and complete functional checks pass.
+7. relevant deterministic focused and complete functional checks pass on the
+   exact reviewed revision.
 
 Create the next numbered review even when it reports zero findings; that review
-is the durable fixed-point witness. Stop rather than inventing lower-value work.
+is the durable deterministic fixed-point witness. Stop code remediation rather
+than inventing lower-value work.
+
+Separately report every required external capability as `capability-confirmed`,
+`capability-unconfirmed`, or `external-contract-failed` under the linked
+boundary. Do not claim the capability or mark the package `Done` unless every
+required initial external capability is confirmed. Only a valid
+`product-contract-failure` disproves that external contract and reopens design
+or remediation.
 
 ## Optional Goal Persistence
 
@@ -268,12 +233,15 @@ available:
    review until the Fixed-Point Rule is satisfied. A suitable objective is:
    `Alternate remediation and independent review for the selected stage until
    the newest numbered review reports zero P0-P3 functional or architectural
-   findings and all fixed-point criteria pass.` Do not set a token budget unless
-   the user supplied one.
+   findings, deterministic gates pass, and required external capability status
+   is reported without conflating availability with product failure.` Do not set
+   a token budget unless the user supplied one.
 2. On later continuations, inspect the active goal and resume from the latest
    review/current tree instead of restarting.
-3. Mark the goal complete only after the zero-finding Tick. Do not mark it
-   complete because a Tock passed tests or the budget is low.
+3. Mark the goal complete only after the zero-finding Tick and any external
+   confirmation required by the user's objective. Do not mark it complete
+   because a Tock passed tests, deterministic fixed point left required initial
+   capability unconfirmed, or the budget is low.
 4. Follow the goal tool's own blocked-state rules; difficulty or a long-running
    remediation is not a blocker.
 

@@ -1,0 +1,125 @@
+# Contract and Scenario Package
+
+Use this reference when establishing the package, assigning each slice, and
+accepting handoffs. Keep the package matrix as the sole requirement authority.
+
+## Contents
+
+- Build the contract-first package matrix
+- Keep private mechanisms conditional
+- Define a small scenario portfolio
+- Separate evidence lanes and statuses
+- Justify exact limits
+- Keep tests stable across redesigns
+
+## Build the contract-first package matrix
+
+Use stable IDs from the caller's normalized contract matrix. If no normalized
+matrix exists, create the smallest package-local subset before slicing work:
+
+| Field | Required content |
+|---|---|
+| Contract ID | Stable identifier used in assignments, reviews, and handoffs |
+| Observable invariant | Public or owner-level behavior that must hold |
+| Semantic owner | Component responsible for the invariant |
+| Lifetime/bound/recovery | Applicable semantic boundaries, with inapplicable parts explained |
+| Implementation slice | Ordered slice that establishes the invariant |
+| Named scenario | Portfolio entry that proves it |
+| Evidence class | Deterministic repository, external compatibility, or observational telemetry |
+| Status | Pending, accepted, unknown, or not-applicable |
+
+Each invariant has one owning row. Slice briefs, correction messages, tests,
+documentation, and handoffs reference contract IDs rather than restating the
+requirement. Update the row only after parent acceptance.
+
+## Keep private mechanisms conditional
+
+Put collection shape, fields, counters, diagnostic plumbing, helper names,
+transaction decomposition, and numeric defaults in a conditional implementation
+appendix. They are design inputs, not required package outcomes.
+
+Promote a mechanism into a contract row only when changing it would violate a
+public compatibility promise, eliminate the only sound semantic owner, or break
+a named correctness invariant. State that reason. Ask whether a simpler
+independently designed correct implementation can satisfy the row before
+freezing representation or vocabulary.
+
+## Define a small scenario portfolio
+
+Record each scenario once:
+
+```text
+Scenario: <behavioral name>
+Contracts: <stable IDs covered>
+Observable invariant: <outcome at an owner or public boundary>
+Evidence class: deterministic repository | external compatibility |
+                observational telemetry
+Capture helpers: <shared instrumentation>
+Localization signal: <boundary identified when the scenario fails>
+```
+
+Prefer a few behavioral scenarios over an assertion inventory. Use shared
+capture helpers for request shape, diagnostics, connection identity, and
+cross-request contamination when relevant. Helpers may inspect private fields
+for diagnosis, but their field layout does not become a public contract merely
+because several scenarios reuse them.
+
+## Separate evidence lanes and statuses
+
+Keep these lanes independently reportable:
+
+1. **Deterministic repository evidence:** owner-level and composed scenarios
+   controlled by the repository. These must pass for slice acceptance.
+2. **Minimal external capability probe:** the smallest credentialed request
+   that isolates provider or endpoint capability.
+3. **Broader composed semantic scenario:** end-to-end product ownership and
+   behavior, using the same capture helpers without being the sole proof of
+   repository-controlled contracts.
+
+The latter two are separate scenarios even when both use external compatibility
+evidence. A failure must identify capability versus composition rather than
+collapsing serialization, tools, diagnostics, transport identity,
+contamination, and model output into one witness.
+
+For each external scenario, carry the capability identity, freshness rule, and
+one of the caller's evidence statuses: `current`, `reusable`, `stale`,
+`unavailable`, `authentication-or-configuration-failure`,
+`provider-or-infrastructure-failure`, `inconclusive-timeout`, or
+`product-contract-failure`. Only the last proves the external contract false.
+Missing credentials and other availability failures neither fail deterministic
+acceptance nor count as an external pass. Required initial evidence remains
+explicitly capability-unconfirmed.
+
+Observational telemetry has no acceptance effect unless the contract names a
+baseline, measurement method, direction, and regression threshold. Record
+unthresholded bytes, token counts, cache tokens, and latency as observational.
+
+## Justify exact limits
+
+Before implementing a normative cap, timeout, retry count, or other numeric
+limit, require:
+
+| Field | Required justification |
+|---|---|
+| Correctness role | Invariant that changes or fails if the value changes |
+| Workload basis | Observed or conservative workload the value must admit |
+| Resource estimate | Memory, CPU, latency, connection, or storage cost it bounds |
+| Boundary consequence | Behavior at exact and one-over values |
+| Revision trigger | Production evidence, benchmark, or workload change that permits revision |
+
+When correctness does not depend on the number, keep it as a private default in
+the implementation appendix. Test it as mechanism evidence rather than making
+it feature acceptance.
+
+## Keep tests stable across redesigns
+
+Classify affected tests as `retain`, `strengthen`, `replace`, or `delete`.
+Contract tests protect stable public semantics, ownership, boundedness, and
+recovery. Mechanism tests are disposable when their design simplifies.
+
+Cover semantic partitions and reachable adjacent boundaries when they
+distinguish behavior. Do not bypass an earlier public admission limit only to
+exercise a later defensive ceiling. Test the earliest observable public
+contract publicly and keep unreachable serializer or ABI limits owner-local.
+A conformance label names evidence but does not replace the scenario's
+observable invariant.
