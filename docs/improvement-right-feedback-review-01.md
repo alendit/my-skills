@@ -1,5 +1,15 @@
 # Improvement Right Feedback — Review 01
 
+## Current disposition
+
+Finding 01 is remediated in the working tree. The independent review trigger
+now covers both author-declared architectural impact or deferral and signals
+encountered by the review itself. A missing required decision record remains a
+candidate or required unknown according to source evidence; the reviewer still
+cannot synthesize a branch, accept deferral, authorize scope, or mutate the
+ledger. This disposition awaits a fresh Tick; the historical review below is
+preserved unchanged.
+
 ## Decision
 
 **Changes requested** on revision

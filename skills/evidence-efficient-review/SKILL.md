@@ -163,11 +163,19 @@ then move to the next; do not replace sequential coverage with one broad scan.
 ## Audit Architectural Scope Classifications
 
 When the reviewed work claims architectural impact or defers an architectural
-correction, read
+correction, or when the review itself encounters non-local impact, uncertain
+ownership, mechanism-coupled tests, or a local fix that may preserve an
+architectural problem, read
 [the architectural scope decision authority](../supervised-implementer-loop/references/architectural-scope-decision.md)
 completely. Use it only to audit evidence and classification. A reviewer never
 selects remediation, accepts a deferral, creates or mutates a follow-up record,
 or authorizes package scope.
+
+When this trigger applies but the required decision record is absent, keep the
+issue `candidate` when source evidence shows a concrete possible defect that
+still needs proof, or `unknown` when missing evidence prevents required
+coverage from being cleared. Do not synthesize the missing record or a branch,
+accept deferral, authorize expanded scope, or mutate the ledger.
 
 Require causal source, dependency, state, or test evidence before accepting a
 non-local impact as an architecture signal; effort, file count, inherent public
