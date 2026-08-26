@@ -35,9 +35,12 @@ It does not:
 - require recursive style reviews after every small edit.
 
 The installed general `writing` skill is an adjacent authority outside this
-repository. It continues to own general and public prose. This package must work
-without assuming that skill is installed, while stating precedence clearly when
-both are available.
+repository. It continues to own editorial, marketing, customer-facing, and
+other general prose. Public visibility does not determine ownership: a public
+PR or operator report whose claims depend on code, diffs, tests, or operational
+evidence is still an engineering artifact. This package must work without
+assuming the general skill is installed and must select one prose authority,
+not run both, when their descriptions overlap.
 
 ## Current state and design gap
 
@@ -64,7 +67,7 @@ sentence while breaking the paragraph or document around it.
 | ID | Observable contract | Owner and consumers | Implementation slice | Named evidence |
 |---|---|---|---|---|
 | CTW1 | **Preserve substantive authority.** `clear-technical-writing` may reorganize, explain, qualify, or delete prose only when the resulting text preserves the accepted technical meaning. The source artifact and its specialized skill continue to decide behavior, scope, architecture, review findings, severity, evidence status, and workflow. When meaning is uncertain, the writer returns to that authority instead of silently choosing an interpretation. | New skill owns prose transformation. Every existing skill remains owner of its domain decisions. | S1, S4 | V1 Authority-preservation scenario |
-| CTW2 | **Route only reader-facing engineering prose.** Direct triggers include requests to draft or revise PR descriptions, commit messages, code comments, investigation handoffs, technical reports, design documents, status updates, and technical explanations for developers or operators. Private notes, private reasoning, raw evidence collection, general/public prose, and tasks with no requested prose artifact do not trigger it. When a specialized repository skill applies, that skill runs first and this skill is only its final prose pass. | New skill owns trigger and precedence. Consumer skills own whether their completed artifact needs the pass. | S1, S4 | V2 Trigger-and-precedence fixture |
+| CTW2 | **Route one prose pass by artifact purpose and factual owner.** Requests to draft or revise engineering artifacts use this skill when their claims depend on code, diffs, tests, architecture, or operational evidence, whether or not the artifact is public. Editorial, marketing, customer communication, and other general prose use `writing` when available. Private notes, private reasoning, raw evidence collection, and tasks with no requested prose artifact trigger neither. A specialized artifact skill completes the substantive artifact and, as leaf owner, invokes this skill once. An outer orchestrator may require or report that pass but may not apply it again. If the user explicitly names both writing skills, the artifact owner selects one transformation process and may consult the other only for non-conflicting guidance; it never runs two automatic rewrites, weakens source truth, or overrides the specialized contract. | New skill owns prose routing. The leaf substantive artifact skill owns the single invocation; outer orchestrators own only workflow status. | S1, S4 | V2 Trigger, precedence, and single-pass evidence |
 | CTW3 | **Derive the reader and purpose from the artifact.** Record who will read the artifact, what relevant knowledge may be assumed, and what the reader must understand, decide, verify, or do. Use an uninvolved repository developer only as the fallback for a PR, commit, design, or report when a more specific audience cannot be recovered. A code comment targets the future maintainer at that statement; an operational update targets its actual recipients. | New skill | S2 | V3 Audience-routing scenarios |
 | CTW4 | **Use an adaptive drafting process.** Every pass establishes source, audience, purpose, and the answer or action that belongs first. A compact artifact then drafts and performs one fresh-reader check. An artifact with several dependent claims first records a private question order and claim-to-evidence map. Sentence-level reader-state simulation is optional diagnostic work for a passage that remains unclear; it is not routine bookkeeping. The private plan is never acceptance evidence. | New skill | S2 | V4 Compact, standard, and difficult-passage scenarios |
 | CTW5 | **Make relationships explicit without banning necessary terms.** Prefer established repository terms after explaining the concept in ordinary language. Introduce a new term only when a distinct concept needs a stable name, define it once, and do not overload a familiar word with an unstated private meaning. Where a compressed verb such as `classify`, `route`, or `invalidate` would hide the result, state the actor, operation, object, condition, and consequence that matter to the reader. | New skill; specialized skills remain vocabulary authorities for their domains. | S2 | V5 Terminology and relationship fixture |
@@ -72,22 +75,32 @@ sentence while breaking the paragraph or document around it.
 | CTW7 | **Match structure and detail to the information.** Use prose for a linear argument, lists for discrete items, numbered steps for order, tables for repeated comparable fields, and a diagram only when it materially clarifies a relationship. Keep a sentence, heading, example, or measurement only when it helps the reader understand, verify, decide, or act, or prevents a likely material misunderstanding. Punctuation and voice remain contextual choices rather than acceptance rules. | New skill | S2 | V7 Structure-and-deletion scenario |
 | CTW8 | **Revalidate after later edits.** A changed source fact or requested addition invalidates every prose claim, paragraph transition, title, summary, conclusion, and evidence statement that depends on it. Rewrite the smallest complete unit rather than appending a sentence mechanically, then read the preceding and following transitions from the reader's knowledge state. Re-read the complete artifact when its purpose, through-line, decision, or conclusion changed. | New skill; calling artifact skill supplies the changed source and scope. | S3 | V8 Late-change revision scenario |
 | CTW9 | **Keep one compact writing authority.** The new `SKILL.md` contains trigger, precedence, adaptive process, and final acceptance questions. One-level references contain artifact routing, revision-after-change mechanics, examples, and research rationale. Consumer skills link or invoke the authority at their final prose boundary and do not copy its checklist. Research explains design choices but is not presented as proof that the exact process works. | New skill owns writing guidance. `skill-authoring` remains the authority for package structure. | S1, S3, S4 | V9 Package, reference, and duplication checks |
-| CTW10 | **Prove outputs, not hidden process compliance.** Deterministic repository gates verify skill structure, links, trigger boundaries, source fidelity, authority preservation, required distinctions, and the late-change behavior. A blinded human-comprehension pilot separately evaluates whether intended readers can explain what happened before, what changes, why it is correct or deliberately different, what evidence matters, and what action is requested. Word count, tokens, latency, reading time, and preference remain observational until the pilot records a baseline, method, and decision threshold. | Repository fixtures own deterministic gates. Selected human evaluators own comprehension evidence. | S5, S6 | V10 Deterministic suite; V11 blinded comprehension pilot |
+| CTW10 | **Prove observable outputs in separate evidence lanes.** Deterministic repository gates verify package structure, links, routing declarations, fixture schemas, static examples, absence of copied authority, and exact-revision hygiene. Controlled model trials evaluate V1-V8 output behavior and record the skill revision, model/runtime identity, outer instructions, source packet, trial policy, scorer, and failure boundary. A blinded human pilot separately evaluates whether intended readers understand the artifact. Neither external lane inspects private reasoning or becomes deterministic merely because its inputs are recorded. Word count, tokens, latency, reading time, preference, and edit size remain observational unless a protocol supplies a baseline, method, direction, and threshold. | Repository checks own deterministic evidence. The evaluation runner owns controlled model evidence. Selected human evaluators own comprehension evidence. | S5, S6 | V9-V10 deterministic package evidence; V1-V8 controlled model evidence; V11 blinded human evidence |
 
 ## Artifact routing and ownership
 
 This table applies CTW1 and CTW2. It is routing information, not a second
-definition of the writing contract.
+definition of the writing contract. The substantive leaf owner named in the
+table is the only component that invokes the prose pass for that artifact. An
+outer workflow may check that the pass occurred but does not invoke another
+pass over the same artifact.
 
 | Artifact | Substantive owner | Writing pass |
 |---|---|---|
-| PR description, commit message, code comment, investigation handoff, status report, technical explanation | Caller, repository sources, and any task-specific skill | Use `clear-technical-writing` directly after facts and decisions are established. |
+| PR description, commit message, code comment, investigation handoff, status report, technical explanation whose claims depend on engineering evidence | Caller, repository sources, and any task-specific skill | The caller is the leaf owner and uses `clear-technical-writing` once after facts and decisions are established, even when the artifact is public. |
 | Educational technical-note series | `technical-note-series` | Use the new skill only after reader journey, examples, ownership, and publication scope are coherent. |
 | `docs/architecture.md` | `project-architecture-doc` | Use the new skill after the required architecture structure and source-backed discussion exist. |
 | Repository architecture policy | `add-architectural-guidances` | Use the compact pass after the guidance contract has been applied. Do not expand the policy to demonstrate prose technique. |
-| Review artifact or finding explanation | `evidence-efficient-review`; `review-fixpoint` owns outer mechanics | Apply the writing pass only after findings, severities, statuses, and evidence are final. Wording cannot add, remove, close, or downgrade a finding. |
+| Review artifact or finding explanation | `evidence-efficient-review`; `review-fixpoint` owns outer mechanics | `evidence-efficient-review` applies the pass once after findings, severities, statuses, and evidence are final. `review-fixpoint` records that result and does not rewrite it. Wording cannot add, remove, close, or downgrade a finding. |
 | Implementation slice or package handoff | `supervised-implementer-loop` | Use the compact pass without changing accepted contract IDs or evidence results. |
-| General/public prose | General `writing` skill when available | Do not invoke this skill merely because the subject is technical. |
+| Editorial, marketing, customer communication, and other general prose | General `writing` skill when available | Use one general-writing authority. Technical subject matter alone does not make the artifact an engineering-evidence artifact. |
+
+When the user explicitly requests both prose skills for one artifact, the leaf
+owner chooses the skill whose purpose matches the artifact. It may use a
+non-conflicting check from the other skill as review input, but it applies one
+coherent rewrite process and one final acceptance pass. This rule prevents
+nested consumers and overlapping trigger descriptions from applying successive
+style transformations to the same accepted technical content.
 
 ## Planned skill package
 
@@ -120,10 +133,12 @@ description: >-
   Draft or revise reader-facing engineering prose such as PR descriptions,
   commit messages, code comments, investigation handoffs, design documents,
   technical reports, status updates, and explanations. Use when developers or
-  operators must understand, verify, decide, or act on technical work. Do not
-  use for private reasoning or general public prose; when a specialized skill
-  owns the artifact, preserve its decisions and apply this skill only as the
-  final prose pass.
+  operators must understand, verify, decide, or act on claims grounded in code,
+  diffs, tests, architecture, or operational evidence, including public
+  engineering artifacts. Do not use for private reasoning or general editorial,
+  marketing, or customer prose. When a specialized skill owns the artifact,
+  preserve its decisions and let that leaf owner apply this skill exactly once
+  as the final prose pass.
 ```
 
 ## Research disposition
@@ -165,57 +180,99 @@ affected prose units and transitions rather than reward sentence appending.
 ### S4 — Integrate existing skills without duplicate authority
 
 Implement the consumer side of CTW1, CTW2, and CTW9. Change only the smallest
-owning sections in the six repository skills. Each consumer states when its
-substantive work is ready for a prose pass and links to the new skill. It does
-not copy the process, examples, or final questions.
+owning sections in the six repository skills. Each leaf consumer states when
+its substantive work is ready, invokes one prose pass, and links to the new
+skill. An outer orchestrator records that the leaf pass occurred and does not
+invoke it again. No consumer copies the process, examples, or final questions.
 
-### S5 — Add deterministic behavioral fixtures
+### S5 — Add deterministic package checks and evaluation fixtures
 
-Implement the deterministic part of CTW10 through the V1-V10 scenarios below.
-Fixtures contain source packets, artifact intent, observable reader contract,
-and forbidden regressions. They do not prescribe exact sentences or inspect
-private reasoning.
+Implement the deterministic part of CTW10 through V9-V10. Validate frontmatter,
+links, reference contents sections, routing declarations, fixture schemas,
+static example invariants, consumer-link uniqueness, duplication searches, and
+exact-revision hygiene. Define the V1-V8 source packets, artifact intent,
+observable reader contract, scoring helpers, and forbidden regressions without
+claiming that static fixtures prove generated behavior. Install the repository
+skill as `~/.agents/skills/clear-technical-writing`, then verify the resolved
+link target and readable `SKILL.md`.
 
-### S6 — Pilot, install, and complete the rollout
+### S6 — Run capability evaluations and complete the rollout
 
-Run V11 with blinded readers against a recorded baseline and a predeclared
-decision rule. Record skill revision, model family, source packet, artifact
-type, evaluator audience, and results. Install the repository skill as
-`~/.agents/skills/clear-technical-writing`, verifying the link target and a
-readable `SKILL.md`. Run an independent review under `review-fixpoint` before
-claiming completion.
+Run V1-V8 as controlled model trials under the shared protocol below. Run V11
+as a paired, blinded human comparison against the exact production baseline
+with only the skill condition changed. Predeclare both protocols before
+examining candidate outputs. Run an independent review under `review-fixpoint`
+before claiming deterministic or capability completion.
 
 ## Scenario portfolio
 
-| Evidence | Scenario | Observable result and localization |
+V1-V8 share one capture helper. It stores the exact skill revision, model and
+runtime identifiers, complete outer instructions, source-packet hash, exposed
+generation settings, tool/context configuration, trial count, output, and
+timestamps. A scenario-specific scorer compares observable output with the
+source packet and reader contract and reports the first failed contract ID. The
+trial policy and rubric are fixed before outputs are generated. Private plans
+are neither captured nor inferred. An unavailable runtime is external evidence
+unavailability; a valid output that violates the rubric is a model-behavior
+failure.
+
+| Evidence | Lane | Scenario, scoring, and failure localization |
 |---|---|---|
-| V1 | Authority preservation | A prose pass over a review finding preserves severity, status, evidence, and requested correction. A mismatch localizes to CTW1 or the consumer boundary. |
-| V2 | Trigger and precedence | Direct engineering-prose requests trigger the skill; private notes and general prose do not; specialized artifact work runs before the prose pass. |
-| V3 | Audience routing | The same change produces appropriately different PR, local-comment, and operator-status explanations without assuming the author as reader. |
-| V4 | Adaptive effort | A compact commit message does not acquire planning ceremony; a multi-claim handoff has ordered reader questions and evidence; only an actually unclear passage uses the diagnostic. Acceptance observes the output and cost, not private notes. |
-| V5 | Terminology | An unnecessary overloaded term is expanded into an explicit operation and result, while a genuinely new repository concept receives one stable, ordinary-language definition. |
-| V6 | Source and precision | An investigation preserves unknowns and source provenance. A performance summary rounds observational values consistently but retains an exact timeout or boundary needed for correctness. |
-| V7 | Structure and deletion | Comparable results use a table, a linear explanation remains prose, and removing decorative structure or obvious facts does not remove a reader prerequisite. |
-| V8 | Late change | A later fact contradicts part of an otherwise good draft. The affected paragraph, transitions, summary, and conclusion are revalidated; no contradictory appended sentence remains. |
-| V9 | Consumer composition | Each of the six existing skills retains its substantive authority and contains only a concise invocation/link. General writing remains an adjacent non-required authority. |
-| V10 | Deterministic package gate | The skill validator, relative-link checks, reference-TOC checks, trigger-negative checks, duplication search, source-fidelity fixtures, and `git diff --check` pass on the exact revision. |
-| V11 | Blinded comprehension pilot | Readers who match the artifact audience answer the five CTW10 questions against baseline and candidate artifacts without seeing which process produced them. The predeclared rule requires no factual regression and a material comprehension benefit before claiming that capability. |
+| V1 | Controlled model behavior | **Authority preservation.** A field comparator checks that a rewritten review finding retains severity, status, cited evidence, and requested correction. A mismatch localizes to CTW1 or the named leaf consumer. |
+| V2 | Controlled model behavior | **Trigger, precedence, and single pass.** An invocation trace checks that engineering-evidence artifacts select this skill, general prose selects `writing` when available, private work selects neither, a specialized leaf runs first, and an outer orchestrator does not apply a second pass. A mismatch localizes to CTW2 or the named consumer route. |
+| V3 | Controlled model behavior | **Audience routing.** A required-information rubric checks that the same source change yields distinct PR, local-comment, and operator-status explanations with no author-only premise. A mismatch localizes to CTW3's reader or purpose selection. |
+| V4 | Controlled model behavior | **Adaptive output.** A compactness and prerequisite-order rubric checks that a small commit message avoids visible ceremony while a multi-claim handoff presents supported claims in dependency order. Token and latency cost are reported separately as observational telemetry. The scenario makes no claim that private planning occurred. |
+| V5 | Controlled model behavior | **Terminology.** A relationship rubric checks that an overloaded verb is replaced by the relevant actor, operation, object, condition, and result, while a necessary repository concept receives one stable ordinary-language definition. A mismatch localizes to CTW5. |
+| V6 | Controlled model behavior | **Source and precision.** A source-field comparator checks that an investigation retains unknowns and provenance, observational values use consistent decision-sized precision, and an exact correctness boundary is unchanged. A mismatch localizes to source fidelity or measurement treatment under CTW6. |
+| V7 | Controlled model behavior | **Structure and deletion.** A structure rubric checks that comparable fields use a table, a linear argument remains prose, and every retained or removed element preserves the supplied reader prerequisites. A mismatch localizes to CTW7's relationship or relevance rule. |
+| V8 | Controlled model behavior | **Late change.** A contradiction and dependency checker compares the revised artifact with a changed source packet and checks the affected paragraph, adjacent transitions, summary, and conclusion. A stale or appended contradiction localizes to CTW8. |
+| V9 | Deterministic repository gate | **Consumer composition.** Static inspection verifies that each of the six consumers retains its substantive authority, names one leaf invocation point, contains one concise link, and does not copy the process. It also verifies that `evidence-efficient-review`, not `review-fixpoint`, owns the pass over a review artifact. |
+| V10 | Deterministic repository gate | **Package gate.** The skill validator, relative-link checks, reference-contents checks, fixture-schema validation, static-example invariant checks, trigger/routing declaration checks, duplication search, symlink read-back, and `git diff --check` pass on the exact revision. |
+| V11 | Blinded human evidence | **Controlled comprehension comparison.** Baseline and candidate use the same task, source packet, outer instructions, model/runtime configuration, generation policy, and exposed settings; only the candidate receives the skill. Audience-matched readers see randomized or counterbalanced unlabeled outputs and answer the five CTW10 questions. Predeclared factual and comprehension scorers require no factual regression and the declared comprehension improvement. A failure localizes to factual preservation or human comprehension rather than package structure. |
 
 ## Evidence and completion
 
-The deterministic suite is required for `deterministic-fixed-point`. It can
-prove that the implemented package follows CTW1-CTW10 and that its controlled
-fixtures do not regress.
+V9-V10 are required for `deterministic-fixed-point`. They can prove that the
+package, consumers, fixtures, and static examples implement the specification
+on the accepted revision. They cannot prove that a model follows the skill or
+that people understand its output.
 
-The human pilot is external compatibility evidence for the claim that the skill
-improves comprehension. Before running it, record the baseline, sample, scoring
-method, and minimum material improvement; do not choose the threshold after
-seeing results. Reuse is allowed only while the skill contract, material prompt
-shape, model family, artifact suite, and intended audience remain applicable.
-Missing evaluators or an inconclusive sample leaves
-`human-comprehension-unconfirmed`; it does not fail the deterministic suite or
-count as evidence of improvement. A valid pilot that contradicts the declared
-criterion returns the process or routing design to remediation.
+V1-V8 are external compatibility evidence for model behavior. Record exactly
+the identity fields named by the shared capture protocol. A valid generated
+output that violates a predeclared scenario rubric is
+`product-contract-failure` and blocks the affected capability. Authentication
+or configuration failure, provider or infrastructure failure, and an
+inconclusive timeout leave `model-capability-unconfirmed`; they remain visible
+but do not fail V9-V10. Passing trials are `current` or `reusable` only under
+the freshness rule below.
+
+V11 is separate external evidence for the claim that the skill improves human
+comprehension. The baseline is the same generation task under the exact
+recorded conditions with the candidate skill absent, unless the product claim
+explicitly names another production baseline. Before generation, record the
+artifact assignment, sample, randomized or counterbalanced presentation,
+factual scorer, comprehension scorer, and minimum material improvement. Missing
+evaluators, infrastructure failure, or an inconclusive sample leaves
+`human-comprehension-unconfirmed`; it does not fail V9-V10 or count as evidence
+of improvement. A valid paired pilot that violates the factual or comprehension
+criterion is `product-contract-failure` and returns the affected contract to
+remediation.
+
+External model and human evidence is reusable for the exact skill revision for
+seven days after collection only while the model/runtime identity,
+complete outer instructions, source-packet suite, generation settings,
+tool/context configuration, scoring protocol, and intended audience remain
+unchanged. A skill revision or identity mismatch invalidates it immediately.
+At or after the expiry instant, the evidence is stale and must be refreshed
+before another capability claim, even if all identities still match.
+
+| Freshness-limit field | Record |
+|---|---|
+| Correctness role | Prevent a human or model result from supporting a later capability claim after the agent runtime or evaluation context may have drifted. |
+| Workload basis | One implementation and fixed-point rollout is expected to complete within a week; the initial evaluation suite is intentionally small enough to rerun. This is an operational assumption, not an empirical claim. |
+| Expected resource effect | Evidence reuse avoids rerunning V1-V8 and V11 during the same rollout. An older rollout pays the accepted cost of a fresh small-suite run and human comparison. |
+| Exact boundary | With UTC timestamps, evidence is reusable when `collected_at <= use_at < collected_at + 168 hours`. It is stale when `use_at >= collected_at + 168 hours`. An identity mismatch makes it stale earlier. |
+| Revision trigger | Change the limit only after recording actual rollout durations and model/runtime stability. The replacement must state its last reusable and first stale instants. |
 
 Word count, prompt/output tokens, drafting latency, reading time, preference,
 and edit size are observational unless the pilot protocol gives a metric a
@@ -223,9 +280,11 @@ baseline, measurement method, direction, and threshold. Short-artifact cost is
 especially important to record because CTW4 exists to avoid process overhead,
 but an unthresholded cost observation cannot decide acceptance.
 
-The package is `Done` only when CTW1-CTW10 are implemented, V1-V10 pass on the
-exact reviewed revision, a fresh independent review reports no P0-P3 finding or
-required unknown, the skill link is verified, and the initial V11 capability is
-confirmed. Deterministic fixed point may be reported earlier, but it must retain
-`human-comprehension-unconfirmed` and must not claim that the skill is proven to
-improve human understanding.
+The package reaches `deterministic-fixed-point` only when CTW1-CTW10 are
+implemented, V9-V10 pass on the exact reviewed revision, and a fresh independent
+review reports no P0-P3 finding or required unknown. It is `Done` only when
+V1-V8 are current and passing and the initial V11 capability is confirmed under
+the paired protocol. Earlier deterministic completion must retain
+`model-capability-unconfirmed`, `human-comprehension-unconfirmed`, or both, as
+applicable, and must not claim proven model compliance or improved human
+understanding.

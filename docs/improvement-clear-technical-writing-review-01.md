@@ -5,6 +5,19 @@
 **Changes requested** on revision
 `a4c5f9bf29bc21d4241003b1973746d844891d2c`.
 
+## Current disposition after Tock
+
+The remediation following this historical review addresses all three findings:
+
+| Finding | Current disposition |
+|---|---|
+| Artifact visibility and nested ownership | Addressed by routing on artifact purpose and factual owner, choosing one prose authority for overlaps, and assigning exactly one invocation to the leaf substantive owner. Outer orchestrators only verify or report that pass. |
+| Model behavior called deterministic | Addressed by limiting deterministic gates to package and fixture structure, moving V1-V8 to controlled model evidence with shared capture and scoring, and removing the unobservable private-plan assertion from V4. |
+| Human pilot baseline and freshness | Addressed by a paired baseline that changes only skill presence, predeclared randomized or counterbalanced scoring, complete identity records, and an exact seven-day reuse boundary with invalidation triggers and limit rationale. |
+
+These dispositions do not alter the original decision below. A fresh Tick must
+verify the remediated revision before any fixed-point claim.
+
 This fresh rebaseline specification Tick found one P1 and two P2 design
 defects. The proposed skill has a sound substantive writing contract, bounded
 research rationale, adaptive effort, and dependency-aware revision. It does not
