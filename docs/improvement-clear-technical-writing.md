@@ -75,7 +75,7 @@ sentence while breaking the paragraph or document around it.
 | CTW7 | **Match structure and detail to the information.** Use prose for a linear argument, lists for discrete items, numbered steps for order, tables for repeated comparable fields, and a diagram only when it materially clarifies a relationship. Keep a sentence, heading, example, or measurement only when it helps the reader understand, verify, decide, or act, or prevents a likely material misunderstanding. Punctuation and voice remain contextual choices rather than acceptance rules. | New skill | S2 | V7 Structure-and-deletion scenario |
 | CTW8 | **Revalidate after later edits.** A changed source fact or requested addition invalidates every prose claim, paragraph transition, title, summary, conclusion, and evidence statement that depends on it. Rewrite the smallest complete unit rather than appending a sentence mechanically, then read the preceding and following transitions from the reader's knowledge state. Re-read the complete artifact when its purpose, through-line, decision, or conclusion changed. | New skill; calling artifact skill supplies the changed source and scope. | S3 | V8 Late-change revision scenario |
 | CTW9 | **Keep one compact writing authority.** The new `SKILL.md` contains trigger, precedence, adaptive process, and final acceptance questions. One-level references contain artifact routing, revision-after-change mechanics, examples, and research rationale. Consumer skills link or invoke the authority at their final prose boundary and do not copy its checklist. Research explains design choices but is not presented as proof that the exact process works. | New skill owns writing guidance. `skill-authoring` remains the authority for package structure. | S1, S3, S4 | V9 Package, reference, and duplication checks |
-| CTW10 | **Prove observable outputs in separate evidence lanes.** Deterministic repository gates verify package structure, links, routing declarations, fixture schemas, static examples, absence of copied authority, and exact-revision hygiene. Controlled model trials evaluate V1-V8 output behavior and record the skill revision, model/runtime identity, outer instructions, source packet, trial policy, scorer, and failure boundary. A blinded human pilot separately evaluates whether intended readers understand the artifact. Neither external lane inspects private reasoning or becomes deterministic merely because its inputs are recorded. Word count, tokens, latency, reading time, preference, and edit size remain observational unless a protocol supplies a baseline, method, direction, and threshold. | Repository checks own deterministic evidence. The evaluation runner owns controlled model evidence. Selected human evaluators own comprehension evidence. | S5, S6 | V9-V10 deterministic package evidence; V1-V8 controlled model evidence; V11 blinded human evidence |
+| CTW10 | **Prove observable outputs in separate evidence lanes.** Deterministic repository gates verify package structure, links, routing declarations, fixture schemas, static examples, absence of copied authority, and exact-revision hygiene. Controlled model trials evaluate V1-V8 output behavior and record the skill revision, model/runtime identity, outer instructions, source packet, trial policy, scorer, and failure boundary. A blinded human pilot separately asks whether intended readers can explain: what was happening before; what changes; why the behavior is correct or deliberately different; what evidence matters; and what the artifact asks them to decide or do. Neither external lane inspects private reasoning or becomes deterministic merely because its inputs are recorded. Word count, tokens, latency, reading time, preference, and edit size remain observational unless a protocol supplies a baseline, method, direction, and threshold. | Repository checks own deterministic evidence. The evaluation runner owns controlled model evidence. Selected human evaluators own comprehension evidence. | S5, S6 | V9-V10 deterministic package evidence; V1-V8 controlled model evidence; V11 blinded human evidence |
 
 ## Artifact routing and ownership
 
@@ -228,7 +228,7 @@ failure.
 | V8 | Controlled model behavior | **Late change.** A contradiction and dependency checker compares the revised artifact with a changed source packet and checks the affected paragraph, adjacent transitions, summary, and conclusion. A stale or appended contradiction localizes to CTW8. |
 | V9 | Deterministic repository gate | **Consumer composition.** Static inspection verifies that each of the six consumers retains its substantive authority, names one leaf invocation point, contains one concise link, and does not copy the process. It also verifies that `evidence-efficient-review`, not `review-fixpoint`, owns the pass over a review artifact. |
 | V10 | Deterministic repository gate | **Package gate.** The skill validator, relative-link checks, reference-contents checks, fixture-schema validation, static-example invariant checks, trigger/routing declaration checks, duplication search, symlink read-back, and `git diff --check` pass on the exact revision. |
-| V11 | Blinded human evidence | **Controlled comprehension comparison.** Baseline and candidate use the same task, source packet, outer instructions, model/runtime configuration, generation policy, and exposed settings; only the candidate receives the skill. Audience-matched readers see randomized or counterbalanced unlabeled outputs and answer the five CTW10 questions. Predeclared factual and comprehension scorers require no factual regression and the declared comprehension improvement. A failure localizes to factual preservation or human comprehension rather than package structure. |
+| V11 | Blinded human evidence | **Controlled comprehension comparison.** Baseline and candidate use the same task, source packet, outer instructions, model/runtime configuration, generation policy, and exposed settings; only the candidate receives the skill. Audience-matched readers see randomized or counterbalanced unlabeled outputs and answer the five questions defined by CTW10. The protocol derives the answer key from each source packet before generation and maps both factual and comprehension scoring to those questions. Predeclared scorers require no factual regression and the declared comprehension improvement. A failure localizes to factual preservation or human comprehension rather than package structure. |
 
 ## Evidence and completion
 
@@ -258,21 +258,24 @@ of improvement. A valid paired pilot that violates the factual or comprehension
 criterion is `product-contract-failure` and returns the affected contract to
 remediation.
 
-External model and human evidence is reusable for the exact skill revision for
-seven days after collection only while the model/runtime identity,
-complete outer instructions, source-packet suite, generation settings,
-tool/context configuration, scoring protocol, and intended audience remain
-unchanged. A skill revision or identity mismatch invalidates it immediately.
-At or after the expiry instant, the evidence is stale and must be refreshed
-before another capability claim, even if all identities still match.
+Initial V1-V8 and V11 evidence is non-reusable. It is `current` only for the
+acceptance review that commissioned the run, on the exact skill revision and
+while the recorded model/runtime identity, outer instructions, source packets,
+generation settings, tool/context configuration, scoring protocol, and intended
+audience remain unchanged. The review records collection time and evidence age.
+Any identity change, completion of that review, or later capability claim makes
+the evidence unavailable and requires a fresh run. This event-bounded rule has
+no arbitrary calendar threshold and deliberately pays the full rerun cost until
+that cost is measured.
 
-| Freshness-limit field | Record |
-|---|---|
-| Correctness role | Prevent a human or model result from supporting a later capability claim after the agent runtime or evaluation context may have drifted. |
-| Workload basis | One implementation and fixed-point rollout is expected to complete within a week; the initial evaluation suite is intentionally small enough to rerun. This is an operational assumption, not an empirical claim. |
-| Expected resource effect | Evidence reuse avoids rerunning V1-V8 and V11 during the same rollout. An older rollout pays the accepted cost of a fresh small-suite run and human comparison. |
-| Exact boundary | With UTC timestamps, evidence is reusable when `collected_at <= use_at < collected_at + 168 hours`. It is stale when `use_at >= collected_at + 168 hours`. An identity mismatch makes it stale earlier. |
-| Revision trigger | Change the limit only after recording actual rollout durations and model/runtime stability. The replacement must state its last reusable and first stale instants. |
+A later implementation may propose reusable evidence only after at least one
+complete V1-V8 and V11 run records the model-trial count, generated-token use,
+elapsed runtime, human-reader count, evaluator time, and end-to-end rerun cost.
+The proposal must use those observations to justify a freshness interval under
+the exact-limit policy in `improvement_avoid_repetition.md`, including the last
+reusable instant, first stale instant, invalidating identity changes, expected
+resource effect, and evidence that would revise the interval. Until that record
+is independently accepted, the non-reuse rule remains authoritative.
 
 Word count, prompt/output tokens, drafting latency, reading time, preference,
 and edit size are observational unless the pilot protocol gives a metric a

@@ -5,6 +5,18 @@
 **Changes requested** on revision
 `f1d21cf3306fcabd23a95979acd9fd2874c2bd65`.
 
+## Current disposition after Tock
+
+The remediation following this historical review addresses both findings:
+
+| Finding | Current disposition |
+|---|---|
+| Missing V11 comprehension contract | Addressed by defining the five reader outcomes once in CTW10 and requiring V11 to derive its source-packet answer key and scorers from those outcomes. |
+| Unsupported 168-hour freshness gate | Addressed by removing the calendar gate. Initial external evidence is non-reusable and current only for its commissioning acceptance review. A future reuse interval requires measured trial volume, human effort, elapsed time, and rerun cost under the imported exact-limit policy. |
+
+These dispositions preserve the original decision below. A fresh Tick must
+verify the remediated revision before any fixed-point claim.
+
 This incremental Tick independently verified the three Review 01 findings and
 then audited the changed evidence and routing boundaries. The remediation
 correctly assigns one prose pass to the substantive leaf owner and separates
