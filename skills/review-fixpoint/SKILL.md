@@ -80,6 +80,16 @@ single requirement authority, keep workflow mechanics in this skill, and apply
 the reference's evidence classes and result vocabulary to every phase decision.
 Use its test-stability rules when a design changes.
 
+Carry glossary state through the
+[project-glossary authority](../clear-technical-writing/references/project-glossaries.md):
+the selected glossary identity or explicit opt-out and only the material
+term-to-semantic-source relationships needed by each Tick or Tock leaf. Preserve
+that state in leaf inputs and results. Require or report the leaf review or
+handoff's applicable
+[clear technical writing pass](../clear-technical-writing/SKILL.md), but do not
+read or apply the glossary as another semantic reviewer and do not perform
+another prose pass in this outer workflow.
+
 ## Route Architectural Scope Decisions
 
 When remediation or review exposes non-local impact, uncertain ownership,
@@ -124,6 +134,9 @@ use `$supervised-implementer-loop`: give one persistent implementer the complete
 outcome and slice map, let the primary accept each slice, and finish package
 verification before returning here. Handle a small direct fix directly, and do
 not force genuinely independent packages through one artificial sequence.
+Pass the resolved glossary identity or explicit opt-out and the material
+term-to-semantic-source relationships into the Tock leaf, then retain its
+reported access, changes, candidates, and continuity in the Tock result.
 
 For each finding:
 
@@ -167,7 +180,9 @@ the remediation author's claims. Supply a repository-specific review request:
   and follow-up deltas relevant to the reviewed scope;
 - the P0-P3 functional and architectural finding policy below;
 - the deterministic Fixed-Point Rule and required external-capability status as
-  the whole-scope completion contract; and
+  the whole-scope completion contract;
+- the selected glossary identity or explicit opt-out and material
+  term-to-semantic-source relationships needed by the review leaf; and
 - the next numbered review path and required document shape.
 
 Use incremental mode only when the previous review is trustworthy and change
@@ -213,7 +228,8 @@ The review document must:
   non-gating architectural follow-ups, and report follow-up IDs created,
   updated, closed, stale, or unchanged-but-relevant;
 - list focused supporting evidence and the required architecture self-check;
-  and
+- carry the glossary state, material access or candidates, terminology
+  continuity, and the leaf review's clear-writing-pass status; and
 - avoid security framing, validation-date disputes, Git cleanliness, README
   command drift, publication provenance, or evidence-map bookkeeping as
   findings unless the user explicitly changes scope.

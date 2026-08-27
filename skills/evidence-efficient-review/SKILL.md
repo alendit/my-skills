@@ -30,6 +30,11 @@ Before reading broad source, identify:
 - severity and finding policy; and
 - the requested result or review-artifact format.
 
+Resolve glossary state through the
+[project-glossary authority](../clear-technical-writing/references/project-glossaries.md)
+and record the selected glossary identity or explicit opt-out in the review
+contract before delegating review work.
+
 Do not infer domain policy from this skill. If these inputs cannot be recovered
 from the request and repository, report the missing review contract instead of
 inventing one.
@@ -91,6 +96,8 @@ compact evidence:
 - outlines of changed owners and adjacent consumers before exact range reads;
 - the authoritative contract matrix, architecture ownership, and public entry
   points;
+- the selected glossary identity or explicit opt-out and only the material
+  term-to-semantic-source relationships;
 - prior finding identifiers and dispositions;
 - relevant architectural-scope decision records, the selected durable ledger
   authority, and follow-up deltas;
@@ -122,6 +129,12 @@ needed for a live closure question.
 
 The dossier supplies facts and routing, not the remediation author's suspected
 answer.
+
+When a glossary is selected, require the independent reviewer to access each
+material entry directly rather than receiving the remediation author's
+interpretation. Treat that wording as explanatory input, never proof; verify
+behavior, ownership, lifetime, and acceptance against their semantic sources.
+Under an explicit opt-out, require no glossary access or placement question.
 
 ## Audit Promised Closure First
 
@@ -320,6 +333,17 @@ Return or draft the caller's requested artifact with:
 - unresolved unknowns, if any;
 - focused and complete verification evidence; and
 - progress toward the explicit target and applicable architecture self-check.
+
+Use preferred project terms consistently without changing finding, severity,
+evidence, owner, or correction semantics. Report an unauthorized or semantically
+uncertain new term as a candidate rather than persisting it; a write remains
+subject to the shared meaning, location, and edit-scope authority.
+
+After the result is substantively final, apply one
+[clear technical writing pass](../clear-technical-writing/SKILL.md). The pass
+cannot add, remove, close, or downgrade a finding or change its evidence and
+owner. Route any later material correction through that skill's
+revision-after-change behavior instead of applying a second outer prose pass.
 
 A whole-scope zero-finding decision requires every required cell to be cleared
 or not applicable on the reviewed revision, every prior finding to be closed,

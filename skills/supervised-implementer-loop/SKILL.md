@@ -32,6 +32,12 @@ Read
 before defining slices. Build its contract-first package matrix from stable
 contract IDs and keep it as the package's requirement authority.
 
+Before spawning, resolve glossary state through the
+[project-glossary authority](../clear-technical-writing/references/project-glossaries.md).
+Record the selected source or explicit opt-out and only the material
+term-to-semantic-source relationships in the work package. Glossary wording is
+explanatory input; package contracts and technical owners retain semantics.
+
 1. Inspect the current tree, user-supplied requirements, repository guidance,
    and existing changes. Begin at the first unmet requirement and preserve
    unrelated user work.
@@ -84,8 +90,13 @@ Give the implementer enough context once:
 - evidence class, shared capture helpers, localization signals, external
   evidence status when applicable, and reporting format;
 - known architectural follow-up IDs and the authority boundary for any ledger
-  mutation; and
+  mutation;
+- the selected glossary source or explicit opt-out and the material
+  term-to-semantic-source relationships, without copying the glossary; and
 - whether the implementer may commit.
+
+Under an explicit opt-out, instruct the implementer not to ask another
+placement question, access a glossary, or persist a term later in the package.
 
 Explicitly instruct the implementer to use tokens economically without
 weakening correctness: inspect only relevant owners and adjacent consumers,
@@ -182,6 +193,13 @@ For every slice:
 8. Only then begin the next slice. Treat accepted earlier invariants as stable;
    do not rediscover or restate them unless new evidence challenges them.
 
+Across assignments, corrections, slice handoffs, and parent review, verify that
+preferred terms and their semantic-source relationships remain continuous and
+that technical owners outrank glossary wording. Treat a new term as a candidate
+unless its meaning, glossary location, and edit scope are authorized for a
+bounded write. Never translate a glossary label into a new field, state, limit,
+component, or other mechanism without its own semantic owner.
+
 ## Keep The Loop Economical
 
 - Reuse the same implementer; do not spawn a replacement for ordinary
@@ -219,9 +237,17 @@ After the final slice:
    or unintended dirty state remains.
 4. Confirm every architectural-scope decision has an accepted branch and that
    no unauthorized or unverified ledger mutation is credited as durable.
-5. Report the accepted slices, important review corrections, verification,
-   follow-up ledger delta, commits or pending changes, and any genuine remaining
+5. Report the glossary source or explicit opt-out, material access or authorized
+   changes, unresolved term candidates, and terminology continuity alongside
+   the accepted slices, important review corrections, verification, follow-up
+   ledger delta, commits or pending changes, and any genuine remaining
    limitation.
+6. After contract IDs, package scope, and evidence results are accepted, apply
+   one compact
+   [clear technical writing pass](../clear-technical-writing/SKILL.md) to the
+   final package handoff without changing those decisions. Route a later
+   material edit through that skill's revision-after-change behavior rather
+   than applying a second outer prose pass.
 
 Stop when this package is accepted. Do not continue into unrelated cleanup or
 a broader review unless the user separately requests it.
