@@ -148,11 +148,14 @@ that the owning boundary moved.
 ## Preserve Independence Without Reviewer Fan-Out
 
 Use one reviewer for the complete review whenever delegation is needed. Reuse
-that reviewer across the review's sequential contract cells; do not split the
+that reviewer across the review's sequential contract cells and across review
+rounds when the outer workflow supplies a persistent reviewer; do not split the
 same scope among subsystem agents merely for breadth.
 
-- If the primary authored or supervised the implementation, use one fresh
-  read-only reviewer when delegation is available.
+- If the primary authored or supervised the implementation, use one read-only
+  reviewer independent of the implementation author. Honor an outer workflow's
+  persistent reviewer selection instead of spawning a fresh reviewer for each
+  round.
 - If the primary is independent of the implementation, it may apply this
   method directly.
 - Never use the implementation author as the sole fixed-point reviewer.

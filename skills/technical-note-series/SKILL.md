@@ -79,7 +79,7 @@ Read
 completely. Validate claims, code references, the running example, links,
 diagrams, and repository scope before review.
 
-After validation, require a fresh independent `$evidence-efficient-review` for
+After validation, require an independent `$evidence-efficient-review` for
 every publication pass. Supply one normalized matrix for the audience,
 learning, factual accuracy, boundary ownership, example, time/certainty,
 coherence, traceability, scope, and navigation cells defined in the reference.
@@ -87,7 +87,7 @@ Consume its evidence classes and coverage statuses.
 
 If any required publication cell is `candidate` or `unknown`, repair its owning
 guide or note, rerun affected validation, and continue through
-`$review-fixpoint` until a fresh review clears every required cell. This skill
+`$review-fixpoint` until its review clears every required cell. This skill
 supplies the publication contract; `$review-fixpoint` owns review numbering,
 commits, reviewer selection, remediation repetition, and stop mechanics. Keep
 those mechanics out of the guide and notes. A cleared publication pass does not

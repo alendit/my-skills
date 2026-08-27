@@ -64,7 +64,7 @@ not be silently converted into passing evidence.
 
 ## Compose with repository review workflows
 
-After validation, use `$evidence-efficient-review` for a fresh independent
+After validation, use `$evidence-efficient-review` for an independent
 review of every selected publication pass. Supply audience, learning outcomes,
 revision, files, guide authority, running example, known uncertainties,
 validation, severity policy, and the matrix above. Request actionable factual,
@@ -73,7 +73,7 @@ preference.
 
 If any required cell is `candidate` or `unknown`, repair its owning guide or
 note, rerun affected validation, and continue through `$review-fixpoint` until
-a fresh review clears every required cell. This reference defines the required
+its review clears every required cell. This reference defines the required
 publication closure, not general workflow mechanics: `$review-fixpoint` owns
 review numbering, commits, reviewer selection, remediation repetition, and stop
 rules. Keep those mechanics out of the guide and notes. Do not claim independent

@@ -20,9 +20,10 @@ Drive one repository-local loop with two alternating phases:
   its owning architectural boundary. Use `$supervised-implementer-loop` when
   the remediation is one non-trivial package with ordered dependent slices.
 
-Continue until a fresh Tick finds no P0-P3 functional or architectural defect.
-Passing tests alone is not a deterministic fixed point. Required external
-capabilities must also be confirmed before claiming the capability or `Done`.
+Continue until the persistent reviewer's next Tick finds no P0-P3 functional
+or architectural defect. Passing tests alone is not a deterministic fixed
+point. Required external capabilities must also be confirmed before claiming
+the capability or `Done`.
 
 This skill owns phase selection, repository-specific policy, phase commits, and
 the fixed-point decision. The called skills own review mechanics and supervised
@@ -37,6 +38,14 @@ verified, create one review/documentation commit. Keep the worktree clean
 between phases, preserve unrelated user work in the same intentional checkpoint
 when it is already part of the requested stage, and never leave a completed
 phase only as uncommitted working-tree state.
+
+At loop start, select exactly one persistent read-only reviewer that is
+independent of the remediation author and implementer. Reuse that reviewer for
+every Tick, including review of later Tocks, so it retains the reviewed
+baseline, prior findings, and accepted evidence. Persistence does not authorize
+implementation edits or remediation reasoning: give the reviewer a neutral
+dossier and the current source each round. If the reviewer becomes unavailable,
+report the loss of continuity and ask the user before selecting a replacement.
 
 ## Establish the Current Phase
 
@@ -67,9 +76,9 @@ Tock: remediate latest review
        -> findings: preserve review N+1, return to Tock
 ```
 
-Never declare a fixed point immediately after Tock. Only the following fresh
-Tick can establish it. Finish and verify remediation before starting that Tick;
-do not review a partially edited tree.
+Never declare a fixed point immediately after Tock. Only the persistent
+reviewer's following independent Tick can establish it. Finish and verify
+remediation before starting that Tick; do not review a partially edited tree.
 
 ## Use One Contract And Evidence Boundary
 
@@ -240,9 +249,12 @@ and cannot negate a concrete behavior reproducer.
 ## Preserve Review Independence
 
 Read and apply the independence rules in the phase-mechanics reference. Never
-use the remediation author as the sole reviewer. Give one fresh reviewer the
-neutral dossier and have the primary verify material candidates; add another
-reviewer only for a concrete unresolved dispute.
+use the remediation author as the sole reviewer. Give the persistent reviewer
+the neutral dossier and have the primary verify material candidates. Do not
+spawn a fresh reviewer for an ordinary later Tick. Add another reviewer only
+for a concrete unresolved dispute, and keep the persistent reviewer as owner of
+the complete loop review. If that additional reviewer remains needed in a later
+round, reuse the same reviewer until the dispute is resolved.
 
 ## Verify Each Tock
 
@@ -254,8 +266,8 @@ a deterministic gate.
 
 ## Fixed-Point Rule
 
-Declare `deterministic-fixed-point` only after a fresh independent Tick
-establishes all of the following on the current tree:
+Declare `deterministic-fixed-point` only after an independent Tick by the
+persistent reviewer establishes all of the following on the current tree:
 
 1. every prior finding is closed at its owning boundary;
 2. no P0-P3 functional or architectural finding remains;

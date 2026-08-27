@@ -54,7 +54,7 @@ Use this result vocabulary:
 
 | Result | Meaning |
 |---|---|
-| `deterministic-fixed-point` | A fresh independent Tick finds no P0-P3 defect, all required deterministic cells are cleared, exact-revision gates pass, and no valid external product-contract failure or activated follow-up remains unresolved. Legitimate non-gating architectural follow-ups may remain visible. |
+| `deterministic-fixed-point` | An independent Tick by the loop's persistent reviewer finds no P0-P3 defect, all required deterministic cells are cleared, exact-revision gates pass, and no valid external product-contract failure or activated follow-up remains unresolved. Legitimate non-gating architectural follow-ups may remain visible. |
 | `capability-confirmed` | Every required external capability has current or reusable successful evidence under its identity and freshness rule. |
 | `capability-unconfirmed` | Required initial evidence is missing or has status `stale`, `unavailable`, `authentication-or-configuration-failure`, `provider-or-infrastructure-failure`, or `inconclusive-timeout`. The capability has not passed or failed. |
 | `external-contract-failed` | A valid external run produced `product-contract-failure`; the external contract is false and must return to design or remediation. |
