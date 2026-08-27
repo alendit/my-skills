@@ -6,6 +6,7 @@ of model behavior or inspect private reasoning.
 ## Contents
 
 - Evidence lanes and capture
+- Deterministic command
 - Clear-writing scenarios
 - Glossary scenarios
 - Deterministic package gates
@@ -16,9 +17,9 @@ of model behavior or inspect private reasoning.
 
 Keep three evidence lanes separate:
 
-1. Deterministic repository gates verify package shape, links, declarations,
-   fixture schemas, static invariants, absence of copied authority, and
-   exact-revision hygiene.
+1. Deterministic repository gates verify package shape, rendered links and
+   anchors, fixture and capture-schema integrity, installed read-back, and
+   exact-revision hygiene. Source review decides semantic ownership.
 2. Controlled model trials evaluate observable output behavior.
 3. A blinded human pilot evaluates audience comprehension independently.
 
@@ -34,11 +35,34 @@ packet and expected material fields, observable reader contract, scoring helper,
 forbidden regressions, and first failure boundary. Fix the fixture and rubric
 before examining candidate output.
 
-A valid output that violates its predeclared rubric is
-`product-contract-failure`. Authentication or configuration failure, provider
-or infrastructure failure, and inconclusive timeout leave the model capability
-`model-capability-unconfirmed`; glossary-specific unavailable evidence remains
-`capability-unconfirmed`. Neither status fails deterministic gates.
+A fresh successful record for one commissioned fixture is `current`; it does
+not confirm or aggregate the suite. A valid output that violates its
+predeclared rubric is `product-contract-failure`. Authentication or
+configuration failure, provider or infrastructure failure, and inconclusive
+timeout leave an unavailable V1-V8 trial `model-capability-unconfirmed` and an
+unavailable M1-M8 trial `capability-unconfirmed`. `prepared` is a work state,
+not evidence. None of the unavailable statuses fails deterministic gates.
+
+## Deterministic Command
+
+Run the repository-owned
+[validation entrypoint](../scripts/validate_evidence.py) from its absolute
+repository location:
+
+```bash
+"$SKILLS_REPO/skills/clear-technical-writing/scripts/validate_evidence.py" \
+  --repo-root "$SKILLS_REPO" validate-package \
+  --installed-skill "$HOME/.agents/skills/clear-technical-writing"
+```
+
+Use `--help` to prepare or validate a capture and to run the synthetic adjacent
+case self-test. Capture preparation records the selected fixture's canonical
+source-packet hash and writes outside the repository by default. A scorer must
+record each criterion decision and its observable evidence; the helper checks
+completeness, consistency, first-failure localization, and M7/M8 event order.
+It does not judge prose quality. Package validation establishes V10 mechanical
+conformance and reports structural inputs relevant to D1, D2, and V9, but those
+three semantic ownership gates still require independent source review.
 
 ## Clear-Writing Scenarios
 
@@ -78,15 +102,16 @@ report the first failed GL contract and named lifecycle boundary.
 
 | ID | Gate |
 |---|---|
-| D1 | Verify one linked glossary reference in this package, valid relative links, no standalone glossary skill, and no duplicate glossary procedure. |
-| D2 | Verify changed consumers link only at their owning boundaries, retain their semantic responsibilities, carry required glossary state through review and supervised handoffs, and add neither copied procedure nor a second prose pass. |
-| V9 | Verify each consumer retains substantive authority, names one leaf invocation point, contains one concise link, and does not copy the writing process. Confirm that the review leaf, not an outer fixpoint workflow, owns the pass over a review artifact. |
-| V10 | Run the skill validator, relative-link and reference-contents checks, fixture-schema and static-example checks, routing and duplication searches, installation-link read-back when installation is in scope, and `git diff --check` on the exact revision. |
+| D1 | Independently review the source to verify one glossary authority, no standalone glossary skill, and no copied glossary procedure. The validator checks only the relevant package and link structure. |
+| D2 | Independently review changed consumers for retained semantic responsibilities, glossary-state continuity, and absence of a second process authority. The validator checks only declared link boundaries and destinations. |
+| V9 | Independently review each consumer's substantive authority and single leaf or carry-only outer boundary. The validator does not infer these properties from wording. |
+| V10 | Run the skill validator, rendered relative-link and anchor checks, long-reference Contents checks, fixture and capture-schema integrity, declared CTW9 link destinations, installation-link read-back, `git show --check`, and `git diff --check`. |
 
 Deterministic gates prove repository composition only. They do not prove that a
 model follows instructions or that a person understands the output.
-Static examples must retain their supplied facts, unknowns, and exact boundaries
-and remain illustrations rather than deterministic proof of generated behavior.
+Fixture source packets retain their supplied facts, unknowns, and exact
+correctness boundaries as explicit test inputs. Examples remain illustrations,
+not deterministic proof of generated behavior.
 
 ## Human Evidence
 
@@ -98,7 +123,11 @@ suite. Audience-matched readers see randomized or counterbalanced unlabeled
 outputs and answer what happened before, what changes, why it is correct or
 deliberately different, what evidence matters, and what action or decision the
 artifact requests. Predeclare the answer key, factual scorer, comprehension
-scorer, and minimum material improvement. Require no factual regression.
+scorer, and a minimum material-improvement parameter. Before outputs are
+generated, record the metric, direction, numeric threshold chosen for that
+commission, reader profile and sample size, randomization or counterbalancing
+method, and five-field answer key. The package supplies no default threshold.
+Require no factual regression.
 
 Missing evaluators, infrastructure failure, or an inconclusive sample leaves
 `human-comprehension-unconfirmed`; it does not fail deterministic gates or prove
