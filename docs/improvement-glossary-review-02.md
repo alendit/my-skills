@@ -6,6 +6,14 @@
 `docs/improvement-glossary.md` at exact revision
 `a3fcd0a42a840f8f28f2ba66c4f1a5326c8d468c`.
 
+## Current disposition after Tock
+
+The remediation following this historical review closes the remaining G1
+branch: GL2 now gives an explicit opt-out precedence over glossary selection or
+placement, routes directly to GL5 without another question or write, and M5
+tests both an initial opt-out and a refusal after M1. This disposition preserves
+the original decision below; a fresh Tick must verify it before fixed point.
+
 The remediation closes the competing technical-note vocabulary authority and
 bounds dependent edits to the authorized scope. It also removes the duplicated
 placement procedure. One part of the placement precedence remains incomplete:

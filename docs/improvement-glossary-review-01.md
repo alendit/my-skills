@@ -12,7 +12,7 @@ The remediation following this historical review addresses all three findings:
 
 | Finding | Current disposition |
 |---|---|
-| G1 placement contract | Addressed by moving the complete ordered trigger, precedence, consent, and path-selection behavior into GL2; S1 now references that row without adding another rule, and M2 covers a selected path whose file does not yet exist. |
+| G1 placement contract | The first Tock centralized placement but Review 02 found that an explicit opt-out still reached the location question. The next Tock gives that opt-out precedence in GL2, routes to GL5 without another question or write, and adds both initial and later refusal cases to M5. |
 | G2 teaching-vocabulary authority | Addressed by assigning project-wide identity and meaning to the selected glossary while the series guide owns introduction order, reader-specific explanations, series-only terms, and navigation. S4 and D2 now require coherent changes to the entrypoint and all three existing vocabulary references. |
 | G3 authorization escape | Addressed by limiting revalidation and edits to the current authorized scope and requiring known out-of-scope dependents to be reported with their stale term and semantic source. M6 exercises that boundary. |
 
