@@ -37,11 +37,15 @@ Before drafting:
    completely. Build source evidence, verify one running example, order concepts
    by prerequisite, and update the guide before individual notes.
 4. Make the guide the single authority only for series-owned reading paths,
-   running-example identity, teaching vocabulary, series scope, and navigation.
-   Notes own distinct reader questions and link to guide-owned material. When a
-   project or feature goal already has a normative contract, link stable
-   contract IDs to its owning source. Keep plain-language goal and architecture
-   orientation explicitly explanatory, never a second acceptance authority.
+   running-example identity, series-only terms, reader-specific introduction
+   order and first-use explanations, series scope, and navigation. Notes own
+   distinct reader questions and link to guide-owned material. When glossary
+   state selects a source, link project-wide terms to it instead of maintaining
+   a competing canonical definition. Otherwise keep necessary definitions local
+   without requiring glossary access or persistence. When a project or feature
+   goal already has a normative contract, link stable contract IDs to its owning
+   source. Keep plain-language goal and architecture orientation explicitly
+   explanatory, never a second acceptance authority.
 5. Keep the foundational path compact, published extensions evidence-backed,
    and future candidates explicitly provisional. The latest published note is
    a frontier, not the end of the series.
@@ -55,10 +59,18 @@ explain semantic owners and crossing data, reuse the verified example, and
 isolate volatile private implementation detail from durable concepts.
 
 After each note, reconcile the complete selected series against the guide.
-Remove duplicate definitions and compensating navigation; repair the owning
-guide or note once and replace copies with links. Preserve current facts,
-rationale, limitations, non-goals, and future direction as distinct claim
-classes.
+When a glossary is selected, replace competing project-wide definitions with
+links. Otherwise preserve necessary local definitions without presenting them
+as a durable project-wide authority. Remove duplicate series-only definitions
+and compensating navigation; repair the owning guide or note once and replace
+copies with links. Preserve current facts, rationale, limitations, non-goals,
+and future direction as distinct claim classes.
+
+Once the reader journey, running example, ownership, series scope, and
+navigation are coherent, apply one final
+[clear technical writing pass](../clear-technical-writing/SKILL.md). Preserve
+the accepted teaching decisions and do not add another prose pass in an outer
+review workflow.
 
 ## Validate And Review
 
@@ -80,6 +92,12 @@ supplies the publication contract; `$review-fixpoint` owns review numbering,
 commits, reviewer selection, remediation repetition, and stop mechanics. Keep
 those mechanics out of the guide and notes. A cleared publication pass does not
 declare the open-ended series permanently complete.
+
+If specialized validation or a review correction changes a source fact,
+conclusion, or dependent prose after the clear-writing pass, apply
+[revision-after-change](../clear-technical-writing/references/revision-after-change.md)
+to the affected complete unit before the next review. This is leaf-artifact
+revalidation, not a recursive style review or a second outer prose pass.
 
 ## Operating Rules
 

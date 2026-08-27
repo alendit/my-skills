@@ -17,6 +17,12 @@ Create or update `docs/architecture.md` from the repository's real current state
    - Prefer `AGENTS.md`, `CLAUDE.md`, `README.md`, `docs/`, `specs/`, and implementation progress files if present.
    - Treat explicit repo architecture guidance as the review lens for the final discussion.
    - If a local architecture vision document exists, use it as the target-state reference. If not, infer vision only from stable docs and label inference as such.
+   - Resolve shared project terminology through the
+     [project-glossary authority](../clear-technical-writing/references/project-glossaries.md).
+     Treat a selected glossary as explanatory input for preferred terms and
+     aliases, verify meanings against code and architecture authorities, and
+     route a durable new or changed term through that authority only within the
+     authorized edit scope.
 
 2. Scan the actual project.
    - Use fast file discovery (`rg --files`, package manifests, build configs, route trees, module indexes).
@@ -53,7 +59,12 @@ Create or update `docs/architecture.md` from the repository's real current state
    - Describe the delta between current architecture and architectural vision.
    - Separate confirmed facts from inferred gaps.
 
-6. Verify the result.
+6. Apply one final
+   [clear technical writing pass](../clear-technical-writing/SKILL.md) after the
+   architecture structure and source-backed decisions are complete. Preserve
+   architectural ownership, facts, uncertainty, and contract links.
+
+7. Verify the result.
    - Re-read the final document for broken references, duplicate sections, Mermaid syntax plausibility, and stale claims.
    - If the document has a table of contents, verify every heading-anchor link.
    - Run the repo's formatting or docs checks when available and cheap.

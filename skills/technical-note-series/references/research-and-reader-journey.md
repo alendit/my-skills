@@ -26,6 +26,16 @@ Recover discoverable facts from the repository. Make only narrow, reversible
 assumptions when an input cannot be recovered. Determine what the reader must
 understand and what current implementation supports before polishing prose.
 
+Before establishing terminology shared beyond this series, resolve glossary
+state through the
+[project-glossary authority](../../clear-technical-writing/references/project-glossaries.md).
+When a source is selected, use it for preferred project-wide terms, aliases, and
+plain explanations, then verify behavior, ownership, lifetime, and acceptance
+against their semantic owners. When glossary use is declined or no authorized
+source is available, keep necessary definitions local, persist no term, and ask
+no repeated placement question. A glossary link never replaces the local
+explanation a reader needs.
+
 ## Protect the working scope
 
 Inspect repository status before editing and preserve unrelated changes. For an
@@ -122,19 +132,31 @@ for series-owned material:
 
 - recommended reading order, foundational path, extensions, and latest frontier;
 - running-example identity and expected result;
-- teaching vocabulary; and
+- series-only terms and reader-specific introduction order and first-use
+  explanations; and
 - series scope, shared non-goals, navigation, and links to deeper reference
   material.
+
+When a glossary is selected, it remains canonical for project-wide term
+identity, aliases, and concise explanation. Link those definitions from the
+guide instead of maintaining another project-wide meaning, while still
+explaining the concept locally at the reader's first need. Without an authorized
+source, keep necessary definitions in the series without presenting or
+persisting them as canonical project-wide entries. Code, accepted contracts,
+architecture authorities, and artifact-specific owners remain authoritative for
+semantics in either branch.
 
 When the project or feature goal has a normative contract, link stable contract
 IDs to its owning source. A plain-language project goal or architecture overview
 may orient readers, but label it as explanatory and do not restate acceptance
 requirements or become a second authority.
 
-Notes link to these definitions and navigation instead of recreating them.
-Each note owns only its distinct reader question, layer-specific explanation,
-and local transitions. Keep future candidates separate and explicitly
-non-binding.
+When a glossary is selected, notes link to it for project-wide definitions.
+Otherwise they retain the local definitions their readers need. In either case,
+notes link to the guide for series-only definitions and navigation instead of
+recreating them. Each note owns only its distinct reader question,
+layer-specific explanation, reader-specific first use, and local transitions.
+Keep future candidates separate and explicitly non-binding.
 
 Prefer one ownership/data-flow diagram over a component inventory. Label native,
 guest, generated, persistent, remote, or other execution domains when relevant.

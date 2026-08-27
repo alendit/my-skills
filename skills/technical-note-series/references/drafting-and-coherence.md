@@ -32,10 +32,13 @@ expose the argument when scanned alone.
 ## Teach unfamiliar technology just in time
 
 Assume software-engineering experience but no background in the project's
-specialist technology. Define a term at first use in ordinary language, connect
-it immediately to the example or architecture, explain why the project needs
-it, distinguish general technology from project usage, and link an authoritative
-external primer for optional depth.
+specialist technology. When a glossary is selected, use its preferred
+project-wide term. Otherwise use the clearest local definition without creating
+or persisting a glossary term. In either branch, define the concept at first use
+in ordinary language, connect it immediately to the example or architecture,
+and verify the project-specific meaning against its semantic owner. Explain why
+the project needs it, distinguish general technology from project usage, and
+link an authoritative external primer for optional depth.
 
 Avoid jargon chains and keep generic background proportional. The goal is to
 make this project intelligible, not reproduce a language, compiler, runtime,
@@ -90,10 +93,14 @@ present a temporary mechanism as permanent architecture without authority.
 
 ## Maintain cross-note coherence
 
-After each note, verify one guide-owned definition per shared term, a stable
+After each note, verify one guide-owned definition per series-only term and
+reader-specific local first-use explanations. When a glossary is selected,
+verify links to its project-wide definitions; otherwise verify that necessary
+definitions remain local without a glossary dependency. Also verify a stable
 running example and result, compatible diagrams, prerequisite order, consistent
-behavior ownership, and non-conflicting scope and non-goals. Replace compensating
-repetition with a link to the guide or note that owns the explanation.
+behavior ownership, and non-conflicting scope and non-goals. Replace
+compensating repetition with a glossary link only when a source is selected, or
+with a link to the guide or note that owns series material.
 
 Navigation follows the guide's recommended reading paths rather than numeric
 filenames. The latest note points through the guide or to published extensions

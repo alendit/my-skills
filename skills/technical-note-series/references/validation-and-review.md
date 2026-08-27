@@ -27,6 +27,14 @@ stable contract-ID link and owning source when a normative contract exists.
 Verify that plain-language orientation is labeled explanatory and does not
 restate acceptance requirements.
 
+When a glossary is selected, verify project-wide preferred terms and aliases
+against it. When glossary use is declined or no authorized source is available,
+verify that necessary definitions remain local and require no glossary access,
+link, persistence, or repeated placement question. In either branch, verify
+behavior and ownership against code, accepted contracts, or architecture
+authorities, confirm that the guide owns only series-specific terms and
+reader-specific introduction, and require local explanations at first use.
+
 Tests support specific claims; they do not automatically prove prose. Read the
 assertions and owning path closely enough to state the observed invariant. When
 a claim cannot be verified, weaken, qualify, or remove it.
@@ -44,7 +52,7 @@ supplies these documentation cells:
 | Boundary accuracy | Owners, non-owners, dependencies, and crossing data are exact. |
 | Example correctness | The running example and result are observed and consistent. |
 | Time and certainty | Current fact, rationale, limitation, non-goal, and direction remain distinct. |
-| Cross-note coherence | Series-owned reading paths, running-example identity, teaching vocabulary, scope, and navigation have one guide authority; project or feature goals link stable contract IDs to their owning source, and plain-language orientation is explanatory rather than normative. |
+| Cross-note coherence | Series-owned reading paths, running-example identity, series-only terms, reader-specific introduction, scope, and navigation have one guide authority. When a glossary is selected, project-wide definitions link to it; otherwise necessary definitions remain local without creating a glossary requirement or canonical project-wide source. Project or feature goals link stable contract IDs to their owning source, and plain-language orientation remains explanatory rather than normative. |
 | Implementation traceability | Implementation maps reach current authoritative files and symbols. |
 | Scope honesty | The pass neither claims speculative coverage nor permanent series completion. |
 | Link and navigation integrity | Guide paths, prerequisites, and relative links resolve. |
@@ -92,12 +100,16 @@ Accept the selected pass only when an experienced newcomer can state the
 project goal and trace the example, specialist terms precede use, major behavior
 has explicit owners and non-owners, time/certainty classes remain distinct, the
 guide and notes form coherent open-ended paths, implementation maps are current,
-examples and links are checked, unrelated changes remain untouched, and every
-required review cell is cleared or explicitly not applicable.
+project-wide terms follow a selected glossary or remain locally defined when
+glossary use is declined or no authorized source is available, every unfamiliar
+term receives a local first-use explanation, examples and applicable links are
+checked, unrelated changes remain untouched, and every required review cell is
+cleared or explicitly not applicable.
 
 Acceptance closes this publication pass, not the series. A later pass
 revalidates changed notes and any existing note whose prerequisites, shared
-vocabulary, ownership boundaries, example, or navigation changed.
+project-wide terms, series-only vocabulary, ownership boundaries, example, or
+navigation changed.
 
 ## Handoff
 
