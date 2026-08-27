@@ -22,20 +22,11 @@ they do not add independent requirements.
 
 ## Scope and non-goals
 
-The work adds one repository skill that coordinates a mixed work package across
-multiple artifact types or specialized skills when no existing skill owns the
-outcome end to end.
-
-It does not:
-
-- replace the implementation, review, fixed-point, documentation, architecture,
-  or prose mechanics owned by existing skills;
-- make every multi-file edit, review, research request, or plan invoke an outer
-  workflow;
-- mandate subagents, commits, pushes, deployments, messages, or other external
-  writes;
-- preserve Tavern or devtools skill names as compatibility aliases; or
-- define a new project term that belongs in `docs/glossary.md`.
+This package adds one repository skill and its installed-source transition.
+CW1-CW8 own its trigger, ownership, routing, replanning, delegation,
+authorization, verification, and handoff behavior; S1 and S2 implement those
+contracts. CW4 owns the compatibility-alias boundary. No new project term or
+`docs/glossary.md` change is required.
 
 ## Authoritative contract-and-evidence matrix
 
