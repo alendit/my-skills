@@ -1,924 +1,100 @@
 {
   "schema_version": 1,
-  "fixtures": [
+  "study_question": "Does the skill produce more useful engineering prose than the same model working from the same source packet without the skill?",
+  "review_dimensions": [
+    "clarity",
+    "factual-preservation",
+    "terminology-consistency",
+    "unnecessary-detail"
+  ],
+  "cases": [
     {
-      "id": "V1",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["CTW1"],
-      "artifact": {
-        "assignment": "Rewrite a repository review finding for its implementation owner.",
-        "intent": "Make the correction actionable without changing the accepted review decision."
-      },
-      "intended_reader": {
-        "role": "implementation owner",
-        "assumed_knowledge": ["repository layout", "finding severity policy"],
-        "required_outcome": "Recover the finding status, evidence, and requested correction exactly."
-      },
+      "id": "initial-technical-writing",
+      "contract_ids": ["CTW1", "CTW3", "CTW4", "CTW6", "CTW7"],
+      "artifact_assignment": "Write a concise engineering status update for a reviewer deciding whether to accept a parser change.",
+      "intended_reader": "An uninvolved repository developer who understands parser tests but has not followed the change.",
       "source_packet": {
-        "finding": {
-          "id": "P1-EVAL-01",
-          "severity": "P1",
-          "status": "open",
-          "evidence": ["parser.py:87 accepts an unauthenticated retry", "test_parser.py:143 covers only authenticated retry"],
-          "owner": "response parser",
-          "requested_correction": "Reject the unauthenticated retry before the request returns to the coordinator."
+        "before": "A successful response with an empty result object was rejected as malformed.",
+        "change": "The parser now accepts that successful empty result while leaving row-bearing success responses unchanged.",
+        "evidence": ["The focused parser test suite passes."],
+        "unknowns": ["No production telemetry has been collected yet."],
+        "requested_action": "Review the compatibility behavior and test coverage."
+      },
+      "review_questions": [
+        {"dimension": "clarity", "question": "Can the reader quickly identify the previous behavior, the change, and the requested decision?"},
+        {"dimension": "factual-preservation", "question": "Does the text preserve every supplied fact and unknown without inventing evidence?"},
+        {"dimension": "terminology-consistency", "question": "Does the text use stable, ordinary terms for the response states?"},
+        {"dimension": "unnecessary-detail", "question": "Does the text omit detail that does not help the review decision?"}
+      ]
+    },
+    {
+      "id": "revision-after-change",
+      "contract_ids": ["CTW1", "CTW6", "CTW8"],
+      "artifact_assignment": "Revise the complete acceptance note after a newly requested correctness result changes its conclusion.",
+      "intended_reader": "The maintainer deciding whether the optimization is ready to accept.",
+      "source_packet": {
+        "existing_note": "The candidate is 17.4% faster and is ready to accept.",
+        "new_requested_change": "Add the latest correctness result and update every dependent statement.",
+        "current_facts": {
+          "latency": "equal to baseline within measurement precision",
+          "correctness": "one unresolved failure",
+          "decision": "not accepted"
         },
-        "unknowns": ["Whether another caller bypasses the response parser"]
+        "requested_action": "Explain what must be resolved before reconsideration."
       },
-      "expected_material_outcomes": [
-        {"field": "finding.severity", "relation": "equals-source", "value": "P1"},
-        {"field": "finding.status", "relation": "equals-source", "value": "open"},
-        {"field": "finding.evidence", "relation": "retains-all-source-items"},
-        {"field": "finding.requested_correction", "relation": "preserves-semantic-action"}
-      ],
-      "forbidden_regressions": [
-        {"id": "v1-no-downgrade", "description": "Do not close, downgrade, or relabel the finding."},
-        {"id": "v1-no-new-proof", "description": "Do not present the unknown caller path as verified."}
-      ],
-      "scorer": {
-        "method": "observable-field-comparator",
-        "criteria": [
-          {"id": "v1-preserve-finding", "description": "Compare severity, status, evidence, owner, and requested correction with the source packet.", "observable_fields": ["finding.severity", "finding.status", "finding.evidence", "finding.owner", "finding.requested_correction"], "contract_ids": ["CTW1"], "failure_boundary": "review-substantive-authority"},
-          {"id": "v1-preserve-unknown", "description": "Keep the unverified bypass path explicitly unknown.", "observable_fields": ["unknowns"], "contract_ids": ["CTW1"], "failure_boundary": "source-fidelity"}
-        ]
-      },
-      "first_failure": {"contract_id": "CTW1", "boundary": "review-substantive-authority"}
+      "review_questions": [
+        {"dimension": "clarity", "question": "Does the revised note lead with the current conclusion and explain its consequence?"},
+        {"dimension": "factual-preservation", "question": "Are the old speedup and acceptance conclusion removed everywhere they no longer apply?"},
+        {"dimension": "terminology-consistency", "question": "Are baseline, candidate, correctness, and acceptance used consistently?"},
+        {"dimension": "unnecessary-detail", "question": "Is obsolete history excluded unless it is needed to explain the changed decision?"}
+      ]
     },
     {
-      "id": "V2",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["CTW2"],
-      "artifact": {
-        "assignment": "Route four prose requests and report the observable invocation sequence.",
-        "intent": "Verify purpose-based routing, leaf precedence, and one transformation pass."
-      },
-      "intended_reader": {
-        "role": "evaluation reviewer",
-        "assumed_knowledge": ["skill invocation traces"],
-        "required_outcome": "Identify the selected prose authority and leaf owner for every case."
-      },
-      "source_packet": {
-        "cases": [
-          {"case_id": "engineering-pr", "request": "Draft a public PR description from a diff and tests.", "artifact_owner": "caller", "expected_route": "clear-technical-writing", "expected_pass_count": 1},
-          {"case_id": "customer-campaign", "request": "Rewrite launch marketing copy.", "artifact_owner": "writing", "expected_route": "writing", "expected_pass_count": 1},
-          {"case_id": "private-notes", "request": "Organize private evidence notes without producing prose.", "artifact_owner": "caller", "expected_route": "none", "expected_pass_count": 0},
-          {"case_id": "review-finding", "request": "Return a source-backed implementation finding through a fixpoint workflow.", "artifact_owner": "evidence-efficient-review", "outer_workflow": "review-fixpoint", "expected_route": "clear-technical-writing", "expected_pass_count": 1}
-        ]
-      },
-      "expected_material_outcomes": [
-        {"field": "cases[].selected_route", "relation": "equals-case-expected-route"},
-        {"field": "cases[].leaf_owner", "relation": "equals-case-artifact-owner"},
-        {"field": "cases[].pass_count", "relation": "equals-case-expected-pass-count"},
-        {"field": "review-finding.outer_action", "relation": "reports-leaf-pass-without-rewrite"}
-      ],
-      "forbidden_regressions": [
-        {"id": "v2-no-publicity-route", "description": "Do not route by public visibility alone."},
-        {"id": "v2-no-private-trigger", "description": "Do not invoke a prose skill for private evidence collection."},
-        {"id": "v2-no-outer-pass", "description": "Do not let review-fixpoint rewrite the review result."}
-      ],
-      "scorer": {
-        "method": "invocation-trace-comparator",
-        "criteria": [
-          {"id": "v2-route-cases", "description": "Compare every selected route and pass count with its case record.", "observable_fields": ["selected_route", "leaf_owner", "pass_count"], "contract_ids": ["CTW2"], "failure_boundary": "prose-routing"},
-          {"id": "v2-leaf-before-outer", "description": "Verify the specialized leaf finishes first and the outer workflow only reports its pass.", "observable_fields": ["invocation_sequence", "outer_action"], "contract_ids": ["CTW2"], "failure_boundary": "leaf-pass-ownership"}
-        ]
-      },
-      "first_failure": {"contract_id": "CTW2", "boundary": "prose-routing"}
-    },
-    {
-      "id": "V3",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["CTW3"],
-      "artifact": {
-        "assignment": "Explain one queue-limit change for a PR reviewer, a local code maintainer, and an on-call operator.",
-        "intent": "Adapt prerequisites and requested action to three recoverable audiences."
-      },
-      "intended_reader": {
-        "role": "three audience-specific readers",
-        "assumed_knowledge": ["PR reviewer knows repository conventions", "maintainer knows the local function", "operator knows service alerts but not implementation"],
-        "required_outcome": "Each reader can identify the relevant change and their decision or action."
-      },
-      "source_packet": {
-        "change": "The admission controller rejects new work when the pending queue reaches 128 entries.",
-        "before": "The controller admitted work until worker allocation failed later.",
-        "signal": "The rejection increments queue_full and returns retryable overload.",
-        "evidence": ["admission tests cover 127 and 128 entries", "operator dashboard exposes queue_full"],
-        "audiences": ["PR reviewer", "future maintainer at admission check", "on-call operator responding to queue_full"]
-      },
-      "expected_material_outcomes": [
-        {"field": "pr", "relation": "includes-before-change-rationale-evidence-and-review-decision"},
-        {"field": "comment", "relation": "explains-local-boundary-and-why-check-occurs-here"},
-        {"field": "operator_status", "relation": "explains-signal-impact-and-operator-action"}
-      ],
-      "forbidden_regressions": [
-        {"id": "v3-no-author-premise", "description": "Do not rely on implementation context known only to the author."},
-        {"id": "v3-no-universal-audience", "description": "Do not reuse one unchanged explanation for all three readers."}
-      ],
-      "scorer": {
-        "method": "audience-required-information-rubric",
-        "criteria": [
-          {"id": "v3-pr-reader", "description": "Check PR orientation, rationale, evidence, and review decision.", "observable_fields": ["pr.before", "pr.change", "pr.evidence", "pr.request"], "contract_ids": ["CTW3"], "failure_boundary": "pr-reader-selection"},
-          {"id": "v3-comment-reader", "description": "Check the local invariant and future-maintainer prerequisite.", "observable_fields": ["comment.local_invariant", "comment.reason"], "contract_ids": ["CTW3"], "failure_boundary": "comment-reader-selection"},
-          {"id": "v3-operator-reader", "description": "Check signal, effect, and operator action without private code assumptions.", "observable_fields": ["operator_status.signal", "operator_status.effect", "operator_status.action"], "contract_ids": ["CTW3"], "failure_boundary": "operator-reader-selection"}
-        ]
-      },
-      "first_failure": {"contract_id": "CTW3", "boundary": "reader-and-purpose-selection"}
-    },
-    {
-      "id": "V4",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["CTW4"],
-      "artifact": {
-        "assignment": "Produce a compact commit message and a dependent-claim implementation handoff.",
-        "intent": "Show adaptive visible output without claiming private planning."
-      },
-      "intended_reader": {
-        "role": "repository maintainer receiving two artifact shapes",
-        "assumed_knowledge": ["commit history", "package handoff conventions"],
-        "required_outcome": "Understand the compact change immediately and follow the handoff prerequisites in order."
-      },
-      "source_packet": {
-        "compact": {
-          "facts": ["The parser accepts a successful empty result object.", "Successful row-bearing responses are unchanged.", "Parser tests pass."],
-          "artifact_type": "commit-message"
-        },
-        "dependent_handoff": {
-          "facts": ["Schema migration must land before the reader flag is enabled.", "The compatibility reader accepts old and new records.", "The writer still emits old records until rollout approval.", "Focused migration and compatibility tests pass."],
-          "dependency_order": ["compatibility reader", "schema migration", "writer switch", "rollout approval"]
-        }
-      },
-      "expected_material_outcomes": [
-        {"field": "compact", "relation": "leads-with-change-and-retains-nonchange-and-evidence-without-visible-ceremony"},
-        {"field": "dependent_handoff", "relation": "orders-supported-claims-by-dependency"}
-      ],
-      "forbidden_regressions": [
-        {"id": "v4-no-visible-plan", "description": "Do not expose a private question map or claim that one occurred."},
-        {"id": "v4-no-ceremony", "description": "Do not expand the commit message into a multi-section report."},
-        {"id": "v4-no-order-inversion", "description": "Do not present rollout approval before compatibility prerequisites."}
-      ],
-      "scorer": {
-        "method": "compactness-and-prerequisite-rubric",
-        "criteria": [
-          {"id": "v4-compact-artifact", "description": "Check that the small artifact leads with its change and retains material non-change and evidence without visible process ceremony.", "observable_fields": ["compact.change", "compact.nonchange", "compact.evidence"], "contract_ids": ["CTW4"], "failure_boundary": "adaptive-compact-output"},
-          {"id": "v4-dependent-order", "description": "Check that handoff facts appear in recoverable prerequisite order.", "observable_fields": ["dependent_handoff.claim_order"], "contract_ids": ["CTW4"], "failure_boundary": "dependent-claim-order"}
-        ]
-      },
-      "first_failure": {"contract_id": "CTW4", "boundary": "adaptive-output"}
-    },
-    {
-      "id": "V5",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["CTW5", "GL3"],
-      "artifact": {
-        "assignment": "Clarify an overloaded failure-routing explanation and define one project concept locally.",
-        "intent": "Expose only the relationships needed by the reader while preserving established terminology."
-      },
-      "intended_reader": {
-        "role": "developer new to the request path",
-        "assumed_knowledge": ["HTTP authentication failures"],
-        "required_outcome": "Trace who changes request state, under what condition, and what the caller receives."
-      },
-      "source_packet": {
-        "compressed_statement": "The router classifies failures and invalidates the request.",
-        "relationship": {
-          "actor": "response parser",
-          "operation": "marks the current attempt unusable",
-          "object": "current request attempt",
-          "condition": "an authentication failure is identified",
-          "consequence": "the coordinator returns the failure without retrying"
-        },
-        "project_term": {
-          "preferred": "leaf owner",
-          "meaning": "the artifact-specific skill or caller that decides substantive content and applies the final prose pass once",
-          "semantic_source": "CTW2"
-        }
-      },
-      "expected_material_outcomes": [
-        {"field": "relationship", "relation": "retains-material-actor-operation-object-condition-and-consequence"},
-        {"field": "project_term", "relation": "uses-one-stable-term-with-local-ordinary-language-explanation"}
-      ],
-      "forbidden_regressions": [
-        {"id": "v5-no-label-only", "description": "Do not replace the operation with only route or invalidate labels."},
-        {"id": "v5-no-mechanism", "description": "Do not infer a new request state or component from the project term."}
-      ],
-      "scorer": {
-        "method": "relationship-and-term-rubric",
-        "criteria": [
-          {"id": "v5-explicit-relationship", "description": "Compare the material relationship fields with the output meaning.", "observable_fields": ["actor", "operation", "object", "condition", "consequence"], "contract_ids": ["CTW5"], "failure_boundary": "compressed-operation"},
-          {"id": "v5-local-term", "description": "Check one stable preferred term, its ordinary-language explanation, and semantic-source precedence.", "observable_fields": ["preferred_term", "local_explanation", "semantic_source"], "contract_ids": ["CTW5", "GL3"], "failure_boundary": "term-explanation"}
-        ]
-      },
-      "first_failure": {"contract_id": "CTW5", "boundary": "relationship-or-term"}
-    },
-    {
-      "id": "V6",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["CTW6"],
-      "artifact": {
-        "assignment": "Write an investigation status from a benchmark and correctness limit.",
-        "intent": "Preserve provenance, unknowns, exact boundaries, and decision-sized observational precision."
-      },
-      "intended_reader": {
-        "role": "performance decision owner",
-        "assumed_knowledge": ["benchmark environment"],
-        "required_outcome": "Decide whether the observation justifies continuing while retaining the exact safety boundary."
-      },
-      "source_packet": {
-        "exact_boundaries": [{"name": "payload_limit", "value": 16, "unit": "MiB", "rule": "reject above"}],
-        "observations": [{"name": "median_latency_before", "value": 201.8, "unit": "ms"}, {"name": "median_latency_after", "value": 183.6, "unit": "ms"}],
-        "comparison_base": "same 10,000-request replay on one isolated worker",
-        "provenance": ["benchmark run perf-218", "payload-limit contract LIM-4"],
-        "unknowns": ["Whether the latency change holds at peak concurrency"],
-        "evidence_added_by_change": ["perf-218"],
-        "pre_existing_evidence": ["LIM-4"]
-      },
-      "expected_material_outcomes": [
-        {"field": "payload_limit", "relation": "preserves-exact-value-and-unit", "value": "16 MiB"},
-        {"field": "latency_comparison", "relation": "uses-consistent-decision-sized-precision-with-comparison-base"},
-        {"field": "unknowns", "relation": "retains-all-source-items"},
-        {"field": "provenance", "relation": "distinguishes-pre-existing-from-new-evidence"}
-      ],
-      "forbidden_regressions": [
-        {"id": "v6-no-boundary-rounding", "description": "Do not change 16 MiB to a decimal unit or approximate value."},
-        {"id": "v6-no-generalization", "description": "Do not claim peak-concurrency improvement."}
-      ],
-      "scorer": {
-        "method": "source-field-and-measurement-comparator",
-        "criteria": [
-          {"id": "v6-exact-boundary", "description": "Compare the correctness boundary value, unit, and direction exactly.", "observable_fields": ["exact_boundaries.name", "exact_boundaries.value", "exact_boundaries.unit", "exact_boundaries.rule"], "contract_ids": ["CTW6"], "failure_boundary": "exact-correctness-boundary"},
-          {"id": "v6-observational-precision", "description": "Check consistent units, recoverable comparison base, and decision-sized precision.", "observable_fields": ["observations", "comparison_base"], "contract_ids": ["CTW6"], "failure_boundary": "observational-measurement"},
-          {"id": "v6-provenance-and-unknown", "description": "Check provenance classes and the unresolved concurrency question.", "observable_fields": ["provenance", "unknowns", "evidence_added_by_change", "pre_existing_evidence"], "contract_ids": ["CTW6"], "failure_boundary": "source-fidelity"}
-        ]
-      },
-      "first_failure": {"contract_id": "CTW6", "boundary": "source-fidelity-or-precision"}
-    },
-    {
-      "id": "V7",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["CTW7"],
-      "artifact": {
-        "assignment": "Present comparable component observations and one causal explanation.",
-        "intent": "Match structure to relationships and remove irrelevant detail without dropping prerequisites."
-      },
-      "intended_reader": {
-        "role": "architecture reviewer",
-        "assumed_knowledge": ["request pipeline components"],
-        "required_outcome": "Compare repeated fields quickly and follow the causal argument."
-      },
-      "source_packet": {
-        "comparable_components": [
-          {"component": "parser", "owner": "ingress", "median_ms": 8.1, "status": "unchanged"},
-          {"component": "planner", "owner": "optimizer", "median_ms": 17.4, "status": "improved"},
-          {"component": "executor", "owner": "runtime", "median_ms": 61.2, "status": "unchanged"}
-        ],
-        "linear_argument": ["The planner now reuses the normalized predicate.", "That removes one repeated normalization pass.", "Parser and executor ownership do not change."],
-        "reader_prerequisites": ["component ownership", "comparison workload"],
-        "irrelevant_detail": "The benchmark file name contains 42 characters."
-      },
-      "expected_material_outcomes": [
-        {"field": "component_comparison", "relation": "uses-repeated-field-structure"},
-        {"field": "causal_explanation", "relation": "remains-linear-prose"},
-        {"field": "reader_prerequisites", "relation": "retains-all-material-items"},
-        {"field": "irrelevant_detail", "relation": "removed"}
-      ],
-      "forbidden_regressions": [
-        {"id": "v7-no-table-for-argument", "description": "Do not fragment the causal explanation into repeated-field rows."},
-        {"id": "v7-no-prerequisite-deletion", "description": "Do not remove ownership or comparison workload context."}
-      ],
-      "scorer": {
-        "method": "relationship-structure-rubric",
-        "criteria": [
-          {"id": "v7-comparison-structure", "description": "Check that repeated component fields are directly comparable.", "observable_fields": ["component", "owner", "median_ms", "status"], "contract_ids": ["CTW7"], "failure_boundary": "repeated-field-structure"},
-          {"id": "v7-linear-argument", "description": "Check that the causal sequence remains a recoverable linear argument.", "observable_fields": ["linear_argument"], "contract_ids": ["CTW7"], "failure_boundary": "linear-relationship"},
-          {"id": "v7-deletion", "description": "Check that irrelevant detail is absent while prerequisites remain.", "observable_fields": ["reader_prerequisites", "irrelevant_detail"], "contract_ids": ["CTW7"], "failure_boundary": "reader-relevance"}
-        ]
-      },
-      "first_failure": {"contract_id": "CTW7", "boundary": "structure-or-relevance"}
-    },
-    {
-      "id": "V8",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["CTW8"],
-      "artifact": {
-        "assignment": "Revise a drafted evaluation handoff after corrected evidence changes its conclusion.",
-        "intent": "Rebuild every dependent prose unit instead of appending a contradiction."
-      },
-      "intended_reader": {
-        "role": "acceptance reviewer",
-        "assumed_knowledge": ["candidate evaluation protocol"],
-        "required_outcome": "See the corrected decision consistently across evidence, summary, title, and conclusion."
-      },
-      "source_packet": {
-        "old_source": {"latency": "candidate faster", "correctness": "passing", "decision": "accept"},
-        "changed_source": {"latency": "equal within measurement precision", "correctness": "one unresolved failure", "decision": "not accepted"},
-        "affected_units": ["evidence paragraph", "preceding transition", "following transition", "summary", "title", "conclusion"],
-        "unchanged_fact": "The same workload and comparison base were used."
-      },
-      "expected_material_outcomes": [
-        {"field": "affected_units", "relation": "all-agree-with-changed-source"},
-        {"field": "unchanged_fact", "relation": "retained"},
-        {"field": "decision", "relation": "equals", "value": "not accepted"}
-      ],
-      "forbidden_regressions": [
-        {"id": "v8-no-stale-acceptance", "description": "Do not retain a faster, passing, or accepted claim."},
-        {"id": "v8-no-compensating-append", "description": "Do not leave the old conclusion and append only a caveat."}
-      ],
-      "scorer": {
-        "method": "dependency-and-contradiction-checker",
-        "criteria": [
-          {"id": "v8-dependent-units", "description": "Compare every named dependent unit with the corrected latency, correctness, and decision.", "observable_fields": ["affected_units", "changed_source"], "contract_ids": ["CTW8"], "failure_boundary": "dependency-invalidation"},
-          {"id": "v8-no-stale-claim", "description": "Detect coexistence of the old acceptance claim and corrected rejection.", "observable_fields": ["old_source", "changed_source", "output_claims"], "contract_ids": ["CTW8"], "failure_boundary": "stale-or-appended-contradiction"}
-        ]
-      },
-      "first_failure": {"contract_id": "CTW8", "boundary": "dependency-invalidation"}
-    },
-    {
-      "id": "M1",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["GL2"],
-      "artifact": {
-        "assignment": "Prepare a durable design handoff that needs one shared project term in a repository with no glossary guidance.",
-        "intent": "Resolve placement consent before any glossary creation or term persistence."
-      },
-      "intended_reader": {
-        "role": "project maintainer",
-        "assumed_knowledge": ["repository documentation conventions"],
-        "required_outcome": "Choose project-local or user-selected look-aside placement before a durable term is written."
-      },
-      "source_packet": {
-        "repository_guidance": "No glossary path or terminology policy is present.",
-        "existing_glossaries": [],
-        "requested_term": {"name": "replay fence", "semantic_source": "accepted design RF-12"},
-        "authorized_artifact_scope": ["design handoff"],
-        "authorized_glossary_scope": []
-      },
-      "expected_material_outcomes": [
-        {"field": "placement_question", "relation": "offers-project-local-versus-user-selected-look-aside"},
-        {"field": "glossary_creation", "relation": "absent-before-answer"},
-        {"field": "term_persistence", "relation": "absent-before-answer"}
-      ],
-      "forbidden_regressions": [
-        {"id": "m1-no-default-path", "description": "Do not select docs/glossary.md automatically."},
-        {"id": "m1-no-preconsent-write", "description": "Do not create a file or persist the term before placement is answered."}
-      ],
-      "scorer": {
-        "method": "observable-action-rubric",
-        "criteria": [
-          {"id": "m1-placement-consent", "description": "Check the placement question and absence of pre-answer filesystem actions.", "observable_fields": ["questions", "file_actions", "term_actions"], "contract_ids": ["GL2"], "failure_boundary": "missing-glossary-consent"}
-        ]
-      },
-      "first_failure": {"contract_id": "GL2", "boundary": "missing-glossary-consent"}
-    },
-    {
-      "id": "M2",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["GL2"],
-      "artifact": {
-        "assignment": "Resolve glossary state for selected, selected-absent, and competing-source cases.",
-        "intent": "Exercise ordered placement precedence without widening write authority."
-      },
-      "intended_reader": {
-        "role": "artifact owner",
-        "assumed_knowledge": ["task write authorization"],
-        "required_outcome": "Receive one resolved source or one authority question without an unauthorized write."
-      },
-      "source_packet": {
-        "cases": [
-          {"case_id": "selected-existing", "instruction": "Use docs/terms.md", "sources": ["docs/terms.md"], "path_exists": true, "write_authorized": false},
-          {"case_id": "selected-absent", "instruction": "The glossary location is docs/terms.md", "sources": [], "path_exists": false, "write_authorized": false},
-          {"case_id": "competing", "instruction": null, "sources": ["docs/terms.md", "design/glossary.md"], "path_exists": true, "write_authorized": false}
-        ]
-      },
-      "expected_material_outcomes": [
-        {"field": "selected-existing", "relation": "uses-selected-source"},
-        {"field": "selected-absent", "relation": "placement-resolved-without-creation-or-write"},
-        {"field": "competing", "relation": "asks-which-source-governs-without-merging"}
-      ],
-      "forbidden_regressions": [
-        {"id": "m2-no-write-expansion", "description": "Do not infer file or term write authority from path selection."},
-        {"id": "m2-no-auto-merge", "description": "Do not merge or silently choose competing sources."}
-      ],
-      "scorer": {
-        "method": "placement-branch-comparator",
-        "criteria": [
-          {"id": "m2-selected-existing", "description": "Check direct use of the selected existing source.", "observable_fields": ["selected_source", "source_access"], "contract_ids": ["GL2"], "failure_boundary": "selected-source"},
-          {"id": "m2-selected-absent", "description": "Check resolved placement and unchanged write authorization.", "observable_fields": ["placement_state", "file_actions", "term_actions"], "contract_ids": ["GL2"], "failure_boundary": "selected-absent-path"},
-          {"id": "m2-competing", "description": "Check the authority question and absence of merge or selection.", "observable_fields": ["questions", "selected_source", "merge_actions"], "contract_ids": ["GL2"], "failure_boundary": "competing-sources"}
-        ]
-      },
-      "first_failure": {"contract_id": "GL2", "boundary": "placement-precedence"}
-    },
-    {
-      "id": "M3",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["GL3"],
-      "artifact": {
-        "assignment": "Write a review handoff when a selected glossary entry conflicts with the accepted review contract.",
-        "intent": "Keep preferred terminology separate from semantic truth and report the conflict."
-      },
-      "intended_reader": {
-        "role": "review owner",
-        "assumed_knowledge": ["finding policy"],
-        "required_outcome": "See the accepted behavior and the stale glossary conflict without semantic normalization."
-      },
+      "id": "project-glossary-use",
+      "contract_ids": ["CTW1", "CTW5", "GL3", "GL5"],
+      "artifact_assignment": "Explain review-prose ownership using the selected project glossary while keeping the explanation self-contained.",
+      "intended_reader": "An experienced developer new to this repository and its skill composition.",
       "source_packet": {
         "selected_glossary": "docs/glossary.md",
-        "preferred_term": "leaf owner",
-        "stale_entry_claim": "The leaf owner may downgrade a finding during the prose pass.",
-        "semantic_source": {"id": "CTW2", "claim": "The leaf owner applies one prose pass but prose cannot change findings or severity."},
-        "finding": {"severity": "P1", "status": "open"}
+        "material_entry": {
+          "term": "leaf owner",
+          "explanation": "The artifact-specific skill that owns substantive content and applies the one final prose pass.",
+          "semantic_source": "CTW2"
+        },
+        "semantic_fact": "evidence-efficient-review owns findings, severities, and evidence; review-fixpoint only carries and reports the leaf result.",
+        "constraint": "Glossary wording is explanatory input, not proof of behavior.",
+        "requested_action": "Confirm the single-pass ownership boundary."
       },
-      "expected_material_outcomes": [
-        {"field": "preferred_term", "relation": "retained"},
-        {"field": "behavior", "relation": "matches-semantic-source"},
-        {"field": "glossary_conflict", "relation": "reported-to-semantic-owner"},
-        {"field": "finding", "relation": "severity-and-status-unchanged"}
-      ],
-      "forbidden_regressions": [
-        {"id": "m3-no-stale-normalization", "description": "Do not downgrade the finding to match glossary wording."},
-        {"id": "m3-no-silent-glossary-edit", "description": "Do not silently rewrite the glossary without edit authority."}
-      ],
-      "scorer": {
-        "method": "semantic-source-precedence-comparator",
-        "criteria": [
-          {"id": "m3-semantic-truth", "description": "Compare behavior and finding fields with CTW2 rather than the stale entry.", "observable_fields": ["behavior", "finding.severity", "finding.status", "semantic_source"], "contract_ids": ["GL3"], "failure_boundary": "semantic-source-precedence"},
-          {"id": "m3-conflict-report", "description": "Check that the glossary conflict and semantic owner are reported.", "observable_fields": ["glossary_conflict", "semantic_owner"], "contract_ids": ["GL3"], "failure_boundary": "glossary-conflict-reporting"}
-        ]
-      },
-      "first_failure": {"contract_id": "GL3", "boundary": "semantic-source-precedence"}
+      "review_questions": [
+        {"dimension": "clarity", "question": "Can a newcomer understand the ownership boundary without opening the glossary first?"},
+        {"dimension": "factual-preservation", "question": "Does the explanation preserve CTW2 and the review skill's substantive authority?"},
+        {"dimension": "terminology-consistency", "question": "Is leaf owner used consistently with the selected entry and its semantic source?"},
+        {"dimension": "unnecessary-detail", "question": "Does the explanation avoid a vocabulary dump or repeated glossary procedure?"}
+      ]
     },
     {
-      "id": "M4",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["GL4"],
-      "artifact": {
-        "assignment": "Evaluate one project-specific concept and one ordinary engineering word for glossary admission.",
-        "intent": "Admit only a useful distinction and keep entry shape information-driven."
-      },
-      "intended_reader": {
-        "role": "repository contributor",
-        "assumed_knowledge": ["ordinary queue terminology"],
-        "required_outcome": "Understand the distinct project concept and its accepted alias without unnecessary vocabulary."
-      },
+      "id": "agent-handoff",
+      "contract_ids": ["CTW1", "CTW2", "GL3", "GL7"],
+      "artifact_assignment": "Write a compact implementation handoff for another agent from the accepted work-package facts.",
+      "intended_reader": "A collaborating implementation agent that has not seen the earlier conversation.",
       "source_packet": {
-        "candidates": [
-          {"term": "replay fence", "alias": "replay watermark", "distinct_project_meaning": "the durable sequence boundary below which replayed events are ignored", "semantic_source": "accepted design RF-12", "ordinary_vocabulary": false},
-          {"term": "queue", "alias": null, "distinct_project_meaning": null, "semantic_source": null, "ordinary_vocabulary": true}
+        "scope": "Change only the serializer handoff boundary; do not change review findings or consumer ownership.",
+        "accepted_contract_ids": ["CTW2", "GL7"],
+        "glossary_state": "selected: docs/glossary.md",
+        "material_terms": [
+          {"term": "leaf owner", "semantic_source": "CTW2"},
+          {"term": "semantic owner", "semantic_source": "GL3"}
         ],
-        "repository_format": "compact Markdown table; no fixed paragraph length or typography rule"
+        "evidence": ["handoff.py:44 drops the accepted contract ID"],
+        "required_report": ["changed files", "checks", "glossary state", "term candidates"],
+        "constraint": "The glossary cannot authorize a new field, state, limit, or component."
       },
-      "expected_material_outcomes": [
-        {"field": "replay fence", "relation": "one-preferred-entry-with-alias-and-project-distinction"},
-        {"field": "queue", "relation": "no-entry"},
-        {"field": "entry_shape", "relation": "follows-information-and-repository-format"}
-      ],
-      "forbidden_regressions": [
-        {"id": "m4-no-ordinary-entry", "description": "Do not add queue without a project-specific distinction."},
-        {"id": "m4-no-format-gate", "description": "Do not decide admission from paragraph count or italics."}
-      ],
-      "scorer": {
-        "method": "term-admission-and-alias-rubric",
-        "criteria": [
-          {"id": "m4-useful-distinction", "description": "Check admission against the distinct project meaning and accepted semantic source.", "observable_fields": ["term_actions", "semantic_source", "project_distinction"], "contract_ids": ["GL4"], "failure_boundary": "term-admission"},
-          {"id": "m4-alias-shape", "description": "Check one preferred concept, alias redirection, and repository-shaped presentation.", "observable_fields": ["preferred_term", "aliases", "entry_shape"], "contract_ids": ["GL4"], "failure_boundary": "entry-and-alias-shape"}
-        ]
-      },
-      "first_failure": {"contract_id": "GL4", "boundary": "term-admission"}
-    },
-    {
-      "id": "M5",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["GL2", "GL5"],
-      "artifact": {
-        "assignment": "Prepare a self-contained handoff under selected-source, initial-opt-out, and post-question refusal conditions.",
-        "intent": "Preserve preferred terms when selected and local explanation without persistence otherwise."
-      },
-      "intended_reader": {
-        "role": "collaborating implementation agent unfamiliar with project terminology",
-        "assumed_knowledge": ["general software ownership"],
-        "required_outcome": "Understand who owns the artifact without requiring glossary access."
-      },
-      "source_packet": {
-        "concept": {"term": "leaf owner", "meaning": "the artifact-specific owner that decides substantive content", "semantic_source": "CTW2"},
-        "cases": [
-          {"case_id": "selected", "glossary_state": "selected", "source": "docs/glossary.md"},
-          {"case_id": "initial-opt-out", "glossary_state": "opt-out", "source": null},
-          {"case_id": "refused-after-question", "glossary_state": "refused", "source": null}
-        ]
-      },
-      "expected_material_outcomes": [
-        {"field": "selected", "relation": "uses-preferred-term-and-explains-locally"},
-        {"field": "initial-opt-out", "relation": "defines-locally-with-no-question-access-create-or-persist"},
-        {"field": "refused-after-question", "relation": "continues-locally-with-no-repeat-question-access-create-or-persist"}
-      ],
-      "forbidden_regressions": [
-        {"id": "m5-no-vocabulary-dump", "description": "Do not open the handoff with a glossary dump."},
-        {"id": "m5-no-link-as-explanation", "description": "Do not make a glossary link the reader's only prerequisite."},
-        {"id": "m5-no-repeat-consent", "description": "Do not ask placement again after opt-out or refusal."}
-      ],
-      "scorer": {
-        "method": "term-continuity-and-fallback-rubric",
-        "criteria": [
-          {"id": "m5-selected-local-explanation", "description": "Check preferred-term consistency and local prerequisite explanation.", "observable_fields": ["preferred_term", "local_explanation", "source_access"], "contract_ids": ["GL5"], "failure_boundary": "selected-source-use"},
-          {"id": "m5-opt-out-fallback", "description": "Check local explanation and absence of placement, access, creation, and persistence actions after opt-out or refusal.", "observable_fields": ["questions", "source_access", "file_actions", "term_actions", "local_explanation"], "contract_ids": ["GL2", "GL5"], "failure_boundary": "opt-out-or-refusal-fallback"}
-        ]
-      },
-      "first_failure": {"contract_id": "GL2", "boundary": "opt-out-precedence"}
-    },
-    {
-      "id": "M6",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["GL6", "CTW8"],
-      "artifact": {
-        "assignment": "Apply an authorized definition change and report an adjacent unauthorized proposal.",
-        "intent": "Bound glossary and dependent-prose writes by meaning, location, and edit scope."
-      },
-      "intended_reader": {
-        "role": "documentation owner",
-        "assumed_knowledge": ["selected glossary scope", "dependency list"],
-        "required_outcome": "See exactly which definition and dependents changed and which candidate remains unwritten."
-      },
-      "source_packet": {
-        "authorized_change": {
-          "term": "retry window",
-          "old_meaning": "five-minute interval",
-          "new_meaning": "two-minute interval",
-          "semantic_source": "accepted operations contract OP-7",
-          "glossary_location": "docs/terms.md",
-          "documentation_scope_authorized": true,
-          "edit_scope": ["docs/terms.md", "docs/runbook.md"],
-          "aliases": ["retry interval"],
-          "out_of_scope_dependents": [{"path": "training/overview.md", "stale_term": "five-minute retry window", "semantic_source": "OP-7"}]
-        },
-        "unauthorized_candidate": {
-          "term": "retry epoch",
-          "meaning_authorized": false,
-          "location_authorized": true,
-          "edit_scope_authorized": true
-        }
-      },
-      "expected_material_outcomes": [
-        {"field": "authorized_change", "relation": "updates-owning-entry-alias-and-in-scope-dependent"},
-        {"field": "out_of_scope_dependents", "relation": "reports-with-stale-term-and-semantic-source-without-edit"},
-        {"field": "unauthorized_candidate", "relation": "reports-candidate-without-write"}
-      ],
-      "forbidden_regressions": [
-        {"id": "m6-no-out-of-scope-edit", "description": "Do not edit training/overview.md."},
-        {"id": "m6-no-uncertain-write", "description": "Do not persist retry epoch without authorized meaning."},
-        {"id": "m6-no-compensating-append", "description": "Do not leave the old definition and append a contradictory sentence."}
-      ],
-      "scorer": {
-        "method": "authorized-dependency-boundary-rubric",
-        "criteria": [
-          {"id": "m6-authorized-update", "description": "Compare entry, aliases, and in-scope dependent with the accepted semantic change.", "observable_fields": ["entry_changes", "alias_changes", "in_scope_prose_changes"], "contract_ids": ["GL6", "CTW8"], "failure_boundary": "authorized-definition-update"},
-          {"id": "m6-out-of-scope-report", "description": "Check the stale term and source report without an out-of-scope edit.", "observable_fields": ["out_of_scope_reports", "file_actions"], "contract_ids": ["GL6"], "failure_boundary": "out-of-scope-dependent"},
-          {"id": "m6-candidate-only", "description": "Check that missing meaning authority yields a candidate and no glossary write.", "observable_fields": ["term_candidates", "term_actions"], "contract_ids": ["GL6"], "failure_boundary": "new-term-authorization"}
-        ]
-      },
-      "first_failure": {"contract_id": "GL6", "boundary": "authorized-dependency-boundary"}
-    },
-    {
-      "id": "M7",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["GL7", "CTW1", "CTW2"],
-      "artifact": {
-        "assignment": "Delegate a fresh implementation review under selected-glossary and opt-out conditions.",
-        "intent": "Preserve neutral review authority, independent source access, and final terminology continuity."
-      },
-      "intended_reader": {
-        "role": "fresh independent reviewer and review recipient",
-        "assumed_knowledge": ["P0-P3 finding policy", "review dossier format"],
-        "required_outcome": "Review exact source with material terminology while retaining severity and semantic-source precedence."
-      },
-      "source_packet": {
-        "cases": [
-          {"case_id": "selected", "glossary_state": "selected", "source": "docs/glossary.md", "material_entries": [{"term": "leaf owner", "semantic_source": "CTW2"}, {"term": "semantic owner", "semantic_source": "GL3"}]},
-          {"case_id": "opt-out", "glossary_state": "opt-out", "source": null, "material_entries": []}
-        ],
-        "review_target": {"finding_id": "P1-EVAL-07", "severity": "P1", "evidence": ["handoff.py:44 drops the accepted contract ID"], "semantic_owner": "handoff serializer"},
-        "reviewer_identity_requirement": "fresh reviewer distinct from remediation author"
-      },
-      "trace_contract": {
-        "role_bindings": {
-          "coordinator": "review-coordinator",
-          "remediation_author": "remediation-author",
-          "assigned_reviewer": "fresh-reviewer"
-        },
-        "distinct_roles": [["assigned_reviewer", "remediation_author"], ["assigned_reviewer", "coordinator"]],
-        "event_roles": {
-          "glossary_resolution": "coordinator",
-          "dossier": "coordinator",
-          "assignment": "coordinator",
-          "source_access": "assigned_reviewer",
-          "correction": "assigned_reviewer",
-          "review_handoff": "assigned_reviewer",
-          "final_output": "assigned_reviewer"
-        }
-      },
-      "trace_cases": [
-        {
-          "case_id": "selected",
-          "glossary_state": "selected",
-          "required_events": ["glossary_resolution", "dossier", "assignment", "source_access", "correction", "review_handoff", "final_output"],
-          "forbidden_events": ["private_reasoning"],
-          "ordered_pairs": [["glossary_resolution", "dossier"], ["dossier", "assignment"], ["assignment", "source_access"], ["source_access", "correction"], ["correction", "review_handoff"], ["review_handoff", "final_output"]],
-          "source_access": {"required": true, "actor_role": "assigned_reviewer", "source": "docs/glossary.md", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}, {"term": "semantic owner", "semantic_source": "GL3"}]},
-          "event_details": {
-            "glossary_resolution": {"glossary_state": "selected", "source": "docs/glossary.md"},
-            "dossier": {"glossary_state": "selected", "source": "docs/glossary.md", "material_entries": [{"term": "leaf owner", "semantic_source": "CTW2"}, {"term": "semantic owner", "semantic_source": "GL3"}]},
-            "assignment": {"assigned_actor": "fresh-reviewer", "glossary_state": "selected"},
-            "source_access": {"access_mode": "direct", "source": "docs/glossary.md", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}, {"term": "semantic owner", "semantic_source": "GL3"}]},
-            "final_output": {"finding_id": "P1-EVAL-07", "severity": "P1", "evidence": ["handoff.py:44 drops the accepted contract ID"], "semantic_owner": "handoff serializer"}
-          },
-          "scorecard_evidence": {
-            "m7-resolution-and-dossier": {"glossary_state": "selected", "source": "docs/glossary.md"},
-            "m7-independent-source-access": {"actor_id": "fresh-reviewer", "access_mode": "direct", "source": "docs/glossary.md", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}, {"term": "semantic owner", "semantic_source": "GL3"}]},
-            "m7-final-review": {"finding_id": "P1-EVAL-07", "severity": "P1", "evidence": ["handoff.py:44 drops the accepted contract ID"], "semantic_owner": "handoff serializer"}
-          }
-        },
-        {
-          "case_id": "opt-out",
-          "glossary_state": "opt-out",
-          "required_events": ["glossary_resolution", "dossier", "assignment", "correction", "review_handoff", "final_output"],
-          "forbidden_events": ["source_access", "placement_question", "glossary_write", "private_reasoning"],
-          "ordered_pairs": [["glossary_resolution", "dossier"], ["dossier", "assignment"], ["assignment", "correction"], ["correction", "review_handoff"], ["review_handoff", "final_output"]],
-          "source_access": {"required": false, "actor_role": "assigned_reviewer", "source": null, "entries": []},
-          "event_details": {
-            "glossary_resolution": {"glossary_state": "opt-out", "source": null},
-            "dossier": {"glossary_state": "opt-out", "source": null, "material_entries": []},
-            "assignment": {"assigned_actor": "fresh-reviewer", "glossary_state": "opt-out"},
-            "final_output": {"finding_id": "P1-EVAL-07", "severity": "P1", "evidence": ["handoff.py:44 drops the accepted contract ID"], "semantic_owner": "handoff serializer"}
-          },
-          "scorecard_evidence": {
-            "m7-resolution-and-dossier": {"glossary_state": "opt-out", "source": null},
-            "m7-final-review": {"finding_id": "P1-EVAL-07", "severity": "P1", "evidence": ["handoff.py:44 drops the accepted contract ID"], "semantic_owner": "handoff serializer"},
-            "m7-opt-out": {"glossary_state": "opt-out", "forbidden_events_absent": ["source_access", "placement_question", "glossary_write"]}
-          }
-        }
-      ],
-      "expected_material_outcomes": [
-        {"field": "selected.dossier", "relation": "records-selected-source-and-material-term-to-source-mappings"},
-        {"field": "selected.source_access", "relation": "performed-directly-by-fresh-reviewer"},
-        {"field": "selected.finding", "relation": "preserves-preferred-terms-severity-evidence-and-semantic-source"},
-        {"field": "opt-out", "relation": "no-placement-question-or-glossary-access"}
-      ],
-      "forbidden_regressions": [
-        {"id": "m7-no-author-interpretation", "description": "Do not substitute the remediation author's entry summary for reviewer source access."},
-        {"id": "m7-no-glossary-proof", "description": "Do not use glossary wording as evidence for the finding."},
-        {"id": "m7-no-severity-change", "description": "Do not alter finding severity during the prose pass."}
-      ],
-      "scorer": {
-        "method": "ordered-delegation-trace-and-field-rubric",
-        "criteria": [
-          {"id": "m7-resolution-and-dossier", "description": "Check pre-delegation glossary state and neutral dossier transfer.", "observable_fields": ["trace.glossary_resolution", "trace.dossier"], "contract_ids": ["GL7"], "failure_boundary": "resolution-or-neutral-handoff"},
-          {"id": "m7-independent-source-access", "description": "Check fresh-reviewer identity and direct access to every material selected entry.", "observable_fields": ["trace.assignment.actor_id", "trace.source_access.actor_id", "trace.source_access.details.entries"], "contract_ids": ["GL7"], "failure_boundary": "independent-source-reading"},
-          {"id": "m7-final-review", "description": "Check preferred terms, severity, evidence, and semantic-source precedence in review output.", "observable_fields": ["finding.terms", "finding.severity", "finding.evidence", "finding.semantic_source"], "contract_ids": ["GL7", "CTW1"], "failure_boundary": "final-review-communication"},
-          {"id": "m7-opt-out", "description": "Check that opt-out produces no placement question or glossary access.", "observable_fields": ["trace.opt-out"], "contract_ids": ["GL7"], "failure_boundary": "opt-out-continuity"}
-        ]
-      },
-      "first_failure": {"contract_id": "GL7", "boundary": "review-delegation-lifecycle"}
-    },
-    {
-      "id": "M8",
-      "evidence_class": "controlled-model",
-      "contract_ids": ["GL6", "GL7", "CTW1", "CTW2"],
-      "artifact": {
-        "assignment": "Run a supervised implementation package with selected, opt-out, and authorized-new-term cases.",
-        "intent": "Preserve term-to-source mappings through assignment, correction, handoff, and final output."
-      },
-      "intended_reader": {
-        "role": "persistent implementer and supervising parent",
-        "assumed_knowledge": ["slice contracts", "package acceptance"],
-        "required_outcome": "Carry the resolved glossary state without mechanism invention or unauthorized persistence."
-      },
-      "source_packet": {
-        "cases": [
-          {"case_id": "selected-candidate", "glossary_state": "selected", "source": "docs/glossary.md", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "new_term": {"term": "evidence capsule", "meaning_authorized": true, "location_authorized": true, "edit_scope_authorized": false}},
-          {"case_id": "opt-out", "glossary_state": "opt-out", "source": null, "term_mappings": [], "new_term": null},
-          {"case_id": "authorized-update", "glossary_state": "selected", "source": "docs/glossary.md", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "new_term": {"term": "run witness", "meaning": "the observable artifact that records one package run's accepted evidence", "semantic_source": "accepted package contract PKG-9", "authorized_location": "docs/glossary.md", "authorized_edit_scope": "one run-witness entry", "meaning_authorized": true, "location_authorized": true, "edit_scope_authorized": true}}
-        ],
-        "package_contract": {"ids": ["PKG-8", "PKG-9"], "prohibited_mechanisms": ["new field", "new state", "new limit", "new component"]}
-      },
-      "trace_contract": {
-        "role_bindings": {
-          "supervising_parent": "supervising-parent",
-          "assigned_implementer": "persistent-implementer"
-        },
-        "distinct_roles": [["supervising_parent", "assigned_implementer"]],
-        "event_roles": {
-          "glossary_resolution": "supervising_parent",
-          "work_package": "supervising_parent",
-          "assignment": "supervising_parent",
-          "source_access": "assigned_implementer",
-          "correction": "supervising_parent",
-          "glossary_write": "assigned_implementer",
-          "slice_handoff": "assigned_implementer",
-          "final_output": "supervising_parent"
-        }
-      },
-      "trace_cases": [
-        {
-          "case_id": "selected-candidate",
-          "glossary_state": "selected",
-          "required_events": ["glossary_resolution", "work_package", "assignment", "source_access", "correction", "slice_handoff", "final_output"],
-          "forbidden_events": ["glossary_write", "private_reasoning"],
-          "ordered_pairs": [["glossary_resolution", "work_package"], ["work_package", "assignment"], ["assignment", "source_access"], ["source_access", "correction"], ["correction", "slice_handoff"], ["slice_handoff", "final_output"]],
-          "source_access": {"required": true, "actor_role": "assigned_implementer", "source": "docs/glossary.md", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
-          "authorization": {"term": "evidence capsule", "meaning_authorized": true, "location_authorized": true, "edit_scope_authorized": false, "expected_action": "candidate"},
-          "event_details": {
-            "glossary_resolution": {"glossary_state": "selected", "source": "docs/glossary.md"},
-            "work_package": {"glossary_state": "selected", "source": "docs/glossary.md", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
-            "assignment": {"assigned_actor": "persistent-implementer", "glossary_state": "selected", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
-            "source_access": {"access_mode": "direct", "source": "docs/glossary.md", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
-            "correction": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "candidate"},
-            "slice_handoff": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "candidate"},
-            "final_output": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "candidate", "mechanism_changes": []}
-          },
-          "scorecard_evidence": {
-            "m8-work-package-transfer": {"glossary_state": "selected", "source": "docs/glossary.md", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "source_access": {"actor_id": "persistent-implementer", "access_mode": "direct", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}]}},
-            "m8-continuity": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "candidate"},
-            "m8-authorization": {"term": "evidence capsule", "meaning_authorized": true, "location_authorized": true, "edit_scope_authorized": false, "expected_action": "candidate"},
-            "m8-no-mechanism": {"mechanism_changes": []}
-          }
-        },
-        {
-          "case_id": "opt-out",
-          "glossary_state": "opt-out",
-          "required_events": ["glossary_resolution", "work_package", "assignment", "slice_handoff", "final_output"],
-          "forbidden_events": ["placement_question", "source_access", "glossary_write", "term_persistence", "private_reasoning"],
-          "ordered_pairs": [["glossary_resolution", "work_package"], ["work_package", "assignment"], ["assignment", "slice_handoff"], ["slice_handoff", "final_output"]],
-          "source_access": {"required": false, "actor_role": "assigned_implementer", "source": null, "entries": []},
-          "authorization": {"term": null, "meaning_authorized": false, "location_authorized": false, "edit_scope_authorized": false, "expected_action": "none"},
-          "event_details": {
-            "glossary_resolution": {"glossary_state": "opt-out", "source": null},
-            "work_package": {"glossary_state": "opt-out", "source": null, "term_mappings": []},
-            "assignment": {"assigned_actor": "persistent-implementer", "glossary_state": "opt-out", "term_mappings": []},
-            "slice_handoff": {"term_mappings": [], "term_action": "none"},
-            "final_output": {"term_mappings": [], "term_action": "none", "mechanism_changes": []}
-          },
-          "scorecard_evidence": {
-            "m8-work-package-transfer": {"glossary_state": "opt-out", "source": null, "term_mappings": []},
-            "m8-continuity": {"term_mappings": [], "term_action": "none"},
-            "m8-no-mechanism": {"mechanism_changes": []},
-            "m8-opt-out": {"glossary_state": "opt-out", "forbidden_events_absent": ["placement_question", "source_access", "glossary_write", "term_persistence"]}
-          }
-        },
-        {
-          "case_id": "authorized-update",
-          "glossary_state": "selected",
-          "required_events": ["glossary_resolution", "work_package", "assignment", "source_access", "correction", "glossary_write", "slice_handoff", "final_output"],
-          "forbidden_events": ["private_reasoning", "mechanism_invention"],
-          "ordered_pairs": [["glossary_resolution", "work_package"], ["work_package", "assignment"], ["assignment", "source_access"], ["source_access", "correction"], ["correction", "glossary_write"], ["glossary_write", "slice_handoff"], ["slice_handoff", "final_output"]],
-          "source_access": {"required": true, "actor_role": "assigned_implementer", "source": "docs/glossary.md", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
-          "authorization": {"term": "run witness", "semantic_source": "accepted package contract PKG-9", "authorized_location": "docs/glossary.md", "authorized_edit_scope": "one run-witness entry", "meaning_authorized": true, "location_authorized": true, "edit_scope_authorized": true, "expected_action": "glossary-write"},
-          "event_details": {
-            "glossary_resolution": {"glossary_state": "selected", "source": "docs/glossary.md"},
-            "work_package": {"glossary_state": "selected", "source": "docs/glossary.md", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
-            "assignment": {"assigned_actor": "persistent-implementer", "glossary_state": "selected", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
-            "source_access": {"access_mode": "direct", "source": "docs/glossary.md", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
-            "correction": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "glossary-write"},
-            "glossary_write": {"term": "run witness", "semantic_source": "accepted package contract PKG-9", "authorized_location": "docs/glossary.md", "authorized_edit_scope": "one run-witness entry", "meaning_authorized": true, "location_authorized": true, "edit_scope_authorized": true},
-            "slice_handoff": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "glossary-write"},
-            "final_output": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "glossary-write", "mechanism_changes": []}
-          },
-          "scorecard_evidence": {
-            "m8-work-package-transfer": {"glossary_state": "selected", "source": "docs/glossary.md", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "source_access": {"actor_id": "persistent-implementer", "access_mode": "direct", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}]}},
-            "m8-continuity": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "glossary-write"},
-            "m8-authorization": {"term": "run witness", "semantic_source": "accepted package contract PKG-9", "authorized_location": "docs/glossary.md", "authorized_edit_scope": "one run-witness entry", "meaning_authorized": true, "location_authorized": true, "edit_scope_authorized": true, "expected_action": "glossary-write"},
-            "m8-no-mechanism": {"mechanism_changes": []}
-          }
-        }
-      ],
-      "expected_material_outcomes": [
-        {"field": "work_package-and-assignment", "relation": "carry-source-or-opt-out-and-only-material-term-to-source-mappings"},
-        {"field": "corrections-and-handoffs", "relation": "preserve-terminology-and-semantic-source-precedence"},
-        {"field": "selected-candidate", "relation": "reports-candidate-without-write"},
-        {"field": "opt-out", "relation": "no-later-question-access-or-persistence"},
-        {"field": "authorized-update", "relation": "bounded-glossary-write-after-all-authorities"},
-        {"field": "mechanisms", "relation": "none-invented-from-labels"}
-      ],
-      "forbidden_regressions": [
-        {"id": "m8-no-copied-glossary", "description": "Do not copy the glossary into the assignment."},
-        {"id": "m8-no-unauthorized-write", "description": "Do not persist evidence capsule without edit-scope authority."},
-        {"id": "m8-no-mechanism-invention", "description": "Do not translate a glossary label into a field, state, limit, or component."}
-      ],
-      "scorer": {
-        "method": "ordered-delegation-trace-and-authorization-rubric",
-        "criteria": [
-          {"id": "m8-work-package-transfer", "description": "Check resolution before spawning, state plus material mappings in work package and assignment, and direct implementer source access.", "observable_fields": ["trace.glossary_resolution", "trace.work_package", "trace.assignment", "trace.source_access"], "contract_ids": ["GL7"], "failure_boundary": "work-package-or-assignment-transfer"},
-          {"id": "m8-continuity", "description": "Check mapping continuity through corrections, slice handoffs, and final output.", "observable_fields": ["trace.correction", "trace.slice_handoff", "trace.final_output"], "contract_ids": ["GL7"], "failure_boundary": "correction-or-handoff-continuity"},
-          {"id": "m8-authorization", "description": "Check candidate-only and authorized-write branches against meaning, location, and edit scope.", "observable_fields": ["term_candidates", "glossary_writes", "authorization"], "contract_ids": ["GL6", "GL7"], "failure_boundary": "new-term-authorization"},
-          {"id": "m8-no-mechanism", "description": "Check that no field, state, limit, or component appears without a semantic owner.", "observable_fields": ["mechanism_changes", "semantic_sources"], "contract_ids": ["GL7"], "failure_boundary": "mechanism-invention"},
-          {"id": "m8-opt-out", "description": "Check no later placement question, access, write, or persistence under opt-out.", "observable_fields": ["trace.opt-out"], "contract_ids": ["GL7"], "failure_boundary": "opt-out-continuity"}
-        ]
-      },
-      "first_failure": {"contract_id": "GL7", "boundary": "supervised-delegation-lifecycle"}
-    },
-    {
-      "id": "V11-GLOSSARY-PRESENT",
-      "evidence_class": "blinded-human",
-      "contract_ids": ["CTW10", "GL8"],
-      "condition": "glossary-present",
-      "artifact": {
-        "assignment": "Explain a review-handoff ownership change under a selected project glossary.",
-        "intent": "Compare factual preservation and reader comprehension with only the skill condition changed."
-      },
-      "intended_reader": {
-        "role": "experienced developer new to the repository",
-        "assumed_knowledge": ["code review fundamentals"],
-        "required_outcome": "Answer the five CTW10 comprehension questions without relying on project background."
-      },
-      "source_packet": {
-        "glossary_state": "selected",
-        "glossary_source": "docs/glossary.md",
-        "material_entry": {"term": "leaf owner", "meaning": "artifact-specific substantive owner that applies the final prose pass once", "semantic_source": "CTW2"},
-        "before": "review-fixpoint rewrote review prose after evidence-efficient-review returned it",
-        "change": "evidence-efficient-review now applies the only final prose pass; review-fixpoint carries and reports the result",
-        "correctness": "finding severity, evidence, status, and owner remain controlled by evidence-efficient-review",
-        "evidence": ["one clear-writing link in evidence-efficient-review", "review-fixpoint explicitly prohibits another prose pass"],
-        "requested_action": "approve the ownership correction if the single-pass boundary is preserved"
-      },
-      "expected_material_outcomes": [
-        {"field": "paired_conditions", "relation": "same-task-packet-instructions-model-runtime-settings-and-policy"},
-        {"field": "candidate_condition", "relation": "receives-skill-baseline-does-not"},
-        {"field": "factual_score", "relation": "no-regression"},
-        {"field": "comprehension_score", "relation": "candidate-mean-correct-meets-predeclared-material-improvement-threshold"}
-      ],
-      "forbidden_regressions": [
-        {"id": "v11p-no-factual-regression", "description": "Do not improve comprehension by changing source facts."},
-        {"id": "v11p-no-glossary-proof", "description": "Do not treat the selected entry as proof of ownership behavior."},
-        {"id": "v11p-no-unblinding", "description": "Do not reveal baseline or candidate labels to readers."}
-      ],
-      "scorer": {
-        "method": "paired-blinded-five-question-rubric",
-        "criteria": [
-          {"id": "v11p-factual-preservation", "description": "Require every answer-key fact to remain recoverable in both outputs.", "observable_fields": ["before", "change", "correctness", "evidence", "requested_action"], "contract_ids": ["CTW10", "GL8"], "failure_boundary": "factual-preservation"},
-          {"id": "v11p-comprehension", "description": "Compare randomized or counterbalanced reader answers to the five-field answer key and apply the material-improvement threshold commissioned before generation.", "observable_fields": ["reader_answers", "answer_key", "presentation_order", "mean_correct_delta"], "contract_ids": ["CTW10"], "failure_boundary": "human-comprehension"}
-        ],
-        "answer_key_fields": ["before", "change", "correctness", "evidence", "requested_action"],
-        "commissioning_requirements": {
-          "threshold_parameter": "minimum_material_improvement",
-          "metric": "mean_correct_answers_out_of_five",
-          "direction": "candidate-above-baseline",
-          "default_threshold": null,
-          "required_before_generation": ["numeric threshold", "reader profile and sample size", "randomization or counterbalancing method", "five-field answer key"]
-        },
-        "requires_no_factual_regression": true
-      },
-      "first_failure": {"contract_id": "CTW10", "boundary": "factual-preservation-or-human-comprehension"}
-    },
-    {
-      "id": "V11-GLOSSARY-ABSENT",
-      "evidence_class": "blinded-human",
-      "contract_ids": ["CTW10", "GL5", "GL8"],
-      "condition": "glossary-absent",
-      "artifact": {
-        "assignment": "Explain the same review-handoff ownership change when no authorized glossary source is available.",
-        "intent": "Compare comprehension while requiring a local definition and no glossary dependency."
-      },
-      "intended_reader": {
-        "role": "experienced developer new to the repository",
-        "assumed_knowledge": ["code review fundamentals"],
-        "required_outcome": "Answer the five CTW10 comprehension questions from self-contained prose."
-      },
-      "source_packet": {
-        "glossary_state": "no-authorized-source",
-        "glossary_source": null,
-        "local_concept": {"working_phrase": "artifact-specific owner", "meaning": "the skill that decides substantive review content and applies the final prose pass", "semantic_source": "CTW2", "persist_term": false},
-        "before": "review-fixpoint rewrote review prose after evidence-efficient-review returned it",
-        "change": "evidence-efficient-review now applies the only final prose pass; review-fixpoint carries and reports the result",
-        "correctness": "finding severity, evidence, status, and owner remain controlled by evidence-efficient-review",
-        "evidence": ["one clear-writing link in evidence-efficient-review", "review-fixpoint explicitly prohibits another prose pass"],
-        "requested_action": "approve the ownership correction if the single-pass boundary is preserved"
-      },
-      "expected_material_outcomes": [
-        {"field": "paired_conditions", "relation": "same-task-packet-instructions-model-runtime-settings-and-policy"},
-        {"field": "local_explanation", "relation": "self-contained-without-glossary-access-link-or-persistence"},
-        {"field": "factual_score", "relation": "no-regression"},
-        {"field": "comprehension_score", "relation": "candidate-mean-correct-meets-predeclared-material-improvement-threshold"}
-      ],
-      "forbidden_regressions": [
-        {"id": "v11a-no-factual-regression", "description": "Do not improve comprehension by changing source facts."},
-        {"id": "v11a-no-glossary-dependency", "description": "Do not require glossary access, linking, or persistence."},
-        {"id": "v11a-no-unblinding", "description": "Do not reveal baseline or candidate labels to readers."}
-      ],
-      "scorer": {
-        "method": "paired-blinded-five-question-rubric",
-        "criteria": [
-          {"id": "v11a-factual-preservation", "description": "Require every answer-key fact to remain recoverable in both outputs.", "observable_fields": ["before", "change", "correctness", "evidence", "requested_action"], "contract_ids": ["CTW10", "GL5", "GL8"], "failure_boundary": "factual-preservation"},
-          {"id": "v11a-comprehension", "description": "Compare randomized or counterbalanced reader answers to the five-field answer key and apply the material-improvement threshold commissioned before generation.", "observable_fields": ["reader_answers", "answer_key", "presentation_order", "mean_correct_delta"], "contract_ids": ["CTW10"], "failure_boundary": "human-comprehension"}
-        ],
-        "answer_key_fields": ["before", "change", "correctness", "evidence", "requested_action"],
-        "commissioning_requirements": {
-          "threshold_parameter": "minimum_material_improvement",
-          "metric": "mean_correct_answers_out_of_five",
-          "direction": "candidate-above-baseline",
-          "default_threshold": null,
-          "required_before_generation": ["numeric threshold", "reader profile and sample size", "randomization or counterbalancing method", "five-field answer key"]
-        },
-        "requires_no_factual_regression": true
-      },
-      "first_failure": {"contract_id": "CTW10", "boundary": "factual-preservation-or-human-comprehension"}
+      "review_questions": [
+        {"dimension": "clarity", "question": "Can the receiving agent identify the exact scope, evidence, and required report without prior conversation?"},
+        {"dimension": "factual-preservation", "question": "Does the handoff preserve contract IDs, evidence, ownership, and prohibited changes?"},
+        {"dimension": "terminology-consistency", "question": "Are the selected terms transferred with their semantic sources rather than redefined?"},
+        {"dimension": "unnecessary-detail", "question": "Does the handoff omit orchestration history that the implementer does not need?"}
+      ]
     }
   ]
 }

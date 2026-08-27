@@ -1,181 +1,70 @@
 # Validation Scenarios
 
-Use this reference to evaluate the package. Do not treat static checks as proof
-of model behavior or inspect private reasoning.
+The evaluation asks one practical question: does this skill help the same model
+produce more useful engineering prose from the same source material?
 
-## Contents
+Use the dated
+[pre-study protocol](../../../docs/evidence/2026-08-27-clear-technical-writing-pre-study-protocol.md)
+for trial conditions, blinded review, the decision rule, and the optional V11
+human study. The validator checks records mechanically; it never decides
+whether prose or terminology is good.
 
-- Evidence lanes and capture
-- Deterministic command
-- Clear-writing scenarios
-- Glossary scenarios
-- Deterministic package gates
-- Human evidence
-- Freshness and completion
+## Representative Cases
 
-## Evidence Lanes And Capture
+The compact [case manifest](../evals/fixtures.json) contains four paired cases.
+Each supplies an assignment, intended reader, source packet, and observable
+review questions.
 
-Keep three evidence lanes separate:
+| Case | What it exercises |
+|---|---|
+| `initial-technical-writing` | Produce a first reader-facing engineering update from accepted facts and unknowns. |
+| `revision-after-change` | Rebuild dependent prose after a requested fact changes the conclusion. |
+| `project-glossary-use` | Use a selected project term consistently while keeping semantic authority and local explanation clear. |
+| `agent-handoff` | Give another agent a self-contained, source-grounded handoff without redefining terms or inventing mechanisms. |
 
-1. Deterministic repository gates verify package shape, rendered links and
-   anchors, fixture and capture-schema integrity, installed read-back, and
-   exact-revision hygiene. Source review decides semantic ownership.
-2. Controlled model trials evaluate observable output behavior.
-3. A blinded human pilot evaluates audience comprehension independently.
+The independent reviewer compares the baseline and skill outputs on clarity,
+factual preservation, terminology consistency, and unnecessary detail. These
+questions guide human judgment; they are not exact-string checks.
 
-For V1-V8, record the exact skill revision, model and runtime identity, complete
-outer instructions, source-packet hash, exposed generation settings,
-tool/context configuration, trial count, output, and timestamps. Predeclare the
-trial policy, reader contract, scorer, and failure localization before
-generation. Compare observable output with the source packet; do not capture or
-infer private plans.
+## Mechanical Commands
 
-Each fixture identifies its evidence ID, artifact assignment and intent, source
-packet and expected material fields, observable reader contract, scoring helper,
-forbidden regressions, and first failure boundary. Fix the fixture and rubric
-before examining candidate output.
-
-A fresh successful record for one commissioned fixture is `current`; it does
-not confirm or aggregate the suite. A valid output that violates its
-predeclared rubric is `product-contract-failure`. Authentication or
-configuration failure, provider or infrastructure failure, and inconclusive
-timeout leave an unavailable V1-V8 trial `model-capability-unconfirmed` and an
-unavailable M1-M8 trial `capability-unconfirmed`. `prepared` is a work state,
-not evidence. None of the unavailable statuses fails deterministic gates.
-
-## Deterministic Command
-
-Run the repository-owned
-[validation entrypoint](../scripts/validate_evidence.py) from its absolute
-repository location:
+Run the thin package validator and its bounded malformed-record checks:
 
 ```bash
 "$SKILLS_REPO/skills/clear-technical-writing/scripts/validate_evidence.py" \
-  --repo-root "$SKILLS_REPO" validate-package \
-  --installed-skill "$HOME/.agents/skills/clear-technical-writing"
+  --repo-root "$SKILLS_REPO" validate-package
+
+"$SKILLS_REPO/skills/clear-technical-writing/scripts/validate_evidence.py" \
+  --repo-root "$SKILLS_REPO" self-test
 ```
 
-Use `--help` to prepare, complete, or validate a capture and to run the
-synthetic adjacent-case self-test. Capture preparation records the selected
-fixture's canonical source-packet hash and writes outside the repository by
-default. A scorer must record each criterion decision and its observable
-evidence; the helper checks completeness, consistency, first-failure
-localization, and the M7/M8 actors, direct source access, material-entry
-coverage, lifecycle order, authorization fields, and matching scorecard
-evidence. It does not judge prose quality. Package validation establishes V10
-mechanical conformance and reports structural inputs relevant to D1, D2, and
-V9, but those three semantic ownership gates still require independent source
-review.
+Create one record for each paired condition with the same trial ID, model,
+runtime, outer instructions, settings, tool/context configuration, and source
+packet. Captures default to the system temporary directory:
 
-## Clear-Writing Scenarios
+```bash
+"$SKILLS_REPO/skills/clear-technical-writing/scripts/validate_evidence.py" \
+  --repo-root "$SKILLS_REPO" prepare-capture \
+  --case initial-technical-writing \
+  --trial-id STUDY-RUN-ID \
+  --condition baseline \
+  --model-id MODEL-ID \
+  --runtime-id RUNTIME-ID \
+  --outer-instructions "OUTER INSTRUCTIONS"
+```
 
-| ID | Observable scenario and first failure boundary |
-|---|---|
-| V1 | Rewrite a review finding while a field comparator checks severity, status, cited evidence, and requested correction. A mismatch localizes to substantive authority or the leaf consumer. |
-| V2 | Use an invocation trace to check engineering-evidence routing, general-prose routing, no private-work trigger, specialized-leaf precedence, and absence of an outer second pass. |
-| V3 | Generate PR, local-comment, and operator-status explanations from one source packet. A required-information rubric checks reader and purpose differences without author-only premises. |
-| V4 | Check that a compact artifact has no visible ceremony and a multi-claim handoff presents supported claims in prerequisite order. Do not claim that private planning occurred. |
-| V5 | Check that an overloaded verb is replaced by the material actor, operation, object, condition, and result while a necessary project concept receives one stable ordinary-language definition. |
-| V6 | Compare source fields to ensure unknowns and provenance remain, observational values use consistent decision-sized precision, and exact correctness boundaries are unchanged. |
-| V7 | Check that repeated comparable fields use a table, a linear argument remains prose, and retained or removed elements preserve reader prerequisites. |
-| V8 | Compare a changed source packet with the affected paragraph, adjacent transitions, summary, and conclusion. A stale or appended contradiction localizes to revision after change. |
+Use `--condition skill` for the matched skill output. A completed record needs
+the exact current skill revision and a non-empty output. Validate any record
+with `validate-capture PATH`.
 
-## Glossary Scenarios
+## Evidence Boundary
 
-M1-M6 use the shared single-output record and scorer. M7-M8 use the same
-model/runtime identity, freshness, failure, and scoring protocol and add an
-ordered observable delegation trace: actor and run identity; glossary-resolution
-state; glossary source-access events; neutral dossier or work package; initial
-assignment; applicable corrections; review or slice handoffs; and final output.
-Record external actions and artifacts, not private reasoning. At each checkpoint,
-report the first failed GL contract and named lifecycle boundary.
+Repository validation proves that the skill and four-case study package are
+well formed. It does not prove that a model follows the skill, that the skill
+is useful, or that a person understands its output. Actual paired outputs and
+their blinded independent review provide model-capability evidence.
 
-The M7 and M8 fixtures bind lifecycle roles to distinct observable actor IDs.
-For selected-source cases, the assigned reviewer or implementer records direct
-access to the exact material entries and their semantic-source mappings.
-Relevant scorer evidence repeats those mechanical facts so the helper can
-cross-check it against the trace. Meaning and prose quality remain manual
-judgments; never record private reasoning.
-
-| ID | Observable scenario and first failure boundary |
-|---|---|
-| M1 | With no glossary or placement instruction, ask project-local versus user-selected look-aside before creation or persistence; never choose `docs/glossary.md` automatically. |
-| M2 | Use an existing selected source; treat an explicitly selected absent path as placement without widened write authority; ask when plausible sources compete. |
-| M3 | When a stale entry conflicts with code or an accepted contract, preserve semantic truth and report the glossary conflict. |
-| M4 | Give a useful project concept one plain entry with aliases redirected to it; reject an entry for ordinary engineering vocabulary without using paragraph or typography rules as gates. |
-| M5 | Keep selected terms consistent and explain missing prerequisites locally. An initial opt-out or refusal after M1 asks no further placement question, accesses or creates no glossary, and persists no term. |
-| M6 | For an authorized semantic change, update the owning entry, aliases, and in-scope prose, then report a known out-of-scope dependent with its stale term and source. Report an unauthorized or uncertain change without writing. |
-| M7 | **Review delegation.** Before delegation, the neutral dossier records the selected glossary identity or explicit opt-out. Identify the fresh reviewer and, for a selected glossary, record that reviewer's access to each material entry rather than an author's interpretation. Findings and correction directions preserve preferred terms, severity, evidence, and semantic-source authority. Under opt-out, ask no placement question and access no glossary. Localize failure to resolution, neutral handoff, independent source reading, semantic preservation, or final review communication. |
-| M8 | **Supervised delegation.** Before spawning, resolve glossary state. The work package and initial assignment carry the selected source or explicit opt-out and only material term-to-semantic-source relationships. Corrections and handoffs preserve those meanings. Under opt-out, no later placement question, glossary access, or persistence occurs. Report a new term as a candidate if meaning, location, or edit scope is unauthorized; when all three are authorized, apply the bounded glossary update. Reject mechanism invention from glossary labels. Localize failure to work-package resolution, assignment transfer, correction continuity, handoff continuity, authorization, or mechanism invention. |
-
-## Deterministic Package Gates
-
-| ID | Gate |
-|---|---|
-| D1 | Independently review the source to verify one glossary authority, no standalone glossary skill, and no copied glossary procedure. The validator checks only the relevant package and link structure. |
-| D2 | Independently review changed consumers for retained semantic responsibilities, glossary-state continuity, and absence of a second process authority. The validator checks only declared link boundaries and destinations. |
-| V9 | Independently review each consumer's substantive authority and single leaf or carry-only outer boundary. The validator does not infer these properties from wording. |
-| V10 | Run the skill validator, rendered relative-link and anchor checks, long-reference Contents checks, fixture and capture-schema integrity, one-level reference-role topology and declared CTW9 link destinations, installation-link read-back, `git show --check`, and `git diff --check`. |
-
-Deterministic gates prove repository composition only. They do not prove that a
-model follows instructions or that a person understands the output.
-Fixture source packets retain their supplied facts, unknowns, and exact
-correctness boundaries as explicit test inputs. Examples remain illustrations,
-not deterministic proof of generated behavior.
-
-The package-owned role manifest binds stable reference responsibilities and
-consumer destinations to the current files. Filenames are not correctness
-contracts: a one-level reference may be renamed, or compatible roles may share
-one file, when the manifest and rendered links are updated together.
-
-## Human Evidence
-
-V11 pairs a baseline and candidate under the same task, source packet, outer
-instructions, model/runtime configuration, generation policy, and exposed
-settings; only the candidate receives this skill. Include glossary-present and
-glossary-absent packets in the existing pilot rather than creating another
-suite. Audience-matched readers see randomized or counterbalanced unlabeled
-outputs and answer what happened before, what changes, why it is correct or
-deliberately different, what evidence matters, and what action or decision the
-artifact requests. Predeclare the answer key, factual scorer, comprehension
-scorer, and a minimum material-improvement parameter. Before outputs are
-generated, record the metric, direction, numeric threshold chosen for that
-commission, reader profile and sample size, randomization or counterbalancing
-method, and five-field answer key. The package supplies no default threshold.
-Require no factual regression.
-
-Create a V11 `prepared` record only after that complete protocol is recorded.
-After generation and scoring, use `complete-capture` with the same prepared
-record. Completion preserves its trial ID, source-packet hash, preparation
-timestamp, identities, settings, and commissioning values and records the
-prepared record's hash. Validate a completed V11 record with
-`validate-capture --prepared-capture PREPARED`; direct scored construction or
-post-prepare protocol changes are invalid.
-
-Missing evaluators, infrastructure failure, or an inconclusive sample leaves
-`human-comprehension-unconfirmed`; it does not fail deterministic gates or prove
-improvement. A valid paired pilot that violates the factual or comprehension
-criterion is `product-contract-failure`.
-
-## Freshness And Completion
-
-Initial V1-V8, M1-M8, and V11 evidence is non-reusable. It is current only for
-the acceptance review that commissioned it, on the exact skill revision, while
-recorded model/runtime identity, outer instructions, source packets, generation
-settings, tool/context configuration, scoring protocol, and intended audience
-remain unchanged. Any identity change, completion of that review, or later
-capability claim requires a fresh run. A future reuse interval requires measured
-rerun cost and independent acceptance under the project's exact-limit policy.
-
-Keep word count, tokens, latency, reading time, preference, edit size, glossary
-size, entry count, and lookup time observational unless a protocol predeclares a
-baseline, method, direction, and threshold. Do not claim model compliance,
-human comprehension, capability confirmation, deterministic fixed point, or
-`Done` from scenario definitions or repository checks alone.
-
-Implementation `deterministic-fixed-point` additionally requires CTW1-CTW10,
-applicable D1-D2 and V9-V10 gates on the exact reviewed revision, and a fresh
-independent review with no P0-P3 finding or required unknown. `Done` additionally
-requires current passing controlled model evidence and confirmed initial human
-comprehension evidence. Retain unconfirmed capability statuses until those
-external lanes actually run and pass.
+V11 remains a separate audience-comprehension pilot. Do not run it or claim
+human evidence unless the predeclared intended-reader evaluators are available.
+Absence of external evaluators or model access does not invalidate a sensibly
+implemented skill or its deterministic repository checks.
