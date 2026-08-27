@@ -3,8 +3,9 @@
 ## Purpose and composed authority
 
 Add glossary-aware behavior to the planned `clear-technical-writing` package
-and the existing skills that create or consume durable engineering prose. Do
-not create a separate glossary skill.
+and the existing skills that create or consume durable engineering
+communication. The intended reader may be a person or another agent. Do not
+create a separate glossary skill.
 
 The GL1-GL8 matrix below is the sole authority for glossary discovery,
 placement, term ownership, maintenance, and evidence. The
@@ -18,10 +19,11 @@ reference GL IDs and add only routing, implementation, or evidence details.
 ## Scope and current fit
 
 A project glossary is an optional durable source for terminology shared across
-artifacts and sessions. It is useful when a project gives an established word a
-narrower meaning or introduces a genuinely distinct abstraction, owner,
-lifetime, resource, or process. It is not required for ordinary programming
-vocabulary or for a term used clearly in one local passage.
+artifacts, sessions, and agents. It is useful when a project gives an
+established word a narrower meaning or introduces a genuinely distinct
+abstraction, owner, lifetime, resource, or process. It is not required for
+ordinary programming vocabulary or for a term used clearly in one local
+passage.
 
 The planned `clear-technical-writing` skill already owns the relevant prose
 behavior through CTW5: explain unfamiliar concepts in ordinary language, avoid
@@ -44,14 +46,14 @@ Existing repository skills already own adjacent concerns:
 
 | ID | Observable contract | Semantic owner and public composition | Slice | Named evidence |
 |---|---|---|---|---|
-| GL1 | **Extend the existing writing authority.** Glossary behavior lives in a one-level reference of `clear-technical-writing`. Consumer skills link to that authority at the point where they discover sources or prepare the one final prose pass. No `project-glossary`, `glossary-manager`, or equivalent standalone skill is created, and no consumer copies the workflow. | `clear-technical-writing` owns the shared glossary workflow; `skill-authoring` owns package shape. Every listed consumer remains owner of its artifact. | S1, S4 | D1 package and duplicate-authority checks |
-| GL2 | **Discover placement and obtain consent.** Before durable engineering prose uses or establishes shared project terminology, inspect explicit user instructions and repository guidance. If the user declines glossary creation or use for this task, do not ask about placement, create a file, or persist a term; use GL5's local-definition fallback. Otherwise use an existing selected glossary. If no glossary exists but either authority selects its location, placement is resolved while the task's normal write-authorization boundary remains in force. If no glossary exists and neither authority selects placement, ask whether to create it inside the project or at a user-selected look-aside location; do not create a file or persist a term until the user answers. After a project-local answer, use an established documentation path or ask for the exact path. After a look-aside answer, obtain the exact location and scope. Never invent either location. Ask which source governs when several plausible glossaries remain unresolved. Unrelated work that neither uses nor establishes shared project terminology does not trigger the question. Reuse a prior selection only when it is recoverable for the same project and scope. | The user or repository guidance owns placement. The artifact's leaf skill performs discovery and asks the question before glossary creation. | S1, S2, S4 | M1 missing-glossary consent; M2 placement-precedence routing; M5 opt-out fallback |
+| GL1 | **Extend the existing writing authority.** Glossary behavior lives in a one-level reference of `clear-technical-writing`. Consumer skills link to that authority when they discover sources, prepare a durable artifact for a person or agent, or perform the one final prose pass. No `project-glossary`, `glossary-manager`, or equivalent standalone skill is created, and no consumer copies the workflow. | `clear-technical-writing` owns the shared glossary workflow; `skill-authoring` owns package shape. Every listed consumer remains owner of its artifact. | S1, S4 | D1 package and duplicate-authority checks |
+| GL2 | **Discover placement and obtain consent.** Before durable engineering communication uses or establishes shared project terminology, inspect explicit user instructions and repository guidance. If the user declines glossary creation or use for this task, do not ask about placement, create a file, or persist a term; use GL5's local-definition fallback. Otherwise use an existing selected glossary. If no glossary exists but either authority selects its location, placement is resolved while the task's normal write-authorization boundary remains in force. If no glossary exists and neither authority selects placement, ask whether to create it inside the project or at a user-selected look-aside location; do not create a file or persist a term until the user answers. After a project-local answer, use an established documentation path or ask for the exact path. After a look-aside answer, obtain the exact location and scope. Never invent either location. Ask which source governs when several plausible glossaries remain unresolved. Unrelated work that neither uses nor establishes shared project terminology does not trigger the question. Reuse a prior selection only when it is recoverable for the same project and scope. | The user or repository guidance owns placement. The artifact's leaf skill performs discovery and asks the question before glossary creation. | S1, S2, S4 | M1 missing-glossary consent; M2 placement-precedence routing; M5 opt-out fallback |
 | GL3 | **Keep terminology authority separate from semantic truth.** The selected glossary is canonical for a project's preferred term, aliases, and plain explanation within its declared scope. Code, accepted contracts, architecture authorities, and the artifact's factual owner remain authoritative for behavior, ownership, lifetime, and acceptance. Glossary entries link to those sources when the distinction matters. A conflict is reported to the semantic owner instead of being silently normalized in prose. | The selected glossary owns term identity and explanation. Existing technical owners retain semantics. The final artifact demonstrates the composition. | S2, S3 | M3 semantic-authority preservation |
 | GL4 | **Record only useful project distinctions.** Add a term only when it names a distinct project concept or a domain concept used more narrowly than readers can safely assume. Explain it in ordinary language, state the project-specific distinction, and include the owner, lifetime, mapping, or semantic-source link only when needed to prevent a material misunderstanding. Keep one entry per concept and make aliases point to it. Entry length, Markdown shape, and cross-reference styling follow the repository and the information; a one-paragraph cap and italicized cross-references are not contracts. | The artifact's technical owner supplies meaning. The glossary editor owns concise presentation and cross-links. | S2 | M4 entry and alias scenario |
-| GL5 | **Use the glossary without turning prose into a glossary.** Read relevant entries before drafting a durable engineering artifact, then explain a term locally when the intended reader still needs that prerequisite. Do not open a note with a vocabulary dump, replace concrete operations with labels, or assume that a link repairs an unclear sentence. If the user declines glossary creation or no authorized location is available, define the concept in the artifact and do not persist it elsewhere. | The leaf artifact skill owns prerequisite placement. `clear-technical-writing` performs the single final terminology check under CTW2 and CTW5. | S2, S4 | M5 existing, declined, and local-definition scenarios |
+| GL5 | **Use the glossary without turning communication into a glossary.** Read relevant entries before drafting a durable engineering artifact, including a review dossier, agent assignment, correction, or handoff. Explain a term locally when the intended person or agent still needs that prerequisite. Do not open an artifact with a vocabulary dump, replace concrete operations with labels, or assume that a link repairs an unclear instruction. If the user declines glossary creation or no authorized location is available, define the concept in the artifact and do not persist it elsewhere. | The leaf artifact skill owns prerequisite placement. `clear-technical-writing` performs the single final terminology check under CTW2 and CTW5 when that prose pass applies. | S2, S4 | M5 existing, declined, and local-definition scenarios |
 | GL6 | **Update definitions within the authorized dependency boundary.** A durable artifact may propose a glossary entry only when its accepted source establishes the meaning. Write the entry only when the selected location and documentation scope are authorized; otherwise report the candidate. When a semantic source or glossary definition changes, revalidate aliases, linked entries, and affected prose under CTW8 only inside the current authorized edit scope. Report each known out-of-scope dependent with its semantic source and stale term; do not edit it or silently treat it as current. Do not append a compensating sentence to a stale entry or change the term to fit one artifact. | The semantic owner approves meaning; the authorized glossary editor changes the entry; in-scope artifact owners revalidate dependent prose. The current task reports out-of-scope dependents without assuming their edit authority. | S3, S4 | M6 bounded authorized-update scenario |
-| GL7 | **Preserve consumer-specific ownership.** The selected project glossary owns the preferred project-wide term, aliases, and concise project meaning. A `technical-note-series` guide owns introduction order, reader-specific first-use explanations, and terms used only within that series. It may explain a project term locally for teaching but links to the glossary instead of maintaining a second canonical project definition. Architecture and policy skills remain factual owners of their artifacts. Review skills flag terminology only when ambiguity, contradiction, or an undefined project term can change a finding, decision, implementation, owner, lifetime, scope, or evidence claim. Implementation skills treat a glossary as explanatory input, never as authority to manufacture mechanisms. `review-fixpoint` does not apply another glossary or prose pass. | Each consumer named in the routing table retains its established responsibility. | S4 | D2 consumer-authority check; M7 composed-consumer scenario |
-| GL8 | **Reuse the clear-writing evidence model.** Static repository checks establish package shape, links, absence of a standalone glossary skill, and absence of copied workflow. Controlled model trials evaluate discovery, consent, source fidelity, term use, and update behavior. Add glossary-present and glossary-absent source packets to CTW's existing model and human scenarios instead of creating a second capability suite. Entry counts, lookup time, prompt tokens, edit size, and glossary size remain observational unless a future protocol supplies a baseline and threshold. | CTW's evaluation runner and human pilot remain evidence owners. Repository validation owns static checks. | S5 | D1-D2 deterministic checks; M1-M7 controlled model evidence; CTW V11 human evidence |
+| GL7 | **Preserve consumer-specific ownership and agent-to-agent meaning.** The selected project glossary owns the preferred project-wide term, aliases, and concise project meaning. A `technical-note-series` guide owns introduction order, reader-specific first-use explanations, and terms used only within that series; it links to the glossary instead of maintaining a second canonical project definition. `evidence-efficient-review` resolves the glossary while establishing the review contract, records the selected source or explicit opt-out in its neutral dossier, independently reads the entries material to the review, and uses their terms consistently in findings without treating them as proof. `supervised-implementer-loop` resolves the glossary before spawning the implementer, records its source or opt-out plus relevant term-to-semantic-source mappings in the work package and initial assignment, and verifies terminology continuity in corrections and handoffs. New terms remain reported candidates unless their meaning, location, and edit scope are authorized. Architecture and policy skills remain factual owners. Implementation agents treat glossary entries as explanatory input, never as authority to manufacture mechanisms. `review-fixpoint` carries the selected source or opt-out between its leaf workflows but does not apply another glossary or prose pass. | Each consumer named in the routing table retains its established responsibility. Code, accepted contracts, architecture authorities, findings, and package scope outrank glossary wording. | S4 | D2 consumer-authority check; M7 review-communication scenario; M8 supervised-agent scenario |
+| GL8 | **Reuse the clear-writing evidence model.** Static repository checks establish package shape, links, absence of a standalone glossary skill, and absence of copied workflow. Controlled model trials evaluate discovery, consent, source fidelity, term use, agent-to-agent continuity, and update behavior. Add glossary-present and glossary-absent source packets to CTW's existing model and human scenarios instead of creating a second capability suite. Entry counts, lookup time, prompt tokens, edit size, and glossary size remain observational unless a future protocol supplies a baseline and threshold. | CTW's evaluation runner and human pilot remain evidence owners. Repository validation owns static checks. | S5 | D1-D2 deterministic checks; M1-M8 controlled model evidence; CTW V11 human evidence |
 
 ## Entry-shape guidance
 
@@ -76,13 +78,13 @@ This table applies GL5-GL7 without redefining them.
 
 | Consumer | Glossary responsibility |
 |---|---|
-| `clear-technical-writing` | Add `references/project-glossaries.md`; perform GL2 discovery when it is the direct leaf owner, use relevant entries as sources, and run the one CTW5 terminology check during the final pass. |
+| `clear-technical-writing` | Add `references/project-glossaries.md`; perform GL2 discovery when it is the direct leaf owner, treat people and collaborating agents as possible readers, use relevant entries as sources, and run the one CTW5 terminology check during the final pass. |
 | `technical-note-series` | Apply GL2 before building teaching vocabulary. Keep the guide authoritative for prerequisite order, reader-specific first-use explanations, series-only terms, and navigation. Link project-wide definitions instead of maintaining a second canonical meaning. |
 | `project-architecture-doc` | Treat the selected glossary as an explanatory source. Verify definitions against code and architecture authorities, and route durable new project terms through GL2 and GL6. |
 | `add-architectural-guidances` | Preserve established glossary terms when available, but keep target policy self-contained and do not make a look-aside glossary an undeclared runtime dependency. |
-| `evidence-efficient-review` | Use a glossary to interpret terminology, then verify semantic claims against their owners. Report only materially ambiguous, contradictory, or authority-stealing terminology; do not turn wording preference into a finding. Its review artifact receives the existing single clear-writing pass. |
-| `supervised-implementer-loop` | Use glossary definitions as explanatory context, not as permission to create fields, states, limits, or components. Include an authorized glossary edit in a slice only when accepted semantic work changed the term. |
-| `review-fixpoint` | Require or report the leaf owner's glossary-aware prose pass when applicable; do not perform a second pass or copy this protocol. |
+| `evidence-efficient-review` | Apply GL7 in `Establish The Review Contract`, `Build A Compact Review Dossier`, and `Return A Structured Review Result`. Give the reviewer the selected glossary identity or opt-out, require independent reading of material entries, verify semantic claims against their owners, and report only terminology defects that can change the review result. Its final review artifact receives the existing single clear-writing pass. |
+| `supervised-implementer-loop` | Apply GL7 in `Establish The Work Package`, `Give The Initial Assignment`, `Run Each Slice`, and `Accept The Package`. The parent resolves glossary state before spawning, gives the implementer relevant term-to-semantic-source mappings without copying the whole glossary, checks corrections and handoffs for drift, and treats new terms as candidates unless authorized. Glossary wording cannot create fields, states, limits, or components. |
+| `review-fixpoint` | Carry the selected glossary identity or explicit opt-out through Tick and Tock inputs and results. Require or report the leaf owner's glossary-aware pass when applicable; do not independently apply a second glossary or prose pass. |
 
 The general `writing` skill remains outside this repository. When it owns a
 general prose artifact, it may consume a user-supplied glossary as source
@@ -115,19 +117,23 @@ Implement GL1, GL5-GL7 through concise links or invocation notes in the consumer
 table. For `technical-note-series`, coherently update `SKILL.md` and the
 `research-and-reader-journey.md`, `drafting-and-coherence.md`, and
 `validation-and-review.md` references so none retains a canonical shared-term
-definition in the guide. Other consumers do not copy GL2 or the entry guidance.
-Preserve the single-pass ownership established by CTW2.
+definition in the guide. Update the three named `evidence-efficient-review`
+sections and the four named `supervised-implementer-loop` sections so glossary
+identity and relevant definitions survive agent delegation and handoff. Update
+`review-fixpoint` only to carry that state between leaf workflows. Consumers do
+not copy GL2 or the entry guidance. Preserve the single-pass ownership
+established by CTW2.
 
 ### S5 — Extend existing validation rather than creating another suite
 
-Implement GL8. Add D1-D2 to CTW's deterministic package checks, M1-M7 to its
+Implement GL8. Add D1-D2 to CTW's deterministic package checks, M1-M8 to its
 controlled model source-packet suite, and glossary-present and glossary-absent
 conditions to the existing V11 pilot. Keep all external identity, failure,
 freshness, and non-reuse rules under CTW10.
 
 ## Scenario portfolio
 
-M1-M7 use CTW's shared capture record and output scorer. Each run records the
+M1-M8 use CTW's shared capture record and output scorer. Each run records the
 exact skill revision, model/runtime identity, outer instructions, project
 guidance, glossary or absence evidence, source-packet hash, authorization
 boundary, output, and first failed GL contract. Private reasoning is not
@@ -136,14 +142,15 @@ captured or inferred.
 | Evidence | Class | Observable result and localization |
 |---|---|---|
 | D1 | Deterministic repository gate | The clear-writing package contains one linked glossary reference, valid relative links, and no standalone glossary skill or duplicate procedure. Failure localizes to GL1 or package authoring. |
-| D2 | Deterministic repository gate | Each changed consumer contains at most one concise glossary-authority link at its owning boundary and retains its prior semantic responsibility. Static searches also verify that the technical-note entrypoint and its three vocabulary references no longer claim a second canonical definition for project-wide terms. Failure localizes to GL7 and the named consumer authority. |
+| D2 | Deterministic repository gate | Each changed consumer contains concise glossary-authority links only at its owning boundaries and retains its prior semantic responsibility. Static checks verify the technical-note authority migration, review-contract and dossier integration, work-package and assignment integration, handoff continuity checks, and the absence of copied glossary procedures or a second final pass. Failure localizes to GL7 and the named consumer authority. |
 | M1 | Controlled model behavior | With no glossary and no placement instruction, the agent asks project-local versus look-aside before creating or persisting anything. It does not choose `docs/glossary.md` automatically. Failure localizes to GL2. |
 | M2 | Controlled model behavior | An existing selected glossary is used. When the file is absent but explicit user or repository guidance selects its future path, placement is treated as resolved without bypassing normal write authorization. Two unresolved plausible sources produce an authority question rather than an automatic merge. Failure localizes to GL2 precedence. |
 | M3 | Controlled model behavior | A stale glossary conflicts with code or an accepted contract. The artifact preserves semantic truth and reports the glossary conflict instead of rewriting the fact to match the entry. Failure localizes to GL3. |
 | M4 | Controlled model behavior | A necessary project concept receives one plain entry and aliases redirect to it; an ordinary engineering term does not receive an entry. No paragraph cap or italicization rule decides acceptance. Failure localizes to GL4. |
 | M5 | Controlled model behavior | Existing glossary terms remain consistent, but an unfamiliar reader still receives a local prerequisite explanation. An opt-out present in the initial instructions and a refusal in response to M1 both continue with local explanation, create no file, persist no term, and ask no further placement question. Failure localizes to GL2 precedence or GL5 fallback. |
 | M6 | Controlled model behavior | An authorized semantic change updates the owning entry, aliases, and in-scope dependent prose. It reports a known out-of-scope dependent with its stale term and semantic source without editing it. An unauthorized or semantically uncertain glossary change is reported without a write. Failure localizes to GL6 scope or source authority. |
-| M7 | Controlled model behavior | A project term has one canonical glossary identity while a technical note still introduces it where its reader needs it; a review preserves finding semantics; and an implementation handoff does not turn the label into a new mechanism. Each artifact receives no more than one final prose pass. Failure localizes to GL7 or the named consumer. |
+| M7 | Controlled model behavior | A review dossier records the selected glossary identity or opt-out. The independent reviewer reads material entries, uses the canonical terms in findings and correction directions, and preserves severity, evidence, and semantic-source authority when a glossary entry conflicts. Failure localizes to GL7's review boundary. |
+| M8 | Controlled model behavior | Before spawning an implementer, the parent resolves glossary state and gives the assignment only relevant term-to-semantic-source mappings. Later corrections and handoffs preserve those meanings; a newly needed term is reported as a candidate rather than silently invented or persisted, and no glossary label becomes a new mechanism. Failure localizes to GL7's supervised-agent boundary. |
 
 ## Evidence and completion
 
@@ -151,7 +158,7 @@ D1-D2 are deterministic package gates on the exact accepted revision. They can
 prove package composition and static ownership, not that a model follows the
 instructions.
 
-M1-M7 are controlled model compatibility evidence under CTW10. Runtime or
+M1-M8 are controlled model compatibility evidence under CTW10. Runtime or
 configuration unavailability leaves glossary behavior `capability-unconfirmed`;
 a valid output that violates a predeclared GL rubric is
 `product-contract-failure`. Initial evidence is non-reusable under the CTW
@@ -167,7 +174,7 @@ observational. No exact entry-length, glossary-size, or lookup limit is a
 completion gate.
 
 This glossary integration reaches specification `deterministic-fixed-point`
-only after a fresh independent review clears GL1-GL8, D1-D2, M1-M7 definitions,
+only after a fresh independent review clears GL1-GL8, D1-D2, M1-M8 definitions,
 the required specification cells, and all prior findings on the exact revision.
 The future implementation does not reach its deterministic fixed point until
 D1-D2 and the applicable CTW package gates pass. It is not `Done` until the
