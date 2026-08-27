@@ -55,14 +55,17 @@ repository location:
   --installed-skill "$HOME/.agents/skills/clear-technical-writing"
 ```
 
-Use `--help` to prepare or validate a capture and to run the synthetic adjacent
-case self-test. Capture preparation records the selected fixture's canonical
-source-packet hash and writes outside the repository by default. A scorer must
-record each criterion decision and its observable evidence; the helper checks
-completeness, consistency, first-failure localization, and M7/M8 event order.
-It does not judge prose quality. Package validation establishes V10 mechanical
-conformance and reports structural inputs relevant to D1, D2, and V9, but those
-three semantic ownership gates still require independent source review.
+Use `--help` to prepare, complete, or validate a capture and to run the
+synthetic adjacent-case self-test. Capture preparation records the selected
+fixture's canonical source-packet hash and writes outside the repository by
+default. A scorer must record each criterion decision and its observable
+evidence; the helper checks completeness, consistency, first-failure
+localization, and the M7/M8 actors, direct source access, material-entry
+coverage, lifecycle order, authorization fields, and matching scorecard
+evidence. It does not judge prose quality. Package validation establishes V10
+mechanical conformance and reports structural inputs relevant to D1, D2, and
+V9, but those three semantic ownership gates still require independent source
+review.
 
 ## Clear-Writing Scenarios
 
@@ -87,6 +90,13 @@ assignment; applicable corrections; review or slice handoffs; and final output.
 Record external actions and artifacts, not private reasoning. At each checkpoint,
 report the first failed GL contract and named lifecycle boundary.
 
+The M7 and M8 fixtures bind lifecycle roles to distinct observable actor IDs.
+For selected-source cases, the assigned reviewer or implementer records direct
+access to the exact material entries and their semantic-source mappings.
+Relevant scorer evidence repeats those mechanical facts so the helper can
+cross-check it against the trace. Meaning and prose quality remain manual
+judgments; never record private reasoning.
+
 | ID | Observable scenario and first failure boundary |
 |---|---|
 | M1 | With no glossary or placement instruction, ask project-local versus user-selected look-aside before creation or persistence; never choose `docs/glossary.md` automatically. |
@@ -105,13 +115,18 @@ report the first failed GL contract and named lifecycle boundary.
 | D1 | Independently review the source to verify one glossary authority, no standalone glossary skill, and no copied glossary procedure. The validator checks only the relevant package and link structure. |
 | D2 | Independently review changed consumers for retained semantic responsibilities, glossary-state continuity, and absence of a second process authority. The validator checks only declared link boundaries and destinations. |
 | V9 | Independently review each consumer's substantive authority and single leaf or carry-only outer boundary. The validator does not infer these properties from wording. |
-| V10 | Run the skill validator, rendered relative-link and anchor checks, long-reference Contents checks, fixture and capture-schema integrity, declared CTW9 link destinations, installation-link read-back, `git show --check`, and `git diff --check`. |
+| V10 | Run the skill validator, rendered relative-link and anchor checks, long-reference Contents checks, fixture and capture-schema integrity, one-level reference-role topology and declared CTW9 link destinations, installation-link read-back, `git show --check`, and `git diff --check`. |
 
 Deterministic gates prove repository composition only. They do not prove that a
 model follows instructions or that a person understands the output.
 Fixture source packets retain their supplied facts, unknowns, and exact
 correctness boundaries as explicit test inputs. Examples remain illustrations,
 not deterministic proof of generated behavior.
+
+The package-owned role manifest binds stable reference responsibilities and
+consumer destinations to the current files. Filenames are not correctness
+contracts: a one-level reference may be renamed, or compatible roles may share
+one file, when the manifest and rendered links are updated together.
 
 ## Human Evidence
 
@@ -128,6 +143,14 @@ generated, record the metric, direction, numeric threshold chosen for that
 commission, reader profile and sample size, randomization or counterbalancing
 method, and five-field answer key. The package supplies no default threshold.
 Require no factual regression.
+
+Create a V11 `prepared` record only after that complete protocol is recorded.
+After generation and scoring, use `complete-capture` with the same prepared
+record. Completion preserves its trial ID, source-packet hash, preparation
+timestamp, identities, settings, and commissioning values and records the
+prepared record's hash. Validate a completed V11 record with
+`validate-capture --prepared-capture PREPARED`; direct scored construction or
+post-prepare protocol changes are invalid.
 
 Missing evaluators, infrastructure failure, or an inconclusive sample leaves
 `human-comprehension-unconfirmed`; it does not fail deterministic gates or prove

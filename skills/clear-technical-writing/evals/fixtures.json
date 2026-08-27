@@ -598,20 +598,62 @@
         "review_target": {"finding_id": "P1-EVAL-07", "severity": "P1", "evidence": ["handoff.py:44 drops the accepted contract ID"], "semantic_owner": "handoff serializer"},
         "reviewer_identity_requirement": "fresh reviewer distinct from remediation author"
       },
+      "trace_contract": {
+        "role_bindings": {
+          "coordinator": "review-coordinator",
+          "remediation_author": "remediation-author",
+          "assigned_reviewer": "fresh-reviewer"
+        },
+        "distinct_roles": [["assigned_reviewer", "remediation_author"], ["assigned_reviewer", "coordinator"]],
+        "event_roles": {
+          "glossary_resolution": "coordinator",
+          "dossier": "coordinator",
+          "assignment": "coordinator",
+          "source_access": "assigned_reviewer",
+          "correction": "assigned_reviewer",
+          "review_handoff": "assigned_reviewer",
+          "final_output": "assigned_reviewer"
+        }
+      },
       "trace_cases": [
         {
           "case_id": "selected",
           "glossary_state": "selected",
           "required_events": ["glossary_resolution", "dossier", "assignment", "source_access", "correction", "review_handoff", "final_output"],
           "forbidden_events": ["private_reasoning"],
-          "ordered_pairs": [["glossary_resolution", "dossier"], ["dossier", "assignment"], ["assignment", "source_access"], ["source_access", "correction"], ["correction", "review_handoff"], ["review_handoff", "final_output"]]
+          "ordered_pairs": [["glossary_resolution", "dossier"], ["dossier", "assignment"], ["assignment", "source_access"], ["source_access", "correction"], ["correction", "review_handoff"], ["review_handoff", "final_output"]],
+          "source_access": {"required": true, "actor_role": "assigned_reviewer", "source": "docs/glossary.md", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}, {"term": "semantic owner", "semantic_source": "GL3"}]},
+          "event_details": {
+            "glossary_resolution": {"glossary_state": "selected", "source": "docs/glossary.md"},
+            "dossier": {"glossary_state": "selected", "source": "docs/glossary.md", "material_entries": [{"term": "leaf owner", "semantic_source": "CTW2"}, {"term": "semantic owner", "semantic_source": "GL3"}]},
+            "assignment": {"assigned_actor": "fresh-reviewer", "glossary_state": "selected"},
+            "source_access": {"access_mode": "direct", "source": "docs/glossary.md", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}, {"term": "semantic owner", "semantic_source": "GL3"}]},
+            "final_output": {"finding_id": "P1-EVAL-07", "severity": "P1", "evidence": ["handoff.py:44 drops the accepted contract ID"], "semantic_owner": "handoff serializer"}
+          },
+          "scorecard_evidence": {
+            "m7-resolution-and-dossier": {"glossary_state": "selected", "source": "docs/glossary.md"},
+            "m7-independent-source-access": {"actor_id": "fresh-reviewer", "access_mode": "direct", "source": "docs/glossary.md", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}, {"term": "semantic owner", "semantic_source": "GL3"}]},
+            "m7-final-review": {"finding_id": "P1-EVAL-07", "severity": "P1", "evidence": ["handoff.py:44 drops the accepted contract ID"], "semantic_owner": "handoff serializer"}
+          }
         },
         {
           "case_id": "opt-out",
           "glossary_state": "opt-out",
           "required_events": ["glossary_resolution", "dossier", "assignment", "correction", "review_handoff", "final_output"],
           "forbidden_events": ["source_access", "placement_question", "glossary_write", "private_reasoning"],
-          "ordered_pairs": [["glossary_resolution", "dossier"], ["dossier", "assignment"], ["assignment", "correction"], ["correction", "review_handoff"], ["review_handoff", "final_output"]]
+          "ordered_pairs": [["glossary_resolution", "dossier"], ["dossier", "assignment"], ["assignment", "correction"], ["correction", "review_handoff"], ["review_handoff", "final_output"]],
+          "source_access": {"required": false, "actor_role": "assigned_reviewer", "source": null, "entries": []},
+          "event_details": {
+            "glossary_resolution": {"glossary_state": "opt-out", "source": null},
+            "dossier": {"glossary_state": "opt-out", "source": null, "material_entries": []},
+            "assignment": {"assigned_actor": "fresh-reviewer", "glossary_state": "opt-out"},
+            "final_output": {"finding_id": "P1-EVAL-07", "severity": "P1", "evidence": ["handoff.py:44 drops the accepted contract ID"], "semantic_owner": "handoff serializer"}
+          },
+          "scorecard_evidence": {
+            "m7-resolution-and-dossier": {"glossary_state": "opt-out", "source": null},
+            "m7-final-review": {"finding_id": "P1-EVAL-07", "severity": "P1", "evidence": ["handoff.py:44 drops the accepted contract ID"], "semantic_owner": "handoff serializer"},
+            "m7-opt-out": {"glossary_state": "opt-out", "forbidden_events_absent": ["source_access", "placement_question", "glossary_write"]}
+          }
         }
       ],
       "expected_material_outcomes": [
@@ -653,9 +695,26 @@
         "cases": [
           {"case_id": "selected-candidate", "glossary_state": "selected", "source": "docs/glossary.md", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "new_term": {"term": "evidence capsule", "meaning_authorized": true, "location_authorized": true, "edit_scope_authorized": false}},
           {"case_id": "opt-out", "glossary_state": "opt-out", "source": null, "term_mappings": [], "new_term": null},
-          {"case_id": "authorized-update", "glossary_state": "selected", "source": "docs/glossary.md", "term_mappings": [{"term": "run witness", "semantic_source": "accepted package contract PKG-9"}], "new_term": {"term": "run witness", "meaning_authorized": true, "location_authorized": true, "edit_scope_authorized": true}}
+          {"case_id": "authorized-update", "glossary_state": "selected", "source": "docs/glossary.md", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "new_term": {"term": "run witness", "meaning": "the observable artifact that records one package run's accepted evidence", "semantic_source": "accepted package contract PKG-9", "authorized_location": "docs/glossary.md", "authorized_edit_scope": "one run-witness entry", "meaning_authorized": true, "location_authorized": true, "edit_scope_authorized": true}}
         ],
         "package_contract": {"ids": ["PKG-8", "PKG-9"], "prohibited_mechanisms": ["new field", "new state", "new limit", "new component"]}
+      },
+      "trace_contract": {
+        "role_bindings": {
+          "supervising_parent": "supervising-parent",
+          "assigned_implementer": "persistent-implementer"
+        },
+        "distinct_roles": [["supervising_parent", "assigned_implementer"]],
+        "event_roles": {
+          "glossary_resolution": "supervising_parent",
+          "work_package": "supervising_parent",
+          "assignment": "supervising_parent",
+          "source_access": "assigned_implementer",
+          "correction": "supervising_parent",
+          "glossary_write": "assigned_implementer",
+          "slice_handoff": "assigned_implementer",
+          "final_output": "supervising_parent"
+        }
       },
       "trace_cases": [
         {
@@ -663,21 +722,71 @@
           "glossary_state": "selected",
           "required_events": ["glossary_resolution", "work_package", "assignment", "source_access", "correction", "slice_handoff", "final_output"],
           "forbidden_events": ["glossary_write", "private_reasoning"],
-          "ordered_pairs": [["glossary_resolution", "work_package"], ["work_package", "assignment"], ["assignment", "source_access"], ["source_access", "correction"], ["correction", "slice_handoff"], ["slice_handoff", "final_output"]]
+          "ordered_pairs": [["glossary_resolution", "work_package"], ["work_package", "assignment"], ["assignment", "source_access"], ["source_access", "correction"], ["correction", "slice_handoff"], ["slice_handoff", "final_output"]],
+          "source_access": {"required": true, "actor_role": "assigned_implementer", "source": "docs/glossary.md", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
+          "authorization": {"term": "evidence capsule", "meaning_authorized": true, "location_authorized": true, "edit_scope_authorized": false, "expected_action": "candidate"},
+          "event_details": {
+            "glossary_resolution": {"glossary_state": "selected", "source": "docs/glossary.md"},
+            "work_package": {"glossary_state": "selected", "source": "docs/glossary.md", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
+            "assignment": {"assigned_actor": "persistent-implementer", "glossary_state": "selected", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
+            "source_access": {"access_mode": "direct", "source": "docs/glossary.md", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
+            "correction": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "candidate"},
+            "slice_handoff": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "candidate"},
+            "final_output": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "candidate", "mechanism_changes": []}
+          },
+          "scorecard_evidence": {
+            "m8-work-package-transfer": {"glossary_state": "selected", "source": "docs/glossary.md", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "source_access": {"actor_id": "persistent-implementer", "access_mode": "direct", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}]}},
+            "m8-continuity": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "candidate"},
+            "m8-authorization": {"term": "evidence capsule", "meaning_authorized": true, "location_authorized": true, "edit_scope_authorized": false, "expected_action": "candidate"},
+            "m8-no-mechanism": {"mechanism_changes": []}
+          }
         },
         {
           "case_id": "opt-out",
           "glossary_state": "opt-out",
           "required_events": ["glossary_resolution", "work_package", "assignment", "slice_handoff", "final_output"],
           "forbidden_events": ["placement_question", "source_access", "glossary_write", "term_persistence", "private_reasoning"],
-          "ordered_pairs": [["glossary_resolution", "work_package"], ["work_package", "assignment"], ["assignment", "slice_handoff"], ["slice_handoff", "final_output"]]
+          "ordered_pairs": [["glossary_resolution", "work_package"], ["work_package", "assignment"], ["assignment", "slice_handoff"], ["slice_handoff", "final_output"]],
+          "source_access": {"required": false, "actor_role": "assigned_implementer", "source": null, "entries": []},
+          "authorization": {"term": null, "meaning_authorized": false, "location_authorized": false, "edit_scope_authorized": false, "expected_action": "none"},
+          "event_details": {
+            "glossary_resolution": {"glossary_state": "opt-out", "source": null},
+            "work_package": {"glossary_state": "opt-out", "source": null, "term_mappings": []},
+            "assignment": {"assigned_actor": "persistent-implementer", "glossary_state": "opt-out", "term_mappings": []},
+            "slice_handoff": {"term_mappings": [], "term_action": "none"},
+            "final_output": {"term_mappings": [], "term_action": "none", "mechanism_changes": []}
+          },
+          "scorecard_evidence": {
+            "m8-work-package-transfer": {"glossary_state": "opt-out", "source": null, "term_mappings": []},
+            "m8-continuity": {"term_mappings": [], "term_action": "none"},
+            "m8-no-mechanism": {"mechanism_changes": []},
+            "m8-opt-out": {"glossary_state": "opt-out", "forbidden_events_absent": ["placement_question", "source_access", "glossary_write", "term_persistence"]}
+          }
         },
         {
           "case_id": "authorized-update",
           "glossary_state": "selected",
           "required_events": ["glossary_resolution", "work_package", "assignment", "source_access", "correction", "glossary_write", "slice_handoff", "final_output"],
           "forbidden_events": ["private_reasoning", "mechanism_invention"],
-          "ordered_pairs": [["glossary_resolution", "work_package"], ["work_package", "assignment"], ["assignment", "source_access"], ["source_access", "correction"], ["correction", "glossary_write"], ["glossary_write", "slice_handoff"], ["slice_handoff", "final_output"]]
+          "ordered_pairs": [["glossary_resolution", "work_package"], ["work_package", "assignment"], ["assignment", "source_access"], ["source_access", "correction"], ["correction", "glossary_write"], ["glossary_write", "slice_handoff"], ["slice_handoff", "final_output"]],
+          "source_access": {"required": true, "actor_role": "assigned_implementer", "source": "docs/glossary.md", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
+          "authorization": {"term": "run witness", "semantic_source": "accepted package contract PKG-9", "authorized_location": "docs/glossary.md", "authorized_edit_scope": "one run-witness entry", "meaning_authorized": true, "location_authorized": true, "edit_scope_authorized": true, "expected_action": "glossary-write"},
+          "event_details": {
+            "glossary_resolution": {"glossary_state": "selected", "source": "docs/glossary.md"},
+            "work_package": {"glossary_state": "selected", "source": "docs/glossary.md", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
+            "assignment": {"assigned_actor": "persistent-implementer", "glossary_state": "selected", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
+            "source_access": {"access_mode": "direct", "source": "docs/glossary.md", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}]},
+            "correction": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "glossary-write"},
+            "glossary_write": {"term": "run witness", "semantic_source": "accepted package contract PKG-9", "authorized_location": "docs/glossary.md", "authorized_edit_scope": "one run-witness entry", "meaning_authorized": true, "location_authorized": true, "edit_scope_authorized": true},
+            "slice_handoff": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "glossary-write"},
+            "final_output": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "glossary-write", "mechanism_changes": []}
+          },
+          "scorecard_evidence": {
+            "m8-work-package-transfer": {"glossary_state": "selected", "source": "docs/glossary.md", "term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "source_access": {"actor_id": "persistent-implementer", "access_mode": "direct", "entries": [{"term": "leaf owner", "semantic_source": "CTW2"}]}},
+            "m8-continuity": {"term_mappings": [{"term": "leaf owner", "semantic_source": "CTW2"}], "term_action": "glossary-write"},
+            "m8-authorization": {"term": "run witness", "semantic_source": "accepted package contract PKG-9", "authorized_location": "docs/glossary.md", "authorized_edit_scope": "one run-witness entry", "meaning_authorized": true, "location_authorized": true, "edit_scope_authorized": true, "expected_action": "glossary-write"},
+            "m8-no-mechanism": {"mechanism_changes": []}
+          }
         }
       ],
       "expected_material_outcomes": [
@@ -696,7 +805,7 @@
       "scorer": {
         "method": "ordered-delegation-trace-and-authorization-rubric",
         "criteria": [
-          {"id": "m8-work-package-transfer", "description": "Check resolution before spawning and state plus material mappings in work package and assignment.", "observable_fields": ["trace.glossary_resolution", "trace.work_package", "trace.assignment"], "contract_ids": ["GL7"], "failure_boundary": "work-package-or-assignment-transfer"},
+          {"id": "m8-work-package-transfer", "description": "Check resolution before spawning, state plus material mappings in work package and assignment, and direct implementer source access.", "observable_fields": ["trace.glossary_resolution", "trace.work_package", "trace.assignment", "trace.source_access"], "contract_ids": ["GL7"], "failure_boundary": "work-package-or-assignment-transfer"},
           {"id": "m8-continuity", "description": "Check mapping continuity through corrections, slice handoffs, and final output.", "observable_fields": ["trace.correction", "trace.slice_handoff", "trace.final_output"], "contract_ids": ["GL7"], "failure_boundary": "correction-or-handoff-continuity"},
           {"id": "m8-authorization", "description": "Check candidate-only and authorized-write branches against meaning, location, and edit scope.", "observable_fields": ["term_candidates", "glossary_writes", "authorization"], "contract_ids": ["GL6", "GL7"], "failure_boundary": "new-term-authorization"},
           {"id": "m8-no-mechanism", "description": "Check that no field, state, limit, or component appears without a semantic owner.", "observable_fields": ["mechanism_changes", "semantic_sources"], "contract_ids": ["GL7"], "failure_boundary": "mechanism-invention"},

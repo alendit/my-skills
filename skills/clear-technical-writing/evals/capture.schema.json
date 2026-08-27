@@ -24,9 +24,30 @@
     "scorecard",
     "status",
     "observable_trace",
-    "commissioning_protocol"
+    "commissioning_protocol",
+    "preparation_record_hash"
   ],
   "timestamp_fields": ["prepared_at", "completed_at"],
+  "v11_lifecycle": {
+    "prepared_requires_complete_commissioning": true,
+    "completion_requires_prepared_predecessor": true,
+    "preparation_hash_algorithm": "sha256-canonical-json",
+    "immutable_fields": [
+      "fixture_id",
+      "evidence_class",
+      "trial_run_id",
+      "skill_revision",
+      "model_id",
+      "runtime_id",
+      "outer_instructions",
+      "source_packet_hash",
+      "generation_settings",
+      "tool_context_configuration",
+      "trial_count",
+      "timestamps.prepared_at",
+      "commissioning_protocol"
+    ]
+  },
   "status_rules": {
     "prepared": {
       "evidence_classes": ["controlled-model", "blinded-human"],

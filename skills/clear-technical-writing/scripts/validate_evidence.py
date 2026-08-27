@@ -49,41 +49,13 @@ CHANGED_CONSUMER_MARKDOWN = (
     "skills/review-fixpoint/SKILL.md",
 )
 
-# CTW9 declares these composition links. Validate only rendered destinations
-# and counts, never the meaning of surrounding prose.
-DECLARED_STRUCTURAL_LINKS = {
-    "skills/clear-technical-writing/SKILL.md": {
-        "references/artifact-routing.md": 1,
-        "references/revision-after-change.md": 1,
-        "references/examples.md": 1,
-        "references/research-rationale.md": 1,
-        "references/validation-scenarios.md": 1,
-        "references/project-glossaries.md": 1,
-    },
-    "skills/technical-note-series/SKILL.md": {"../clear-technical-writing/SKILL.md": 1},
-    "skills/technical-note-series/references/research-and-reader-journey.md": {
-        "../../clear-technical-writing/references/project-glossaries.md": 1
-    },
-    "skills/project-architecture-doc/SKILL.md": {
-        "../clear-technical-writing/SKILL.md": 1,
-        "../clear-technical-writing/references/project-glossaries.md": 1,
-    },
-    "skills/add-architectural-guidances/SKILL.md": {
-        "../clear-technical-writing/SKILL.md": 1,
-        "../clear-technical-writing/references/project-glossaries.md": 1,
-    },
-    "skills/evidence-efficient-review/SKILL.md": {
-        "../clear-technical-writing/SKILL.md": 1,
-        "../clear-technical-writing/references/project-glossaries.md": 1,
-    },
-    "skills/supervised-implementer-loop/SKILL.md": {
-        "../clear-technical-writing/SKILL.md": 1,
-        "../clear-technical-writing/references/project-glossaries.md": 1,
-    },
-    "skills/review-fixpoint/SKILL.md": {
-        "../clear-technical-writing/SKILL.md": 1,
-        "../clear-technical-writing/references/project-glossaries.md": 1,
-    },
+EXPECTED_REFERENCE_ROLES = {
+    "artifact-routing",
+    "revision-after-change",
+    "examples",
+    "research-rationale",
+    "validation-scenarios",
+    "project-glossaries",
 }
 V11_ANSWER_FIELDS = ("before", "change", "correctness", "evidence", "requested_action")
 
@@ -128,6 +100,32 @@ def nonempty_string(value: Any) -> bool:
 
 def observable_evidence(value: Any) -> bool:
     return nonempty_string(value) or isinstance(value, (list, dict)) and bool(value)
+
+
+def canonical_items(values: Any) -> list[str] | None:
+    if not isinstance(values, list):
+        return None
+    return sorted(json.dumps(item, sort_keys=True, separators=(",", ":")) for item in values)
+
+
+def contains_expected(actual: Any, expected: Any) -> bool:
+    if isinstance(expected, dict):
+        return isinstance(actual, dict) and all(
+            key in actual and contains_expected(actual[key], value)
+            for key, value in expected.items()
+        )
+    if isinstance(expected, list):
+        return canonical_items(actual) == canonical_items(expected)
+    return actual == expected
+
+
+def nested_value(value: Any, dotted_path: str) -> Any:
+    current = value
+    for component in dotted_path.split("."):
+        if not isinstance(current, dict):
+            return None
+        current = current.get(component)
+    return current
 
 
 def find_forbidden_keys(value: Any, forbidden: set[str], location: str = "$") -> list[str]:
@@ -186,7 +184,7 @@ def validate_schema(schema: Any) -> list[str]:
     }:
         errors.append("capture schema must limit validation to one fixture run without suite confirmation")
     for field in (
-        "required_fields", "timestamp_fields", "status_rules", "scorecard_required_fields",
+        "required_fields", "timestamp_fields", "v11_lifecycle", "status_rules", "scorecard_required_fields",
         "criterion_result_required_fields", "trace_event_required_fields", "forbidden_private_fields",
     ):
         if not schema.get(field):
@@ -198,6 +196,15 @@ def validate_schema(schema: Any) -> list[str]:
     actual = set(schema.get("status_rules", {}))
     if actual != expected:
         errors.append(f"capture schema statuses must be {sorted(expected)}, got {sorted(actual)}")
+    lifecycle = schema.get("v11_lifecycle", {})
+    if lifecycle.get("prepared_requires_complete_commissioning") is not True:
+        errors.append("capture schema must require complete V11 commissioning before prepared")
+    if lifecycle.get("completion_requires_prepared_predecessor") is not True:
+        errors.append("capture schema must require a V11 prepared predecessor for completion")
+    if lifecycle.get("preparation_hash_algorithm") != "sha256-canonical-json":
+        errors.append("capture schema must bind V11 completion to canonical prepared-record SHA-256")
+    if not lifecycle.get("immutable_fields"):
+        errors.append("capture schema must declare immutable V11 preparation fields")
     return errors
 
 
@@ -206,11 +213,41 @@ def validate_trace_cases(fixture: dict[str, Any], location: str) -> list[str]:
     trace_cases = fixture.get("trace_cases")
     if not isinstance(trace_cases, list) or not trace_cases:
         return [f"{location}.trace_cases must be a non-empty list"]
-    source_ids = {
-        case.get("case_id") for case in fixture.get("source_packet", {}).get("cases", [])
+    source_cases = {
+        case.get("case_id"): case for case in fixture.get("source_packet", {}).get("cases", [])
         if isinstance(case, dict)
     }
+    source_ids = set(source_cases)
+    trace_contract = fixture.get("trace_contract")
+    if not isinstance(trace_contract, dict):
+        return [f"{location}.trace_contract must be an object"]
+    roles = trace_contract.get("role_bindings")
+    event_roles = trace_contract.get("event_roles")
+    distinct_roles = trace_contract.get("distinct_roles")
+    if not isinstance(roles, dict) or not roles or not all(
+        nonempty_string(role) and nonempty_string(actor) for role, actor in roles.items()
+    ):
+        errors.append(f"{location}.trace_contract.role_bindings must map roles to actor IDs")
+        roles = {}
+    if not isinstance(event_roles, dict) or not event_roles:
+        errors.append(f"{location}.trace_contract.event_roles must be non-empty")
+        event_roles = {}
+    elif any(not nonempty_string(event) or role not in roles for event, role in event_roles.items()):
+        errors.append(f"{location}.trace_contract.event_roles must reference declared roles")
+    if not isinstance(distinct_roles, list) or not distinct_roles:
+        errors.append(f"{location}.trace_contract.distinct_roles must be non-empty")
+        distinct_roles = []
+    for pair in distinct_roles:
+        if not isinstance(pair, list) or len(pair) != 2 or any(role not in roles for role in pair):
+            errors.append(f"{location}.trace_contract.distinct_roles contains an invalid pair: {pair}")
+        elif roles[pair[0]] == roles[pair[1]]:
+            errors.append(f"{location}.trace_contract roles must be distinct: {pair}")
+    criterion_ids = {
+        criterion.get("id") for criterion in fixture.get("scorer", {}).get("criteria", [])
+        if isinstance(criterion, dict)
+    }
     trace_ids: set[str] = set()
+    required_event_types: set[str] = set()
     for index, case in enumerate(trace_cases):
         here = f"{location}.trace_cases[{index}]"
         if not isinstance(case, dict):
@@ -231,6 +268,7 @@ def validate_trace_cases(fixture: dict[str, Any], location: str) -> list[str]:
         if not isinstance(required, list) or not required:
             errors.append(f"{here}.required_events must be non-empty")
             continue
+        required_event_types.update(required)
         if not isinstance(forbidden, list):
             errors.append(f"{here}.forbidden_events must be a list")
             continue
@@ -248,8 +286,68 @@ def validate_trace_cases(fixture: dict[str, Any], location: str) -> list[str]:
             for event_type in ("placement_question", "source_access", "glossary_write"):
                 if event_type not in forbidden:
                     errors.append(f"{here} opt-out must forbid {event_type}")
+        source_access = case.get("source_access")
+        if not isinstance(source_access, dict):
+            errors.append(f"{here}.source_access must be an object")
+        else:
+            if source_access.get("required") not in {True, False}:
+                errors.append(f"{here}.source_access.required must be boolean")
+            if source_access.get("actor_role") not in roles:
+                errors.append(f"{here}.source_access.actor_role must reference a declared role")
+            expected_entries = source_cases.get(case_id, {}).get(
+                "material_entries", source_cases.get(case_id, {}).get("term_mappings", [])
+            )
+            if canonical_items(source_access.get("entries")) != canonical_items(expected_entries):
+                errors.append(f"{here}.source_access.entries must exactly cover the source case mappings")
+            if source_access.get("source") != source_cases.get(case_id, {}).get("source"):
+                errors.append(f"{here}.source_access.source must match the source case")
+            if case.get("glossary_state") == "selected" and source_access.get("required") is not True:
+                errors.append(f"{here} selected glossary must require direct source access")
+            if case.get("glossary_state") == "opt-out" and source_access.get("required") is not False:
+                errors.append(f"{here} opt-out must not require source access")
+        event_details = case.get("event_details")
+        if not isinstance(event_details, dict) or not event_details:
+            errors.append(f"{here}.event_details must be non-empty")
+        elif any(event_type not in required for event_type in event_details):
+            errors.append(f"{here}.event_details may describe only required events")
+        scorecard_evidence = case.get("scorecard_evidence")
+        if not isinstance(scorecard_evidence, dict) or not scorecard_evidence:
+            errors.append(f"{here}.scorecard_evidence must be non-empty")
+        elif any(criterion_id not in criterion_ids for criterion_id in scorecard_evidence):
+            errors.append(f"{here}.scorecard_evidence references an unknown criterion")
+        if fixture.get("id") == "M8":
+            authorization = case.get("authorization")
+            new_term = source_cases.get(case_id, {}).get("new_term")
+            if not isinstance(authorization, dict):
+                errors.append(f"{here}.authorization must be an object")
+            else:
+                for field in ("meaning_authorized", "location_authorized", "edit_scope_authorized"):
+                    expected = bool(new_term and new_term.get(field))
+                    if authorization.get(field) is not expected:
+                        errors.append(f"{here}.authorization.{field} must match the source case")
+                expected_term = new_term.get("term") if isinstance(new_term, dict) else None
+                if authorization.get("term") != expected_term:
+                    errors.append(f"{here}.authorization.term must match the source case")
+                for field in ("semantic_source", "authorized_location", "authorized_edit_scope"):
+                    if isinstance(new_term, dict) and field in new_term and authorization.get(field) != new_term[field]:
+                        errors.append(f"{here}.authorization.{field} must match the source case")
+                fully_authorized = bool(new_term) and all(
+                    new_term.get(field) is True
+                    for field in ("meaning_authorized", "location_authorized", "edit_scope_authorized")
+                )
+                if fully_authorized and not all(
+                    nonempty_string(new_term.get(field))
+                    for field in ("meaning", "semantic_source", "authorized_location", "authorized_edit_scope")
+                ):
+                    errors.append(f"{here} fully authorized term must declare meaning, source, location, and edit scope")
+                expected_action = "glossary-write" if fully_authorized else "candidate" if new_term else "none"
+                if authorization.get("expected_action") != expected_action:
+                    errors.append(f"{here}.authorization.expected_action must be {expected_action}")
     if trace_ids != source_ids:
         errors.append(f"{location}.trace_cases IDs {sorted(trace_ids)} do not match source cases {sorted(source_ids)}")
+    missing_role_events = sorted(required_event_types - set(event_roles))
+    if missing_role_events:
+        errors.append(f"{location}.trace_contract.event_roles lacks required events: {missing_role_events}")
     return errors
 
 
@@ -467,6 +565,117 @@ def relative_link_errors(paths: Iterable[Path], repo_root: Path) -> tuple[list[s
     return errors, checked
 
 
+def resolved_link_targets(path: Path) -> list[Path]:
+    return [
+        (path if not target.partition("#")[0] else path.parent / target.partition("#")[0]).resolve()
+        for _, target in rendered_relative_links(path)
+    ]
+
+
+def validate_package_roles(
+    repo_root: Path, skill_root: Path, manifest: Any
+) -> tuple[list[str], dict[str, int], set[Path]]:
+    errors: list[str] = []
+    counts = {"reference_role_bindings": 0, "consumer_boundary_bindings": 0}
+    referenced_paths: set[Path] = set()
+    if not isinstance(manifest, dict):
+        return ["package role manifest must be an object"], counts, referenced_paths
+    if manifest.get("schema_version") != 1:
+        errors.append("package role manifest schema_version must be 1")
+    entrypoint_value = manifest.get("entrypoint")
+    if not nonempty_string(entrypoint_value):
+        errors.append("package role manifest entrypoint must be non-empty")
+        return errors, counts, referenced_paths
+    entrypoint_relative = Path(entrypoint_value)
+    if entrypoint_relative.is_absolute() or len(entrypoint_relative.parts) != 1:
+        errors.append("package role manifest entrypoint must be one file at the skill root")
+    entrypoint = (skill_root / entrypoint_relative).resolve()
+    if not entrypoint.is_file():
+        errors.append(f"package role entrypoint does not exist: {entrypoint_value}")
+
+    roles = manifest.get("reference_roles")
+    if not isinstance(roles, dict) or set(roles) != EXPECTED_REFERENCE_ROLES:
+        actual = sorted(roles) if isinstance(roles, dict) else []
+        errors.append(f"package reference roles must be {sorted(EXPECTED_REFERENCE_ROLES)}, got {actual}")
+        roles = {}
+    role_destinations: dict[str, set[Path]] = {"entrypoint": {entrypoint}}
+    for role, raw_paths in roles.items():
+        if not isinstance(raw_paths, list) or not raw_paths:
+            errors.append(f"package reference role {role} must bind at least one path")
+            continue
+        destinations: set[Path] = set()
+        for raw_path in raw_paths:
+            counts["reference_role_bindings"] += 1
+            if not nonempty_string(raw_path):
+                errors.append(f"package reference role {role} contains an empty path")
+                continue
+            relative = Path(raw_path)
+            if relative.is_absolute() or len(relative.parts) != 2 or relative.parts[0] != "references" or relative.suffix.lower() != ".md":
+                errors.append(f"package reference role {role} path must be one-level Markdown under references/: {raw_path}")
+                continue
+            destination = (skill_root / relative).resolve()
+            if not destination.is_file():
+                errors.append(f"package reference role {role} target does not exist: {raw_path}")
+            destinations.add(destination)
+            referenced_paths.add(destination)
+        role_destinations[role] = destinations
+
+    reference_root = skill_root / "references"
+    nested_references = sorted(
+        path.relative_to(skill_root).as_posix()
+        for path in reference_root.rglob("*.md")
+        if path.parent != reference_root
+    ) if reference_root.exists() else []
+    if nested_references:
+        errors.append(f"package references must remain one level deep: {nested_references}")
+    discovered_references = set(reference_root.glob("*.md")) if reference_root.exists() else set()
+    if referenced_paths != {path.resolve() for path in discovered_references}:
+        undeclared = sorted(
+            path.relative_to(skill_root).as_posix()
+            for path in discovered_references if path.resolve() not in referenced_paths
+        )
+        missing = sorted(
+            path.relative_to(skill_root).as_posix()
+            for path in referenced_paths if path not in {item.resolve() for item in discovered_references}
+        )
+        errors.append(f"package reference-role coverage mismatch; undeclared={undeclared}, missing={missing}")
+
+    if entrypoint.is_file():
+        entry_targets = resolved_link_targets(entrypoint)
+        for destination in referenced_paths:
+            if entry_targets.count(destination) != 1:
+                errors.append(
+                    f"package entrypoint must render one link to declared reference {destination.relative_to(skill_root)}"
+                )
+
+    boundaries = manifest.get("consumer_boundaries")
+    if not isinstance(boundaries, list):
+        errors.append("package role manifest consumer_boundaries must be a list")
+        boundaries = []
+    for index, boundary in enumerate(boundaries):
+        if not isinstance(boundary, dict):
+            errors.append(f"consumer_boundaries[{index}] must be an object")
+            continue
+        source_value = boundary.get("source")
+        role = boundary.get("destination_role")
+        expected_count = boundary.get("count")
+        if not nonempty_string(source_value) or role not in role_destinations or not isinstance(expected_count, int) or expected_count < 1:
+            errors.append(f"consumer_boundaries[{index}] has invalid source, destination_role, or count")
+            continue
+        source = (repo_root / source_value).resolve()
+        if not source.is_file():
+            errors.append(f"consumer boundary source does not exist: {source_value}")
+            continue
+        counts["consumer_boundary_bindings"] += 1
+        allowed = role_destinations[role]
+        actual_count = sum(target in allowed for target in resolved_link_targets(source))
+        if actual_count != expected_count:
+            errors.append(
+                f"consumer boundary {source_value} must render {expected_count} link(s) to role {role}, got {actual_count}"
+            )
+    return errors, counts, referenced_paths
+
+
 def run_command(command: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
     return subprocess.run(command, cwd=cwd, text=True, capture_output=True, check=False)
 
@@ -491,6 +700,7 @@ def validate_package(args: argparse.Namespace) -> int:
     try:
         manifest = load_json(skill_root / "evals/fixtures.json")
         schema = load_json(skill_root / "evals/capture.schema.json")
+        role_manifest = load_json(skill_root / "evals/package-roles.json")
     except ValueError as exc:
         print(f"error: [V10] {exc}", file=sys.stderr)
         emit({"command": "validate-package", "status": "fail", "errors": [str(exc)]})
@@ -499,11 +709,13 @@ def validate_package(args: argparse.Namespace) -> int:
     errors.extend(f"[V10] {item}" for item in validate_schema(schema))
     counts["fixtures"] = len(manifest.get("fixtures", []))
 
+    role_errors, role_counts, role_paths = validate_package_roles(repo_root, skill_root, role_manifest)
+    errors.extend(f"[V10] {item}" for item in role_errors)
+    counts.update(role_counts)
+
     required_files = {
-        "SKILL.md", "references/artifact-routing.md", "references/revision-after-change.md",
-        "references/examples.md", "references/research-rationale.md",
-        "references/validation-scenarios.md", "references/project-glossaries.md",
-        "evals/fixtures.json", "evals/capture.schema.json", "scripts/validate_evidence.py",
+        "SKILL.md", "evals/fixtures.json", "evals/capture.schema.json",
+        "evals/package-roles.json", "scripts/validate_evidence.py",
     }
     missing_files = sorted(item for item in required_files if not (skill_root / item).is_file())
     if missing_files:
@@ -511,6 +723,7 @@ def validate_package(args: argparse.Namespace) -> int:
     if (skill_root / "scripts/validate_evidence.py").is_file() and not (skill_root / "scripts/validate_evidence.py").stat().st_mode & 0o111:
         errors.append("[V10] deterministic entrypoint is not executable")
     package_text_files = [skill_root / item for item in required_files if (skill_root / item).is_file()]
+    package_text_files.extend(role_paths)
     errors.extend(f"[V10] {item}" for item in whitespace_errors(package_text_files, repo_root))
     counts["package_text_files_whitespace_checked"] = len(package_text_files)
 
@@ -545,16 +758,6 @@ def validate_package(args: argparse.Namespace) -> int:
             if not any(re.match(r"^#{1,6} +(?:table of )?contents\s*$", line, re.I) for line in lines):
                 errors.append(f"[V10] reference over 100 lines lacks a Contents heading: {path.relative_to(repo_root)}")
     counts["references_over_100_lines"] = long_references
-
-    declared_links = 0
-    for relative, requirements in DECLARED_STRUCTURAL_LINKS.items():
-        targets = [target for _, target in rendered_relative_links(repo_root / relative)]
-        for target, expected_count in requirements.items():
-            declared_links += 1
-            actual_count = targets.count(target)
-            if actual_count != expected_count:
-                errors.append(f"[V10] {relative} must render {target} {expected_count} time(s), got {actual_count}")
-    counts["declared_structural_links"] = declared_links
 
     standalone = sorted(
         path.name for path in (repo_root / "skills").iterdir()
@@ -649,6 +852,7 @@ def build_capture(
     output: str | None = None, scores: dict[str, Any] | None = None,
     failure_kind: str | None = None, trace: list[dict[str, Any]] | None = None,
     commissioning_protocol: dict[str, Any] | None = None,
+    preparation_record_hash: str | None = None,
 ) -> dict[str, Any]:
     now = utc_now()
     return {
@@ -671,6 +875,7 @@ def build_capture(
         "status": {"state": status, "failure_kind": failure_kind},
         "observable_trace": trace or [],
         "commissioning_protocol": commissioning_protocol,
+        "preparation_record_hash": preparation_record_hash,
     }
 
 
@@ -687,17 +892,12 @@ def parse_timestamp(value: Any) -> datetime | None:
 def validate_commissioning_protocol(capture: dict[str, Any], fixture: dict[str, Any], prepared_at: datetime | None) -> list[str]:
     errors: list[str] = []
     protocol = capture.get("commissioning_protocol")
-    state = capture.get("status", {}).get("state")
     if fixture_lane(fixture["id"]) != "V11":
         if protocol is not None:
             errors.append("non-V11 capture commissioning_protocol must be null")
         return errors
-    if state == "prepared":
-        if protocol is not None and not isinstance(protocol, dict):
-            errors.append("prepared V11 commissioning_protocol must be an object or null")
-        return errors
     if not isinstance(protocol, dict):
-        return ["V11 capture cannot leave prepared without a commissioning_protocol"]
+        return ["V11 capture requires a complete pre-generation commissioning_protocol before prepared"]
     required = {
         "recorded_at", "recorded_before_generation", "minimum_material_improvement",
         "reader_sample", "presentation", "answer_key",
@@ -782,30 +982,79 @@ def validate_trace(capture: dict[str, Any], fixture: dict[str, Any], schema: dic
     expected_ids = {case["case_id"] for case in fixture.get("trace_cases", [])}
     if set(events_by_case) != expected_ids:
         errors.append(f"observable_trace case IDs must be {sorted(expected_ids)}, got {sorted(str(value) for value in events_by_case)}")
+    trace_contract = fixture["trace_contract"]
+    role_bindings = trace_contract["role_bindings"]
+    event_roles = trace_contract["event_roles"]
+    for left, right in trace_contract["distinct_roles"]:
+        if role_bindings[left] == role_bindings[right]:
+            errors.append(f"trace roles {left} and {right} must resolve to distinct actors")
+    scorecard_results = {
+        result.get("criterion_id"): result
+        for result in capture.get("scorecard", {}).get("criteria", [])
+        if isinstance(result, dict)
+    }
     for case in fixture.get("trace_cases", []):
         case_id = case["case_id"]
         events = events_by_case.get(case_id, [])
-        positions: dict[str, list[int]] = {}
+        events_by_type: dict[str, list[dict[str, Any]]] = {}
         for event in events:
-            positions.setdefault(event["event_type"], []).append(event["sequence"])
+            event_type = event["event_type"]
+            events_by_type.setdefault(event_type, []).append(event)
+            role = event_roles.get(event_type)
+            if role is None:
+                errors.append(f"trace case {case_id} event {event_type} has no declared actor role")
+            elif event["actor_id"] != role_bindings[role]:
+                errors.append(
+                    f"trace case {case_id} event {event_type} actor must be the declared {role} actor {role_bindings[role]}"
+                )
+        positions = {
+            event_type: [event["sequence"] for event in typed_events]
+            for event_type, typed_events in events_by_type.items()
+        }
         for event_type in case["required_events"]:
-            if event_type not in positions:
-                errors.append(f"trace case {case_id} missing required event {event_type}")
+            count = len(events_by_type.get(event_type, []))
+            if count != 1:
+                errors.append(f"trace case {case_id} requires exactly one {event_type} event, got {count}")
         for event_type in case["forbidden_events"]:
             if event_type in positions:
                 errors.append(f"trace case {case_id} contains forbidden event {event_type}")
         for earlier, later in case["ordered_pairs"]:
             if earlier in positions and later in positions and max(positions[earlier]) >= min(positions[later]):
                 errors.append(f"trace case {case_id} event order invalid: {earlier} must precede {later}")
-        if case["glossary_state"] == "selected" and "source_access" in positions:
-            source_events = [event for event in events if event["event_type"] == "source_access"]
-            if any(not event["details"].get("entries") for event in source_events):
-                errors.append(f"trace case {case_id} source_access must list material entries")
+        for event_type, expected_details in case["event_details"].items():
+            for event in events_by_type.get(event_type, []):
+                if not contains_expected(event["details"], expected_details):
+                    errors.append(f"trace case {case_id} event {event_type} details do not match the fixture contract")
+        source_access = case["source_access"]
+        source_events = events_by_type.get("source_access", [])
+        if source_access["required"]:
+            if len(source_events) == 1:
+                source_event = source_events[0]
+                expected_actor = role_bindings[source_access["actor_role"]]
+                if source_event["actor_id"] != expected_actor:
+                    errors.append(f"trace case {case_id} source_access actor must be {expected_actor}")
+                if source_event["details"].get("access_mode") != "direct":
+                    errors.append(f"trace case {case_id} source_access must record direct access")
+                if source_event["details"].get("source") != source_access["source"]:
+                    errors.append(f"trace case {case_id} source_access source does not match the selected glossary")
+                if canonical_items(source_event["details"].get("entries")) != canonical_items(source_access["entries"]):
+                    errors.append(f"trace case {case_id} source_access entries do not exactly cover material mappings")
+        elif source_events:
+            errors.append(f"trace case {case_id} must not record source_access under opt-out")
+        for criterion_id, expected_evidence in case["scorecard_evidence"].items():
+            result = scorecard_results.get(criterion_id, {})
+            evidence = result.get("evidence") if isinstance(result, dict) else None
+            actual = evidence.get("trace_cases", {}).get(case_id) if isinstance(evidence, dict) else None
+            if not contains_expected(actual, expected_evidence):
+                errors.append(
+                    f"trace case {case_id} scorecard evidence for {criterion_id} does not match observable trace facts"
+                )
     return errors
 
 
 def validate_capture_record(
-    capture: Any, manifest: dict[str, Any], schema: dict[str, Any], expected_skill_revision: str | None = None
+    capture: Any, manifest: dict[str, Any], schema: dict[str, Any], expected_skill_revision: str | None = None,
+    predecessor_record: Any | None = None,
 ) -> list[str]:
     errors: list[str] = []
     if not isinstance(capture, dict):
@@ -929,6 +1178,29 @@ def validate_capture_record(
             errors.append(f"capture status {state} must not set failure_kind")
 
     errors.extend(validate_commissioning_protocol(capture, fixture, prepared_at))
+    preparation_hash = capture.get("preparation_record_hash")
+    if fixture_lane(fixture["id"]) != "V11":
+        if preparation_hash is not None:
+            errors.append("non-V11 capture preparation_record_hash must be null")
+    elif state == "prepared":
+        if preparation_hash is not None:
+            errors.append("prepared V11 capture preparation_record_hash must be null")
+    elif predecessor_record is None:
+        errors.append("completed V11 capture requires its prepared predecessor record")
+    elif not isinstance(predecessor_record, dict):
+        errors.append("V11 predecessor record must be a JSON object")
+    else:
+        predecessor_errors = validate_capture_record(
+            predecessor_record, manifest, schema, expected_skill_revision, None
+        )
+        errors.extend(f"V11 prepared predecessor: {item}" for item in predecessor_errors)
+        if predecessor_record.get("status", {}).get("state") != "prepared":
+            errors.append("V11 predecessor record status must be prepared")
+        if preparation_hash != canonical_hash(predecessor_record):
+            errors.append("V11 preparation_record_hash does not identify the supplied prepared predecessor")
+        for field in schema["v11_lifecycle"]["immutable_fields"]:
+            if nested_value(capture, field) != nested_value(predecessor_record, field):
+                errors.append(f"completed V11 capture changed prepared field {field}")
     errors.extend(find_forbidden_keys(capture, set(schema["forbidden_private_fields"]), "capture"))
     if fixture["id"] in {"M7", "M8"}:
         errors.extend(validate_trace(capture, fixture, schema))
@@ -952,6 +1224,8 @@ def prepare_capture(args: argparse.Namespace) -> int:
         fixture = fixture_map(manifest).get(args.fixture)
         if fixture is None:
             raise ValueError(f"unknown fixture {args.fixture!r}; choose one of {', '.join(sorted(fixture_map(manifest)))}")
+        if fixture_lane(fixture["id"]) == "V11" and args.status != "prepared":
+            raise ValueError("V11 must first be prepared; use complete-capture with that prepared record")
         settings = parse_json_argument(args.settings_json, "--settings-json")
         tool_context = parse_json_argument(args.tool_context_json, "--tool-context-json")
         scores = None if args.scores_json is None else parse_json_argument(args.scores_json, "--scores-json")
@@ -984,22 +1258,76 @@ def prepare_capture(args: argparse.Namespace) -> int:
     return 0
 
 
+def complete_v11_record(
+    prepared: dict[str, Any], fixture: dict[str, Any], status: str,
+    output: str | None, scores: dict[str, Any] | None, failure_kind: str | None,
+) -> dict[str, Any]:
+    completed = copy.deepcopy(prepared)
+    completed["timestamps"]["completed_at"] = utc_now()
+    completed["output"] = output
+    completed["scorecard"] = scorecard_for_fixture(fixture, scores, status)
+    completed["status"] = {"state": status, "failure_kind": failure_kind}
+    completed["preparation_record_hash"] = canonical_hash(prepared)
+    return completed
+
+
+def complete_capture(args: argparse.Namespace) -> int:
+    skill_root = args.repo_root.resolve() / "skills/clear-technical-writing"
+    try:
+        manifest = load_json(skill_root / "evals/fixtures.json")
+        schema = load_json(skill_root / "evals/capture.schema.json")
+        prepared = load_json(args.prepared_capture.resolve())
+        fixture = fixture_map(manifest).get(prepared.get("fixture_id")) if isinstance(prepared, dict) else None
+        if fixture is None or fixture_lane(fixture["id"]) != "V11":
+            raise ValueError("--prepared-capture must identify a V11 fixture")
+        predecessor_errors = validate_capture_record(prepared, manifest, schema, package_hash(skill_root))
+        if predecessor_errors:
+            raise ValueError("prepared predecessor is invalid:\n  - " + "\n  - ".join(predecessor_errors))
+        if prepared.get("status", {}).get("state") != "prepared":
+            raise ValueError("--prepared-capture status must be prepared")
+        scores = None if args.scores_json is None else parse_json_argument(args.scores_json, "--scores-json")
+        completed = complete_v11_record(
+            prepared, fixture, args.status, args.output_text, scores, args.failure_kind
+        )
+        errors = validate_capture_record(
+            completed, manifest, schema, package_hash(skill_root), prepared
+        )
+        if errors:
+            raise ValueError("completion arguments are inconsistent:\n  - " + "\n  - ".join(errors))
+        output_path = (args.output_path or default_output_path(fixture["id"])).resolve()
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(json.dumps(completed, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    except ValueError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        emit({"command": "complete-capture", "status": "fail", "error": str(exc)})
+        return 1
+    emit({
+        "command": "complete-capture", "status": "pass", "capture_state": completed["status"]["state"],
+        "fixture_id": fixture["id"], "prepared_capture": str(args.prepared_capture.resolve()),
+        "preparation_record_hash": completed["preparation_record_hash"], "output_path": str(output_path),
+        "capability_claim": "none-record-completion-does-not-aggregate-evidence",
+    })
+    return 0
+
+
 def validate_capture_command(args: argparse.Namespace) -> int:
     skill_root = args.repo_root.resolve() / "skills/clear-technical-writing"
     try:
         manifest = load_json(skill_root / "evals/fixtures.json")
         schema = load_json(skill_root / "evals/capture.schema.json")
         capture = load_json(args.capture.resolve())
+        predecessor = None if args.prepared_capture is None else load_json(args.prepared_capture.resolve())
     except ValueError as exc:
         print(f"error: {exc}", file=sys.stderr)
         emit({"command": "validate-capture", "status": "fail", "errors": [str(exc)]})
         return 1
-    errors = validate_capture_record(capture, manifest, schema, package_hash(skill_root))
+    errors = validate_capture_record(capture, manifest, schema, package_hash(skill_root), predecessor)
     for error in errors:
         print(f"error: {error}", file=sys.stderr)
     emit({
         "command": "validate-capture", "status": "pass" if not errors else "fail",
         "capture": str(args.capture.resolve()), "fixture_id": capture.get("fixture_id"),
+        "prepared_capture": str(args.prepared_capture.resolve()) if args.prepared_capture else None,
         "capture_state": capture.get("status", {}).get("state"),
         "capability_claim": "none-valid-record-does-not-confirm-or-aggregate-the-suite",
         "errors": errors,
@@ -1010,19 +1338,13 @@ def validate_capture_command(args: argparse.Namespace) -> int:
 def synthetic_trace(fixture: dict[str, Any], run_id: str) -> list[dict[str, Any]]:
     trace: list[dict[str, Any]] = []
     sequence = 1
+    trace_contract = fixture["trace_contract"]
     for case in fixture.get("trace_cases", []):
         for event_type in case["required_events"]:
-            if event_type in {"glossary_resolution", "dossier", "work_package", "assignment"}:
-                actor = "coordinator"
-            elif event_type in {"source_access", "review_handoff", "slice_handoff"}:
-                actor = "fresh-reviewer" if fixture["id"] == "M7" else "persistent-implementer"
-            elif event_type == "correction":
-                actor = "fresh-reviewer" if fixture["id"] == "M7" else "supervising-parent"
-            else:
-                actor = "coordinator"
-            details: dict[str, Any] = {"synthetic_self_test": True}
-            if event_type == "source_access":
-                details["entries"] = ["leaf owner", "semantic owner"]
+            role = trace_contract["event_roles"][event_type]
+            actor = trace_contract["role_bindings"][role]
+            details = copy.deepcopy(case.get("event_details", {}).get(event_type, {}))
+            details["synthetic_self_test"] = True
             trace.append({
                 "sequence": sequence, "case_id": case["case_id"], "event_type": event_type,
                 "actor_id": actor, "run_id": run_id, "timestamp": utc_now(),
@@ -1034,13 +1356,21 @@ def synthetic_trace(fixture: dict[str, Any], run_id: str) -> list[dict[str, Any]
 
 
 def scored_decisions(fixture: dict[str, Any]) -> dict[str, Any]:
-    return {
-        criterion["id"]: {
-            "passed": True,
-            "evidence": {"source": "synthetic structural self-test", "observable": criterion["observable_fields"]},
+    decisions: dict[str, Any] = {}
+    for criterion in fixture["scorer"]["criteria"]:
+        trace_cases = {
+            case["case_id"]: copy.deepcopy(case["scorecard_evidence"][criterion["id"]])
+            for case in fixture.get("trace_cases", [])
+            if criterion["id"] in case.get("scorecard_evidence", {})
         }
-        for criterion in fixture["scorer"]["criteria"]
-    }
+        evidence = {"trace_cases": trace_cases} if trace_cases else {
+            "source": "synthetic structural self-test", "observable": criterion["observable_fields"]
+        }
+        decisions[criterion["id"]] = {
+            "passed": True,
+            "evidence": evidence,
+        }
+    return decisions
 
 
 def synthetic_commissioning(fixture: dict[str, Any]) -> dict[str, Any]:
@@ -1059,18 +1389,33 @@ def synthetic_commissioning(fixture: dict[str, Any]) -> dict[str, Any]:
 
 
 def fully_scored_capture(fixture: dict[str, Any], revision: str) -> dict[str, Any]:
+    if fixture_lane(fixture["id"]) == "V11":
+        raise ValueError("use prepared_v11_pair for V11 synthetic captures")
     capture = build_capture(
         fixture, revision, "synthetic-model", "synthetic-runtime",
         "Synthetic schema self-test; not external capability evidence.",
         {"synthetic": True}, {"synthetic": True}, 1, "current",
         "Synthetic observable output used only to validate record structure.",
-        scored_decisions(fixture), commissioning_protocol=(
-            synthetic_commissioning(fixture) if fixture_lane(fixture["id"]) == "V11" else None
-        ),
+        scored_decisions(fixture),
     )
     if fixture["id"] in {"M7", "M8"}:
         capture["observable_trace"] = synthetic_trace(fixture, capture["trial_run_id"])
     return capture
+
+
+def prepared_v11_pair(fixture: dict[str, Any], revision: str) -> tuple[dict[str, Any], dict[str, Any]]:
+    prepared = build_capture(
+        fixture, revision, "synthetic-model", "synthetic-runtime",
+        "Synthetic pre-generation commissioning; not external capability evidence.",
+        {"synthetic": True}, {"synthetic": True}, 1, "prepared",
+        commissioning_protocol=synthetic_commissioning(fixture),
+    )
+    completed = complete_v11_record(
+        prepared, fixture, "current",
+        "Synthetic observable output used only to validate record structure.",
+        scored_decisions(fixture), None,
+    )
+    return prepared, completed
 
 
 def self_test(args: argparse.Namespace) -> int:
@@ -1124,13 +1469,20 @@ def self_test(args: argparse.Namespace) -> int:
         )
         record("m_capability_unconfirmed", validate_capture_record(m_unconfirmed, manifest, schema, revision))
 
-        v11_unconfirmed = build_capture(
-            fixtures["V11-GLOSSARY-PRESENT"], revision, "synthetic-model", "synthetic-runtime",
-            "Synthetic unavailable human pilot.", {}, {}, 1, "human-comprehension-unconfirmed",
-            failure_kind="missing-evaluators",
-            commissioning_protocol=synthetic_commissioning(fixtures["V11-GLOSSARY-PRESENT"]),
+        v11_fixture = fixtures["V11-GLOSSARY-PRESENT"]
+        v11_prepared = build_capture(
+            v11_fixture, revision, "synthetic-model", "synthetic-runtime",
+            "Synthetic unavailable human pilot.", {}, {}, 1, "prepared",
+            commissioning_protocol=synthetic_commissioning(v11_fixture),
         )
-        record("v11_human_comprehension_unconfirmed", validate_capture_record(v11_unconfirmed, manifest, schema, revision))
+        record("v11_prepared_with_commissioning", validate_capture_record(v11_prepared, manifest, schema, revision))
+        v11_unconfirmed = complete_v11_record(
+            v11_prepared, v11_fixture, "human-comprehension-unconfirmed", None, None, "missing-evaluators"
+        )
+        record(
+            "v11_human_comprehension_unconfirmed",
+            validate_capture_record(v11_unconfirmed, manifest, schema, revision, v11_prepared),
+        )
 
         wording_variant = copy.deepcopy(manifest)
         fixture_map(wording_variant)["V1"]["artifact"] = {
@@ -1139,10 +1491,27 @@ def self_test(args: argparse.Namespace) -> int:
         }
         record("wording_independent_fixture_variant", validate_fixtures(wording_variant))
 
-        variant_root = temporary_root / "wording-independent-package"
+        collapsed_roles = copy.deepcopy(manifest)
+        collapsed_m8 = fixture_map(collapsed_roles)["M8"]["trace_contract"]["role_bindings"]
+        collapsed_m8["assigned_implementer"] = collapsed_m8["supervising_parent"]
+        record(
+            "m8_distinct_actor_roles_required",
+            validate_fixtures(collapsed_roles), "roles must be distinct",
+        )
+
+        variant_repo = temporary_root / "wording-independent-repository"
+        variant_root = variant_repo / "skills/clear-technical-writing"
         variant_references = variant_root / "references"
         variant_references.mkdir(parents=True)
-        variant_targets = list(DECLARED_STRUCTURAL_LINKS["skills/clear-technical-writing/SKILL.md"])
+        variant_roles = {
+            "artifact-routing": ["references/process.md"],
+            "revision-after-change": ["references/process.md"],
+            "examples": ["references/illustrations.md"],
+            "research-rationale": ["references/evidence.md"],
+            "validation-scenarios": ["references/evidence.md"],
+            "project-glossaries": ["references/terms.md"],
+        }
+        variant_targets = sorted({path for paths in variant_roles.values() for path in paths})
         for target in variant_targets:
             (variant_root / target).write_text("# Alternate Reference\n\nDifferent explanatory wording.\n", encoding="utf-8")
         variant_entry = variant_root / "SKILL.md"
@@ -1152,12 +1521,16 @@ def self_test(args: argparse.Namespace) -> int:
             + "\n",
             encoding="utf-8",
         )
-        variant_errors, variant_link_count = relative_link_errors([variant_entry], temporary_root)
+        variant_manifest = {
+            "schema_version": 1, "entrypoint": "SKILL.md",
+            "reference_roles": variant_roles, "consumer_boundaries": [],
+        }
+        variant_errors, _, _ = validate_package_roles(variant_repo, variant_root, variant_manifest)
+        link_errors, variant_link_count = relative_link_errors([variant_entry, *(variant_root / path for path in variant_targets)], variant_repo)
+        variant_errors.extend(link_errors)
         if variant_link_count != len(variant_targets):
-            variant_errors.append(
-                f"wording-independent package variant exposed {variant_link_count} links, expected {len(variant_targets)}"
-            )
-        record("wording_independent_package_prose_variant", variant_errors)
+            variant_errors.append(f"renamed/combined package exposed {variant_link_count} links, expected {len(variant_targets)}")
+        record("renamed_and_combined_reference_layout", variant_errors)
 
         missing_identity = copy.deepcopy(valid)
         missing_identity.pop("model_id")
@@ -1184,9 +1557,36 @@ def self_test(args: argparse.Namespace) -> int:
         )
         record("wrong_m_state_rejected", validate_capture_record(wrong_m, manifest, schema, revision), "incompatible with M fixture")
 
-        missing_threshold = fully_scored_capture(fixtures["V11-GLOSSARY-PRESENT"], revision)
+        missing_commissioning = copy.deepcopy(v11_prepared)
+        missing_commissioning["commissioning_protocol"] = None
+        record(
+            "v11_missing_prepared_commissioning_rejected",
+            validate_capture_record(missing_commissioning, manifest, schema, revision), "commissioning_protocol",
+        )
+
+        missing_threshold = copy.deepcopy(v11_prepared)
         del missing_threshold["commissioning_protocol"]["minimum_material_improvement"]["threshold"]
-        record("v11_missing_threshold_rejected", validate_capture_record(missing_threshold, manifest, schema, revision), "threshold")
+        record(
+            "v11_missing_prepared_threshold_rejected",
+            validate_capture_record(missing_threshold, manifest, schema, revision), "threshold",
+        )
+
+        transition_prepared, transition_completed = prepared_v11_pair(v11_fixture, revision)
+        record(
+            "v11_valid_prepare_to_complete_transition",
+            validate_capture_record(transition_completed, manifest, schema, revision, transition_prepared),
+        )
+        record(
+            "v11_direct_completion_rejected",
+            validate_capture_record(transition_completed, manifest, schema, revision), "prepared predecessor",
+        )
+        altered_protocol = copy.deepcopy(transition_completed)
+        altered_protocol["commissioning_protocol"]["minimum_material_improvement"]["threshold"] = 0.5
+        record(
+            "v11_altered_post_prepare_protocol_rejected",
+            validate_capture_record(altered_protocol, manifest, schema, revision, transition_prepared),
+            "changed prepared field commissioning_protocol",
+        )
 
         for fixture_id in ("M7", "M8"):
             malformed = fully_scored_capture(fixtures[fixture_id], revision)
@@ -1200,6 +1600,34 @@ def self_test(args: argparse.Namespace) -> int:
                 f"malformed_{fixture_id.lower()}_order_rejected",
                 validate_capture_record(malformed, manifest, schema, revision),
                 "event order invalid",
+            )
+            wrong_actor = fully_scored_capture(fixtures[fixture_id], revision)
+            source_event = next(
+                item for item in wrong_actor["observable_trace"] if item["event_type"] == "source_access"
+            )
+            source_event["actor_id"] = fixtures[fixture_id]["trace_contract"]["role_bindings"][
+                "coordinator" if fixture_id == "M7" else "supervising_parent"
+            ]
+            record(
+                f"wrong_{fixture_id.lower()}_source_actor_rejected",
+                validate_capture_record(wrong_actor, manifest, schema, revision), "actor must be",
+            )
+            wrong_access = fully_scored_capture(fixtures[fixture_id], revision)
+            source_event = next(
+                item for item in wrong_access["observable_trace"] if item["event_type"] == "source_access"
+            )
+            source_event["details"]["entries"] = []
+            record(
+                f"incomplete_{fixture_id.lower()}_source_access_rejected",
+                validate_capture_record(wrong_access, manifest, schema, revision), "exactly cover material mappings",
+            )
+            wrong_scorecard = fully_scored_capture(fixtures[fixture_id], revision)
+            criterion = next(iter(fixtures[fixture_id]["trace_cases"][0]["scorecard_evidence"]))
+            result = next(item for item in wrong_scorecard["scorecard"]["criteria"] if item["criterion_id"] == criterion)
+            result["evidence"]["trace_cases"][fixtures[fixture_id]["trace_cases"][0]["case_id"]] = {"altered": True}
+            record(
+                f"contradictory_{fixture_id.lower()}_scorecard_trace_rejected",
+                validate_capture_record(wrong_scorecard, manifest, schema, revision), "scorecard evidence",
             )
     failed = [name for name, passed in results.items() if not passed]
     for name in failed:
@@ -1225,6 +1653,9 @@ def build_parser() -> argparse.ArgumentParser:
   {script_path} --repo-root {default_repo} validate-package
   {script_path} --repo-root {default_repo} prepare-capture --fixture V1 \\
     --model-id MODEL --runtime-id RUNTIME --outer-instructions INSTRUCTIONS
+  {script_path} --repo-root {default_repo} complete-capture \\
+    --prepared-capture /tmp/v11-prepared.json --status current \\
+    --output-text OUTPUT --scores-json SCORES
 
 Package validation proves mechanical conformance only. Scorers, not this helper,
 decide natural-language criteria and record observable evidence. A valid current
@@ -1270,10 +1701,28 @@ capability suite. Exit codes: 0 success, 1 conformance failure, 2 usage error.""
     prepare_parser.add_argument("--output-path", type=Path, help="capture path; defaults under the system temporary directory")
     prepare_parser.set_defaults(handler=prepare_capture)
 
+    complete_parser = subparsers.add_parser(
+        "complete-capture", help="complete a V11 capture from its validated prepared predecessor"
+    )
+    complete_parser.add_argument("--prepared-capture", type=Path, required=True, help="validated V11 prepared capture")
+    complete_parser.add_argument(
+        "--status", required=True,
+        choices=["current", "product-contract-failure", "human-comprehension-unconfirmed"],
+    )
+    complete_parser.add_argument("--failure-kind", help="external unavailability classification")
+    complete_parser.add_argument("--output-text", help="observable generated and evaluated output")
+    complete_parser.add_argument("--scores-json", help="criterion ID to {passed,evidence} scorer record JSON")
+    complete_parser.add_argument("--output-path", type=Path, help="completed capture path; defaults under system temporary directory")
+    complete_parser.set_defaults(handler=complete_capture)
+
     capture_parser = subparsers.add_parser(
         "validate-capture", help="validate capture identity, scorer completeness, status, commissioning, and trace consistency"
     )
     capture_parser.add_argument("capture", type=Path, help="capture JSON file")
+    capture_parser.add_argument(
+        "--prepared-capture", type=Path,
+        help="required prepared predecessor for a completed V11 capture",
+    )
     capture_parser.set_defaults(handler=validate_capture_command)
     self_test_parser = subparsers.add_parser("self-test", help="exercise valid and adjacent invalid structural cases in a temporary directory")
     self_test_parser.set_defaults(handler=self_test)
