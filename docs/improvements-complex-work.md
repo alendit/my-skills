@@ -11,8 +11,10 @@ The installed `~/.agents/skills/complex-work` is currently a standalone copy.
 Its broad trigger overlaps several repository skills, its code path names
 unavailable Tavern specializations, and its generic phase instructions claim
 implementation, review, delegation, commit, and prose responsibilities already
-owned elsewhere. The repository-owned replacement must remove those conflicts
-and become the installed source after deterministic acceptance.
+owned elsewhere. The repository-owned replacement must remove those conflicts.
+After its repository package checks pass and the caller authorizes installation,
+S2 makes it the installed source and D2 verifies that state for package
+acceptance.
 
 This document is the sole normative authority for the CW1-CW8 contracts below.
 Later sections provide rationale, scenarios, and an implementation sequence;
@@ -66,19 +68,8 @@ preference, not a behavioral contract.
 
 ## Ownership and routing
 
-CW1, CW2, and CW4 define the complete routing contract. The implementation may
-use this non-normative file map to locate their current owners:
-
-| Work shape | Owner |
-|---|---|
-| Broad implementation or specification review | `evidence-efficient-review` |
-| Repeated independent review and remediation | `review-fixpoint` |
-| One ordered, dependent implementation package requiring supervised delegation | `supervised-implementer-loop` |
-| Educational technical-note series | `technical-note-series` |
-| Repository architecture document | `project-architecture-doc` |
-| Durable reusable architecture guidance | `add-architectural-guidances` |
-| Final reader-facing engineering prose | `clear-technical-writing` |
-| Cross-owner outcome spanning several rows | `complex-work` |
+CW1, CW2, and CW4 own routing. Resolve each named skill at
+`skills/<skill-name>/SKILL.md`; do not maintain another work-shape mapping.
 
 ## Scenario portfolio
 
@@ -114,7 +105,8 @@ use this non-normative file map to locate their current owners:
 - **Observable invariant:** mixed feature, migration, documentation, and
   validation work invokes `complex-work`; broad review and technical-note work
   select their leaf directly; a small single-file edit stays inline.
-- **Evidence class:** controlled model behavior.
+- **Evidence class:** external compatibility evidence; controlled model
+  behavior.
 - **Capture and scoring:** use the common exact-identity record above and score
   the selected skill set and stated bypass reason for each prompt.
 - **Localization signal:** description or trigger-boundary failure.
@@ -127,8 +119,8 @@ use this non-normative file map to locate their current owners:
   copying leaf mechanics; a second mixed package keeps an unmatched ordinary
   implementation or analysis unit primary-owned while routing its specialized
   sibling to the applicable leaf.
-- **Evidence class:** controlled model behavior. D1 separately audits static
-  duplication and named leaf existence.
+- **Evidence class:** external compatibility evidence; controlled model
+  behavior. D1 separately audits static duplication and named leaf existence.
 - **Capture and scoring:** use the common record and score owner assignment,
   ordering, and absence of duplicated leaf procedure.
 - **Localization signal:** outer ownership, primary-owned fallback, or leaf
@@ -140,7 +132,8 @@ use this non-normative file map to locate their current owners:
 - **Observable invariant:** with incomplete repository context, the workflow
   recovers available facts, identifies a material assumption, and defines only
   the units and observable exits needed for the outcome.
-- **Evidence class:** controlled model behavior.
+- **Evidence class:** external compatibility evidence; controlled model
+  behavior.
 - **Capture and scoring:** use the common record and score source grounding,
   named assumptions, unit necessity, and lack of invented ceremony.
 - **Localization signal:** package-establishment failure.
@@ -151,7 +144,8 @@ use this non-normative file map to locate their current owners:
 - **Observable invariant:** when evidence invalidates the second of three units,
   the workflow replans it and its dependent third unit while retaining the
   independent accepted first unit.
-- **Evidence class:** controlled model behavior.
+- **Evidence class:** external compatibility evidence; controlled model
+  behavior.
 - **Capture and scoring:** use the common record and score dependency
   invalidation, carry-forward, and the revised route.
 - **Localization signal:** invalidation or replanning failure.
@@ -162,7 +156,8 @@ use this non-normative file map to locate their current owners:
 - **Observable invariant:** a supervised dependent package and an independent
   review retain their leaf topology, while size alone does not delegate all
   work.
-- **Evidence class:** controlled model behavior.
+- **Evidence class:** external compatibility evidence; controlled model
+  behavior.
 - **Capture and scoring:** use the common record and score chosen topology,
   retained primary acceptance, and absence of blanket fan-out.
 - **Localization signal:** outer delegation or leaf-topology failure.
@@ -173,8 +168,9 @@ use this non-normative file map to locate their current owners:
 - **Observable invariant:** reviewable units in a dirty worktree preserve
   unrelated changes and do not commit, push, publish, deploy, send, delete, or
   overwrite without applicable authority.
-- **Evidence class:** controlled model behavior. D2 separately audits source
-  wording and the authorized installed-link transition.
+- **Evidence class:** external compatibility evidence; controlled model
+  behavior. D2 separately audits source wording and the authorized installed-
+  link transition.
 - **Capture and scoring:** use the common record and score proposed or executed
   mutations against supplied authority and preserved state.
 - **Localization signal:** authorization or checkpoint-boundary failure.
@@ -185,8 +181,8 @@ use this non-normative file map to locate their current owners:
 - **Observable invariant:** the workflow uses a cheap focused check while a unit
   is unstable, runs the expensive complete gate at the required checkpoint, and
   reports actual evidence after one final prose pass.
-- **Evidence class:** controlled model behavior. D1 separately audits source
-  constraints and package structure.
+- **Evidence class:** external compatibility evidence; controlled model
+  behavior. D1 separately audits source constraints and package structure.
 - **Capture and scoring:** use the common record and score check timing,
   leaf-acceptance use, prose-pass count, and evidence claims.
 - **Localization signal:** verification sequence or handoff failure.
@@ -215,14 +211,18 @@ installed-link read-back. `$review-fixpoint` owns Tick/Tock selection,
 review-artifact lifecycle, exact-revision timing, and the fixed-point decision
 for the selected package.
 
-## Deterministic acceptance
+## Package acceptance
 
-Accept the package when CW1-CW8 are implemented, D1-D2 pass, E1-E7 have current
-controlled-model dispositions, and the selected `$skill-authoring` authority
-finds no checklist violation. A valid E1-E7 product-contract failure returns to
-implementation; unavailable execution remains capability-unconfirmed and
-prevents a claim of `Done`. `$review-fixpoint` owns the fixed-point decision and
-review-artifact lifecycle.
+Accept deterministic implementation when CW1-CW8 are implemented, D1-D2 pass
+on the accepted revision and installed state, the selected `$skill-authoring`
+authority finds no checklist violation, and no valid E1-E7 product-contract
+failure remains unresolved. Separately report E1-E7 as
+`capability-confirmed` when fresh valid runs pass, `capability-unconfirmed` when
+a valid observation is unavailable because of stale identity, authentication
+or configuration, provider or infrastructure failure, or inconclusive timeout,
+and `external-contract-failed` when a valid run contradicts a CW contract.
+`Done` requires deterministic fixed point and `capability-confirmed`.
+`$review-fixpoint` owns the fixed-point decision and review-artifact lifecycle.
 
 ## Handoff
 
