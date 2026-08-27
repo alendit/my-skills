@@ -182,7 +182,7 @@ follow-up delta in the Tock handoff. Do not relabel a current finding, required
 unknown, worsening correction, or external product-contract failure as a
 follow-up merely to complete remediation.
 
-Apply the breaking-cleanup rules in
+Apply the repository compatibility and cleanup policy in
 [references/phase-mechanics.md](references/phase-mechanics.md). Redesign the
 owning boundary when a local repair would preserve faulty ownership.
 
