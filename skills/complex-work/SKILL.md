@@ -1,0 +1,100 @@
+---
+name: complex-work
+description: >-
+  Orchestrate a mixed, non-trivial work package spanning multiple artifact
+  types, capability boundaries, or specialized skills when no single skill
+  owns the outcome end to end. Use for work that combines implementation,
+  review, documentation, research, or external validation. Do not use for a
+  small bounded edit or a request fully owned by one specialized skill.
+---
+
+# Complex Work
+
+Coordinate one mixed work package without taking substantive ownership away
+from its leaf owners. Keep the primary agent responsible for the package
+outcome, scope, cross-unit ordering, shared constraints, authorization
+boundaries, integration, acceptance, and final handoff.
+
+## Establish The Package
+
+1. Read the user request, applicable repository guidance, current state, and
+   relevant primary evidence. Inspect the available skills before assigning
+   owners.
+2. State the outcome, scope, explicit non-goals, material unknowns or
+   assumptions, and the evidence that will demonstrate acceptance.
+3. Discover and carry user and repository policy for commits, external writes,
+   publication, destructive actions, and unrelated worktree state.
+4. Decompose the outcome into ordered units only as far as observable
+   acceptance requires. Record each unit's owner, dependencies, shared
+   constraints, and exit evidence. Keep uncertain choices local and
+   reversible.
+5. Bypass this skill when the result is a small bounded edit or one specialized
+   skill owns it end to end.
+
+## Assign Leaf Owners
+
+Route a unit to the applicable specialized skill, then follow that skill's
+interface and acceptance rules without restating or replacing its mechanics:
+
+- route review-only work to `$evidence-efficient-review`;
+- route repeated review and remediation to `$review-fixpoint`;
+- route dependent implementation requiring one supervised implementer to
+  `$supervised-implementer-loop`;
+- route an educational technical-note series to `$technical-note-series`;
+- route repository architecture documentation to
+  `$project-architecture-doc`;
+- route reusable architecture policy to `$add-architectural-guidances`; and
+- route final engineering prose to `$clear-technical-writing`.
+
+When no available specialized skill owns a unit's complete outcome, keep the
+primary agent as that unit's leaf owner under the carried repository and
+authorization policy. Do not invent a leaf, force delegation, or bypass an
+applicable specialized owner.
+
+## Execute And Integrate Units
+
+For each unit, give its leaf owner the package outcome, unit boundary,
+dependencies, accepted prior evidence, shared constraints, authorization
+limits, and observable exit. Let the leaf owner make its substantive decisions
+and choose its validation mechanics. The primary agent verifies the result,
+integrates it with accepted units, and retains final acceptance authority.
+
+Delegate only when the user requests delegation, the selected leaf requires
+it, or packages are genuinely independent. Do not fan out or delegate all work
+merely because the package is large.
+
+Treat every mutation as bounded by existing authority. A reviewable unit does
+not authorize a commit, push, publication, deployment, message, destructive
+action, or other external write. Checkpoint only when user and repository
+policy authorize it, and preserve unrelated worktree changes.
+
+When an authorized unit changes an installed skill source, inventory the exact
+destination first, preserve the previous standalone source recoverably until
+read-back succeeds, link the installed entry to the accepted repository
+package, and verify both the resolved target and readable `SKILL.md`.
+
+## Replan At The Broken Boundary
+
+When new evidence contradicts the route, identify the invalidated assumption,
+unit, or ordering decision. Return to the latest broken boundary and replan
+that unit and its dependents. Preserve accepted units whose dependencies and
+evidence remain valid. Do not continue a disproved route or restart unaffected
+work.
+
+## Verify And Finish
+
+Run focused checks while a unit is unstable when they can cheaply disprove it.
+Run expensive complete gates at meaningful package checkpoints, according to
+repository policy and the selected leaf owner's acceptance rules. Do not defer
+all validation until the end.
+
+Apply a final `$clear-technical-writing` pass exactly once after substantive
+decisions stabilize. If a leaf owner already applied that pass to its artifact,
+verify that it occurred and do not repeat it in the outer workflow.
+
+Finish with one integrated handoff that reports:
+
+- accepted units and their owners;
+- evidence and package-level verification;
+- unresolved unknowns or capability status; and
+- pending actions that still require authorization.

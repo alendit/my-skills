@@ -1,0 +1,4 @@
+interface:
+  display_name: "Complex Work"
+  short_description: "Orchestrate mixed work across specialized owners"
+  default_prompt: "Use $complex-work to coordinate this mixed work package across its specialized owners while preserving one integrated outcome."
