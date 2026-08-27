@@ -133,11 +133,14 @@ freshness, and non-reuse rules under CTW10.
 
 ## Scenario portfolio
 
-M1-M8 use CTW's shared capture record and output scorer. Each run records the
-exact skill revision, model/runtime identity, outer instructions, project
-guidance, glossary or absence evidence, source-packet hash, authorization
-boundary, output, and first failed GL contract. Private reasoning is not
-captured or inferred.
+M1-M6 use CTW's shared single-output capture record and output scorer. M7-M8
+use the same model/runtime identity, freshness, failure, and scoring protocol,
+and additionally record an ordered observable delegation trace: actor and run
+identity; glossary-resolution state; glossary source-access events; neutral
+dossier or work package; initial assignment; applicable corrections; slice or
+review handoffs; and final output. The trace records external actions and
+artifacts, not private reasoning. Each checkpoint reports the first failed GL
+contract and the named lifecycle boundary.
 
 | Evidence | Class | Observable result and localization |
 |---|---|---|
@@ -149,8 +152,8 @@ captured or inferred.
 | M4 | Controlled model behavior | A necessary project concept receives one plain entry and aliases redirect to it; an ordinary engineering term does not receive an entry. No paragraph cap or italicization rule decides acceptance. Failure localizes to GL4. |
 | M5 | Controlled model behavior | Existing glossary terms remain consistent, but an unfamiliar reader still receives a local prerequisite explanation. An opt-out present in the initial instructions and a refusal in response to M1 both continue with local explanation, create no file, persist no term, and ask no further placement question. Failure localizes to GL2 precedence or GL5 fallback. |
 | M6 | Controlled model behavior | An authorized semantic change updates the owning entry, aliases, and in-scope dependent prose. It reports a known out-of-scope dependent with its stale term and semantic source without editing it. An unauthorized or semantically uncertain glossary change is reported without a write. Failure localizes to GL6 scope or source authority. |
-| M7 | Controlled model behavior | A review dossier records the selected glossary identity or opt-out. The independent reviewer reads material entries, uses the canonical terms in findings and correction directions, and preserves severity, evidence, and semantic-source authority when a glossary entry conflicts. Failure localizes to GL7's review boundary. |
-| M8 | Controlled model behavior | Before spawning an implementer, the parent resolves glossary state and gives the assignment only relevant term-to-semantic-source mappings. Later corrections and handoffs preserve those meanings; a newly needed term is reported as a candidate rather than silently invented or persisted, and no glossary label becomes a new mechanism. Failure localizes to GL7's supervised-agent boundary. |
+| M7 | Controlled model behavior | **Review delegation.** Before a fresh review is delegated, the neutral dossier records the selected glossary identity or explicit opt-out. The trace identifies the fresh reviewer and, when a glossary is selected, records that reviewer's access to each material entry rather than a remediation author's interpretation. The resulting findings and correction directions use the preferred terms while preserving severity, evidence, and semantic-source authority when an entry conflicts. An opt-out triggers no placement question or glossary access. A failure localizes to resolution, neutral handoff, independent source reading, semantic preservation, or final review communication under GL7. |
+| M8 | Controlled model behavior | **Supervised delegation.** Before spawning the implementer, the parent resolves glossary state. The work package and initial assignment carry the selected source or explicit opt-out and only the material term-to-semantic-source relationships. Recorded corrections and handoffs preserve those meanings. Under an opt-out, no later placement question, glossary access, or persisted term occurs. A newly needed term is reported as a candidate when its meaning, location, or edit scope is not authorized; when all three are authorized, GL6 governs the bounded write. No glossary label creates a field, state, limit, or component. Each failure localizes to work-package resolution, assignment transfer, correction continuity, handoff continuity, authorization, or mechanism invention under GL7. |
 
 ## Evidence and completion
 
