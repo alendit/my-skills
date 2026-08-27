@@ -1,4 +1,4 @@
 interface:
   display_name: "Review Fixpoint"
   short_description: "Alternate principled fixes and independent reviews"
-  default_prompt: "Use $review-fixpoint to alternate remediation and independent review for the selected clojure-wasm stage until it reaches a functional fixed point."
+  default_prompt: "Use $review-fixpoint to alternate remediation and independent review for the selected repository work package until it reaches a functional and architectural fixed point."

@@ -11,6 +11,8 @@ cells and inspect them sequentially.
 - Audit the remediation delta
 - Review contract cells
 - Challenge implementation seams
+  - Control-only durable identity
+  - Effective evidence identity
 - Evaluate test evidence
 
 ## Audit promised closure
@@ -93,6 +95,37 @@ Apply only the dimensions relevant to the selected contract:
 - hidden physical ceilings or duplicated policy;
 - obsolete fallback, compatibility, or silent downgrade paths; and
 - complexity accounting against real work rather than timing alone.
+
+Apply the following seams only when the selected contract has the corresponding
+durable-effect or external-evidence surface. They are review questions, not new
+application mechanisms.
+
+### Control-Only Durable Identity
+
+When a response or transaction can commit durable state without ordinary user,
+assistant, or tool content, identify the truthful, resolvable, response-owned
+durable event that represents that response. Prove that committed records,
+lifecycle events, and recovery state bind to that event rather than a preceding
+or later neighboring entry. Cover success, preparation failure, repeated
+invocation, reopen, and branch or fork.
+
+### Effective Evidence Identity
+
+For evidence-producing code, trace endpoint, model, transport, store mode, and
+other material capability identity from effective observed native requests or
+metadata rather than only from selected configuration.
+
+Challenge:
+
+- omitted optional configuration and adapter defaults;
+- caller or backend overrides;
+- declared/effective mismatches;
+- disagreement among requests in one scenario; and
+- partial capture before failure.
+
+A passing record requires every material request in the scenario to agree on
+effective identity. Otherwise preserve the original execution result but
+classify the evidence record as invalid or unavailable.
 
 ## Evaluate test evidence
 

@@ -216,14 +216,29 @@ component, or other mechanism without its own semantic owner.
   trimming explanation.
 - Do not interpret token efficiency as permission to skip owner analysis,
   tests, cleanup, documentation, or independent review.
-- If an implementer turn appears stalled, first check for an active tool or
-  test process and inspect whether the shared diff is still changing. Send one
-  concise status request and wait a bounded interval. If there is no active
-  work or response, interrupt the turn rather than waiting indefinitely. Review
-  any stable edits directly and either finish the narrow package at the parent
-  boundary or resume the same implementer with a delta-only correction. Do not
-  spawn a replacement merely to recover momentum; ask before replacing a lost
-  persistent implementer.
+
+### Progress And Stall Protocol
+
+- Before a command likely to exceed 60 seconds, the implementer reports the
+  exact command, its purpose, and whether it may edit the tree.
+- While work continues, the implementer sends a compact checkpoint at least
+  every 60 seconds: changed files, current hypothesis, last completed result,
+  and active command or explicit `no command running`.
+- The implementer does not start a broad or complete suite until the parent has
+  accepted the focused slice, unless the slice contract explicitly requires it.
+- When the implementer completes the slice or responds with a handoff, let that
+  handoff finish without interruption and proceed through parent review.
+- On apparent silence, the parent checks the active process and whether the
+  shared diff is changing, sends one status request, and waits one additional
+  60-second interval.
+- If neither activity nor response appears, interrupt at most once. Inspect
+  stable edits directly and resume the same implementer with a delta-only
+  assignment.
+- Do not create repeated status-only turns or repeatedly interrupt an active
+  foreground gate.
+
+The 60-second interval is an orchestration default, not a performance
+expectation or acceptance metric.
 
 ## Accept The Package
 

@@ -176,6 +176,16 @@ the required cells and scenario portfolio in the specification reference.
 Inspect the semantic owner and a realistic public composition, record the cell,
 then move to the next; do not replace sequential coverage with one broad scan.
 
+For a delegated review expected to span several minutes, send the outer caller
+a checkpoint after each material contract-cell cluster and before the final
+gate. Report only cleared, candidate, unknown, and not-applicable cells; the
+active command; and the next question. A checkpoint is neither a finding nor a
+final decision and does not alter reviewer independence. The outer caller owns
+status communication.
+
+Do not delay an available candidate disposition merely to finish unrelated
+cells, and do not rerun completed cells in response to a status request.
+
 ## Audit Architectural Scope Classifications
 
 When the reviewed work claims architectural impact or defers an architectural

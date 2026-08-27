@@ -33,12 +33,12 @@ Feature artifacts own:
 - named deterministic, external, and observational evidence; and
 - the current status of required external capabilities.
 
-This skill owns Tick/Tock selection, review numbering, phase commits, reviewer
-selection and independence, exact-revision gate timing, remediation repetition,
-and stop mechanics. A feature artifact may require independent review and link
-to this workflow, but must not copy those mechanics. A numbered review artifact
-owns findings and dispositions; an implementation handoff owns revision-specific
-commands and results.
+This skill owns Tick/Tock selection, review-artifact lifecycle, phase commits,
+reviewer selection and independence, exact-revision gate timing, remediation
+repetition, and stop mechanics. A feature artifact may require independent
+review and link to this workflow, but must not copy those mechanics. The durable
+review artifact declared by repository guidance owns findings and dispositions;
+an implementation handoff owns revision-specific commands and results.
 
 ## Apply evidence classes to completion
 

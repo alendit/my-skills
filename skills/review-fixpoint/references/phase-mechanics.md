@@ -5,24 +5,19 @@ Tick review, and exact-revision verification.
 
 ## Contents
 
-- Prefer breaking cleanup
+- Apply repository compatibility and cleanup policy
 - Preserve review independence
 - Verify each Tock
 
-## Prefer breaking cleanup
+## Apply repository compatibility and cleanup policy
 
-This project has no external Rust-source or persisted module compatibility
-requirement. Do not add or retain:
+Repository guidance supplies compatibility policy, cleanup constraints, and
+canonical verification commands. Do not invent language-specific gates.
 
-- deprecated aliases or compatibility re-exports;
-- older ABI decoders, dual transports, or migration switches;
-- silent defaults, normalization of impossible states, or speculative stale
-  behavior;
-- reproducer-specific branches or message/token whitelists;
-- raised, reset, discounted, or bypassed limits that conceal excess work; or
-- native fast paths that bypass a defective ordinary Clojure primitive.
-
-If a local repair would preserve faulty ownership, redesign the owning boundary.
+Reject a local repair that preserves faulty ownership, a prohibited
+compatibility shim, silent downgrade, reproducer-specific branch, or limit
+bypass. Apply only the prohibitions established by the target repository and
+selected contract.
 
 ## Preserve review independence
 
@@ -55,8 +50,8 @@ When the primary did not author or supervise the implementation, it may apply
 ## Verify each Tock
 
 Run focused checks proportional to each changed owner during implementation.
-After parent acceptance, create the Tock phase commit, then run the selected
-stage's canonical clean-revision command set once on that exact commit. Do not
+After parent acceptance, create the Tock phase commit, then run the repository-
+declared canonical clean-revision command set once on that exact commit. Do not
 run equivalent complete suites immediately before and after the phase commit
 merely to reproduce the same evidence.
 
@@ -67,10 +62,10 @@ rerun the gate before review.
 At minimum preserve:
 
 - focused owner tests and public regressions;
-- formatting and warning-denying Clippy;
-- debug and optimized all-target tests;
-- current conformance/fixture checks; and
-- benchmark assertions relevant to structural behavior.
+- applicable repository-declared formatting, lint, and compile checks;
+- the project-declared complete deterministic gate;
+- conformance or fixture checks relevant to changed contracts; and
+- benchmark assertions only where the contract names a performance bound.
 
 Keep verbose successful output out of review context. Record revision, command,
 exit status, concise counts or identity, and only the failure tail needed for

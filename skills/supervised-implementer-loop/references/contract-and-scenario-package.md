@@ -9,6 +9,7 @@ accepting handoffs. Keep the package matrix as the sole requirement authority.
 - Keep private mechanisms conditional
 - Define a small scenario portfolio
 - Separate evidence lanes and statuses
+- Localize before repeating external scenarios
 - Justify exact limits
 - Keep tests stable across redesigns
 
@@ -93,6 +94,34 @@ explicitly capability-unconfirmed.
 Observational telemetry has no acceptance effect unless the contract names a
 baseline, measurement method, direction, and regression threshold. Record
 unthresholded bytes, token counts, cache tokens, and latency as observational.
+
+## Localize Before Repeating External Scenarios
+
+After an external semantic assertion fails, do not rerun the unchanged scenario
+until available evidence distinguishes the live hypotheses.
+
+Capture one structured diagnostic tuple:
+
+- effective request identity and material request shape;
+- exact external presentation relevant to the assertion;
+- submitted external action or request arguments;
+- semantic-owner state used to validate or commit it;
+- resulting durable or runtime identity; and
+- the violated invariant.
+
+Keep this tuple and its field layout private and disposable. They are diagnostic
+evidence, not a public product contract.
+
+Classify the failure as provider behavior, product behavior, evidence-harness
+behavior, or still unknown.
+
+If the first record is insufficient, improve the capture before one additional
+run. A next run requires improved capture or a changed implementation. Never
+rerun solely because summary output was truncated: preserve the complete
+structured record in a temporary artifact and summarize it separately.
+
+Once localized, add or strengthen deterministic owner and composition coverage
+before another acceptance run.
 
 ## Justify exact limits
 
