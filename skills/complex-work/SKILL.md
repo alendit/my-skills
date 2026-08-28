@@ -22,19 +22,23 @@ boundaries, integration, acceptance, and final handoff.
    owners.
 2. State the outcome, scope, explicit non-goals, material unknowns or
    assumptions, and the evidence that will demonstrate acceptance.
-3. Discover and carry user and repository policy for commits, external writes,
+3. Instantiate the stable package-level goal record from the
+   [behavioral design trace and rebaseline authority](../evidence-efficient-review/references/behavioral-design-trace.md)
+   and carry its identity through leaf routing and acceptance. Update its
+   status only from accepted evidence.
+4. Discover and carry user and repository policy for commits, external writes,
    publication, destructive actions, and unrelated worktree state.
-4. Record an execution-cost profile only when the user supplies one or current
+5. Record an execution-cost profile only when the user supplies one or current
    capabilities establish a material difference between capable owners. Name
    the preferred persistent implementer and any required independent reviewer;
    do not invent prices or weaken authority to save context.
-5. Decompose the outcome into ordered units only as far as observable
+6. Decompose the outcome into ordered units only as far as observable
    acceptance requires. Record each unit's owner, dependencies, shared
    constraints, and exit evidence. Group related mechanical work at the
    smallest meaningful acceptance boundary, but keep a boundary separate when
    later work depends on a semantic or architectural decision there. Keep
    uncertain choices local and reversible.
-6. Bypass this skill when the result is a small bounded edit or one specialized
+7. Bypass this skill when the result is a small bounded edit or one specialized
    skill owns it end to end.
 
 For a mixed package in which several units affect the same source owner,
@@ -69,11 +73,12 @@ applicable specialized owner.
 
 ## Execute And Integrate Units
 
-For each unit, give its leaf owner the package outcome, unit boundary,
-dependencies, accepted prior evidence, shared constraints, authorization
-limits, and observable exit. Let the leaf owner make its substantive decisions
-and choose its validation mechanics. The primary agent verifies the result,
-integrates it with accepted units, and retains final acceptance authority.
+For each unit, give its leaf owner the package goal record, outcome, unit
+boundary, dependencies, accepted prior evidence, shared constraints,
+authorization limits, and observable exit. Let the leaf owner make its
+substantive decisions and choose its validation mechanics. The primary agent
+verifies the result, integrates it with accepted units, and retains final
+acceptance authority.
 
 When source-owner overlap applies, require the implementation leaf's accepted
 baseline-to-result structural decision before package acceptance. Integrate
@@ -111,6 +116,11 @@ that unit and its dependents. Preserve accepted units whose dependencies and
 evidence remain valid. Do not continue a disproved route or restart unaffected
 work.
 
+When a leaf proposes a behavioral contract change, return it to the product
+authority named by the shared record. After acceptance, update the owning
+contract once. Resume affected units from the accepted rebaseline boundary;
+leave the comparison and test-disposition process with the leaf authority.
+
 Treat cumulatively harmful placement that invalidates the assumed source owner
 as such a contradiction; size alone does not invalidate the route.
 
@@ -133,6 +143,8 @@ verify that it occurred and do not repeat it in the outer workflow.
 Finish with one integrated handoff that reports:
 
 - accepted units and their owners;
+- the goal ID and direct scenario's behavioral status, reported separately from
+  mechanism progress;
 - evidence and package-level verification;
 - unresolved unknowns or capability status; and
 - pending actions that still require authorization.

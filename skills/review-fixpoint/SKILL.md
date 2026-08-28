@@ -106,6 +106,12 @@ single requirement authority, keep workflow mechanics in this skill, and apply
 the reference's evidence classes and result vocabulary to every phase decision.
 Use its test-stability rules when a design changes.
 
+Apply the shared
+[behavioral design trace and rebaseline authority](../evidence-efficient-review/references/behavioral-design-trace.md)
+through both phases. Carry one stable package-level goal record, route accepted
+rebaselines back to its owning contract once, and keep direct scenario
+behavioral status separate from mechanism progress.
+
 Also apply the shared
 [economic actionability authority](../evidence-efficient-review/references/economic-actionability.md)
 before a possible failure becomes a defensive contract requirement or Tock
@@ -153,22 +159,16 @@ then change implementation, evidence, or documentation only where that
 artifact's distinct responsibility changed. Replace copied normative prose with
 ID references instead of synchronizing several requirement descriptions.
 
-Route each concern through the shared actionability decision before Tock:
+Remediate accepted observable contract violations directly. Apply economic
+actionability when a proposed Tock would add or preserve a defense without such
+a violation; missing evidence is a Tick unknown only when an in-scope decision
+depends on it.
 
-- remediate an accepted observable contract violation;
-- remediate another defense when comparative evidence makes it actionable;
-- return missing evidence required by an in-scope decision as a Tick unknown;
-  and
-- leave a non-gating concern outside Tock.
-
-Before translating review vocabulary into new limits, counters, capabilities,
-or transaction states, run a design checkpoint. Ask whether each mechanism has
-a distinct semantic owner, enforces a real bound, or serves an operational
-consumer. If a simpler owner satisfies the project goal and stable contract,
-correct the specification and affected evidence first, classify tests as
-`retain`, `strengthen`, `replace`, or `delete`, and then implement the smaller
-design. The specification is authoritative about outcomes, not immune from
-correction when it induces accidental complexity.
+Before translating review vocabulary into design-sensitive machinery, apply
+the shared behavioral-design authority. During Tock, provide its aggregate
+trace and comparison, return any behavioral contract change to product
+authority, classify affected tests, and resume at the accepted rebaseline
+boundary.
 
 Turn the findings into one coherent remediation package when they share a
 target and can be ordered into dependent slices. For a non-trivial package,
@@ -215,6 +215,7 @@ Use `$evidence-efficient-review`. Start from current source and behavior, not
 the remediation author's claims. Supply a repository-specific review request:
 
 - the selected work-package scope and exact reviewed revision;
+- its stable behavioral goal record and current direct scenario status;
 - its normalized contract-and-evidence matrix, required specification-cell
   dispositions, explicit non-goals, and architecture ownership guidance;
 - any applicable structural baseline, intended placement, and material
@@ -246,19 +247,11 @@ non-worsening disposition, the stable dedupe identity, authorized durable
 read-back, current lifecycle status, and handoff visibility. Missing required
 evidence remains `unknown`; it is not a non-gating improvement.
 
-The Tick must also challenge the specification and its tests for accidental
-complexity. Explicitly inspect for requirements that force nonessential
-mechanisms, test names broader than their assertions, internal metrics without
-operational consumers, and assertions coupled to field layout, counter
-vocabulary, or the current transaction decomposition. Recommend simplifying
-the specification when that preserves the project goal and a stable semantic
-contract.
-
-When cumulative remediation triggers the shared authority's rebaseline signal,
-run a bounded rebaseline of the affected contract rows and dependent evidence.
-Compare the current package with the smallest faithful design, carry unaffected
-coverage forward, and use causal burden evidence rather than line count for the
-decision.
+The Tick applies the shared behavioral-design authority to the specification,
+implementation, and affected tests. It records the disposition of concrete
+aggregate comparison signals, audits any accepted rebaseline at the corrected
+boundary, and reports the direct scenario's behavioral status separately from
+mechanism progress.
 
 When external capability matters, independently disposition the minimal
 endpoint-capability probe and the composed semantic scenario defined by the
@@ -273,7 +266,8 @@ The review artifact must:
 - report only reproduced or source-proven functional/architectural findings;
 - distinguish regressions from inherited defects;
 - name the owning fix and explicitly reject plastering alternatives;
-- assess progress toward the selected work package and repository goal;
+- report the stable goal ID and direct scenario's behavioral status separately
+  from mechanism progress;
 - report deterministic-gate, external-compatibility, and observational-telemetry
   status with their distinct decision effects;
 - distinguish current findings and required unknowns from legitimate
@@ -350,7 +344,9 @@ persistent reviewer establishes all of the following on the current tree:
 3. no compatibility shim, obsolete fallback, silent downgrade, or duplicated
    semantic authority was introduced by the accepted change or remains where
    the current contract prohibits it;
-4. realistic public compositions and owner-level invariants agree;
+4. realistic public compositions and owner-level invariants agree, the direct
+   scenario's behavioral status is reported separately, and mechanism evidence
+   is not credited as behavioral acceptance;
 5. resource and performance bounds measure the real work rather than hiding it;
 6. repository-required architecture and behavior authorities describe the
    implementation;

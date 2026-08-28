@@ -24,6 +24,8 @@ Before reading broad source, identify:
 
 - the exact scope and reviewed revision;
 - target-authoritative requirements and explicit non-goals;
+- one package-level behavioral goal record, including stable goal ID, direct
+  public scenario, product authority, owning contract, and current status;
 - current architecture, ownership, dependency, and public-contract authorities;
 - the latest relevant review and its reviewed baseline, when one exists;
 - required evidence and canonical verification;
@@ -45,6 +47,11 @@ The reviewed target may be current implementation or proposed specification.
 For a proposed target, distinguish accepted preceding contracts, current
 implementation facts, future intent, and explicit non-goals; do not treat the
 proposal's own wording as proof of feasibility or necessity.
+
+Read the
+[behavioral design trace and rebaseline authority](references/behavioral-design-trace.md)
+when the target proposes, implements, or reviews supporting mechanisms. Keep
+its behavioral and mechanism progress lanes distinct in the review contract.
 
 ## Choose The Review Mode
 
@@ -73,6 +80,10 @@ create one authoritative contract-and-evidence matrix, then review its contract
 rows and required specification cells sequentially. Do not begin by accepting
 the proposal's section structure or expanding every conceptual entity into a
 private representation.
+
+Apply the linked authority before accepting design-sensitive mechanism detail.
+Return its proposed behavioral contract changes to product authority and carry
+its separate behavioral and mechanism statuses into the review result.
 
 Keep durable observable contracts separate from a conditional implementation
 appendix. Require mechanisms and exact limits to state why correctness depends
@@ -151,6 +162,10 @@ In incremental mode, apply its promised-closure proof and remediation-delta
 audit before broad new-defect exploration. Disposition every prior finding
 individually; neither a nearby mechanism nor a green named regression proves
 that the owning boundary moved.
+
+Also carry the package-level goal record through implementation review and
+report its direct scenario status separately from mechanism status under the
+shared behavioral-design authority.
 
 ## Preserve Independence Without Reviewer Fan-Out
 
@@ -374,7 +389,8 @@ Return or draft the caller's requested artifact with:
   including stable IDs, read-back/lifecycle state, and any laundering rejection;
 - unresolved unknowns, if any;
 - focused and complete verification evidence; and
-- progress toward the explicit target and applicable architecture self-check.
+- the behavioral goal ID and direct scenario status, mechanism progress reported
+  separately, and the applicable architecture self-check.
 
 Use preferred project terms consistently without changing finding, severity,
 evidence, owner, or correction semantics. Report an unauthorized or semantically

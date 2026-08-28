@@ -6,6 +6,7 @@ accepting handoffs. Keep the package matrix as the sole requirement authority.
 ## Contents
 
 - Build the contract-first package matrix
+- Carry the behavioral goal record
 - Keep private mechanisms conditional
 - Profile design-sensitive owners
 - Profile modularization roots
@@ -34,6 +35,14 @@ matrix exists, create the smallest package-local subset before slicing work:
 Each invariant has one owning row. Slice briefs, correction messages, tests,
 documentation, and handoffs reference contract IDs rather than restating the
 requirement. Update the row only after parent acceptance.
+
+## Carry the behavioral goal record
+
+Instantiate the package-level goal record from the shared
+[behavioral design trace and rebaseline authority](../../evidence-efficient-review/references/behavioral-design-trace.md)
+alongside the matrix. Mechanism rows reference its stable goal ID. Carry the
+record through slice assignments, corrections, handoffs, and acceptance, and
+report its direct scenario's behavioral status separately from mechanism status.
 
 ## Keep private mechanisms conditional
 
@@ -120,6 +129,10 @@ for diagnosis, but their field layout does not become a public contract merely
 because several scenarios reuse them.
 
 ## Separate evidence lanes and statuses
+
+Keep the shared behavioral and mechanism progress statuses separate before
+classifying the evidence that supports them. A completed owner suite or
+mechanism path cannot establish the direct scenario's behavioral acceptance.
 
 Keep these lanes independently reportable:
 

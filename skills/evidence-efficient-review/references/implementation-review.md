@@ -9,6 +9,7 @@ cells and inspect them sequentially.
 
 - Audit promised closure
 - Audit the remediation delta
+- Trace behavior through the aggregate design
 - Review contract cells
 - Qualify actionable concerns
 - Review residual topology
@@ -63,6 +64,15 @@ This delta audit takes precedence over exploring an unchanged downstream limit.
 A credible inherited defect does not compensate for missing a defect introduced
 by the remediation under review.
 
+## Trace behavior through the aggregate design
+
+Apply the shared
+[behavioral design trace and rebaseline authority](behavioral-design-trace.md).
+Carry its package-level goal record through the implemented public composition
+and disposition its concrete comparison signals. When the shared process
+changes a contract, resume implementation review at the accepted rebaseline
+boundary. Report behavioral and mechanism statuses separately.
+
 ## Review contract cells
 
 Derive cells from the selected target: supported behavior, ownership boundary,
@@ -91,11 +101,11 @@ invariant. Then report an accepted observable contract violation as a current
 finding, or complete the comparative likelihood, impact, containment, and
 burden decision before promoting another candidate.
 
-When cumulative remediation triggers the authority's rebaseline signals,
-reopen the affected contract rows and dependent tests. Compare the complete
-package with the smallest faithful design while preserving real recovery and
-durable-state invariants. Use the authority's decision backstop to verify that
-local correctness of each layer has not substituted for package-level need.
+When cumulative remediation triggers the behavioral-design authority's
+comparison signals, apply its aggregate comparison and rebaseline process.
+Return here for the economic actionability decision only when a defensive
+requirement would add or preserve product machinery or lasting
+mechanism-coupled tests.
 
 ## Review residual topology
 

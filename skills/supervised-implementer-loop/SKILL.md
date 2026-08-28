@@ -32,6 +32,11 @@ Read
 before defining slices. Build its contract-first package matrix from stable
 contract IDs and keep it as the package's requirement authority.
 
+Apply the shared
+[behavioral design trace and rebaseline authority](../evidence-efficient-review/references/behavioral-design-trace.md)
+through that package reference. Carry its stable package-level goal record from
+establishment through slice and package acceptance.
+
 Before spawning, resolve glossary state through the
 [project-glossary authority](../clear-technical-writing/references/project-glossaries.md).
 Record the selected source or explicit opt-out and only the material
@@ -100,6 +105,7 @@ of continuity and ask before replacing it.
 Give the implementer enough context once:
 
 - the complete package outcome and ordered slice map;
+- the stable behavioral goal record and current direct scenario status;
 - the current slice's contract IDs and scenario-portfolio entries;
 - architectural owners, invariants, and dependency direction;
 - any applicable structural baseline and the current slice's intended source
@@ -144,32 +150,20 @@ statuses separately.
 
 ## Reconcile Specification And Complexity
 
-Run a design checkpoint when literal specification vocabulary would create
-several owners, limits, public metrics, collision tables, failpoints, or
-transaction states. At that checkpoint:
+Use the shared behavioral-design authority when literal specification choices
+or cumulative slice evidence trigger its aggregate comparison. The implementer
+supplies the goal trace, mechanism derivations, and comparison with the smallest
+faithful alternative. The parent may accept a mechanism-only constructive
+rebaseline within package authority. A behavioral contract change requires
+acceptance by the named product authority. After the applicable acceptance,
+update the owning contract once and resume design-sensitive work at the
+corrected boundary, carrying forward unaffected evidence.
 
-1. identify the stable public behavior, ownership, boundedness, and recovery
-   actually required;
-2. apply the
-   [economic actionability authority](../evidence-efficient-review/references/economic-actionability.md)
-   to defensive requirements that would add or preserve product machinery;
-3. propose the smallest cohesive owner that can satisfy the accepted outcomes;
-4. for every exact limit, require its correctness role, workload basis,
-   resource estimate, exact/one-over consequence, and revision trigger; route an
-   unjustified number to the private appendix;
-5. identify the owning contract row and tests that must change; and
-6. wait for the parent acceptance authority to approve the corrected contract
-   before continuing that design-sensitive work.
-
-Treat this as implementation feedback to the specification, not resistance to
-the task. Preserve genuinely distinct limits and evidence when they protect
-real work or public behavior.
-
-Use the same checkpoint when cumulative slices trigger the shared authority's
-rebaseline signals. Report the accepted behavior, the added owners, state,
-branches, public surface, and mechanism-coupled tests, plus the smallest
-faithful alternative. Resume design-sensitive remediation after the parent
-accepts the affected contract decision.
+Apply the
+[economic actionability authority](../evidence-efficient-review/references/economic-actionability.md)
+only when a defensive requirement would add or preserve product machinery or
+lasting mechanism-coupled tests. Use the package reference for exact-limit
+justification.
 
 ## Route Architectural Scope Decisions
 
@@ -206,10 +200,11 @@ For every slice:
    boundary; contract IDs established; intended behavior or interface changes,
    or an explicit statement that none were intended; exceptions from
    mechanical equivalence; material structural delta when a profile applies;
-   checks and scenario results with pass/fail status; unresolved risks or
-   blockers; and the detailed-evidence location. For a modularization package,
-   include the residual-topology delta and disposition of every affected
-   material cluster. Include affected-test,
+   the goal ID and direct scenario's behavioral status; mechanism progress stated
+   separately; checks and scenario results with pass/fail status; unresolved
+   risks or blockers; and the detailed-evidence location. For a modularization
+   package, include the residual-topology delta and disposition of every
+   affected material cluster. Include affected-test,
    external-evidence, architectural-decision, and follow-up dispositions only
    when they apply. The implementer does not approve its own work.
 4. Independently inspect the packet, changed owner topology, and the few
@@ -300,23 +295,26 @@ After the final slice:
 
 1. Map the resulting tree back to every package-matrix row and its named
    scenario status.
-2. Compare every applicable structural profile with the accepted result and
+2. Verify the stable goal record's direct public scenario and report its
+   behavioral status separately from mechanism completion. Mechanism evidence
+   cannot establish behavioral acceptance.
+3. Compare every applicable structural profile with the accepted result and
    resolve any qualified worsening through the architectural-scope authority.
    For a modularization package, also confirm that every material residual
    cluster is `extracted`, `retained-with-proof`, or justified
    `not-applicable`; required `unknown` coverage blocks package acceptance.
-3. Run the package-level verification required by the repository and the risk
+4. Run the package-level verification required by the repository and the risk
    of the changes.
-4. Confirm no partial implementer work, unresolved feedback, overlapping write,
+5. Confirm no partial implementer work, unresolved feedback, overlapping write,
    or unintended dirty state remains.
-5. Confirm every architectural-scope decision has an accepted branch and that
+6. Confirm every architectural-scope decision has an accepted branch and that
    no unauthorized or unverified ledger mutation is credited as durable.
-6. Report the glossary source or explicit opt-out, material access or authorized
+7. Report the glossary source or explicit opt-out, material access or authorized
    changes, unresolved term candidates, and terminology continuity alongside
    the accepted slices, important review corrections, verification, follow-up
    ledger delta, commits or pending changes, and any genuine remaining
    limitation.
-7. After contract IDs, package scope, and evidence results are accepted, apply
+8. After contract IDs, package scope, and evidence results are accepted, apply
    one compact
    [clear technical writing pass](../clear-technical-writing/SKILL.md) to the
    final package handoff without changing those decisions. Route a later

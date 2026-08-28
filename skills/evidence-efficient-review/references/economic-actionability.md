@@ -58,26 +58,15 @@ shows that its marginal risk reduction warrants its added burden. Select the
 smallest response that clears the actual risk. Keep tests on observable
 behavior unless a mechanism is itself an accepted stable contract.
 
-## Reopen ratcheted decisions
+## Compose with behavioral design
 
-Reevaluate affected contract rows before adding more remediation when current
-evidence shows that an earlier economic assumption has changed. Concrete
-signals include:
-
-- one behavioral outcome now requires several semantic owners, durable records,
-  or coordination boundaries;
-- a supporting mechanism changes the feature's observable vocabulary;
-- a correction adds public-looking surface, compatibility paths, states,
-  branches, or mechanism-coupled tests;
-- progress and acceptance evidence mostly prove internal machinery while the
-  end-to-end outcome remains weak or unavailable; or
-- cumulative implementation and test burden materially exceeds the basis on
-  which the defensive requirement was accepted.
-
-A signal triggers comparison. Rebaseline the affected contract rows and
-dependent evidence, compare the current design with the smallest faithful
-alternative, retain defenses supported by the marginal analysis, and replace
-or delete obsolete mechanism tests when the contract is simplified.
+Use the shared
+[behavioral design trace and rebaseline authority](behavioral-design-trace.md)
+for aggregate mechanism comparison, behavioral-authority feedback, and contract
+rebaselining. When that process reaches a defensive requirement, apply the
+marginal risk-and-burden decision here to decide whether the defense remains
+actionable and what smallest response is adequate. Return that decision to the
+shared process without taking ownership of the general design or rebaseline.
 
 ## Decision backstop
 

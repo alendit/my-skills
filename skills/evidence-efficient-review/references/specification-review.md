@@ -8,6 +8,7 @@ authority for the review.
 ## Contents
 
 - Normalize one authority
+- Carry the behavioral design trace
 - Separate durable contracts from implementation detail
 - Qualify defensive requirements economically
 - Classify evidence by decision role
@@ -44,6 +45,15 @@ leaves the old authorities intact.
 Do not force every document to use this exact Markdown table. A database,
 Org-mode table, or other compact ledger is equivalent when it preserves one
 normative authority and stable IDs.
+
+## Carry the behavioral design trace
+
+Apply the shared
+[behavioral design trace and rebaseline authority](behavioral-design-trace.md).
+Include its package-level goal record in the normalized authority and
+disposition the behavioral-design-trace cell below. Keep proposed
+behavioral contract changes with product authority and report behavioral and
+mechanism statuses separately.
 
 ## Separate durable contracts from implementation detail
 
@@ -164,6 +174,7 @@ Clear or disposition every applicable cell:
 | Cell | Question | Candidate trigger |
 |---|---|---|
 | Single normative authority | Does every requirement have one owning contract row and only ID references elsewhere? | Duplicate or contradictory normative prose |
+| Behavioral design trace | Does one stable package goal record remain authoritative, and has the current aggregate been compared with the smallest faithful alternative under the shared authority? | Mechanisms become outcomes, supporting features change core vocabulary without an accepted behavioral contract change, or internal progress displaces the direct scenario |
 | Durable contract boundary | Could an independently designed correct implementation satisfy the row? | Private representation prescribed without a correctness reason |
 | Scenario diagnosability | Does each scenario state an observable invariant and localize failure? | Assertion inventory or heroic catch-all witness |
 | Evidence topology | Are deterministic gates, external probes, and telemetry independent and correctly composed? | External availability blocks unrelated deterministic contracts |
