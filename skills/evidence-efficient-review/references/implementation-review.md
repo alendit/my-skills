@@ -10,6 +10,7 @@ cells and inspect them sequentially.
 - Audit promised closure
 - Audit the remediation delta
 - Review contract cells
+- Qualify actionable concerns
 - Review residual topology
 - Challenge implementation seams
   - Control-only durable identity
@@ -79,6 +80,22 @@ constraint. For each applicable cell:
 Inspect history only when it answers a live question such as regression
 classification, incomplete prior closure, or intended invariant. Do not
 front-load repository archaeology.
+
+## Qualify actionable concerns
+
+Classify a concern with the
+[economic actionability authority](economic-actionability.md)
+when its correction would add or preserve a defensive mechanism or lasting
+mechanism-coupled tests. First reproduce the scenario or prove the source
+invariant. Then report an accepted observable contract violation as a current
+finding, or complete the comparative likelihood, impact, containment, and
+burden decision before promoting another candidate.
+
+When cumulative remediation triggers the authority's rebaseline signals,
+reopen the affected contract rows and dependent tests. Compare the complete
+package with the smallest faithful design while preserving real recovery and
+durable-state invariants. Use the authority's decision backstop to verify that
+local correctness of each layer has not substituted for package-level need.
 
 ## Review residual topology
 

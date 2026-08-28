@@ -27,6 +27,8 @@ Before reading broad source, identify:
 - current architecture, ownership, dependency, and public-contract authorities;
 - the latest relevant review and its reviewed baseline, when one exists;
 - required evidence and canonical verification;
+- applicable operational risk evidence and the economic actionability decision
+  for any proposed defensive requirement;
 - severity and finding policy; and
 - the requested result or review-artifact format.
 
@@ -255,6 +257,8 @@ Decision role: <what this evidence can establish or block>
 Test kind: contract | mechanism | not-applicable
 Review classification: current finding | required unknown |
                        non-gating architectural improvement | not-applicable
+Economic actionability: <accepted observable violation, comparative decision,
+                         required unknown, or not-applicable>
 Architectural decision: <record identity and audited branch, or not-applicable>
 Follow-up state: <stable ID, durable read-back, lifecycle/activation state,
                   observed delta, or not-applicable>
@@ -298,30 +302,40 @@ first/repeated invocation, and clean retry after abort. Repetition must cross a
 known or derived failure threshold when the assertion is meant to distinguish
 local settlement from end-of-entry cleanup.
 
-## Escalate Only Concrete Candidates
+## Escalate Only Actionable Candidates
 
 Spend redundant reasoning on candidate findings, not on every cleared area.
+When remediation would add or preserve a defense, apply the
+[economic actionability authority](references/economic-actionability.md).
+Source proof establishes that a scenario is possible; unless an accepted
+observable contract is violated, it does not by itself establish that the
+concern is economically actionable.
+
 For each candidate:
 
 1. Prove it through a minimal reproducer or exact source invariant.
-2. Establish public impact when the contract is externally observable.
-3. Classify it as new, recurrent, inherited, or incomplete prior closure when
+2. Establish the accepted observable contract violation or complete the
+   comparative likelihood, impact, containment, and burden decision.
+3. Establish public impact when the contract is externally observable.
+4. Classify it as new, recurrent, inherited, or incomplete prior closure when
    history supports that distinction.
-4. Name the owning correction and explain why tempting local workarounds would
-   preserve the defect.
-5. Have the primary independently verify material claims and severity.
+5. Name the smallest adequate owning correction and explain why tempting local
+   workarounds would preserve the defect.
+6. Have the primary independently verify material claims, actionability, and
+   severity.
 
-Report only reproduced or source-proven findings. Keep speculative concerns as
-unknown review questions rather than inflating the finding list.
+Report only reproduced or source-proven findings that also pass the applicable
+actionability boundary.
 
-Do not assign P2 or any other severity solely because an unrelated improvement
-would be valuable. Severity requires a current target violation and the impact
-required by the caller's policy. An unactivated follow-up is not a current
-target merely because its ledger record is visible.
+Use this backstop before reporting the result:
 
-Do not implement remediation during the review. Temporary diagnostic probes
-must stay within authorization, remain clearly disposable, and not become
-unreviewed production changes.
+- [ ] an in-scope decision is the only reason missing likelihood is classified
+      as a required unknown; other concerns are non-gating or omitted;
+- [ ] severity follows a current target violation and the caller's impact
+      policy;
+- [ ] an unactivated follow-up remains outside the current target;
+- [ ] the reviewer remains read-only; and
+- [ ] temporary diagnostic probes stay authorized and disposable.
 
 ## Verify Economically
 
@@ -349,7 +363,8 @@ Return or draft the caller's requested artifact with:
 
 - decision, scope, and reviewed revision;
 - disposition of every prior finding;
-- confirmed findings with severity, proof, owner, and principled fix direction;
+- confirmed findings with severity, proof, actionability evidence, owner, and
+  principled fix direction;
 - exact proposed wording when the reviewed target is a specification and the
   defect can be corrected locally in prose;
 - the authoritative contract-matrix delta and required specification-cell

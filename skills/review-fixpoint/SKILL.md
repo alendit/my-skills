@@ -106,6 +106,13 @@ single requirement authority, keep workflow mechanics in this skill, and apply
 the reference's evidence classes and result vocabulary to every phase decision.
 Use its test-stability rules when a design changes.
 
+Also apply the shared
+[economic actionability authority](../evidence-efficient-review/references/economic-actionability.md)
+before a possible failure becomes a defensive contract requirement or Tock
+work. Preserve the reviewer as finding authority and the primary as package
+acceptance authority. Obtain operational likelihood from recorded evidence or
+the responsible owner, and keep unavailable evidence explicitly unknown.
+
 Carry glossary state through the
 [project-glossary authority](../clear-technical-writing/references/project-glossaries.md):
 the selected glossary identity or explicit opt-out and only the material
@@ -145,6 +152,14 @@ Map every finding to its owning contract ID. Update the owning matrix row once,
 then change implementation, evidence, or documentation only where that
 artifact's distinct responsibility changed. Replace copied normative prose with
 ID references instead of synchronizing several requirement descriptions.
+
+Route each concern through the shared actionability decision before Tock:
+
+- remediate an accepted observable contract violation;
+- remediate another defense when comparative evidence makes it actionable;
+- return missing evidence required by an in-scope decision as a Tick unknown;
+  and
+- leave a non-gating concern outside Tock.
 
 Before translating review vocabulary into new limits, counters, capabilities,
 or transaction states, run a design checkpoint. Ask whether each mechanism has
@@ -238,6 +253,12 @@ operational consumers, and assertions coupled to field layout, counter
 vocabulary, or the current transaction decomposition. Recommend simplifying
 the specification when that preserves the project goal and a stable semantic
 contract.
+
+When cumulative remediation triggers the shared authority's rebaseline signal,
+run a bounded rebaseline of the affected contract rows and dependent evidence.
+Compare the current package with the smallest faithful design, carry unaffected
+coverage forward, and use causal burden evidence rather than line count for the
+decision.
 
 When external capability matters, independently disposition the minimal
 endpoint-capability probe and the composed semantic scenario defined by the
@@ -337,8 +358,11 @@ persistent reviewer establishes all of the following on the current tree:
    exact reviewed revision;
 8. no required coverage remains `unknown`, no accepted correction worsens an
    architectural-scope dimension, and no activated follow-up remains open;
-9. no valid external `product-contract-failure` remains unresolved; and
-10. when the selected contract includes physical decomposition, every material
+9. no valid external `product-contract-failure` remains unresolved;
+10. no in-scope economic actionability decision remains unknown and no defense
+    added or preserved by the selected package depends only on source-level
+    possibility; and
+11. when the selected contract includes physical decomposition, every material
     residual responsibility cluster is `extracted`, `retained-with-proof`, or
     justified `not-applicable`; no preservation evidence has been used to clear
     semantic-owner or locality coverage.

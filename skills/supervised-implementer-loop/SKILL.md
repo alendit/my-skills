@@ -142,25 +142,34 @@ fields into the contract. Keep deterministic acceptance independent from
 credential availability and report external capability and composition
 statuses separately.
 
-## Stop For Spec-Induced Accidental Complexity
+## Reconcile Specification And Complexity
 
-Do not implement documentation vocabulary literally when it creates several
-owners, limits, public metrics, collision tables, failpoints, or transaction
-states without distinct semantics or operational consumers. At that checkpoint:
+Run a design checkpoint when literal specification vocabulary would create
+several owners, limits, public metrics, collision tables, failpoints, or
+transaction states. At that checkpoint:
 
 1. identify the stable public behavior, ownership, boundedness, and recovery
    actually required;
-2. propose the smallest cohesive owner that can satisfy them;
-3. for every exact limit, require its correctness role, workload basis,
+2. apply the
+   [economic actionability authority](../evidence-efficient-review/references/economic-actionability.md)
+   to defensive requirements that would add or preserve product machinery;
+3. propose the smallest cohesive owner that can satisfy the accepted outcomes;
+4. for every exact limit, require its correctness role, workload basis,
    resource estimate, exact/one-over consequence, and revision trigger; route an
    unjustified number to the private appendix;
-4. identify the owning contract row and tests that must change; and
-5. wait for the parent acceptance authority to approve the corrected contract
+5. identify the owning contract row and tests that must change; and
+6. wait for the parent acceptance authority to approve the corrected contract
    before continuing that design-sensitive work.
 
 Treat this as implementation feedback to the specification, not resistance to
 the task. Preserve genuinely distinct limits and evidence when they protect
 real work or public behavior.
+
+Use the same checkpoint when cumulative slices trigger the shared authority's
+rebaseline signals. Report the accepted behavior, the added owners, state,
+branches, public surface, and mechanism-coupled tests, plus the smallest
+faithful alternative. Resume design-sensitive remediation after the parent
+accepts the affected contract decision.
 
 ## Route Architectural Scope Decisions
 

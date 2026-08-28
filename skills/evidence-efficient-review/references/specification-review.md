@@ -9,6 +9,7 @@ authority for the review.
 
 - Normalize one authority
 - Separate durable contracts from implementation detail
+- Qualify defensive requirements economically
 - Classify evidence by decision role
 - Design a diagnosable scenario portfolio
 - Audit the required specification cells
@@ -73,6 +74,21 @@ limit proposed as normative:
 If correctness does not depend on the number, classify it as a private default
 in the implementation appendix. Its boundary checks are mechanism evidence, not
 durable feature acceptance.
+
+## Qualify defensive requirements economically
+
+For each proposed normative precaution, apply the
+[economic actionability authority](economic-actionability.md). Establish the
+possible failure from source, then compare likelihood, impact, existing
+containment, the smallest adequate response, and added carrying cost. Give
+high-impact durable or irreversible outcomes explicit weight even when they are
+uncommon. Keep the resulting decision with the owning contract row or risk
+authority.
+
+Use the authority's decision backstop to confirm that routine requirements stay
+lightweight, likelihood is evidenced or explicitly unknown, and qualitative
+judgment remains visible instead of being replaced by invented probabilities or
+a numeric threshold.
 
 ## Classify evidence by decision role
 
@@ -154,6 +170,7 @@ Clear or disposition every applicable cell:
 | External freshness | Can prior evidence be reused only under explicit identity and age rules? | Credentialed evidence has no freshness or failure classification |
 | Telemetry decision power | Does each metric have a baseline and threshold or an observational label? | Measurement is cited as acceptance but cannot decide success |
 | Exact-limit justification | Does every normative number have workload, cost, boundary, and revision evidence? | Precise cap or timeout is asserted by convention alone |
+| Defensive actionability | Does a proposed precaution protect an accepted observable outcome or have comparative risk-and-burden evidence? | Source proves only that an edge case is possible |
 | Change locality | Does design-sensitive work identify the owning source boundary while keeping private layout conditional? | A new responsibility has no placement rationale, or filenames and modules are frozen without an architectural reason |
 | Workflow boundary | Does the product artifact contain targets and evidence without copying review mechanics? | Review numbering, commits, reviewer selection, or stop procedure embedded in the feature contract |
 
@@ -171,6 +188,6 @@ contract, provide both the durable formulation and the implementation-appendix
 disposition.
 
 Report the normalized matrix or a compact delta to it, the disposition of every
-required cell, external evidence status, telemetry role, and unresolved
-unknowns. Do not declare a whole-specification fixed point while required cells
-remain unknown.
+required cell, defensive actionability decisions, external evidence status,
+telemetry role, and unresolved unknowns. Declare a whole-specification fixed
+point after every required cell is resolved.
