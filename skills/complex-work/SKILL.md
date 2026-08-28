@@ -24,11 +24,17 @@ boundaries, integration, acceptance, and final handoff.
    assumptions, and the evidence that will demonstrate acceptance.
 3. Discover and carry user and repository policy for commits, external writes,
    publication, destructive actions, and unrelated worktree state.
-4. Decompose the outcome into ordered units only as far as observable
+4. Record an execution-cost profile only when the user supplies one or current
+   capabilities establish a material difference between capable owners. Name
+   the preferred persistent implementer and any required independent reviewer;
+   do not invent prices or weaken authority to save context.
+5. Decompose the outcome into ordered units only as far as observable
    acceptance requires. Record each unit's owner, dependencies, shared
-   constraints, and exit evidence. Keep uncertain choices local and
-   reversible.
-5. Bypass this skill when the result is a small bounded edit or one specialized
+   constraints, and exit evidence. Group related mechanical work at the
+   smallest meaningful acceptance boundary, but keep a boundary separate when
+   later work depends on a semantic or architectural decision there. Keep
+   uncertain choices local and reversible.
+6. Bypass this skill when the result is a small bounded edit or one specialized
    skill owns it end to end.
 
 For a mixed package in which several units affect the same source owner,
@@ -70,8 +76,17 @@ that evidence without copying the leaf's scanning or architecture-scope
 mechanics.
 
 Delegate only when the user requests delegation, the selected leaf requires
-it, or packages are genuinely independent. Do not fan out or delegate all work
-merely because the package is large.
+it, an active execution-cost profile identifies a cheaper capable persistent
+owner for suitable mechanical or evidence-producing work, or packages are
+genuinely independent. Do not fan out or delegate all work merely because the
+package is large.
+
+When the execution-cost profile identifies a cheaper capable persistent owner,
+keep exhaustive mechanical work, iteration, and verbose evidence with that
+owner. Give the primary a bounded acceptance packet and independently selected
+risk probes sufficient for its package decisions; context savings do not
+transfer scope, architecture, authorization, acceptance, or independent-review
+authority.
 
 Treat every mutation as bounded by existing authority. A reviewable unit does
 not authorize a commit, push, publication, deployment, message, destructive
@@ -93,6 +108,11 @@ work.
 
 Treat cumulatively harmful placement that invalidates the assumed source owner
 as such a contradiction; size alone does not invalidate the route.
+
+Also replan when primary-context growth is dominated by source, diffs, logs, or
+checks already processed by a capable delegated owner without supporting a new
+primary decision. Expand primary inspection only around consequential risk,
+contradictory evidence, or an authority the primary must exercise.
 
 ## Verify And Finish
 

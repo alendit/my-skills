@@ -130,7 +130,10 @@ already records its contract; reopen only changed authorities and sections
 needed for a live closure question.
 
 The dossier supplies facts and routing, not the remediation author's suspected
-answer.
+answer. It may include concise implementer-produced inventories, normalized
+comparisons, and references to detailed evidence when they efficiently locate
+review candidates. Treat those as navigation facts, not as findings or proof
+that a contract cell is cleared.
 
 When a glossary is selected, require the independent reviewer to access each
 material entry directly rather than receiving the remediation author's
@@ -163,6 +166,9 @@ same scope among subsystem agents merely for breadth.
 - Never use the implementation author as the sole fixed-point reviewer.
 - Give a delegated reviewer the neutral dossier and source tree, not expected
   findings or remediation reasoning.
+- Require the reviewer to verify any implementer-produced candidate evidence
+  against the reviewed source or behavior; implementer self-checks cannot
+  establish the independent decision.
 - The primary verifies material candidate findings rather than duplicating the
   complete review.
 

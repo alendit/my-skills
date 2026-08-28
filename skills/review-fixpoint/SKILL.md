@@ -88,7 +88,14 @@ Tock: remediate latest review artifact
 
 Never declare a fixed point immediately after Tock. Only the persistent
 reviewer's following independent Tick can establish it. Finish and verify
-remediation before starting that Tick; do not review a partially edited tree.
+remediation before starting that Tick; do not review a partially edited tree or
+insert Tick ceremonies between mechanical implementation units. If a Tick
+finds a defect and the resulting non-trivial Tock remains owned by the same
+persistent implementer, return a delta-only correction to that implementer.
+Reopen only contract cells and evidence invalidated by the correction when
+prior coverage remains trustworthy and impact is bounded; otherwise follow the
+existing phase-selection and rebaseline rules before the next required exact-
+revision Tick.
 
 ## Use One Contract And Evidence Boundary
 

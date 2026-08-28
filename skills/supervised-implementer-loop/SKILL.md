@@ -46,10 +46,14 @@ explanatory input; package contracts and technical owners retain semantics.
 3. Put private representation, fields, plumbing, and numeric defaults in the
    conditional implementation appendix unless a row states why correctness
    requires them.
-4. Divide the matrix rows into coherent, ordered slices. Each accepted slice must
-   leave the project in a useful state and establish invariants on which later
-   slices may safely rely. Apply the reference's structural profile when an
-   owner receives a new design-sensitive responsibility or several slices.
+4. Divide the matrix rows into coherent, ordered slices at meaningful
+   acceptance boundaries. Group related mechanical edits when only their
+   combined owner boundary is useful
+   to accept. Keep a slice separate when later work genuinely depends on parent
+   acceptance of its semantic or architectural decision. Each accepted slice
+   must leave the project in a useful state and establish invariants on which
+   later slices may safely rely. Apply the reference's structural profile when
+   an owner receives a new design-sensitive responsibility or several slices.
 5. Keep uncertain decisions local and reversible. Ask only when a missing
    choice would materially change behavior, architecture, risk, or scope.
 
@@ -71,6 +75,10 @@ Before spawning an implementer:
    work. A lean model such as Luna with high or maximum reasoning can be an
    effective implementation choice when current availability and remembered or
    explicit preferences support it.
+   When the user supplies or current capabilities establish a material cost
+   asymmetry, record it without inventing prices and prefer the cheaper capable
+   persistent implementer for exhaustive mechanical and evidence-producing
+   work.
 5. Use normal, non-fast execution by default. Enable fast mode only when the
    user explicitly requests fast mode for the current task; never infer it from
    memory, model choice, urgency, or token-economy instructions.
@@ -106,6 +114,11 @@ weakening correctness: inspect only relevant owners and adjacent consumers,
 avoid repeating supplied context, communicate concise deltas, run focused
 checks during iteration, and report only changed files, verification, and
 material unresolved concerns.
+
+Keep verbose logs, normalized comparisons, symbol inventories, and
+intermediate evidence with the implementer or in a temporary or explicitly
+authorized evidence artifact. The implementer's handoff should reference that
+artifact instead of pasting successful logs or complete files.
 
 Use the smallest context fork that still carries the requirements and current
 repository state. Do not repopulate the agent's context on later slices.
@@ -170,17 +183,21 @@ For every slice:
 2. Let the implementer edit and run focused validation. Do not perform
    overlapping writes or Git operations in the shared workspace. Non-mutating
    preparation may continue, but formally review only a completed slice.
-3. Require a compact handoff: changed files; contract IDs established; material
-   structural delta when a profile applies; scenario
-   results with observable invariant, evidence class, shared capture helpers,
-   and localization signal; affected-test dispositions; external evidence
-   status; any architectural-scope decision record; follow-up IDs created,
-   updated, closed, stale, or unchanged-but-relevant; and any design concern.
-   The implementer does not approve its own work.
-4. Independently inspect the actual diff, owning code, applicable owner outline
-   and structural delta, adjacent consumers, tests, error placement, cleanup,
-   state lifetime, documentation impact, and unintended compatibility or
-   fallback paths. For a routed architectural
+3. Require a compact acceptance packet: changed paths and resulting owner
+   boundary; contract IDs established; intended behavior or interface changes,
+   or an explicit statement that none were intended; exceptions from
+   mechanical equivalence; material structural delta when a profile applies;
+   checks and scenario results with pass/fail status; unresolved risks or
+   blockers; and the detailed-evidence location. Include affected-test,
+   external-evidence, architectural-decision, and follow-up dispositions only
+   when they apply. The implementer does not approve its own work.
+4. Independently inspect the packet, changed owner topology, and the few
+   boundaries where defects would be consequential. Prefer normalized
+   extraction comparisons, symbol and visibility inventories, forbidden-
+   dependency searches, narrow changed ranges, and focused witnesses selected
+   independently from the implementer's checks over complete moved-body or log
+   rereads. Expand inspection when evidence is contradictory, incomplete, or
+   implausible. For a routed architectural
    decision, verify its causal evidence, correction bound, branch, and durable
    follow-up read-back. Do not accept the implementer's summary as evidence by
    itself.
@@ -211,6 +228,9 @@ component, or other mechanism without its own semantic owner.
 - Reuse the same implementer; do not spawn a replacement for ordinary
   corrections or subsequent slices.
 - Prefer concise follow-up tasks over full rewritten briefs.
+- Keep detailed working evidence in the implementer's context or referenced
+  artifact; import it into the parent only to answer a concrete acceptance
+  question.
 - Read and test the smallest relevant surface during iteration.
 - Run focused checks first and defer expensive complete gates to meaningful
   package checkpoints unless risk requires them earlier. When a repository
@@ -218,6 +238,8 @@ component, or other mechanism without its own semantic owner.
   instead of duplicating the same full suite before and after commit.
 - Omit routine narration, unchanged-code summaries, generic reassurance, and
   repeated architectural background.
+- Do not repeat a successful implementer check in the parent unless it supplies
+  distinct independence or risk coverage.
 - Preserve required facts, evidence, constraints, and design reasoning before
   trimming explanation.
 - Do not interpret token efficiency as permission to skip owner analysis,
