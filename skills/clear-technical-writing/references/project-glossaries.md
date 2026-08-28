@@ -38,6 +38,11 @@ self-contained enough for its intended person or agent: explain an unfamiliar
 term locally, do not begin with a vocabulary dump, do not replace concrete
 operations with labels, and do not assume a link repairs unclear prose.
 
+When terminology describes architecture, record semantic ownership, current
+physical placement, and accepted target topology as distinct claims. Label
+current placement as descriptive and connect topology acceptance to its
+architecture evidence and authority.
+
 ## Add Or Update A Term
 
 Add a glossary entry only when all of these conditions hold:

@@ -39,8 +39,13 @@ boundaries, integration, acceptance, and final handoff.
 
 For a mixed package in which several units affect the same source owner,
 identify that overlap during establishment and carry the repository's
-applicable physical-decomposition constraint as a shared constraint. Leave
-structural profiling and qualification to the implementation leaf.
+applicable physical-decomposition constraint and the architecture-guidance
+authority's semantic-authority/physical-decomposition orthogonality rule as
+shared constraints. Require the implementation or review leaf to report its
+complete-boundary qualification, residual-topology coverage, separate
+preservation and locality evidence, and fixed-point eligibility when physical
+decomposition is in scope. Leave the underlying inventory, qualification, and
+fixed-point mechanics to their existing leaf owners.
 
 ## Assign Leaf Owners
 

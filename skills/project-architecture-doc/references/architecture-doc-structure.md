@@ -31,6 +31,9 @@ Use this structure for `docs/architecture.md`. Adapt names to the repository, bu
    - Map major source directories/packages to their architectural roles.
    - Map meaningful implemented subcomponents to the smallest useful current
      source boundaries when a top-level path hides them.
+   - Distinguish the semantic authority, current physical placement, and any
+     separately accepted target topology. Mark current placement as descriptive
+     and link accepted topology to its architecture authority.
    - State what each area is allowed to depend on and what it must stay free of.
    - Skip this section only when the repository is too small for directory/package mapping to add value.
 6. `## Components`
@@ -75,6 +78,9 @@ Use this structure for `docs/architecture.md`. Adapt names to the repository, bu
    - Record a current-state mismatch when described subcomponents cannot be
      recovered from implemented source boundaries; do not infer one from file
      size alone or turn it into an unapproved refactoring plan.
+   - Evaluate behavioral preservation and physical-locality acceptance in
+     separate cells. Record passing tests and stable APIs as preservation
+     evidence and source-boundary analysis as topology evidence.
    - End with the delta between current architecture and architectural vision.
 
 If a repository is small, combine adjacent sections instead of producing empty headings. Do not force sections that cannot be supported by evidence.

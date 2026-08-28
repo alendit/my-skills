@@ -8,6 +8,7 @@ accepting handoffs. Keep the package matrix as the sole requirement authority.
 - Build the contract-first package matrix
 - Keep private mechanisms conditional
 - Profile design-sensitive owners
+- Profile modularization roots
 - Define a small scenario portfolio
 - Separate evidence lanes and statuses
 - Localize before repeating external scenarios
@@ -62,6 +63,41 @@ each relevant slice and compare the final owner with the baseline before
 package acceptance. Inspect bounded history only when repeated placement across
 earlier packages is material. The profile is implementation evidence, not a
 public layout contract or permanent metrics ledger.
+
+## Profile modularization roots
+
+When the package contract explicitly includes modularization or physical
+decomposition, inventory every material residual responsibility cluster in
+each affected root before implementation and again at package acceptance:
+
+```text
+responsibility cluster
+-> semantic owner
+-> current physical representation
+-> state and lifetime
+-> transaction boundary
+-> dependencies and callers
+-> public or ABI surface
+-> representative tests
+-> smallest plausible complete private boundary
+-> colocation invariant, when retained
+-> extracted | retained-with-proof | unknown | not-applicable
+```
+
+`extracted` requires a cohesive private boundary with preserved behavior,
+visibility, state, and dependency direction. `retained-with-proof` requires a
+named causal invariant that the smallest plausible complete boundary would
+break. Use `unknown` when required analysis is absent, contradictory, or tests
+only a partial extraction. Use `not-applicable` for generated or
+language-mandated regions, one cohesive algorithm, or another source-proven
+absence of distinct responsibilities.
+
+Record behavioral preservation and physical locality in separate evidence
+lanes. Put passing APIs, ABIs, tests, and canonical gates in the preservation
+lane; clear residual topology from the inventory and complete-boundary proof.
+As acceptance backstops, an `unknown` residual cluster blocks the
+modularization contract, while size and implementation effort only prioritize
+the inventory.
 
 ## Define a small scenario portfolio
 

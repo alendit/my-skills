@@ -37,12 +37,23 @@ propagation, serialization at a real boundary, a cohesive multi-file owner
 change, inherently end-to-end composition, unfamiliarity, slow tooling, or
 difficult test editing without a causal architecture property.
 
-For a physical-decomposition claim, establish distinct responsibilities or
-change reasons, a causal locality cost from unrelated context or implicit
-coupling, and a plausible smaller cohesive boundary. File length, symbol count,
-history, outline depth, and tool or context truncation are supporting signals
-only. Do not qualify generated source, a cohesive algorithm, language-mandated
-colocation, or mostly inline tests without the same causal evidence.
+For a physical-decomposition claim:
+
+1. identify distinct responsibilities or change reasons;
+2. establish causal locality cost from unrelated context or implicit coupling;
+3. propose the smallest complete cohesive private boundary;
+4. explicitly challenge designs around central types, shared state,
+   transactions, lifecycle, and ABI adaptation; and
+5. retain colocation only when a named causal invariant fails under that
+   complete boundary.
+
+Those design categories raise extraction risk and therefore receive explicit
+boundary design. Record a partial helper, handle, or forwarding-only failure as
+evidence about that candidate, then evaluate the complete boundary separately.
+Use file length, symbol count, history, outline depth, and tool or context
+truncation to prioritize analysis. Classify generated source, a cohesive
+algorithm, language-mandated colocation, or mostly inline tests from the same
+causal responsibility evidence.
 
 For a test-locality claim, apply the alternate-implementation challenge: show
 that an independently designed correct implementation preserving the stable
@@ -85,6 +96,13 @@ The primary supervisor selects and accepts a branch within the caller-approved
 outcome. An outer workflow may propose a branch, but it does not expand that
 authority. Only the caller or another explicit package-scope authority may
 approve a material outcome or scope expansion at a scope stop.
+
+Use a design checkpoint to select one explicit outcome: keep the work in the
+current package, obtain authority for a narrower package contract, or record
+the required coverage as `unknown`. A package that promises modularization or
+physical decomposition reaches fixed point after its central stateful,
+transactional, lifecycle, and ABI work is completed or removed from scope by
+the authorized narrower contract.
 
 An architecture-preserving intermediate correction must satisfy the current
 contract, prevent new consumers or dependencies from relying on the defect, and

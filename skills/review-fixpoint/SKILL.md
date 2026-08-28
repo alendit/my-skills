@@ -336,12 +336,22 @@ persistent reviewer establishes all of the following on the current tree:
 7. relevant deterministic focused and complete functional checks pass on the
    exact reviewed revision;
 8. no required coverage remains `unknown`, no accepted correction worsens an
-   architectural-scope dimension, and no activated follow-up remains open; and
-9. no valid external `product-contract-failure` remains unresolved.
+   architectural-scope dimension, and no activated follow-up remains open;
+9. no valid external `product-contract-failure` remains unresolved; and
+10. when the selected contract includes physical decomposition, every material
+    residual responsibility cluster is `extracted`, `retained-with-proof`, or
+    justified `not-applicable`; no preservation evidence has been used to clear
+    semantic-owner or locality coverage.
 
 Create or update the repository-declared review artifact even when it reports
 zero findings; that artifact is the durable deterministic fixed-point witness.
 Stop code remediation rather than inventing lower-value work.
+
+Establish a whole-package modularization fixed point from both the accepted
+extractions and the residual topology of every affected root. When later
+evidence overturns an earlier zero-finding topology review, preserve the old
+artifact as historical evidence and create a new rebaseline review of the
+complete affected scope.
 
 A legitimate non-gating architectural follow-up may coexist with
 `deterministic-fixed-point` only when the Tick verifies that the current

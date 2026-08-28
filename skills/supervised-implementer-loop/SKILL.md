@@ -57,6 +57,14 @@ explanatory input; package contracts and technical owners retain semantics.
 5. Keep uncertain decisions local and reversible. Ask only when a missing
    choice would materially change behavior, architecture, risk, or scope.
 
+When the package explicitly includes modularization or physical decomposition,
+apply the reference's residual-topology inventory to every affected root. Carry
+the initial inventory through slice planning and compare it with the final root
+before package acceptance. Batch related state, operations, transaction
+handling, ABI adaptation, and tests at meaningful owner boundaries. Include the
+requested stateful and transactional architecture work in those boundaries
+rather than using easy stateless extractions as a proxy for package completion.
+
 ## Select The Implementer
 
 Before spawning an implementer:
@@ -96,6 +104,8 @@ Give the implementer enough context once:
 - architectural owners, invariants, and dependency direction;
 - any applicable structural baseline and the current slice's intended source
   destination;
+- the current residual-topology inventory when the package includes physical
+  decomposition;
 - accepted existing behavior that must not regress;
 - explicit non-goals and prohibited plastering fixes;
 - evidence class, shared capture helpers, localization signals, external
@@ -188,11 +198,18 @@ For every slice:
    or an explicit statement that none were intended; exceptions from
    mechanical equivalence; material structural delta when a profile applies;
    checks and scenario results with pass/fail status; unresolved risks or
-   blockers; and the detailed-evidence location. Include affected-test,
+   blockers; and the detailed-evidence location. For a modularization package,
+   include the residual-topology delta and disposition of every affected
+   material cluster. Include affected-test,
    external-evidence, architectural-decision, and follow-up dispositions only
    when they apply. The implementer does not approve its own work.
 4. Independently inspect the packet, changed owner topology, and the few
-   boundaries where defects would be consequential. Prefer normalized
+   boundaries where defects would be consequential. For a modularization
+   package, verify that each extracted module is cohesive, the root lost the
+   corresponding responsibility rather than retaining an operational copy,
+   every material residual cluster has an explicit disposition, and central
+   state, transaction, lifecycle, or ABI work was designed rather than skipped
+   as non-mechanical. Prefer normalized
    extraction comparisons, symbol and visibility inventories, forbidden-
    dependency searches, narrow changed ranges, and focused witnesses selected
    independently from the implementer's checks over complete moved-body or log
@@ -276,6 +293,9 @@ After the final slice:
    scenario status.
 2. Compare every applicable structural profile with the accepted result and
    resolve any qualified worsening through the architectural-scope authority.
+   For a modularization package, also confirm that every material residual
+   cluster is `extracted`, `retained-with-proof`, or justified
+   `not-applicable`; required `unknown` coverage blocks package acceptance.
 3. Run the package-level verification required by the repository and the risk
    of the changes.
 4. Confirm no partial implementer work, unresolved feedback, overlapping write,

@@ -32,6 +32,13 @@ the target repository, but preserve the outcomes without duplicating them.
   change, expose meaningful internal source boundaries so each can be
   understood, changed, and reviewed without unrelated context. Treat size and
   context cost as signals only, not proof that decomposition is defective.
+- Separate semantic authority from physical source decomposition during design.
+  Keep one component as the sole semantic and public authority where
+  appropriate, then place cohesive internal state, operations, transactions,
+  ABI adaptation, and evidence behind private source boundaries. Use shared
+  access to a central type, state, lifecycle, transaction, or ABI to shape those
+  boundaries. A retained colocated responsibility names the causal invariant
+  that the smallest plausible complete private boundary would break.
 - Make dependencies point from unstable shells and adapters toward stable,
   domain-owned contracts. Keep side effects at shell or adapter boundaries and
   do not combine unrelated domains in one coordinator.
@@ -61,7 +68,11 @@ the target repository, but preserve the outcomes without duplicating them.
    local and reversible?
 3. Who owns each changed behavior, does that owner remain cohesive, and which
    source boundary receives it? Does the change improve, preserve, or worsen
-   reviewable physical decomposition?
+   reviewable physical decomposition? For each responsibility retained in a
+   composition root or large semantic owner, what causal invariant requires
+   colocation after challenging the smallest plausible complete private
+   boundary? Have central state, lifecycle, transactions, ABI work, and private
+   access been treated as design inputs rather than automatic exemptions?
 4. What state changes, who owns it, how long should it live, and can it be
    rebuilt from more durable facts?
 5. Do dependencies and side effects remain on the correct side of stable

@@ -10,6 +10,7 @@ cells and inspect them sequentially.
 - Audit promised closure
 - Audit the remediation delta
 - Review contract cells
+- Review residual topology
 - Challenge implementation seams
   - Control-only durable identity
   - Effective evidence identity
@@ -78,6 +79,29 @@ constraint. For each applicable cell:
 Inspect history only when it answers a live question such as regression
 classification, incomplete prior closure, or intended invariant. Do not
 front-load repository archaeology.
+
+## Review residual topology
+
+For a whole-scope modularization review, independently build the
+[residual-topology inventory](../../supervised-implementer-loop/references/contract-and-scenario-package.md#profile-modularization-roots)
+for every affected root before deciding fixed point. Audit extracted modules
+and retained roots with equal contract authority. Challenge at least one
+plausible complete private boundary for every retained material cluster and
+record the causal invariant when that complete boundary would fail. Treat the
+failure of an individual helper, handle, or call extraction as evidence about
+that partial boundary only.
+
+Record behavioral preservation separately from semantic-owner and physical-
+locality coverage. Place passing APIs, ABIs, tests, canonical gates, and
+normalized moved-body comparisons in the preservation cell. Clear owner and
+locality cells from the residual inventory and complete-boundary evidence;
+classify unperformed central-state, transaction, lifecycle, central-type, ABI,
+or cross-cutting boundary design as required `unknown` coverage.
+
+Incremental review may carry a residual disposition forward only when its
+responsibilities, dependencies, state, transactions, callers, and tests remain
+unchanged. Rebaseline when an earlier zero-finding topology decision is
+overturned or the residual impact cone is uncertain.
 
 ## Challenge implementation seams
 

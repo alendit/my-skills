@@ -184,6 +184,11 @@ the required cells and scenario portfolio in the specification reference.
 Inspect the semantic owner and a realistic public composition, record the cell,
 then move to the next; do not replace sequential coverage with one broad scan.
 
+For a whole-scope modularization contract, apply the implementation reference's
+residual-topology review before deciding fixed point. Cover cohesive extracted
+modules and every material responsibility that remains in the affected roots,
+then record missing residual analysis as required `unknown` coverage.
+
 For a delegated review expected to span several minutes, send the outer caller
 a checkpoint after each material contract-cell cluster and before the final
 gate. Report only cleared, candidate, unknown, and not-applicable cells; the

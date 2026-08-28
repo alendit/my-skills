@@ -62,6 +62,17 @@ signals only. Generated source, cohesive algorithms, mandated colocation, and
 mostly inline tests may remain large. An extraction that worsens coupling,
 ownership, or dependency direction is not an improvement.
 
+Examples of useful private decomposition around one semantic authority include
+distributed inherent implementation blocks for a central type, a private
+module containing one complete transaction, owner-local state behind a narrow
+internal contract, and ABI adaptation beside the state or operation whose
+boundary it expresses.
+
+Counterexamples include forwarding-only modules, public traits without
+substitutable implementations, copied state, bidirectional sibling
+dependencies, and extraction that hides transaction ordering. Qualification
+remains with the architectural-scope decision authority linked above.
+
 ## Work Packages
 
 Incremental work should still produce useful stopping points. The test is not
