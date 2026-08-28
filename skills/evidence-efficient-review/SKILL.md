@@ -94,6 +94,8 @@ compact evidence:
 
 - status, history, baseline-to-current diff, and changed symbols;
 - outlines of changed owners and adjacent consumers before exact range reads;
+- any applicable structural baseline, intended placement, and material
+  structural delta for a design-sensitive owner;
 - the authoritative contract matrix, architecture ownership, and public entry
   points;
 - the selected glossary identity or explicit opt-out and only the material
@@ -190,8 +192,9 @@ cells, and do not rerun completed cells in response to a status request.
 
 When the reviewed work claims architectural impact or defers an architectural
 correction, or when the review itself encounters non-local impact, uncertain
-ownership, mechanism-coupled tests, or a local fix that may preserve an
-architectural problem, read
+ownership, mechanism-coupled tests, physical source structure that may hide
+distinct responsibilities, or a local fix that may preserve an architectural
+problem, read
 [the architectural scope decision authority](../supervised-implementer-loop/references/architectural-scope-decision.md)
 completely. Use it only to audit evidence and classification. A reviewer never
 selects remediation, accepts a deferral, creates or mutates a follow-up record,

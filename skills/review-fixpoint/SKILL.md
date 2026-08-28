@@ -112,8 +112,9 @@ another prose pass in this outer workflow.
 ## Route Architectural Scope Decisions
 
 When remediation or review exposes non-local impact, uncertain ownership,
-mechanism-coupled tests, or a local fix that may preserve an architectural
-problem, read
+mechanism-coupled tests, physical source structure that may hide distinct
+responsibilities, or a local fix that may preserve an architectural problem,
+read
 [the architectural scope decision authority](../supervised-implementer-loop/references/architectural-scope-decision.md)
 completely. Do not copy its decision, non-worsening, or ledger tables into this
 skill or a feature specification.
@@ -194,6 +195,8 @@ the remediation author's claims. Supply a repository-specific review request:
 - the selected work-package scope and exact reviewed revision;
 - its normalized contract-and-evidence matrix, required specification-cell
   dispositions, explicit non-goals, and architecture ownership guidance;
+- any applicable structural baseline, intended placement, and material
+  structural delta for a design-sensitive owner;
 - the latest applicable review artifact and its reviewed baseline;
 - current conformance/evidence authorities and canonical gates;
 - architectural-scope decision records, the selected durable ledger authority,

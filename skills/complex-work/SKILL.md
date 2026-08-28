@@ -31,6 +31,11 @@ boundaries, integration, acceptance, and final handoff.
 5. Bypass this skill when the result is a small bounded edit or one specialized
    skill owns it end to end.
 
+For a mixed package in which several units affect the same source owner,
+identify that overlap during establishment and carry the repository's
+applicable physical-decomposition constraint as a shared constraint. Leave
+structural profiling and qualification to the implementation leaf.
+
 ## Assign Leaf Owners
 
 Route a unit to the applicable specialized skill, then follow that skill's
@@ -59,6 +64,11 @@ limits, and observable exit. Let the leaf owner make its substantive decisions
 and choose its validation mechanics. The primary agent verifies the result,
 integrates it with accepted units, and retains final acceptance authority.
 
+When source-owner overlap applies, require the implementation leaf's accepted
+baseline-to-result structural decision before package acceptance. Integrate
+that evidence without copying the leaf's scanning or architecture-scope
+mechanics.
+
 Delegate only when the user requests delegation, the selected leaf requires
 it, or packages are genuinely independent. Do not fan out or delegate all work
 merely because the package is large.
@@ -80,6 +90,9 @@ unit, or ordering decision. Return to the latest broken boundary and replan
 that unit and its dependents. Preserve accepted units whose dependencies and
 evidence remain valid. Do not continue a disproved route or restart unaffected
 work.
+
+Treat cumulatively harmful placement that invalidates the assumed source owner
+as such a contradiction; size alone does not invalidate the route.
 
 ## Verify And Finish
 

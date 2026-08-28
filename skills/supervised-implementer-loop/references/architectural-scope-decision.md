@@ -1,10 +1,10 @@
 # Architectural Scope Decision
 
 Use this reference when implementation or parent review exposes non-local
-impact, uncertain ownership, mechanism-coupled tests, or a local fix that may
-preserve an architectural problem. The primary supervisor owns the decision.
-The implementer supplies evidence and proposals but never accepts its own
-branch.
+impact, uncertain ownership, mechanism-coupled tests, physical source structure
+that may hide distinct responsibilities, or a local fix that may preserve an
+architectural problem. The primary supervisor owns the decision. The
+implementer supplies evidence and proposals but never accepts its own branch.
 
 ## Contents
 
@@ -27,7 +27,7 @@ architecture signal:
 | Expected owner | Component that should decide and maintain the behavior |
 | Actual impact | Owners, consumers, dependency edges, state/lifetime boundaries, and tests that must change |
 | Causal path | Why the trigger forces that impact rather than merely accompanying it |
-| Architecture property | Duplicated semantic authority, wrong dependency direction, split or misplaced state/lifetime ownership, wrong-owner public or compatibility surface, or decomposition frozen into durable tests |
+| Architecture property | Duplicated semantic authority, wrong dependency direction, split or misplaced state/lifetime ownership, wrong-owner public or compatibility surface, physical source decomposition that hides cohesive responsibilities or change boundaries, or decomposition frozen into durable tests |
 | Desired direction | Intended semantic owner or dependency/state direction |
 | Local-patch defect | Why the convenient local fix preserves the architecture property |
 
@@ -36,6 +36,13 @@ evidence. Non-local work is not itself proof. Do not qualify ordinary adapter
 propagation, serialization at a real boundary, a cohesive multi-file owner
 change, inherently end-to-end composition, unfamiliarity, slow tooling, or
 difficult test editing without a causal architecture property.
+
+For a physical-decomposition claim, establish distinct responsibilities or
+change reasons, a causal locality cost from unrelated context or implicit
+coupling, and a plausible smaller cohesive boundary. File length, symbol count,
+history, outline depth, and tool or context truncation are supporting signals
+only. Do not qualify generated source, a cohesive algorithm, language-mandated
+colocation, or mostly inline tests without the same causal evidence.
 
 For a test-locality claim, apply the alternate-implementation challenge: show
 that an independently designed correct implementation preserving the stable
@@ -98,6 +105,7 @@ short source- or delta-backed reason for every dimension:
 | Durable surface | Does it expand a public, persisted, wire, or compatibility contract? |
 | Transitional burden | Does it add a fallback, shim, dual path, or temporary abstraction that must later be removed? |
 | Test coupling | Does it freeze a temporary mechanism into durable tests? |
+| Physical decomposition | Does it add a distinct responsibility to a source unit or make a cohesive change require more unrelated context? |
 | Exposure | Does it expose the defect to more consumers? |
 | Failure visibility | Does it hide the defect or weaken observable failure? |
 | Remediation cost | Does it increase migration, removal, or eventual correction cost? |

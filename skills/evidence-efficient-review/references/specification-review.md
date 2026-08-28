@@ -154,6 +154,7 @@ Clear or disposition every applicable cell:
 | External freshness | Can prior evidence be reused only under explicit identity and age rules? | Credentialed evidence has no freshness or failure classification |
 | Telemetry decision power | Does each metric have a baseline and threshold or an observational label? | Measurement is cited as acceptance but cannot decide success |
 | Exact-limit justification | Does every normative number have workload, cost, boundary, and revision evidence? | Precise cap or timeout is asserted by convention alone |
+| Change locality | Does design-sensitive work identify the owning source boundary while keeping private layout conditional? | A new responsibility has no placement rationale, or filenames and modules are frozen without an architectural reason |
 | Workflow boundary | Does the product artifact contain targets and evidence without copying review mechanics? | Review numbering, commits, reviewer selection, or stop procedure embedded in the feature contract |
 
 Workflow boundary is not applicable when the reviewed artifact is itself the

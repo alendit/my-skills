@@ -92,9 +92,18 @@ Apply only the dimensions relevant to the selected contract:
 - identity and provenance across representations or bridges;
 - substitutability across selected variants and routes;
 - owner behavior versus public composition;
+- reviewable physical decomposition when an owner receives a new
+  design-sensitive responsibility or repeated placement;
 - hidden physical ceilings or duplicated policy;
 - obsolete fallback, compatibility, or silent downgrade paths; and
 - complexity accounting against real work rather than timing alone.
+
+For reviewable physical decomposition, compare the affected owner's structural
+baseline and material delta when available. Apply the
+[architectural-scope decision authority](../../supervised-implementer-loop/references/architectural-scope-decision.md)
+to qualify any concern and bound its correction. File size alone is not a
+finding, and a mechanically extracted module that worsens coupling, ownership,
+or dependency direction is not an improvement.
 
 Apply the following seams only when the selected contract has the corresponding
 durable-effect or external-evidence surface. They are review questions, not new

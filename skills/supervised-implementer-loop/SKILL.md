@@ -48,7 +48,8 @@ explanatory input; package contracts and technical owners retain semantics.
    requires them.
 4. Divide the matrix rows into coherent, ordered slices. Each accepted slice must
    leave the project in a useful state and establish invariants on which later
-   slices may safely rely.
+   slices may safely rely. Apply the reference's structural profile when an
+   owner receives a new design-sensitive responsibility or several slices.
 5. Keep uncertain decisions local and reversible. Ask only when a missing
    choice would materially change behavior, architecture, risk, or scope.
 
@@ -85,6 +86,8 @@ Give the implementer enough context once:
 - the complete package outcome and ordered slice map;
 - the current slice's contract IDs and scenario-portfolio entries;
 - architectural owners, invariants, and dependency direction;
+- any applicable structural baseline and the current slice's intended source
+  destination;
 - accepted existing behavior that must not regress;
 - explicit non-goals and prohibited plastering fixes;
 - evidence class, shared capture helpers, localization signals, external
@@ -139,8 +142,9 @@ real work or public behavior.
 ## Route Architectural Scope Decisions
 
 When implementation or parent review exposes non-local impact, uncertain
-ownership, mechanism-coupled tests, or a local fix that may preserve an
-architectural problem, read
+ownership, mechanism-coupled tests, physical source structure that may hide
+distinct responsibilities, or a local fix that may preserve an architectural
+problem, read
 [references/architectural-scope-decision.md](references/architectural-scope-decision.md)
 completely. Do not infer an architecture defect from effort or file count.
 
@@ -166,15 +170,17 @@ For every slice:
 2. Let the implementer edit and run focused validation. Do not perform
    overlapping writes or Git operations in the shared workspace. Non-mutating
    preparation may continue, but formally review only a completed slice.
-3. Require a compact handoff: changed files; contract IDs established; scenario
+3. Require a compact handoff: changed files; contract IDs established; material
+   structural delta when a profile applies; scenario
    results with observable invariant, evidence class, shared capture helpers,
    and localization signal; affected-test dispositions; external evidence
    status; any architectural-scope decision record; follow-up IDs created,
    updated, closed, stale, or unchanged-but-relevant; and any design concern.
    The implementer does not approve its own work.
-4. Independently inspect the actual diff, owning code, adjacent consumers,
-   tests, error placement, cleanup, state lifetime, documentation impact, and
-   unintended compatibility or fallback paths. For a routed architectural
+4. Independently inspect the actual diff, owning code, applicable owner outline
+   and structural delta, adjacent consumers, tests, error placement, cleanup,
+   state lifetime, documentation impact, and unintended compatibility or
+   fallback paths. For a routed architectural
    decision, verify its causal evidence, correction bound, branch, and durable
    follow-up read-back. Do not accept the implementer's summary as evidence by
    itself.
@@ -246,18 +252,20 @@ After the final slice:
 
 1. Map the resulting tree back to every package-matrix row and its named
    scenario status.
-2. Run the package-level verification required by the repository and the risk
+2. Compare every applicable structural profile with the accepted result and
+   resolve any qualified worsening through the architectural-scope authority.
+3. Run the package-level verification required by the repository and the risk
    of the changes.
-3. Confirm no partial implementer work, unresolved feedback, overlapping write,
+4. Confirm no partial implementer work, unresolved feedback, overlapping write,
    or unintended dirty state remains.
-4. Confirm every architectural-scope decision has an accepted branch and that
+5. Confirm every architectural-scope decision has an accepted branch and that
    no unauthorized or unverified ledger mutation is credited as durable.
-5. Report the glossary source or explicit opt-out, material access or authorized
+6. Report the glossary source or explicit opt-out, material access or authorized
    changes, unresolved term candidates, and terminology continuity alongside
    the accepted slices, important review corrections, verification, follow-up
    ledger delta, commits or pending changes, and any genuine remaining
    limitation.
-6. After contract IDs, package scope, and evidence results are accepted, apply
+7. After contract IDs, package scope, and evidence results are accepted, apply
    one compact
    [clear technical writing pass](../clear-technical-writing/SKILL.md) to the
    final package handoff without changing those decisions. Route a later

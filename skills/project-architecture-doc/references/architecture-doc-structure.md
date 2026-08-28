@@ -29,6 +29,8 @@ Use this structure for `docs/architecture.md`. Adapt names to the repository, bu
      requirements.
 5. `## Repository Mapping`
    - Map major source directories/packages to their architectural roles.
+   - Map meaningful implemented subcomponents to the smallest useful current
+     source boundaries when a top-level path hides them.
    - State what each area is allowed to depend on and what it must stay free of.
    - Skip this section only when the repository is too small for directory/package mapping to add value.
 6. `## Components`
@@ -69,7 +71,10 @@ Use this structure for `docs/architecture.md`. Adapt names to the repository, bu
    - Omit this section when private detail does not materially help maintainers.
 13. `## Architecture Discussion`
    - Review against local architecture guidance.
-   - Cover ownership, coupling, dependency direction, side-effect placement, abstraction quality, interface semantics, and testability.
+   - Cover ownership, reviewable physical decomposition, coupling, dependency direction, side-effect placement, abstraction quality, interface semantics, and testability.
+   - Record a current-state mismatch when described subcomponents cannot be
+     recovered from implemented source boundaries; do not infer one from file
+     size alone or turn it into an unapproved refactoring plan.
    - End with the delta between current architecture and architectural vision.
 
 If a repository is small, combine adjacent sections instead of producing empty headings. Do not force sections that cannot be supported by evidence.

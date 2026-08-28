@@ -8,6 +8,7 @@ target `AGENTS.md`; extract only the shortest rules that fit that repo.
 
 - Available Information
 - Local And Reversible Before Abstract
+- Reviewable Physical Decomposition
 - Work Packages
 - Compatibility And Legacy Paths
 - Error Handling
@@ -41,6 +42,25 @@ when:
 Uncertain code should be easy to replace or delete. It should not be hidden
 behind a vague interface that every implementation must distort itself to
 satisfy.
+
+## Reviewable Physical Decomposition
+
+A semantic owner may be large, but its source organization should expose
+cohesive internal responsibilities as bounded units of understanding, change,
+and review when they have distinct reasons to change. A boundary may be a
+module, submodule, object, or function group; this is not a one-file-per-owner
+rule.
+
+Qualification belongs to the
+[architectural-scope decision authority](../../supervised-implementer-loop/references/architectural-scope-decision.md).
+Reviewability matters because hidden boundaries can force unrelated context
+into one change and conceal dependency or state relationships; it does not make
+smaller modules intrinsically better.
+
+Lines, bytes, outline depth, history, and tool truncation are prioritization
+signals only. Generated source, cohesive algorithms, mandated colocation, and
+mostly inline tests may remain large. An extraction that worsens coupling,
+ownership, or dependency direction is not an improvement.
 
 ## Work Packages
 

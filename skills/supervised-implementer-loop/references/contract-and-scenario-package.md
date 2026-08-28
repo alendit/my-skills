@@ -7,6 +7,7 @@ accepting handoffs. Keep the package matrix as the sole requirement authority.
 
 - Build the contract-first package matrix
 - Keep private mechanisms conditional
+- Profile design-sensitive owners
 - Define a small scenario portfolio
 - Separate evidence lanes and statuses
 - Localize before repeating external scenarios
@@ -44,6 +45,23 @@ public compatibility promise, eliminate the only sound semantic owner, or break
 a named correctness invariant. State that reason. Ask whether a simpler
 independently designed correct implementation can satisfy the row before
 freezing representation or vocabulary.
+
+## Profile design-sensitive owners
+
+When one owner will receive a new design-sensitive responsibility or several
+slices, record a compact package-local structural baseline:
+
+- relevant source units and major responsibility groups;
+- state and collaborator boundaries;
+- production and test separation; and
+- the intended destination for each relevant slice.
+
+Use module indexes, bounded outlines, and exact reads; do not load a complete
+large owner merely to build the profile. Report material structural delta after
+each relevant slice and compare the final owner with the baseline before
+package acceptance. Inspect bounded history only when repeated placement across
+earlier packages is material. The profile is implementation evidence, not a
+public layout contract or permanent metrics ledger.
 
 ## Define a small scenario portfolio
 

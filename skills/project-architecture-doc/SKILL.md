@@ -27,6 +27,9 @@ Create or update `docs/architecture.md` from the repository's real current state
 2. Scan the actual project.
    - Use fast file discovery (`rg --files`, package manifests, build configs, route trees, module indexes).
    - Identify runtime surfaces, core/domain modules, application services, adapters, persistence, transport/UI shells, background jobs, external integrations, and tests.
+   - Use bounded outlines or module indexes when a top-level path hides
+     meaningful implemented subcomponents; map those subcomponents to the
+     smallest useful current source boundaries.
    - Look for architectural invariants: source of truth, ownership boundaries, supported environments, identity/versioning, concurrency, security, and public surface contracts.
    - Prefer code and executable config over stale prose when they disagree.
 
@@ -55,7 +58,7 @@ Create or update `docs/architecture.md` from the repository's real current state
      documented. Otherwise label it as a private implementation default.
 
 5. End with architecture discussion.
-   - Evaluate the current architecture against the repo's architecture guidance, especially ownership, dependency direction, side-effect placement, semantic interfaces, coupling, and testability.
+   - Evaluate the current architecture against the repo's architecture guidance, especially ownership, reviewable physical decomposition, dependency direction, side-effect placement, semantic interfaces, coupling, and testability.
    - Describe the delta between current architecture and architectural vision.
    - Separate confirmed facts from inferred gaps.
 
@@ -77,5 +80,8 @@ Create or update `docs/architecture.md` from the repository's real current state
 - Do not copy review numbering, commit policy, reviewer selection, remediation
   repetition, or other fixpoint mechanics into the architecture document.
 - Keep technology detail concrete enough to orient maintainers, but keep the main architecture story component-centered.
+- Do not infer a decomposition defect from file size alone. When described
+  subcomponents cannot be recovered from source boundaries, record the
+  source-backed current-state mismatch in the architecture discussion.
 - Use absolute or repo-root-relative paths consistently, following the repository's existing docs style.
 - If existing architecture docs conflict with code, document the current code and call out the conflict in the final discussion.

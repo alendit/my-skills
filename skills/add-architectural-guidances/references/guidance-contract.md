@@ -27,6 +27,11 @@ the target repository, but preserve the outcomes without duplicating them.
 - Give each behavior one cohesive semantic owner and one primary reason to
   change. Keep business policy out of UI, transport, persistence, provider,
   webhook, and tool glue.
+- Keep physical source decomposition aligned with cohesive responsibilities.
+  When one semantic owner contains responsibilities with distinct reasons to
+  change, expose meaningful internal source boundaries so each can be
+  understood, changed, and reviewed without unrelated context. Treat size and
+  context cost as signals only, not proof that decomposition is defective.
 - Make dependencies point from unstable shells and adapters toward stable,
   domain-owned contracts. Keep side effects at shell or adapter boundaries and
   do not combine unrelated domains in one coordinator.
@@ -54,7 +59,9 @@ the target repository, but preserve the outcomes without duplicating them.
    advance?
 2. Which decisions are likely, uncertain, or stable, and are uncertain choices
    local and reversible?
-3. Who owns each changed behavior, and does that owner remain cohesive?
+3. Who owns each changed behavior, does that owner remain cohesive, and which
+   source boundary receives it? Does the change improve, preserve, or worsen
+   reviewable physical decomposition?
 4. What state changes, who owns it, how long should it live, and can it be
    rebuilt from more durable facts?
 5. Do dependencies and side effects remain on the correct side of stable
