@@ -21,16 +21,33 @@ It does not initiate broader reviews, invent adjacent work, or define an outer
 project-completion process.
 
 When an outer fixpoint workflow invokes this skill for remediation, return the
-accepted package to that orchestrator. Slice-level acceptance proves the Tock
-package, not an independent whole-scope Tick; do not reuse the implementer as
-the fixed-point reviewer.
+accepted package to that orchestrator. Delivery-package acceptance proves the
+Tock package, not an independent whole-scope Tick; do not reuse the implementer
+as the fixed-point reviewer.
 
 ## Establish The Work Package
 
 Read
 [references/contract-and-scenario-package.md](references/contract-and-scenario-package.md)
-before defining slices. Build its contract-first package matrix from stable
-contract IDs and keep it as the package's requirement authority.
+before routing admitted delivery packages. Build its contract-first package
+matrix from stable contract IDs and keep it as the package's requirement
+authority.
+
+Use that reference's delivery-package record and map-admission sequence before
+implementation work. The reference owns package fields, bidirectional contract
+mapping, useful stopping points, closure, split/combine decisions, and
+internal-step treatment. This entrypoint only establishes the caller-authorized
+work package, consumes the reviewed plan decision, and routes admission and
+execution.
+
+Consume the durable result and plan identity from the
+[review-fixpoint contract boundary](../review-fixpoint/references/contract-and-evidence-boundary.md).
+Before spawning or allowing production edits, require a current
+`implementation-plan-fixed-point` for unchanged plan-owning content and
+dependencies, with every plan cell cleared. A missing, contract-only, stale,
+invalidated, changed, or unknown plan result stops admission; checkpoints do
+not establish plan readiness and this entrypoint does not invent unresolved
+package boundaries.
 
 Apply the shared
 [behavioral design trace and rebaseline authority](../evidence-efficient-review/references/behavioral-design-trace.md)
@@ -46,19 +63,20 @@ explanatory input; package contracts and technical owners retain semantics.
 1. Inspect the current tree, user-supplied requirements, repository guidance,
    and existing changes. Begin at the first unmet requirement and preserve
    unrelated user work.
-2. State the package outcome, matrix rows, explicit non-goals, evidence lanes,
-   and authorization or commit boundaries.
+2. State the package outcome, complete matrix rows, admitted delivery-package
+   map and plan identity, explicit non-goals, evidence lanes, and authorization
+   or commit boundaries.
 3. Put private representation, fields, plumbing, and numeric defaults in the
    conditional implementation appendix unless a row states why correctness
    requires them.
-4. Divide the matrix rows into coherent, ordered slices at meaningful
-   acceptance boundaries. Group related mechanical edits when only their
-   combined owner boundary is useful
-   to accept. Keep a slice separate when later work genuinely depends on parent
-   acceptance of its semantic or architectural decision. Each accepted slice
-   must leave the project in a useful state and establish invariants on which
-   later slices may safely rely. Apply the reference's structural profile when
-   an owner receives a new design-sensitive responsibility or several slices.
+4. Validate and consume the admitted, independently reviewed, ordered
+   delivery-package map. Do not divide matrix rows, regroup contracts, or
+   create package boundaries locally after admission. Keep grouping,
+   split/combine decisions, and dependency order in the reviewed plan. If a
+   boundary is missing, invalid, or no longer closes a useful behavior, return
+   to the plan-review owner instead of inventing one locally. Apply the
+   reference's structural profile to each admitted delivery package and
+   preserve the invariants on which later packages rely.
 5. Keep uncertain decisions local and reversible. Ask only when a missing
    choice would materially change behavior, architecture, risk, or scope.
 
@@ -96,20 +114,21 @@ Before spawning an implementer:
    user explicitly requests fast mode for the current task; never infer it from
    memory, model choice, urgency, or token-economy instructions.
 
-Spawn exactly one implementation subagent and reuse it for every slice and
-correction in the package. If that agent becomes unavailable, report the loss
-of continuity and ask before replacing it.
+Spawn exactly one implementation subagent and reuse it for every delivery
+package and correction in the work package. If that agent becomes unavailable,
+report the loss of continuity and ask before replacing it.
 
 ## Give The Initial Assignment
 
 Give the implementer enough context once:
 
-- the complete package outcome and ordered slice map;
+- the work-package outcome and complete accepted delivery-package map with its
+  current plan identity, provided once;
 - the stable behavioral goal record and current direct scenario status;
-- the current slice's contract IDs and scenario-portfolio entries;
+- the current delivery package's contract IDs and scenario-portfolio entries;
 - architectural owners, invariants, and dependency direction;
-- any applicable structural baseline and the current slice's intended source
-  destination;
+- any applicable structural baseline and the current delivery package's
+  intended source destination;
 - the current residual-topology inventory when the package includes physical
   decomposition;
 - accepted existing behavior that must not regress;
@@ -186,25 +205,26 @@ follow-up is read back. External or otherwise separately controlled ledger
 writes require their own authorization. Preserve the resulting decision record
 and follow-up delta for slice and package handoff.
 
-## Run Each Slice
+## Run Each Delivery Package
 
-For every slice:
+For every admitted delivery package:
 
-1. Send the slice to the existing implementer. After the initial assignment,
-   use follow-up messages containing only new requirements, evidence, and
-   corrections.
+1. Send the delivery package to the existing implementer. After the initial
+   assignment, use follow-up messages containing only new requirements,
+   evidence, and corrections.
 2. Let the implementer edit and run focused validation. Do not perform
    overlapping writes or Git operations in the shared workspace. Non-mutating
-   preparation may continue, but formally review only a completed slice.
-3. Require a compact acceptance packet: changed paths and resulting owner
-   boundary; contract IDs established; intended behavior or interface changes,
-   or an explicit statement that none were intended; exceptions from
-   mechanical equivalence; material structural delta when a profile applies;
-   the goal ID and direct scenario's behavioral status; mechanism progress stated
-   separately; checks and scenario results with pass/fail status; unresolved
-   risks or blockers; and the detailed-evidence location. For a modularization
-   package, include the residual-topology delta and disposition of every
-   affected material cluster. Include affected-test,
+   preparation may continue, but formally review only a completed delivery
+   package.
+3. Require a compact delivery-package acceptance packet: changed paths and
+   resulting owner boundary; contract IDs established; intended behavior or
+   interface changes, or an explicit statement that none were intended;
+   exceptions from mechanical equivalence; material structural delta when a
+   profile applies; the goal ID and direct scenario's behavioral status;
+   mechanism progress stated separately; checks and scenario results with
+   pass/fail status; unresolved risks or blockers; and the detailed-evidence
+   location. For a modularization package, include the residual-topology delta
+   and disposition of every affected material cluster. Include affected-test,
    external-evidence, architectural-decision, and follow-up dispositions only
    when they apply. The implementer does not approve its own work.
 4. Independently inspect the packet, changed owner topology, and the few
@@ -229,13 +249,14 @@ For every slice:
    - the owning boundary and required result;
    - the state or public behavior that must be proved; and
    - any tempting but invalid workaround to avoid.
-6. Repeat implementation and parent review until the slice is correct. Do not
-   advance because one narrow test passes.
-7. Run independent validation proportional to the slice. Checkpoint accepted
-   work according to user and repository policy, with all Git writes serialized
-   by the main agent unless explicitly delegated.
-8. Only then begin the next slice. Treat accepted earlier invariants as stable;
-   do not rediscover or restate them unless new evidence challenges them.
+6. Repeat implementation and parent review until the delivery package is
+   correct. Do not advance because one narrow test passes.
+7. Run independent validation proportional to the delivery package. Checkpoint
+   accepted work according to user and repository policy, with all Git writes
+   serialized by the main agent unless explicitly delegated.
+8. Only then begin the next reviewed delivery package. Treat accepted earlier
+   invariants as stable; do not rediscover or restate them unless new evidence
+   challenges them.
 
 Across assignments, corrections, slice handoffs, and parent review, verify that
 preferred terms and their semantic-source relationships remain continuous and
@@ -274,9 +295,11 @@ component, or other mechanism without its own semantic owner.
   every 60 seconds: changed files, current hypothesis, last completed result,
   and active command or explicit `no command running`.
 - The implementer does not start a broad or complete suite until the parent has
-  accepted the focused slice, unless the slice contract explicitly requires it.
-- When the implementer completes the slice or responds with a handoff, let that
-  handoff finish without interruption and proceed through parent review.
+  accepted the focused delivery package, unless its contract explicitly
+  requires it.
+- When the implementer completes the delivery package or responds with a
+  handoff, let that handoff finish without interruption and proceed through
+  parent review.
 - On apparent silence, the parent checks the active process and whether the
   shared diff is changing, sends one status request, and waits one additional
   60-second interval.
@@ -291,7 +314,7 @@ expectation or acceptance metric.
 
 ## Accept The Package
 
-After the final slice:
+After the final delivery package:
 
 1. Map the resulting tree back to every package-matrix row and its named
    scenario status.
@@ -311,7 +334,7 @@ After the final slice:
    no unauthorized or unverified ledger mutation is credited as durable.
 7. Report the glossary source or explicit opt-out, material access or authorized
    changes, unresolved term candidates, and terminology continuity alongside
-   the accepted slices, important review corrections, verification, follow-up
+   the accepted delivery packages, important review corrections, verification, follow-up
    ledger delta, commits or pending changes, and any genuine remaining
    limitation.
 8. After contract IDs, package scope, and evidence results are accepted, apply

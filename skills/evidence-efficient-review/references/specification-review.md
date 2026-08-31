@@ -13,6 +13,7 @@ authority for the review.
 - Qualify defensive requirements economically
 - Classify evidence by decision role
 - Design a diagnosable scenario portfolio
+- Distinguish contract and delivery-plan review levels
 - Audit the required specification cells
 - Return actionable specification findings
 
@@ -29,7 +30,7 @@ stable identifiers:
 | Observable contract | One externally observable semantic, ownership, lifetime, boundedness, or recovery outcome |
 | Semantic owner | Component that decides and maintains the outcome |
 | Public composition | Representative consumer or boundary where the outcome is observable |
-| Implementation slice | Work package that establishes the outcome |
+| Implementation slice | Logically separate, ID-keyed delivery-plan relation that names the establishing delivery package; it may be unknown at contract level and must be complete at implementation-plan level |
 | Deterministic evidence | Named reproducible scenario or gate |
 | External compatibility evidence | Named external probe, or `not-applicable` with reason |
 | Telemetry | Thresholded metric and baseline, or explicitly `observational` |
@@ -42,9 +43,33 @@ definitions as review candidates. Recommend one owning row and deletion or ID
 references for the copies. Do not solve duplication by adding a summary that
 leaves the old authorities intact.
 
+The stable contract fields and the implementation-slice relation have distinct
+authority and decision power. A plan may be represented in the same ledger or
+in a separate artifact, but it always references stable contract IDs and does
+not rewrite accepted observable contract fields. At a contract-level review,
+leave the relation and its downstream cells explicitly unknown while reporting
+the stable contract-cell result. At an implementation-plan review, require a
+bidirectionally complete relation: each contract ID has exactly one establishing
+delivery package, each delivery package establishes at least one complete
+contract, and design checkpoints or internal steps are not delivery packages.
+
+This reference owns normalization and the level-specific coverage cells. The
+result vocabulary, effects, and invalidation rules are owned by
+[review-fixpoint's contract-and-evidence boundary](../../review-fixpoint/references/contract-and-evidence-boundary.md).
+
 Do not force every document to use this exact Markdown table. A database,
 Org-mode table, or other compact ledger is equivalent when it preserves one
 normative authority and stable IDs.
+
+## Distinguish contract and delivery-plan review levels
+
+Record the selected review level and return contract-cell and plan-cell
+dispositions separately. A contract-level review can clear every applicable
+stable contract cell while exposing required downstream plan unknowns. A plan-
+level review clears those same cells only when every applicable delivery-plan
+cell also clears and returns the plan identity defined by the linked
+review-fixpoint boundary. Do not select a Tock or otherwise choose outer
+workflow phase from this reference; return the coverage decision to the caller.
 
 ## Carry the behavioral design trace
 
@@ -184,11 +209,25 @@ Clear or disposition every applicable cell:
 | Defensive actionability | Does a proposed precaution protect an accepted observable outcome or have comparative risk-and-burden evidence? | Source proves only that an edge case is possible |
 | Change locality | Does design-sensitive work identify the owning source boundary while keeping private layout conditional? | A new responsibility has no placement rationale, or filenames and modules are frozen without an architectural reason |
 | Workflow boundary | Does the product artifact contain targets and evidence without copying review mechanics? | Review numbering, commits, reviewer selection, or stop procedure embedded in the feature contract |
+| Decision level and plan disposition | Does the result identify contract-level versus implementation-plan review, keep stable contract cells separate from the delivery-plan relation, and expose downstream plan unknowns at contract level? | A contract result is presented as plan readiness, or a plan field silently occupies a stable contract row |
+| Contract-to-package coverage | At implementation-plan level, does every contract ID map to exactly one establishing delivery package and every package establish at least one complete contract? | Missing, duplicate, partial, or reverse-unmapped contract/package assignment |
+| Useful stopping point | Does every delivery package leave a correct, useful owner/public behavior if later packages never arrive? | A package only provides a checkpoint, helper, representation, adapter, or other non-acceptable intermediate |
+| Cohesion and transaction closure | Do one package's semantic owner, state/lifetime, transaction, recovery, public surface, and evidence close around one primary reason to change? | Acceptance depends on an unbuilt package to settle state, recovery, or public behavior |
+| Dependency order | Does each delivery package consume only accepted earlier contracts and decisions? | A package relies on a later or unaccepted contract/decision |
+| Package-size tradeoff | Does the plan explain why adjacent packages should neither combine nor split further based on closure and decision value? | Package boundaries follow lines, modules, or convenience without a causal tradeoff |
+| Acceptance-cost topology | Do focused checks, parent acceptance, canonical gates, and independent review occur only at materially informative boundaries? | Repeated expensive gates or reviews add no decision value, or a plan/slice acceptance is credited as `deterministic-fixed-point` |
+| Checkpoint/package distinction | Are design checkpoints and internal steps kept distinct from accepted delivery packages unless they satisfy the complete package record? | A checkpoint or internal step is counted as a delivery package |
 
 Workflow boundary is not applicable when the reviewed artifact is itself the
 repository workflow authority. External cells are not applicable when no
 external capability participates in the contract; record the reason rather
 than manufacturing a probe.
+
+For a contract-level result, downstream plan cells are required unknowns for a
+later plan decision but do not block the contract-cell result. For an
+implementation-plan result, any unresolved plan cell blocks that result. The
+caller applies the result effects and invalidation rules from the linked
+review-fixpoint authority.
 
 ## Return actionable specification findings
 
@@ -200,5 +239,8 @@ disposition.
 
 Report the normalized matrix or a compact delta to it, the disposition of every
 required cell, defensive actionability decisions, external evidence status,
-telemetry role, and unresolved unknowns. Declare a whole-specification fixed
-point after every required cell is resolved.
+telemetry role, and unresolved unknowns. Declare a specification result only
+for the selected review level: a contract-level result may retain
+explicit downstream plan unknowns, while an implementation-plan result may not.
+Do not treat this coverage result as a phase transition; return it to the
+caller under the linked review-fixpoint result vocabulary.

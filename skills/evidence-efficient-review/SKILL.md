@@ -85,6 +85,13 @@ Apply the linked authority before accepting design-sensitive mechanism detail.
 Return its proposed behavioral contract changes to product authority and carry
 its separate behavioral and mechanism statuses into the review result.
 
+For a specification review, report the selected contract or implementation-plan
+level and keep stable contract-cell dispositions separate from delivery-plan
+cell dispositions. A contract-level result may expose required downstream plan
+unknowns; do not present it as implementation readiness or select Tock. Return
+the coverage decision to the caller, which consumes the result under the
+review-fixpoint authority.
+
 Keep durable observable contracts separate from a conditional implementation
 appendix. Require mechanisms and exact limits to state why correctness depends
 on them. Classify every named proof as a deterministic release gate, external
@@ -384,6 +391,8 @@ Return or draft the caller's requested artifact with:
   defect can be corrected locally in prose;
 - the authoritative contract-matrix delta and required specification-cell
   dispositions when the target is a specification;
+- the selected specification review level with separate contract-cell and
+  delivery-plan-cell dispositions;
 - coverage ledger or a compact coverage summary;
 - architectural-scope classification and observed follow-up-ledger delta,
   including stable IDs, read-back/lifecycle state, and any laundering rejection;
@@ -407,6 +416,11 @@ A whole-scope zero-finding decision requires every required cell to be cleared
 or not applicable on the reviewed revision, every prior finding to be closed,
 and the caller's complete evidence gate to pass. Stop rather than inventing
 lower-value findings.
+
+For a specification review, apply that rule to the selected level: a
+contract-level result may retain explicit downstream plan unknowns, while an
+implementation-plan result may not. The result does not itself select a phase
+or authorize production edits.
 
 ## Interaction With Outer Workflows
 

@@ -56,6 +56,18 @@ fixed-point mechanics to their existing leaf owners.
 Route a unit to the applicable specialized skill, then follow that skill's
 interface and acceptance rules without restating or replacing its mechanics:
 
+During package establishment and routing, consume the current reviewed result
+level and plan identity for every unit that can produce production edits. If
+implementation-plan coverage is missing, contract-only, stale, invalidated,
+changed, or has any unknown plan cell, route plan or specification review to
+`$evidence-efficient-review` or `$review-fixpoint` and do not route production
+implementation. Route an accepted, current implementation plan to
+`$supervised-implementer-loop`, carrying its result level and plan identity in
+the leaf assignment and acceptance packet. Carry only those routing facts here:
+EER owns contract and plan cells; review-fixpoint owns result effects and
+fixed-point phase mechanics; SIL owns delivery-package schema, admission, and
+execution. Do not copy those leaf schemas or mechanics into this coordinator.
+
 - route review-only work to `$evidence-efficient-review`;
 - route repeated review and remediation to `$review-fixpoint`;
 - route dependent implementation requiring one supervised implementer to

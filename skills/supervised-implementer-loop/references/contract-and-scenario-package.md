@@ -1,25 +1,31 @@
 # Contract and Scenario Package
 
-Use this reference when establishing the package, assigning each slice, and
-accepting handoffs. Keep the package matrix as the sole requirement authority.
+Use this reference when establishing the package, assigning each delivery
+package, and accepting handoffs. Keep the package matrix as the sole
+requirement authority.
 
 ## Contents
 
 - Build the contract-first package matrix
+- Define work package and delivery package terms
+- Record and admit the delivery-package plan
+- Execute ordered delivery packages
 - Carry the behavioral goal record
 - Keep private mechanisms conditional
 - Profile design-sensitive owners
 - Profile modularization roots
 - Define a small scenario portfolio
 - Separate evidence lanes and statuses
-- Localize before repeating external scenarios
+- Localize Before Repeating External Scenarios
 - Justify exact limits
 - Keep tests stable across redesigns
 
 ## Build the contract-first package matrix
 
 Use stable IDs from the caller's normalized contract matrix. If no normalized
-matrix exists, create the smallest package-local subset before slicing work:
+matrix exists, create the smallest package-local subset before assigning work
+only when the caller explicitly authorizes a package-local scope. Do not use a
+local subset to infer plan readiness or invent an unresolved delivery boundary:
 
 | Field | Required content |
 |---|---|
@@ -27,22 +33,127 @@ matrix exists, create the smallest package-local subset before slicing work:
 | Observable invariant | Public or owner-level behavior that must hold |
 | Semantic owner | Component responsible for the invariant |
 | Lifetime/bound/recovery | Applicable semantic boundaries, with inapplicable parts explained |
-| Implementation slice | Ordered slice that establishes the invariant |
+| Establishing delivery package | The one reviewed delivery package that establishes the complete contract ID |
 | Named scenario | Portfolio entry that proves it |
 | Evidence class | Deterministic repository, external compatibility, or observational telemetry |
 | Status | Pending, accepted, unknown, or not-applicable |
 
-Each invariant has one owning row. Slice briefs, correction messages, tests,
-documentation, and handoffs reference contract IDs rather than restating the
-requirement. Update the row only after parent acceptance.
+Each invariant has one owning row. Delivery-package briefs, correction
+messages, tests, documentation, and handoffs reference contract IDs rather
+than restating the requirement. Update the row only after parent acceptance.
+
+## Define work package and delivery package terms
+
+This reference owns the delivery-package record and map consumed by the
+entrypoint. The caller's normalized contract matrix remains the sole
+requirement authority; this terminology describes how that authority is
+delivered, not a second set of contracts.
+
+- A **work package** is the complete caller-authorized scope passed to this
+  skill. It may contain one or more ordered delivery packages.
+- A **delivery package** is an independently acceptable delivery boundary
+  inside the work package. It establishes one or more complete contract IDs
+  and leaves a useful owner-level or public behavior if later packages never
+  arrive.
+- A **design checkpoint** records a decision needed by later work but need not
+  produce behavior. Its acceptance does not make it a delivery package.
+- An **internal step** is implementation work inside one delivery package. It
+  may receive focused parent evidence, but it is not a separately gated
+  delivery package by default.
+
+Every contract ID has exactly one establishing delivery package, and every
+delivery package establishes at least one complete contract ID. No checkpoint,
+internal step, helper, representation, or temporary boundary may take partial
+or temporary ownership of a contract. If accepted behavior genuinely reaches
+two independently useful stopping points, stop and route a contract split to
+the named product authority; continue only after the new contract rows and a
+reviewed plan assign the resulting package IDs.
+
+## Record and admit the delivery-package plan
+
+The plan-level result and its identity come from the
+[review-fixpoint contract boundary](../../review-fixpoint/references/contract-and-evidence-boundary.md).
+This skill consumes that durable decision and owns the final edit-admission
+check; it does not create a fixed-point vocabulary, select a result level, or
+infer plan readiness from a checkpoint.
+
+Before spawning an implementer or permitting production edits, require all of
+the following:
+
+1. The latest durable review result is exactly
+   `implementation-plan-fixed-point`, not merely `contract-fixed-point`, and
+   includes the plan identity.
+2. The identity is current under the review-fixpoint boundary's identity and
+   invalidation rules for unchanged plan-owning content and the dependencies
+   that determine the delivery relation, package records, closure fields, and
+   dependency order.
+3. Every plan cell is cleared and the delivery map is complete in both
+   directions. Refuse admission and do not spawn when the result is missing,
+   contract-only, stale, invalidated, changed, or has any unknown plan cell.
+4. The map has been checked against the record below before the first edit.
+
+The complete delivery-package record is:
+
+| Field | Required closure |
+|---|---|
+| Package ID and useful outcome | Name the behavior available if work stops after this package. |
+| Establishing contract IDs | List one or more complete stable IDs; each ID appears in exactly one package. |
+| Semantic owner and physical boundary | Name the semantic authority and the current or proposed physical surface without equating layout with ownership. |
+| Prerequisites and dependency order | Name only earlier accepted contracts, decisions, and packages actually consumed. |
+| State and lifetime | Close ownership, durability, rebuildability, mutation, and the smallest correct lifetime. |
+| Transaction and recovery closure | Close admission, mutation, commit, abort, retry, poison/failure, recovery, and cross-owner handoffs that the package needs. |
+| Public, skill, and ABI surface | Name the real consumer-facing composition and any skill, guest, engine, embedding, or external boundary. |
+| Focused evidence | Name deterministic owner/composition scenarios, adjacent boundaries, recovery partitions, and the package-level gate. |
+| Safe deferred work | State what remains absent after this package and why that omission does not weaken its complete contracts. |
+| Causal split/combine and acceptance-cost decision | Explain why adjacent work stays together or separates by semantic ownership, closure, useful stopping point, and decision value; place focused checks and canonical gates only where they decide something material. |
+
+The map is not admissible when a package only supplies a design checkpoint,
+mechanical move, helper, adapter, metric, or other non-useful intermediate. A
+valid semantic boundary may coincide with a physical boundary, but physical
+layout alone cannot justify a package. Do not invent an unresolved package
+boundary locally; return the missing plan cell to the plan-review owner.
+
+After the result, identity, and map pass these checks, admit the work package
+before the first edit. Carry the complete accepted map and plan identity to the
+persistent implementer once. Record the admission in the package handoff and
+continue in dependency order only after the parent accepts the admission
+boundary.
+
+## Execute ordered delivery packages
+
+For each admitted delivery package:
+
+1. Confirm its prerequisites are accepted earlier packages or decisions and
+   assign the complete package record and its contract IDs to the persistent
+   implementer.
+2. Build the useful owner/public behavior through its real composition path.
+   Keep state, lifetime, transaction, recovery, public surface, and focused
+   evidence closed around the package's primary reason to change.
+3. Let the parent use focused checks for internal steps. Keep those steps
+   inside their establishing package; they do not receive separate canonical
+   gates or package IDs automatically.
+4. Accept the package only when its complete contract IDs, stopping-point
+   behavior, closure fields, evidence, deferred-work boundary, and causal
+   split/combine decision are all resolved. A later package may extend behavior
+   but may not repair an earlier package's incomplete semantics.
+5. Send corrections and later assignments to the same implementer as
+   delta-only follow-ups. Do not resend the package map or turn an internal
+   step into a new package unless product authority accepts a contract split
+   and a fresh reviewed plan assigns it.
+
+Package acceptance is distinct from `deterministic-fixed-point`; the latter's
+result effects and exact-revision semantics remain with review-fixpoint. A
+canonical gate is justified at an accepted package revision when it makes a
+material decision, not merely to manufacture another internal checkpoint.
 
 ## Carry the behavioral goal record
 
 Instantiate the package-level goal record from the shared
 [behavioral design trace and rebaseline authority](../../evidence-efficient-review/references/behavioral-design-trace.md)
 alongside the matrix. Mechanism rows reference its stable goal ID. Carry the
-record through slice assignments, corrections, handoffs, and acceptance, and
-report its direct scenario's behavioral status separately from mechanism status.
+record through delivery-package assignments, corrections, handoffs, and
+acceptance, and report its direct scenario's behavioral status separately from
+mechanism status.
 
 ## Keep private mechanisms conditional
 
@@ -59,17 +170,17 @@ freezing representation or vocabulary.
 ## Profile design-sensitive owners
 
 When one owner will receive a new design-sensitive responsibility or several
-slices, record a compact package-local structural baseline:
+delivery packages, record a compact package-local structural baseline:
 
 - relevant source units and major responsibility groups;
 - state and collaborator boundaries;
 - production and test separation; and
-- the intended destination for each relevant slice.
+- the intended destination for each relevant delivery package.
 
 Use module indexes, bounded outlines, and exact reads; do not load a complete
 large owner merely to build the profile. Report material structural delta after
-each relevant slice and compare the final owner with the baseline before
-package acceptance. Inspect bounded history only when repeated placement across
+each relevant delivery package and compare the final owner with the baseline
+before package acceptance. Inspect bounded history only when repeated placement across
 earlier packages is material. The profile is implementation evidence, not a
 public layout contract or permanent metrics ledger.
 
@@ -137,7 +248,8 @@ mechanism path cannot establish the direct scenario's behavioral acceptance.
 Keep these lanes independently reportable:
 
 1. **Deterministic repository evidence:** owner-level and composed scenarios
-   controlled by the repository. These must pass for slice acceptance.
+   controlled by the repository. These must pass for delivery-package
+   acceptance.
 2. **Minimal external capability probe:** the smallest credentialed request
    that isolates provider or endpoint capability.
 3. **Broader composed semantic scenario:** end-to-end product ownership and

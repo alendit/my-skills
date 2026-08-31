@@ -106,6 +106,11 @@ single requirement authority, keep workflow mechanics in this skill, and apply
 the reference's evidence classes and result vocabulary to every phase decision.
 Use its test-stability rules when a design changes.
 
+For a specification scope, consume the selected result level and plan identity
+from the linked boundary. A contract-level result routes to delivery-plan
+review; only a current implementation-plan result can route an implementation
+Tock. Do not restate the result meanings here.
+
 Apply the shared
 [behavioral design trace and rebaseline authority](../evidence-efficient-review/references/behavioral-design-trace.md)
 through both phases. Carry one stable package-level goal record, route accepted
@@ -180,6 +185,12 @@ Pass the resolved glossary identity or explicit opt-out and the material
 term-to-semantic-source relationships into the Tock leaf, then retain its
 reported access, changes, candidates, and continuity in the Tock result.
 
+Before routing implementation work, verify that the latest durable review
+result is `implementation-plan-fixed-point` for the unchanged plan identity
+defined by the linked boundary. A `contract-fixed-point` result never routes
+implementation. The supervised implementer owns final edit admission; this
+skill only consumes the result and routes the phase.
+
 For each finding:
 
 1. Reproduce or otherwise prove the defect at its real boundary.
@@ -225,6 +236,8 @@ the remediation author's claims. Supply a repository-specific review request:
 - architectural-scope decision records, the selected durable ledger authority,
   and follow-up deltas relevant to the reviewed scope;
 - the P0-P3 functional and architectural finding policy below;
+- the latest result level and plan identity under the contract-and-evidence
+  boundary;
 - the deterministic Fixed-Point Rule and required external-capability status as
   the whole-scope completion contract;
 - the selected glossary identity or explicit opt-out and material

@@ -8,6 +8,7 @@ fixpoint workflow consumes that authority.
 
 - Preserve one contract authority
 - Keep workflow mechanics out of feature artifacts
+- Carry result levels and plan identity
 - Apply evidence classes to completion
 - Separate external scenarios
 - Keep tests stable across redesigns
@@ -50,10 +51,13 @@ Consume the evidence class and status recorded by `$evidence-efficient-review`:
 | External compatibility evidence | Confirms or disproves the named external capability; availability failures remain visible but do not make deterministic gates fail. |
 | Observational telemetry | Informs follow-up only; without a named baseline and regression threshold it neither establishes nor blocks deterministic acceptance. |
 
-Use this result vocabulary:
+Use this result vocabulary for both specification decisions and implementation
+completion:
 
 | Result | Meaning |
 |---|---|
+| `contract-fixed-point` | A specification review has cleared the required stable contract cells and reported downstream delivery-plan unknowns separately. This result permits dependent architecture and package design, but never implementation admission. |
+| `implementation-plan-fixed-point` | A specification review has cleared the stable contract cells and the complete reviewed delivery-plan relation, including its applicable package-plan cells. This result is the plan-level prerequisite for the first delivery package; supervised implementation still owns edit admission. |
 | `deterministic-fixed-point` | An independent Tick by the loop's persistent reviewer finds no P0-P3 defect, all required deterministic cells are cleared, exact-revision gates pass, and no valid external product-contract failure or activated follow-up remains unresolved. Legitimate non-gating architectural follow-ups may remain visible. |
 | `capability-confirmed` | Every required external capability has current or reusable successful evidence under its identity and freshness rule. |
 | `capability-unconfirmed` | Required initial evidence is missing or has status `stale`, `unavailable`, `authentication-or-configuration-failure`, `provider-or-infrastructure-failure`, or `inconclusive-timeout`. The capability has not passed or failed. |
@@ -68,6 +72,30 @@ defect remains, but the handoff must retain `capability-unconfirmed` and must no
 claim the capability or `Done`. A valid `product-contract-failure` prevents
 `deterministic-fixed-point` until the contradicted contract returns through
 design or remediation.
+
+## Carry result levels and plan identity
+
+Record the result level and the identity of the plan authority with every
+durable specification decision that could route implementation. Bind
+`implementation-plan-fixed-point` to unchanged plan-owning content and
+dependencies that determine the delivery relation, package records, closure
+fields, and dependency order; do not bind it to `HEAD` alone. The plan relation
+may share an artifact with stable contract rows, but its plan-owning fields and
+their dependencies remain the identity-bearing scope.
+
+A commit that changes only the review artifact or its presentation is
+review-artifact-only and does not invalidate an otherwise current plan identity.
+A material change to plan-owning content or a dependency contract invalidates
+`implementation-plan-fixed-point` and any implementation routing until a new
+plan-level review establishes the changed identity. If a stable contract owner
+or dependency changes, invalidate its dependent plan result as well. Preserve
+an unaffected contract-level result when only downstream plan content changes,
+while continuing to expose the plan as unknown until it is reviewed again.
+
+The caller consumes these results as levels, not phases: a contract-level Tick
+does not become an implementation Tock, and a plan-level result does not
+replace the existing exact-revision and independent-Tick requirements for
+`deterministic-fixed-point`.
 
 ## Separate external scenarios
 
