@@ -8,6 +8,7 @@ requirement authority.
 
 - Build the contract-first package matrix
 - Define work package and delivery package terms
+- Keep the realization disposition current
 - Record and admit the delivery-package plan
 - Execute ordered delivery packages
 - Carry the behavioral goal record
@@ -68,6 +69,46 @@ or temporary ownership of a contract. If accepted behavior genuinely reaches
 two independently useful stopping points, stop and route a contract split to
 the named product authority; continue only after the new contract rows and a
 reviewed plan assign the resulting package IDs.
+
+## Keep the realization disposition current
+
+For each stable contract ID in an admitted delivery package, keep one logical
+**realization disposition** current from pre-edit completeness through
+implementation handoff and parent acceptance. It is a relation between the
+contract row and its owner operations, information/state, transaction behavior,
+scenarios, assertions, and design dependencies. It is not a required new file,
+table, durable registry, or private representation.
+
+The disposition is complete only when every applicable dimension has both the
+following evidence and a current decision:
+
+| Dimension | Pre-edit completeness | Implementation and handoff evidence |
+|---|---|---|
+| Ownership and capability | A concrete feasible owner capability or operation is selected, with every required ownership partition it can observe and enforce. | Current source shows the owner operation and its partition behavior; focused assertions exercise the applicable partitions. |
+| Required information | The producer, lifetime, consumer path, and required identity/provenance or other immutable information are identified. | Current source and assertions show production or persistence, lifetime, and consumption of every required information fact. |
+| Transaction and recovery | The applicable ordered admission, mutation, commit/publication, abort, retry, poison/failure, recovery, and cross-owner handoffs are planned. | Current operations and assertions prove the applicable success and failure partitions; adjacent success cannot stand in for an unresolved order or recovery step. |
+| Scenario and assertion | Each required scenario has its observable invariant, adversarial partitions, and assertions, with localization at the owning or public boundary. | The actual owner/public behavior and assertion-level evidence retain the same positive and negative decision power; names or broad pass status are insufficient. |
+| Design dependency | Dependent owner-map, architecture, plan, scenario, and evidence claims are identified for the selected design. | The disposition records whether each dependency remains valid or is stale and the dependency-aware decision that resolves it. |
+
+At pre-edit completeness, the disposition must contain a concrete feasible plan
+for the applicable dimensions above. During implementation and handoff, planned
+entries are replaced by actual source and assertion evidence. Missing or
+unproved coverage remains visible and blocks the current pre-edit, handoff, or
+parent-acceptance decision; an implementer summary, adjacent success, names,
+or a broad gate cannot satisfy the row.
+
+Carry the complete relation once in the initial assignment. Later corrections,
+handoffs, and follow-ups carry only changed dispositions and the contract IDs
+whose dependencies changed. An unchanged disposition remains current only when
+its plan, owner, design, and evidence dependencies are unchanged.
+
+When a design change reaches a dependent authority or evidence claim, mark the
+affected disposition stale before continuing or accepting work. Resolve it with
+a dependency-aware `retain-with-proof`, `strengthen`, `replace`, or `delete`
+decision. An unresolved
+stale disposition blocks the current decision. If the changed content is
+plan-owning, the existing review-fixpoint identity and invalidation boundary
+also applies; this reference does not create another result level or gate.
 
 ## Record and admit the delivery-package plan
 

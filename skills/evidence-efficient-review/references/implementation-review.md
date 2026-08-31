@@ -10,6 +10,7 @@ cells and inspect them sequentially.
 - Audit promised closure
 - Audit the remediation delta
 - Trace behavior through the aggregate design
+- Audit the SIL realization disposition
 - Review contract cells
 - Qualify actionable concerns
 - Review residual topology
@@ -72,6 +73,50 @@ Carry its package-level goal record through the implemented public composition
 and disposition its concrete comparison signals. When the shared process
 changes a contract, resume implementation review at the accepted rebaseline
 boundary. Report behavioral and mechanism statuses separately.
+
+## Audit the SIL realization disposition
+
+When the reviewed package uses a supervised-implementer-loop realization
+disposition, treat the SIL relation as navigation input for selecting current
+contract rows and affected dependencies, not as evidence and not as review-
+owned authority. SIL owns the relation. EER independently verifies current
+source and realistic composition, then reports the result; it does not author,
+repair, or take ownership of the SIL relation.
+
+Carry unchanged cleared contract cells from the prior review without restating
+them when their owners, consumers, design dependencies, and evidence remain
+unchanged. Focus the current review on changed or affected dispositions and
+reopen a carried cell when current source contradicts that dependency claim.
+For each selected stable contract ID, trace directly through all applicable
+dimensions:
+
+1. **Owner capability and partitions:** inspect the actual semantic-owner
+   operations or capabilities and prove that they can observe and enforce every
+   required ownership partition.
+2. **Information and provenance:** inspect produced or persisted identity,
+   provenance, and other immutable information, its lifetime, and its consumer
+   path. Conditional private layout does not waive an accepted information
+   requirement.
+3. **Transaction and recovery:** inspect the ordered admission, mutation,
+   commit/publication, abort, retry, failure or poison, recovery, and
+   cross-owner handoffs that apply. Source order and assertions must cover the
+   applicable success and failure partitions.
+4. **Scenario and assertion:** compare the observable invariant and adversarial
+   partitions with the actual assertions. The assertions must retain the same
+   positive and negative decision power; a scenario name or broad pass label is
+   not evidence of parity.
+5. **Design dependencies:** inspect every dependent owner-map, architecture,
+   plan, scenario, and evidence claim. A changed dependency must have been
+   marked stale and then resolved by a dependency-aware
+   `retain-with-proof`, `strengthen`, `replace`, or `delete` disposition before
+   the realization is treated as current.
+
+Missing, unproved, stale, or contradicted realization is a source-proven
+finding or an explicit required `unknown`, according to the caller's finding
+policy. Do not clear it with relation text, an implementer summary, a name,
+adjacent success, or a broad green gate. This audit adds no phase, result
+level, required artifact, or gate; it only verifies and reports the current
+contract evidence at the existing review boundary.
 
 ## Review contract cells
 

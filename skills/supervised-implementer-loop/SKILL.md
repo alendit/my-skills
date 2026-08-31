@@ -54,6 +54,16 @@ Apply the shared
 through that package reference. Carry its stable package-level goal record from
 establishment through slice and package acceptance.
 
+At the existing pre-edit, handoff, and parent-acceptance boundaries, consume
+the reference's realization disposition for each contract in the admitted
+delivery package. The reference owns its dimensions and closure rules. Before
+production edits, require a concrete feasible plan for every applicable
+capability, information, transaction, scenario/assertion, and design-
+dependency cell; at handoff, require actual source and assertion evidence in
+place of the plan. Missing, unproved, or stale coverage blocks the current
+decision. Affected design dependencies must be reconciled before continuation,
+and plan-owning changes follow the existing review-fixpoint invalidation rule.
+
 Before spawning, resolve glossary state through the
 [project-glossary authority](../clear-technical-writing/references/project-glossaries.md).
 Record the selected source or explicit opt-out and only the material
@@ -126,6 +136,8 @@ Give the implementer enough context once:
   current plan identity, provided once;
 - the stable behavioral goal record and current direct scenario status;
 - the current delivery package's contract IDs and scenario-portfolio entries;
+- the complete realization disposition for those contract IDs, carried once as
+  defined by the package reference;
 - architectural owners, invariants, and dependency direction;
 - any applicable structural baseline and the current delivery package's
   intended source destination;
@@ -212,13 +224,25 @@ and follow-up delta for slice and package handoff.
 
 For every admitted delivery package:
 
+The package reference owns the realization-disposition schema. At the existing
+pre-edit boundary, this entrypoint consumes the complete relation and refuses
+production edits when an applicable row lacks a concrete feasible plan or is
+missing, unproved, or stale. The initial assignment carries the relation once;
+later handoffs and corrections carry only changed dispositions and affected
+contract IDs. The acceptance packet replaces planned entries with actual
+source and assertion evidence, and parent acceptance consumes the current
+relation before deciding the package. Adjacent success, a broad gate, names,
+or an implementer summary cannot satisfy an unresolved row.
+
 1. Send the delivery package to the existing implementer. After the initial
    assignment, use follow-up messages containing only new requirements,
    evidence, and corrections.
 2. Let the implementer edit and run focused validation. Do not perform
    overlapping writes or Git operations in the shared workspace. Non-mutating
    preparation may continue, but formally review only a completed delivery
-   package.
+   package. At handoff, planned realization entries are replaced with actual
+   source and assertion evidence; a design change marks dependent entries
+   stale before continued work or acceptance.
 3. Require a compact delivery-package acceptance packet: changed paths and
    resulting owner boundary; contract IDs established; intended behavior or
    interface changes, or an explicit statement that none were intended;
@@ -227,7 +251,9 @@ For every admitted delivery package:
    mechanism progress stated separately; checks and scenario results with
    pass/fail status; unresolved risks or blockers; and the detailed-evidence
    location. For a modularization package, include the residual-topology delta
-   and disposition of every affected material cluster. Include affected-test,
+   and disposition of every affected material cluster. Include the current
+   realization disposition, or only its changed entries after the initial
+   assignment, and identify any unresolved row. Include affected-test,
    external-evidence, architectural-decision, and follow-up dispositions only
    when they apply. The implementer does not approve its own work.
 4. Independently inspect the packet, changed owner topology, and the few
@@ -243,8 +269,9 @@ For every admitted delivery package:
    rereads. Expand inspection when evidence is contradictory, incomplete, or
    implausible. For a routed architectural
    decision, verify its causal evidence, correction bound, branch, and durable
-   follow-up read-back. Do not accept the implementer's summary as evidence by
-   itself.
+   follow-up read-back. At parent acceptance, select a few high-risk probes
+   independently at those consequential boundaries. Do not accept the
+   implementer's summary as evidence by itself.
 5. When the review finds a defect, send corrective guidance to the same
    implementer. State:
    - the concrete evidence;
@@ -253,7 +280,9 @@ For every admitted delivery package:
    - the state or public behavior that must be proved; and
    - any tempting but invalid workaround to avoid.
 6. Repeat implementation and parent review until the delivery package is
-   correct. Do not advance because one narrow test passes.
+   correct. Confirm that parent acceptance has a current, complete realization
+   disposition for every contract ID; do not advance because one narrow test
+   passes.
 7. Run independent validation proportional to the delivery package. Checkpoint
    accepted work according to user and repository policy, with all Git writes
    serialized by the main agent unless explicitly delegated.
