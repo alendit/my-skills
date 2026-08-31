@@ -31,7 +31,11 @@ boundaries, integration, acceptance, and final handoff.
 5. Record an execution-cost profile only when the user supplies one or current
    capabilities establish a material difference between capable owners. Name
    the preferred persistent implementer and any required independent reviewer;
-   do not invent prices or weaken authority to save context.
+   include parent continuations spent waiting, polling, and interpreting
+   coordination probes when they are material. Distinguish raw input, cache
+   effects, and newly appended context when current telemetry supports that
+   distinction; do not invent prices, cache behavior, or savings, and do not
+   weaken authority to save context.
 6. Decompose the outcome into ordered units only as far as observable
    acceptance requires. Record each unit's owner, dependencies, shared
    constraints, and exit evidence. Group related mechanical work at the
@@ -110,6 +114,16 @@ risk probes sufficient for its package decisions; context savings do not
 transfer scope, architecture, authorization, acceptance, or independent-review
 authority.
 
+For a long delegated unit, establish its progress envelope in the initial
+assignment: expected duration class, self-reported milestones, immediate
+blocker conditions, first credible stall threshold, and intermediate decisions
+that require the primary. Wait for mailbox events with the longest useful
+bounded timeout allowed by the next real checkpoint, user-communication policy,
+and active platform. A timeout reports only that no event arrived; continue
+waiting while the unit remains inside its envelope. Inspect progress only when
+the result can change routing, scope, safety, acceptance, or a dependent
+decision, and batch the narrow evidence needed for that decision.
+
 Treat every mutation as bounded by existing authority. A reviewable unit does
 not authorize a commit, push, publication, deployment, message, destructive
 action, or other external write. Checkpoint only when user and repository
@@ -140,6 +154,12 @@ Also replan when primary-context growth is dominated by source, diffs, logs, or
 checks already processed by a capable delegated owner without supporting a new
 primary decision. Expand primary inspection only around consequential risk,
 contradictory evidence, or an authority the primary must exercise.
+
+Replan the coordination pattern when parent continuations are dominated by
+status timeouts, routine agent listings, or progress probes that do not change
+a decision. Preserve the delegated unit and its accepted context; replace the
+polling loop with its progress envelope, event-driven waits, and milestone- or
+risk-triggered inspection.
 
 ## Verify And Finish
 

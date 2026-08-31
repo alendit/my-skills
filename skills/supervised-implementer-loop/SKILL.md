@@ -139,6 +139,9 @@ Give the implementer enough context once:
   mutation;
 - the selected glossary source or explicit opt-out and the material
   term-to-semantic-source relationships, without copying the glossary; and
+- the progress envelope: expected duration class, milestones the implementer
+  reports without prompting, immediate blocker conditions, the first credible
+  stall threshold, and any intermediate decision the parent must make; and
 - whether the implementer may commit.
 
 Under an explicit opt-out, instruct the implementer not to ask another
@@ -287,30 +290,47 @@ component, or other mechanism without its own semantic owner.
 - Do not interpret token efficiency as permission to skip owner analysis,
   tests, cleanup, documentation, or independent review.
 
-### Progress And Stall Protocol
+### Event-Driven Progress And Stall Protocol
 
-- Before a command likely to exceed 60 seconds, the implementer reports the
-  exact command, its purpose, and whether it may edit the tree.
-- While work continues, the implementer sends a compact checkpoint at least
-  every 60 seconds: changed files, current hypothesis, last completed result,
-  and active command or explicit `no command running`.
-- The implementer does not start a broad or complete suite until the parent has
-  accepted the focused delivery package, unless its contract explicitly
-  requires it.
-- When the implementer completes the delivery package or responds with a
-  handoff, let that handoff finish without interruption and proceed through
-  parent review.
-- On apparent silence, the parent checks the active process and whether the
-  shared diff is changing, sends one status request, and waits one additional
-  60-second interval.
-- If neither activity nor response appears, interrupt at most once. Inspect
-  stable edits directly and resume the same implementer with a delta-only
-  assignment.
-- Do not create repeated status-only turns or repeatedly interrupt an active
-  foreground gate.
+Establish the progress envelope in the initial assignment, then wait for a
+completion, checkpoint, blocker, or decision request instead of asking for
+reassurance. Use the longest useful bounded mailbox wait permitted by the next
+real checkpoint, user-communication policy, and active platform. A longer wait
+must return early when an event arrives, so it does not delay a prompt handoff.
 
-The 60-second interval is an orchestration default, not a performance
-expectation or acceptance metric.
+Treat a wait timeout only as absence of a message during that interval. Wait
+again while the work remains inside its progress envelope. Inspect the shared
+tree or process state only after a promised milestone is missing, the stall
+threshold is crossed, a dependent decision needs current evidence, or another
+credible safety or scope signal appears. Batch one narrow probe around the
+decision it can change; ordinary dirty state while the writer is active is not
+progress-quality evidence.
+
+Use the interaction capability that matches the state:
+
+- queue a delta or correction to an active implementer without restarting its
+  work or resending package context;
+- trigger a new turn for an idle persistent implementer only when real
+  follow-up work is ready;
+- wait on mailbox events for completion and checkpoints;
+- inspect agent topology only when lifecycle state is uncertain; and
+- interrupt only when the active course should stop because it is unsafe,
+  invalidated, or credibly stalled.
+
+If the active runtime publishes a reusable-prefix lifetime, a bounded wait may
+be selected slightly below it when no earlier checkpoint applies. Treat this as
+a runtime profile, not a permanent duration: a 25-minute bound is longer than a
+5-minute bound, but neither alone proves cache savings. When telemetry exists,
+separate raw input, cached reads and writes, and newly appended context. When
+cache behavior is unknown, use event-driven waiting without inventing a timer
+or savings claim.
+
+The implementer does not start a broad or complete suite until the parent has
+accepted the focused delivery package unless its contract requires otherwise.
+Let a completion handoff finish, then perform parent review. After a justified
+stall probe, send at most one status request and make at most one interrupt;
+inspect stable edits and resume the same implementer with a delta-only
+assignment. Do not create repeated status-only turns.
 
 ## Accept The Package
 

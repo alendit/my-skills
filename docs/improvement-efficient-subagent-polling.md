@@ -8,6 +8,13 @@ the subagent reports, and inspects progress only when a decision, blocker, or
 credible stall signal requires it. Routine polling must not repeatedly replay a
 large parent context merely to learn that the subagent is still working.
 
+Status: implemented in `supervised-implementer-loop` and `complex-work`. The
+validation scope is structural and source-level: the skills now establish a
+progress envelope, prefer event-driven bounded waits, and reserve probes and
+interrupts for decision-bearing conditions. No token, price, cache-hit, or
+model-efficacy improvement is claimed; the only duration comparison required
+by this change is that a 25-minute bound is longer than a 5-minute bound.
+
 This proposal extends the context-locality direction in
 `improvement-delegation-context-locality.md`. That note keeps detailed work and
 evidence with the cheaper capable implementer. This note governs the otherwise
