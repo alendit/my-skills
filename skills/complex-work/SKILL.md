@@ -45,15 +45,28 @@ boundaries, integration, acceptance, and final handoff.
 7. Bypass this skill when the result is a small bounded edit or one specialized
    skill owns it end to end.
 
-For a mixed package in which several units affect the same source owner,
-identify that overlap during establishment and carry the repository's
-applicable physical-decomposition constraint and the architecture-guidance
-authority's semantic-authority/physical-decomposition orthogonality rule as
-shared constraints. Require the implementation or review leaf to report its
-complete-boundary qualification, residual-topology coverage, separate
-preservation and locality evidence, and fixed-point eligibility when physical
-decomposition is in scope. Leave the underlying inventory, qualification, and
-fixed-point mechanics to their existing leaf owners.
+For every design-sensitive unit, the coordinator carries the repository's
+[architecture-guidance authority](../add-architectural-guidances/references/guidance-contract.md)
+and its semantic-authority/physical-decomposition orthogonality rule as shared
+constraints. For each new or materially changed responsibility, the coordinator
+asks the leaf to report a lightweight physical-boundary disposition: the
+semantic owner, the selected source boundary, and a cohesion reason—one primary
+reason to change without unrelated context. This ordinary disposition does not
+require a whole-root residual-topology inventory or a complete-boundary
+challenge for unrelated clusters.
+
+When the user-selected contract explicitly includes modularization or physical
+decomposition, or when source/dependency/state/test evidence qualifies a
+physical-decomposition defect under the
+[architectural-scope authority](../supervised-implementer-loop/references/architectural-scope-decision.md),
+the coordinator routes the affected unit through that authority and the
+existing leaf mechanics. For the activated scope, the implementation or review
+leaf must report the activated-scope result, residual-topology coverage,
+separate preservation and locality evidence, and fixed-point eligibility.
+Several units touching the same source owner are a signal for the coordinator
+to check the lightweight disposition; overlap alone does not activate the full
+topology mechanics. Existing leaf owners retain activation, inventory,
+qualification, and fixed-point rules.
 
 ## Assign Leaf Owners
 

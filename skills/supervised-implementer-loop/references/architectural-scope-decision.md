@@ -55,6 +55,18 @@ truncation to prioritize analysis. Classify generated source, a cohesive
 algorithm, language-mandated colocation, or mostly inline tests from the same
 causal responsibility evidence.
 
+When source, dependency, state, or test evidence qualifies a physical-
+decomposition defect, branch selection must carry the required physical-
+decomposition coverage for the affected roots. Before accepting an affected
+package, the primary supervisor must choose one of two paths: obtain caller
+authority that makes physical decomposition explicit in the package contract
+and apply the
+[residual-topology profile](contract-and-scenario-package.md#profile-modularization-roots)
+plus its existing review and fixed-point rules; or retain the required residual
+coverage as `unknown` and select scope stop. The ordinary lightweight placement
+disposition and a no-worsening deferral cannot clear a qualified defect, and the
+caller-approved scope must not be broadened silently.
+
 For a test-locality claim, apply the alternate-implementation challenge: show
 that an independently designed correct implementation preserving the stable
 contract would fail the current test because the test freezes private
