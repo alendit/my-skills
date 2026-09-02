@@ -132,10 +132,18 @@ the responsible owner, and keep unavailable evidence explicitly unknown.
 
 Carry glossary state through the
 [project-glossary authority](../clear-technical-writing/references/project-glossaries.md):
-the selected glossary identity or explicit opt-out and only the material
-term-to-semantic-source relationships needed by each Tick or Tock leaf. Preserve
-that state in leaf inputs and results. Require or report the leaf review or
-handoff's applicable
+carry either the explicit opt-out marker alone or, for a selected glossary, its
+identity, declared-scope fit when applicable, and only the material term-to-
+semantic-source relationships and unresolved candidates needed by each Tick or
+Tock leaf. Preserve selected-source state in leaf inputs and results, carrying
+only changed or still-material dispositions after the initial phase input. It
+remains current only while its selection, active scope, semantic sources, and
+materiality remain unchanged. Missing or stale selected-source state blocks the
+affected phase handoff; recover there through the shared authority and recheck
+only material terms, without a ledger or repository audit. Under opt-out, do
+not access a glossary or calculate, request, transfer, recover, or report scope
+fit or candidates; leaf artifacts explain needed concepts locally. Require or
+report the leaf review or handoff's applicable
 [clear technical writing pass](../clear-technical-writing/SKILL.md), but do not
 read or apply the glossary as another semantic reviewer and do not perform
 another prose pass in this outer workflow.
@@ -191,9 +199,11 @@ delivery-package admission and execution. Let the primary accept each delivery
 package, and finish package verification before returning here. Handle a small
 direct fix directly, and do not force genuinely independent packages through
 one artificial sequence.
-Pass the resolved glossary identity or explicit opt-out and the material
-term-to-semantic-source relationships into the Tock leaf, then retain its
-reported access, changes, candidates, and continuity in the Tock result.
+Pass the explicit opt-out marker alone or, for a selected glossary, its identity,
+declared-scope fit, and material term-to-semantic-source relationships and
+unresolved candidates into the Tock leaf. For selected-source state, retain its
+reported access, changes, changed or still-material candidates, and continuity
+in the Tock result.
 
 Before routing implementation work, verify that the latest durable review
 result is `implementation-plan-fixed-point` for the unchanged plan identity
@@ -250,8 +260,9 @@ the remediation author's claims. Supply a repository-specific review request:
   boundary;
 - the deterministic Fixed-Point Rule and required external-capability status as
   the whole-scope completion contract;
-- the selected glossary identity or explicit opt-out and material
-  term-to-semantic-source relationships needed by the review leaf; and
+- the explicit glossary opt-out marker alone or, for a selected glossary, its
+  identity, declared-scope fit, and material term-to-semantic-source
+  relationships and unresolved candidates needed by the review leaf; and
 - the repository-declared review-artifact destination and required shape.
 
 Use incremental mode only when the previous review is trustworthy and change
@@ -297,8 +308,9 @@ The review artifact must:
   non-gating architectural follow-ups, and report follow-up IDs created,
   updated, closed, stale, or unchanged-but-relevant;
 - list focused supporting evidence and the required architecture self-check;
-- carry the glossary state, material access or candidates, terminology
-  continuity, and the leaf review's clear-writing-pass status; and
+- carry the explicit glossary opt-out marker alone or, for a selected glossary,
+  its state, declared-scope fit, changed or still-material candidates,
+  terminology continuity, and the leaf review's clear-writing-pass status; and
 - avoid security framing, validation-date disputes, Git cleanliness, README
   command drift, publication provenance, or evidence-map bookkeeping as
   findings unless the user explicitly changes scope.
@@ -411,6 +423,11 @@ boundary. Do not claim the capability or mark the package `Done` unless every
 required initial external capability is confirmed. Only a valid
 `product-contract-failure` disproves that external contract and reopens design
 or remediation.
+
+In the final report, include the explicit glossary opt-out marker alone or, for
+a selected glossary, its identity, declared-scope fit, and changed or still-
+material unresolved candidates from the last Tick/Tock result. Do not resolve a
+candidate or add another glossary or prose pass in this outer workflow.
 
 ## Optional Goal Persistence
 

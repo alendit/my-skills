@@ -43,6 +43,37 @@ physical placement, and accepted target topology as distinct claims. Label
 current placement as descriptive and connect topology acceptance to its
 architecture evidence and authority.
 
+## Check Material Coverage At The Existing Boundary
+
+When active work materially changes scope, or an existing selected glossary is
+reused at a durable-artifact or package boundary, compare its declared scope,
+when present, with the active work. Report a material mismatch while retaining
+the selected glossary; do not restart placement discovery or infer authority to
+edit it. A glossary without a declared scope remains usable.
+
+At that same boundary, inspect only shared terms already material to the
+artifact or handoff. For each possible coverage gap, establish:
+
+- the term actually used and why its project-specific distinction is material;
+- the accepted semantic source;
+- the matching glossary entry, or its absence; and
+- whether the entry is materially narrower, broader, or differently aliased.
+
+Report a candidate only when the term names a durable project distinction, has
+an accepted semantic source, and is absent or materially mismatched. Mere
+occurrence is not a definition. Treat ordinary domain vocabulary and local
+workflow labels as local explanation unless the project gives them a distinct
+meaning.
+
+Carry the used term, semantic source, project-specific distinction or
+ambiguity, relevant scope mismatch, and any unresolved preferred-term or alias
+question. This is explanatory state for the current selected source, active
+scope, semantic source, and material artifact; it is not a candidate store.
+Re-evaluate it when one of those inputs changes, and stop carrying it when it
+is resolved or no longer material. The report does not choose terminology,
+decide architecture, or turn a label into a field, state, limit, component,
+ownership rule, or other mechanism.
+
 ## Add Or Update A Term
 
 Add a glossary entry only when all of these conditions hold:
@@ -54,9 +85,10 @@ Add a glossary entry only when all of these conditions hold:
   and
 - the current task authorizes the edit scope.
 
-If any condition is missing, report the term as a candidate and define it
-locally without persisting it. A new label never authorizes a new field, state,
-limit, component, or other mechanism.
+If any condition is missing, leave the glossary unchanged, report the term as a
+candidate, define it locally, and preserve any preferred-term or alias
+uncertainty. A new label never authorizes a new field, state, limit, component,
+or other mechanism.
 
 For an authorized entry, give one concept one preferred term, point aliases to
 it, explain it in ordinary language, and state the project-specific distinction.
@@ -67,4 +99,6 @@ no paragraph cap, typography rule, or mandatory field set decides acceptance.
 When a semantic source or definition changes, follow
 [revision after change](revision-after-change.md). Revalidate aliases, linked
 entries, and affected prose only within the authorized edit scope. Report known
-out-of-scope dependents with their stale term and semantic source.
+out-of-scope dependents with their stale term and semantic source. After an
+authorized update, use the selected glossary as the term authority and do not
+retain a parallel candidate record.

@@ -51,49 +51,68 @@
     },
     {
       "id": "project-glossary-use",
-      "contract_ids": ["CTW1", "CTW5", "GL3", "GL5"],
-      "artifact_assignment": "Explain review-prose ownership using the selected project glossary while keeping the explanation self-contained.",
-      "intended_reader": "An experienced developer new to this repository and its skill composition.",
+      "contract_ids": ["CTW1", "CTW5", "GL3", "GL4", "GL5", "GL6", "GCD1", "GCD2", "GCD3", "GCD5"],
+      "artifact_assignment": "Explain the active Stage 2 direct-cutover boundary using the selected project glossary, while keeping the explanation self-contained and making any material coverage gap visible.",
+      "intended_reader": "An experienced developer new to the project who must distinguish the guest runtime artifact from related snapshots and generated modules.",
       "source_packet": {
         "selected_glossary": "docs/glossary.md",
-        "material_entry": {
-          "term": "leaf owner",
-          "explanation": "The artifact-specific skill that owns substantive content and applies the one final prose pass.",
-          "semantic_source": "CTW2"
+        "declared_glossary_scope": "The Stage 2 modularization interlude and its architecture notes.",
+        "active_scope": "The later Stage 2 memory-management direct cutover.",
+        "material_uncovered_term": {
+          "used_term": "runtime image",
+          "project_distinction": "The encoder-authored WebAssembly module instantiated as the guest runtime, not a Store-rotation snapshot or a generated callable module.",
+          "semantic_source": "The accepted M2 direct-cutover map.",
+          "glossary_entry": "absent",
+          "preferred_term_or_alias": "Unresolved among runtime image, production image, and guest image."
         },
-        "semantic_fact": "evidence-efficient-review owns findings, severities, and evidence; review-fixpoint only carries and reports the leaf result.",
-        "constraint": "Glossary wording is explanatory input, not proof of behavior.",
-        "requested_action": "Confirm the single-pass ownership boundary."
+        "ordinary_domain_term": {
+          "term": "WebAssembly module",
+          "use": "Its ordinary domain meaning is sufficient here; it needs a local explanation for this reader but is not a glossary candidate on that basis alone."
+        },
+        "authorization": "No glossary edit is authorized for this task.",
+        "constraint": "The glossary is explanatory input, not proof of architecture, and no term or alias may create a field, state, limit, component, or ownership decision.",
+        "requested_action": "Explain runtime image locally, report the declared-scope mismatch and semantically sourced candidate, preserve the unresolved alias question, and confirm that the glossary remains unchanged."
       },
       "review_questions": [
-        {"dimension": "clarity", "question": "Can a newcomer understand the ownership boundary without opening the glossary first?"},
-        {"dimension": "factual-preservation", "question": "Does the explanation preserve CTW2 and the review skill's substantive authority?"},
-        {"dimension": "terminology-consistency", "question": "Is leaf owner used consistently with the selected entry and its semantic source?"},
-        {"dimension": "unnecessary-detail", "question": "Does the explanation avoid a vocabulary dump or repeated glossary procedure?"}
+        {"dimension": "clarity", "question": "Can the reader distinguish the runtime image from a Store-rotation snapshot and generated callable module without opening the glossary first?"},
+        {"dimension": "factual-preservation", "question": "Does the explanation preserve the accepted M2 source, identify the scope mismatch, avoid choosing an unresolved preferred alias, and leave the glossary unchanged?"},
+        {"dimension": "terminology-consistency", "question": "Does the output report runtime image as the material semantically sourced candidate while treating WebAssembly module as ordinary domain vocabulary rather than an automatic entry?"},
+        {"dimension": "unnecessary-detail", "question": "Does the explanation avoid a repository-wide terminology audit, vocabulary dump, candidate ledger, or repeated glossary procedure?"}
       ]
     },
     {
       "id": "agent-handoff",
-      "contract_ids": ["CTW1", "CTW2", "GL3", "GL7"],
-      "artifact_assignment": "Write a compact implementation handoff for another agent from the accepted work-package facts.",
+      "contract_ids": ["CTW1", "CTW2", "GL3", "GL7", "GCD3", "GCD4", "GCD6"],
+      "artifact_assignment": "Write a compact implementation handoff for another agent from the accepted work-package facts, preserving the selected glossary's current coverage disposition.",
       "intended_reader": "A collaborating implementation agent that has not seen the earlier conversation.",
       "source_packet": {
-        "scope": "Change only the serializer handoff boundary; do not change review findings or consumer ownership.",
+        "scope": "Change only the callable-publication handoff boundary in the Stage 2 direct cutover; do not change accepted architecture, review findings, or consumer ownership.",
         "accepted_contract_ids": ["CTW2", "GL7"],
-        "glossary_state": "selected: docs/glossary.md",
+        "glossary_state": {
+          "selected_source": "docs/glossary.md",
+          "declared_scope_fit": "Mismatch: the glossary declares coverage of the earlier Stage 2 modularization interlude, while this assignment is in the later memory-management direct cutover."
+        },
         "material_terms": [
           {"term": "leaf owner", "semantic_source": "CTW2"},
           {"term": "semantic owner", "semantic_source": "GL3"}
         ],
+        "unresolved_candidate": {
+          "used_term": "runtime image",
+          "semantic_source": "The accepted M2 direct-cutover map.",
+          "project_distinction": "The encoder-authored WebAssembly module instantiated as the guest runtime, not a Store-rotation snapshot or a generated callable module.",
+          "preferred_term_or_alias": "Unresolved among runtime image, production image, and guest image.",
+          "materiality": "Still material to the assignment and final handoff.",
+          "continuity": "Inherited from the accepted work package and unchanged at this handoff."
+        },
         "evidence": ["handoff.py:44 drops the accepted contract ID"],
-        "required_report": ["changed files", "checks", "glossary state", "term candidates"],
-        "constraint": "The glossary cannot authorize a new field, state, limit, or component."
+        "required_report": ["changed files", "checks", "selected glossary", "declared-scope fit", "changed or still-material term candidates"],
+        "constraint": "Technical owners outrank glossary wording. The handoff must not resolve the alias, write the glossary, create a candidate ledger, run a repository audit, or turn the term into a field, state, limit, component, or ownership decision."
       },
       "review_questions": [
         {"dimension": "clarity", "question": "Can the receiving agent identify the exact scope, evidence, and required report without prior conversation?"},
-        {"dimension": "factual-preservation", "question": "Does the handoff preserve contract IDs, evidence, ownership, and prohibited changes?"},
-        {"dimension": "terminology-consistency", "question": "Are the selected terms transferred with their semantic sources rather than redefined?"},
-        {"dimension": "unnecessary-detail", "question": "Does the handoff omit orchestration history that the implementer does not need?"}
+        {"dimension": "factual-preservation", "question": "Does the handoff preserve contract IDs, evidence, technical ownership, selected-source identity, and declared-scope fit without inventing a write or mechanism?"},
+        {"dimension": "terminology-consistency", "question": "Does runtime image cross the handoff with its accepted semantic source, project distinction, materiality, and unresolved alias status rather than being redefined or resolved?"},
+        {"dimension": "unnecessary-detail", "question": "Does the handoff omit orchestration history, a candidate ledger, a repository audit, and any second glossary or prose pass?"}
       ]
     }
   ]

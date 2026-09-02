@@ -36,8 +36,14 @@ Before reading broad source, identify:
 
 Resolve glossary state through the
 [project-glossary authority](../clear-technical-writing/references/project-glossaries.md)
-and record the selected glossary identity or explicit opt-out in the review
-contract before delegating review work.
+and record either the explicit opt-out marker alone or, for a selected glossary,
+its identity, declared-scope fit when applicable, and material inherited
+unresolved candidates in the review contract before delegating review work.
+Selected-source state remains current only while its selection, active scope,
+semantic sources, and materiality remain unchanged. Missing or stale selected-
+source state blocks the affected review handoff; recover at that existing
+boundary through the shared authority and recheck only material terms, without
+a ledger or repository audit.
 
 Do not infer domain policy from this skill. If these inputs cannot be recovered
 from the request and repository, report the missing review contract instead of
@@ -118,8 +124,9 @@ compact evidence:
   structural delta for a design-sensitive owner;
 - the authoritative contract matrix, architecture ownership, and public entry
   points;
-- the selected glossary identity or explicit opt-out and only the material
-  term-to-semantic-source relationships;
+- the explicit glossary opt-out marker alone or, for a selected glossary, its
+  identity, declared-scope fit, and only the material term-to-semantic-source
+  relationships and inherited unresolved candidates;
 - prior finding identifiers and dispositions;
 - relevant architectural-scope decision records, the selected durable ledger
   authority, and follow-up deltas;
@@ -159,7 +166,11 @@ When a glossary is selected, require the independent reviewer to access each
 material entry directly rather than receiving the remediation author's
 interpretation. Treat that wording as explanatory input, never proof; verify
 behavior, ownership, lifetime, and acceptance against their semantic sources.
-Under an explicit opt-out, require no glossary access or placement question.
+When an inherited candidate affects reviewed terminology, verify it against its
+semantic source without choosing an alias or deciding architecture. Under an
+explicit opt-out, carry only the marker: require no glossary access or placement
+question, scope-fit calculation, or candidate transfer, recovery, or reporting;
+explain concepts locally when the reader needs them.
 
 ## Audit Promised Closure First
 
@@ -397,7 +408,10 @@ Return or draft the caller's requested artifact with:
 - architectural-scope classification and observed follow-up-ledger delta,
   including stable IDs, read-back/lifecycle state, and any laundering rejection;
 - unresolved unknowns, if any;
-- focused and complete verification evidence; and
+- focused and complete verification evidence;
+- the explicit glossary opt-out marker alone or, for a selected glossary, its
+  identity, declared-scope fit, and changed or still-material unresolved
+  candidates; and
 - the behavioral goal ID and direct scenario status, mechanism progress reported
   separately, and the applicable architecture self-check.
 

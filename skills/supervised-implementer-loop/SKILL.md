@@ -74,9 +74,11 @@ and plan-owning changes follow the existing review-fixpoint invalidation rule.
 
 Before spawning, resolve glossary state through the
 [project-glossary authority](../clear-technical-writing/references/project-glossaries.md).
-Record the selected source or explicit opt-out and only the material
-term-to-semantic-source relationships in the work package. Glossary wording is
-explanatory input; package contracts and technical owners retain semantics.
+Record either the explicit opt-out marker alone or, for a selected glossary,
+its source, declared-scope fit when applicable, and only the material term-to-
+semantic-source relationships and unresolved candidates in the work package.
+Glossary wording is explanatory input; package contracts and technical owners
+retain semantics.
 
 1. Inspect the current tree, user-supplied requirements, repository guidance,
    and existing changes. Begin at the first unmet requirement and preserve
@@ -160,8 +162,9 @@ Give the implementer enough context once:
   evidence status when applicable, and reporting format;
 - known architectural follow-up IDs and the authority boundary for any ledger
   mutation;
-- the selected glossary source or explicit opt-out and the material
-  term-to-semantic-source relationships, without copying the glossary; and
+- the explicit glossary opt-out marker alone or, for a selected glossary, its
+  source, declared-scope fit, and the material term-to-semantic-source
+  relationships and unresolved candidates, without copying the glossary; and
 - the continuity mode, required identity when applicable, exact model,
   reasoning effort, execution mode, replacement authority, context-health
   disposition, and shared evidence location; and
@@ -171,7 +174,9 @@ Give the implementer enough context once:
 - whether the implementer may commit.
 
 Under an explicit opt-out, instruct the implementer not to ask another
-placement question, access a glossary, or persist a term later in the package.
+placement question, access a glossary, calculate or carry scope fit or glossary
+candidates, or persist a term later in the package. Keep needed concept
+explanations local to the artifact.
 
 Explicitly instruct the implementer to use tokens economically without
 weakening correctness: inspect only relevant owners and adjacent consumers,
@@ -273,7 +278,9 @@ or an implementer summary cannot satisfy an unresolved row.
    realization disposition, or only its changed entries after the initial
    assignment, and identify any unresolved row. Include affected-test,
    external-evidence, architectural-decision, and follow-up dispositions only
-   when they apply. The implementer does not approve its own work.
+   when they apply. For a selected glossary, also include changed or still-
+   material scope-fit and candidate dispositions; under opt-out, include only
+   the marker. The implementer does not approve its own work.
 4. Independently inspect the packet, changed owner topology, and the few
    boundaries where defects would be consequential. For a modularization
    package, verify that each extracted module is cohesive, the root lost the
@@ -337,7 +344,13 @@ Tick, change reviewer independence, or reactivate the retired context.
 
 Across assignments, corrections, slice handoffs, and parent review, verify that
 preferred terms and their semantic-source relationships remain continuous and
-that technical owners outrank glossary wording. Treat a new term as a candidate
+that technical owners outrank glossary wording. For a selected glossary, carry
+only changed or still-material declared-scope fit and unresolved candidate
+dispositions after the initial assignment. They remain current only while
+glossary selection, active scope, semantic source, and materiality remain
+unchanged. Missing or stale selected-source state blocks the affected correction
+or handoff; recover there through the shared authority and recheck only material
+terms, without a ledger or repository audit. Treat a new term as a candidate
 unless its meaning, glossary location, and edit scope are authorized for a
 bounded write. Never translate a glossary label into a new field, state, limit,
 component, or other mechanism without its own semantic owner.
@@ -430,11 +443,12 @@ After the final delivery package:
    or unintended dirty state remains.
 6. Confirm every architectural-scope decision has an accepted branch and that
    no unauthorized or unverified ledger mutation is credited as durable.
-7. Report the glossary source or explicit opt-out, material access or authorized
-   changes, unresolved term candidates, and terminology continuity alongside
-   the accepted delivery packages, important review corrections, verification, follow-up
-   ledger delta, commits or pending changes, and any genuine remaining
-   limitation.
+7. Report the explicit glossary opt-out marker alone or, for a selected
+   glossary, its source, declared-scope fit, material access or authorized
+   changes, changed or still-material unresolved term candidates, and
+   terminology continuity alongside the accepted delivery packages, important
+   review corrections, verification, follow-up ledger delta, commits or pending
+   changes, and any genuine remaining limitation.
 8. After contract IDs, package scope, and evidence results are accepted, apply
    one compact
    [clear technical writing pass](../clear-technical-writing/SKILL.md) to the

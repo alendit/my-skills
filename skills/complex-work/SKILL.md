@@ -50,6 +50,20 @@ boundaries, integration, acceptance, and final handoff.
 8. Bypass this skill when the result is a small bounded edit or one specialized
    skill owns it end to end.
 
+At package establishment, resolve or consume glossary state through the shared
+[project-glossary authority](../clear-technical-writing/references/project-glossaries.md).
+Under explicit opt-out, carry only the opt-out marker: do not access a glossary
+or calculate, request, transfer, recover, or report scope fit or candidates;
+affected leaves explain concepts locally. For a selected glossary, record its
+identity, declared-scope fit when applicable, and only material unresolved
+candidates with their semantic sources, project distinctions or ambiguities,
+and unresolved aliases. Selected-source state remains current only while its
+selection, active scope, semantic sources, and materiality remain unchanged.
+Missing or stale selected-source state blocks the affected routing or handoff;
+recover at that existing boundary through the shared authority and recheck only
+material terms, without a ledger or repository audit. Do not copy the coverage
+procedure into this coordinator.
+
 For every design-sensitive unit, the coordinator carries the repository's
 [architecture-guidance authority](../add-architectural-guidances/references/guidance-contract.md)
 and its semantic-authority/physical-decomposition orthogonality rule as shared
@@ -121,6 +135,12 @@ authorization limits, and observable exit. Let the leaf owner make its
 substantive decisions and choose its validation mechanics. The primary agent
 verifies the result, integrates it with accepted units, and retains final
 acceptance authority.
+
+Give an affected leaf the opt-out marker or current selected-source state once.
+For a selected glossary, carry only changed or still-material scope-fit and
+candidate dispositions in later assignments, corrections, and handoffs.
+Technical owners retain meaning, and no disposition authorizes a glossary write
+or a new mechanism.
 
 When source-owner overlap applies, require the implementation leaf's accepted
 baseline-to-result structural decision before package acceptance. Integrate
@@ -218,5 +238,7 @@ Finish with one integrated handoff that reports:
 - the goal ID and direct scenario's behavioral status, reported separately from
   mechanism progress;
 - evidence and package-level verification;
-- unresolved unknowns or capability status; and
+- unresolved unknowns or capability status;
+- the explicit opt-out marker alone, or the selected glossary identity,
+  declared-scope fit, and changed or still-material unresolved candidates; and
 - pending actions that still require authorization.

@@ -20,7 +20,7 @@ review questions.
 | `initial-technical-writing` | Produce a first reader-facing engineering update from accepted facts and unknowns. |
 | `revision-after-change` | Rebuild dependent prose after a requested fact changes the conclusion. |
 | `project-glossary-use` | Use a selected project term consistently while keeping semantic authority and local explanation clear. |
-| `agent-handoff` | Give another agent a self-contained, source-grounded handoff without redefining terms or inventing mechanisms. |
+| `agent-handoff` | Carry selected-source identity, declared-scope fit, and a material unresolved candidate with its semantic source through a self-contained handoff without resolving terminology or inventing mechanisms. |
 
 The independent reviewer compares the baseline and skill outputs on clarity,
 factual preservation, terminology consistency, and unnecessary detail. These
