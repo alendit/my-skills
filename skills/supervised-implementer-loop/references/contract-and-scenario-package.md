@@ -156,17 +156,24 @@ boundary locally; return the missing plan cell to the plan-review owner.
 
 After the result, identity, and map pass these checks, admit the work package
 before the first edit. Carry the complete accepted map and plan identity to the
-persistent implementer once. Record the admission in the package handoff and
-continue in dependency order only after the parent accepts the admission
-boundary.
+first active implementation context once. Record the admission in the package
+handoff and continue in dependency order only after the parent accepts the
+admission boundary. The active context may continue into a later accepted
+package, or SIL may renew it under
+[implementer-continuity.md](implementer-continuity.md); a fresh context receives
+the current plan identity and accepted delivery-package map with its next
+package assignment once, and renewal does not change this map or its package
+authority.
 
 ## Execute ordered delivery packages
 
 For each admitted delivery package:
 
 1. Confirm its prerequisites are accepted earlier packages or decisions and
-   assign the complete package record and its contract IDs to the persistent
-   implementer.
+   assign the complete package record and its contract IDs to the active
+   implementation context. A fresh context may receive this assignment only
+   after the preceding package is parent-accepted and SIL has verified the
+   continuity handoff.
 2. Build the useful owner/public behavior through its real composition path.
    Keep state, lifetime, transaction, recovery, public surface, and focused
    evidence closed around the package's primary reason to change.
@@ -177,10 +184,13 @@ For each admitted delivery package:
    behavior, closure fields, evidence, deferred-work boundary, and causal
    split/combine decision are all resolved. A later package may extend behavior
    but may not repair an earlier package's incomplete semantics.
-5. Send corrections and later assignments to the same implementer as
-   delta-only follow-ups. Do not resend the package map or turn an internal
-   step into a new package unless product authority accepts a contract split
-   and a fresh reviewed plan assigns it.
+5. Send corrections within the admitted package to the active implementation
+   context as delta-only follow-ups. Do not renew for an ordinary correction,
+   resend the package map, or turn an internal step into a new package unless
+   product authority accepts a contract split and a fresh reviewed plan assigns
+   it. A verified continuity renewal is an allowed transition only after parent
+   acceptance of the current delivery package; it starts the next admitted
+   package and leaves this package record authoritative.
 
 Package acceptance is distinct from `deterministic-fixed-point`; the latter's
 result effects and exact-revision semantics remain with review-fixpoint. A

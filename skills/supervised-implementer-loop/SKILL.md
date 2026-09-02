@@ -2,19 +2,21 @@
 name: supervised-implementer-loop
 description: >-
   Implement one non-trivial work package through ordered, dependent slices
-  using one persistent subagent while the main agent independently reviews,
-  corrects, validates, and accepts each slice. Use when the user asks to reuse
-  one implementer, review every implementation slice, make later work rely on
-  accepted earlier fixes, or keep implementation token-efficient. Do not use
-  for review-only work, small direct edits, or genuinely independent parallel
-  packages.
+  using one active implementation context at a time while the main agent
+  independently reviews, corrects, validates, and accepts each slice. Reuse
+  that context through an admitted delivery package and its corrections; an
+  authorized renewal may start the next package with the same configuration.
+  Use when the user asks to reuse one implementer, review every implementation
+  slice, make later work rely on accepted earlier fixes, or keep implementation
+  token-efficient. Do not use for review-only work, small direct edits, or
+  genuinely independent parallel packages.
 ---
 
 # Supervised Implementer Loop
 
 Complete one bounded work package through a repeated implement-review-correct
-loop. The main agent is the acceptance authority; one persistent implementer
-owns the edits and first-pass validation.
+loop. The main agent is the acceptance authority; one active implementation
+context owns the edits and first-pass validation at a time.
 
 This skill ends when the requested work package is implemented and accepted.
 It does not initiate broader reviews, invent adjacent work, or define an outer
@@ -39,6 +41,12 @@ mapping, useful stopping points, closure, split/combine decisions, and
 internal-step treatment. This entrypoint only establishes the caller-authorized
 work package, consumes the reviewed plan decision, and routes admission and
 execution.
+
+When the work package may cross an accepted delivery-package boundary, also
+read [references/implementer-continuity.md](references/implementer-continuity.md).
+It owns continuity mode, context-health dispositions, turnover-envelope
+verification, fresh-context assignment, and exceptional recovery. It does not
+replace the delivery-package record or add a review phase.
 
 Consume the durable result and plan identity from the
 [review-fixpoint contract boundary](../review-fixpoint/references/contract-and-evidence-boundary.md).
@@ -118,15 +126,18 @@ Before spawning an implementer:
    explicit preferences support it.
    When the user supplies or current capabilities establish a material cost
    asymmetry, record it without inventing prices and prefer the cheaper capable
-   persistent implementer for exhaustive mechanical and evidence-producing
-   work.
+   implementation owner for exhaustive mechanical and evidence-producing work.
 5. Use normal, non-fast execution by default. Enable fast mode only when the
    user explicitly requests fast mode for the current task; never infer it from
    memory, model choice, urgency, or token-economy instructions.
 
-Spawn exactly one implementation subagent and reuse it for every delivery
-package and correction in the work package. If that agent becomes unavailable,
-report the loss of continuity and ask before replacing it.
+Select exactly one active implementation context at a time. Apply
+[implementer-continuity.md](references/implementer-continuity.md): retain the
+context through the current admitted delivery package and its corrections, and
+consider renewal only after parent acceptance of that package. If continuity
+is `identity-persistent`, report loss and ask before replacing the named
+implementer. If it is `role/model-persistent`, renew only through the verified
+envelope and only when the runtime preserves the required configuration.
 
 ## Give The Initial Assignment
 
@@ -151,6 +162,9 @@ Give the implementer enough context once:
   mutation;
 - the selected glossary source or explicit opt-out and the material
   term-to-semantic-source relationships, without copying the glossary; and
+- the continuity mode, required identity when applicable, exact model,
+  reasoning effort, execution mode, replacement authority, context-health
+  disposition, and shared evidence location; and
 - the progress envelope: expected duration class, milestones the implementer
   reports without prompting, immediate blocker conditions, the first credible
   stall threshold, and any intermediate decision the parent must make; and
@@ -171,7 +185,10 @@ authorized evidence artifact. The implementer's handoff should reference that
 artifact instead of pasting successful logs or complete files.
 
 Use the smallest context fork that still carries the requirements and current
-repository state. Do not repopulate the agent's context on later slices.
+repository state. Do not repopulate the active context on later slices. A fresh
+context, when authorized at an accepted boundary, receives the verified
+turnover envelope and next admitted package once rather than a transcript or
+raw-log replay.
 
 ## Design Tests To Survive Simplification
 
@@ -234,9 +251,10 @@ source and assertion evidence, and parent acceptance consumes the current
 relation before deciding the package. Adjacent success, a broad gate, names,
 or an implementer summary cannot satisfy an unresolved row.
 
-1. Send the delivery package to the existing implementer. After the initial
-   assignment, use follow-up messages containing only new requirements,
-   evidence, and corrections.
+1. Send the delivery package to the active implementation context. After the
+   initial assignment, use follow-up messages containing only new requirements,
+   evidence, and corrections. Do not replace that context for an ordinary
+   correction.
 2. Let the implementer edit and run focused validation. Do not perform
    overlapping writes or Git operations in the shared workspace. Non-mutating
    preparation may continue, but formally review only a completed delivery
@@ -272,8 +290,8 @@ or an implementer summary cannot satisfy an unresolved row.
    follow-up read-back. At parent acceptance, select a few high-risk probes
    independently at those consequential boundaries. Do not accept the
    implementer's summary as evidence by itself.
-5. When the review finds a defect, send corrective guidance to the same
-   implementer. State:
+5. When the review finds a defect, send corrective guidance to the active
+   implementation context. State:
    - the concrete evidence;
    - the violated invariant;
    - the owning boundary and required result;
@@ -288,7 +306,34 @@ or an implementer summary cannot satisfy an unresolved row.
    serialized by the main agent unless explicitly delegated.
 8. Only then begin the next reviewed delivery package. Treat accepted earlier
    invariants as stable; do not rediscover or restate them unless new evidence
-   challenges them.
+   challenges them. At this accepted boundary, apply the continuity
+   disposition: continue with the active context, or renew only after the
+   parent verifies the turnover envelope and retires the old context. A
+   checkpoint or internal step is not an ordinary renewal boundary.
+
+## Manage Context Continuity
+
+Follow [implementer-continuity.md](references/implementer-continuity.md) when
+the active context may cross delivery packages or its reliability is in doubt.
+The positive path is:
+
+1. Keep exactly one active implementation writer through the admitted package,
+   focused checks, parent corrections, and acceptance.
+2. Observe context pressure together with behavioral and current-tree evidence
+   and select `continue`, `renew-at-boundary`, or `stop-and-rebaseline` without
+   a numeric threshold. Correctness must also work when telemetry is absent.
+3. For `renew-at-boundary`, externalize required evidence, have the parent
+   verify a turnover envelope that references existing package and plan records,
+   retire the old context, and start exactly one fresh context with the same
+   authorized configuration and one complete next-package assignment.
+4. For `stop-and-rebaseline`, stop implementation deltas. The parent classifies
+   the bounded dirty tree from the last accepted package as accepted,
+   complete-but-unaccepted, partial, or obsolete, preserves useful edits, and
+   records the rebaseline before any new assignment.
+
+The implementer may contribute turnover deltas, but the parent verifies them;
+the envelope is not a second contract or package ledger. Renewal does not add a
+Tick, change reviewer independence, or reactivate the retired context.
 
 Across assignments, corrections, slice handoffs, and parent review, verify that
 preferred terms and their semantic-source relationships remain continuous and
@@ -299,8 +344,9 @@ component, or other mechanism without its own semantic owner.
 
 ## Keep The Loop Economical
 
-- Reuse the same implementer; do not spawn a replacement for ordinary
-  corrections or subsequent slices.
+- Reuse the active implementation context for ordinary corrections and later
+  internal slices in the admitted package. Do not renew before parent accepts
+  that package.
 - Prefer concise follow-up tasks over full rewritten briefs.
 - Keep detailed working evidence in the implementer's context or referenced
   artifact; import it into the parent only to answer a concrete acceptance
@@ -339,8 +385,8 @@ Use the interaction capability that matches the state:
 
 - queue a delta or correction to an active implementer without restarting its
   work or resending package context;
-- trigger a new turn for an idle persistent implementer only when real
-  follow-up work is ready;
+- trigger a new turn for an idle active implementer only when real follow-up
+  work is ready;
 - wait on mailbox events for completion and checkpoints;
 - inspect agent topology only when lifecycle state is uncertain; and
 - interrupt only when the active course should stop because it is unsafe,
@@ -358,8 +404,11 @@ The implementer does not start a broad or complete suite until the parent has
 accepted the focused delivery package unless its contract requires otherwise.
 Let a completion handoff finish, then perform parent review. After a justified
 stall probe, send at most one status request and make at most one interrupt;
-inspect stable edits and resume the same implementer with a delta-only
-assignment. Do not create repeated status-only turns.
+inspect stable edits and resume the active context with a delta-only assignment
+when its disposition remains `continue`, or when `renew-at-boundary` still
+permits safe completion of the current admitted package. Otherwise use the
+bounded stop-and-rebaseline procedure. Do not create repeated status-only
+turns.
 
 ## Accept The Package
 

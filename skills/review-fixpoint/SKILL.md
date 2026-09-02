@@ -89,13 +89,19 @@ Tock: remediate latest review artifact
 Never declare a fixed point immediately after Tock. Only the persistent
 reviewer's following independent Tick can establish it. Finish and verify
 remediation before starting that Tick; do not review a partially edited tree or
-insert Tick ceremonies between mechanical implementation units. If a Tick
-finds a defect and the resulting non-trivial Tock remains owned by the same
-persistent implementer, return a delta-only correction to that implementer.
-Reopen only contract cells and evidence invalidated by the correction when
-prior coverage remains trustworthy and impact is bounded; otherwise follow the
-existing phase-selection and rebaseline rules before the next required exact-
-revision Tick.
+insert Tick ceremonies between mechanical implementation units. If a later
+Tick produces a correction, reuse the current implementer context with a
+delta when its SIL disposition is `continue`; otherwise route the correction
+through SIL's authorized renewal or rebaseline path. SIL owns that continuity
+decision and its turnover or recovery mechanics. Reopen only contract cells
+and evidence invalidated by the correction when prior coverage remains
+trustworthy and impact is bounded; otherwise follow the existing
+phase-selection and rebaseline rules before the next required exact-revision
+Tick.
+
+An implementer turnover inside SIL is not a Tick, independent review, phase
+boundary, or fixed-point witness. It does not change the exact-revision gates,
+the persistent reviewer's independence, or any fixed-point rule.
 
 ## Use One Contract And Evidence Boundary
 
@@ -176,11 +182,15 @@ authority, classify affected tests, and resume at the accepted rebaseline
 boundary.
 
 Turn the findings into one coherent remediation package when they share a
-target and can be ordered into dependent slices. For a non-trivial package,
-use `$supervised-implementer-loop`: give one persistent implementer the complete
-outcome and slice map, let the primary accept each slice, and finish package
-verification before returning here. Handle a small direct fix directly, and do
-not force genuinely independent packages through one artificial sequence.
+target and can be ordered into dependent slices. For a non-trivial Tock, route
+through `$supervised-implementer-loop`: SIL owns one active implementation
+writer at a time and may use sequential authorized contexts at accepted
+delivery-package boundaries. Give SIL the complete outcome, current
+implementation-plan identity, and accepted delivery-package map; SIL owns
+delivery-package admission and execution. Let the primary accept each delivery
+package, and finish package verification before returning here. Handle a small
+direct fix directly, and do not force genuinely independent packages through
+one artificial sequence.
 Pass the resolved glossary identity or explicit opt-out and the material
 term-to-semantic-source relationships into the Tock leaf, then retain its
 reported access, changes, candidates, and continuity in the Tock result.
@@ -189,7 +199,7 @@ Before routing implementation work, verify that the latest durable review
 result is `implementation-plan-fixed-point` for the unchanged plan identity
 defined by the linked boundary. A `contract-fixed-point` result never routes
 implementation. The supervised implementer owns final edit admission; this
-skill only consumes the result and routes the phase.
+skill only consumes the plan-readiness result and routes the phase.
 
 For each finding:
 

@@ -30,19 +30,24 @@ boundaries, integration, acceptance, and final handoff.
    publication, destructive actions, and unrelated worktree state.
 5. Record an execution-cost profile only when the user supplies one or current
    capabilities establish a material difference between capable owners. Name
-   the preferred persistent implementer and any required independent reviewer;
-   include parent continuations spent waiting, polling, and interpreting
-   coordination probes when they are material. Distinguish raw input, cache
-   effects, and newly appended context when current telemetry supports that
-   distinction; do not invent prices, cache behavior, or savings, and do not
-   weaken authority to save context.
-6. Decompose the outcome into ordered units only as far as observable
+   the selected cheaper capable implementation owner/configuration; include
+   parent continuations spent waiting, polling, and interpreting coordination
+   probes when they are material.
+   Distinguish raw input, cache effects, and newly appended context when
+   current telemetry supports that distinction; do not invent prices, cache
+   behavior, or savings, and do not weaken authority to save context.
+6. When continuity affects routing or delegated work, carry only material
+   continuity facts: the caller-required continuity mode, exact selected
+   implementer configuration, safe parent-accepted delivery-package renewal
+   boundary, and replacement authority. Complex-work consumes caller- or
+   leaf-selected configuration and never selects a model or default team.
+7. Decompose the outcome into ordered units only as far as observable
    acceptance requires. Record each unit's owner, dependencies, shared
    constraints, and exit evidence. Group related mechanical work at the
    smallest meaningful acceptance boundary, but keep a boundary separate when
    later work depends on a semantic or architectural decision there. Keep
    uncertain choices local and reversible.
-7. Bypass this skill when the result is a small bounded edit or one specialized
+8. Bypass this skill when the result is a small bounded edit or one specialized
    skill owns it end to end.
 
 For every design-sensitive unit, the coordinator carries the repository's
@@ -85,10 +90,18 @@ EER owns contract and plan cells; review-fixpoint owns result effects and
 fixed-point phase mechanics; SIL owns delivery-package schema, admission, and
 execution. Do not copy those leaf schemas or mechanics into this coordinator.
 
+When routing a unit to `$supervised-implementer-loop`, also carry any
+caller-required continuity mode, exact implementer configuration, safe accepted
+renewal boundary, and replacement authority that is material to that unit.
+Consume SIL's reported context-health disposition as a leaf result. Renewal
+after parent acceptance at an admitted delivery-package boundary does
+not create a new complex-work unit or change the admitted cross-unit dependency
+map.
+
 - route review-only work to `$evidence-efficient-review`;
 - route repeated review and remediation to `$review-fixpoint`;
-- route dependent implementation requiring one supervised implementer to
-  `$supervised-implementer-loop`;
+- route dependent implementation requiring the supervised implementation
+  workflow to `$supervised-implementer-loop`;
 - route an educational technical-note series to `$technical-note-series`;
 - route repository architecture documentation to
   `$project-architecture-doc`;
@@ -115,17 +128,21 @@ that evidence without copying the leaf's scanning or architecture-scope
 mechanics.
 
 Delegate only when the user requests delegation, the selected leaf requires
-it, an active execution-cost profile identifies a cheaper capable persistent
-owner for suitable mechanical or evidence-producing work, or packages are
+it, an active execution-cost profile identifies a cheaper capable implementation
+owner/configuration for suitable mechanical or evidence-producing work, or packages are
 genuinely independent. Do not fan out or delegate all work merely because the
 package is large.
 
-When the execution-cost profile identifies a cheaper capable persistent owner,
-keep exhaustive mechanical work, iteration, and verbose evidence with that
-owner. Give the primary a bounded acceptance packet and independently selected
-risk probes sufficient for its package decisions; context savings do not
-transfer scope, architecture, authorization, acceptance, or independent-review
-authority.
+When the execution-cost profile identifies a cheaper capable implementation
+owner/configuration, keep exhaustive mechanical work, iteration, and verbose
+evidence with that owner. Give the primary a bounded acceptance packet and
+independently selected risk probes sufficient for its package decisions;
+context savings do not transfer scope, architecture, authorization,
+acceptance, or independent-review authority.
+
+Consume a SIL leaf disposition without reproducing its mechanics; apply it at
+the replan boundary below. Do not copy SIL turnover fields, telemetry
+interpretation, or recovery procedure into the outer package record.
 
 For a long delegated unit, establish its progress envelope in the initial
 assignment: expected duration class, self-reported milestones, immediate
@@ -173,6 +190,16 @@ status timeouts, routine agent listings, or progress probes that do not change
 a decision. Preserve the delegated unit and its accepted context; replace the
 polling loop with its progress envelope, event-driven waits, and milestone- or
 risk-triggered inspection.
+
+When a supervised-implementation leaf reports `renew-at-boundary`, preserve
+the accepted SIL delivery packages and only those outer-unit and dependency
+decisions whose exit evidence remains valid. Renewal occurs only after parent
+acceptance at an admitted delivery-package boundary; do not treat the whole
+complex-work unit as accepted merely because an inner SIL delivery package was
+accepted. When it reports `stop-and-rebaseline`, replan only the affected
+outer unit and its dependents from the leaf's last accepted boundary.
+Complex-work consumes the disposition and leaves SIL turnover mechanics out of
+the outer replan.
 
 ## Verify And Finish
 
