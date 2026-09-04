@@ -140,6 +140,11 @@ consider renewal only after parent acceptance of that package. If continuity
 is `identity-persistent`, report loss and ask before replacing the named
 implementer. If it is `role/model-persistent`, renew only through the verified
 envelope and only when the runtime preserves the required configuration.
+Treat that mode's caller authorization as standing authority for the recorded
+work-package scope: recreate the implementer with the same role, model,
+reasoning effort, and execution mode at later accepted boundaries without
+asking again. Ask only if the caller limited the authorization or identity,
+configuration, or scope must change.
 
 ## Give The Initial Assignment
 

@@ -57,6 +57,13 @@ If the runtime cannot provide the authorized configuration, renewal is
 unavailable: continue in the current context when it remains trustworthy, or
 stop and ask for the required rebaseline or replacement authority.
 
+Recording `role/model-persistent` continuity is standing renewal authority for
+the recorded work-package scope unless the caller explicitly limits it. At a
+later parent-accepted delivery-package boundary, exercise that existing
+authority by recreating the implementer with the exact recorded configuration;
+do not stop to request the same permission again. Ask only when identity,
+configuration, or authorized scope must change.
+
 Do not add turnover ceremony to a small package expected to finish in one
 coherent context.
 
