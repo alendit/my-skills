@@ -6,6 +6,12 @@ that may hide distinct responsibilities, or a local fix that may preserve an
 architectural problem. The primary supervisor owns the decision. The
 implementer supplies evidence and proposals but never accepts its own branch.
 
+In the semantic MCP workflow, realization returns architectural contradictions
+and proposals as bounded semantic feedback. The parent resolves that decision;
+it does not routinely investigate implementation mechanics between successful
+calls. Independent source and non-worsening verification occurs at slice
+acceptance. A design change invalidates affected evidence at its owning boundary.
+
 ## Contents
 
 - Qualify the signal

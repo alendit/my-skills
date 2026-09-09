@@ -36,11 +36,9 @@ boundaries, integration, acceptance, and final handoff.
    Distinguish raw input, cache effects, and newly appended context when
    current telemetry supports that distinction; do not invent prices, cache
    behavior, or savings, and do not weaken authority to save context.
-6. When continuity affects routing or delegated work, carry only material
-   continuity facts: the caller-required continuity mode, exact selected
-   implementer configuration, safe parent-accepted delivery-package renewal
-   boundary, and replacement authority. Complex-work consumes caller- or
-   leaf-selected configuration and never selects a model or default team.
+6. Carry the semantic MCP's repository binding and caller-selected implementer
+   configuration when routing implementation. The MCP owns context continuity;
+   the coordinator does not select a model, operate a mailbox, or manage renewal.
 7. Decompose the outcome into ordered units only as far as observable
    acceptance requires. Record each unit's owner, dependencies, shared
    constraints, and exit evidence. Group related mechanical work at the
@@ -104,13 +102,12 @@ EER owns contract and plan cells; review-fixpoint owns result effects and
 fixed-point phase mechanics; SIL owns delivery-package schema, admission, and
 execution. Do not copy those leaf schemas or mechanics into this coordinator.
 
-When routing a unit to `$supervised-implementer-loop`, also carry any
-caller-required continuity mode, exact implementer configuration, safe accepted
-renewal boundary, and replacement authority that is material to that unit.
-Consume SIL's reported context-health disposition as a leaf result. Renewal
-after parent acceptance at an admitted delivery-package boundary does
-not create a new complex-work unit or change the admitted cross-unit dependency
-map.
+When routing a unit to `$supervised-implementer-loop`, carry material host
+binding and configuration constraints. The parent acting through the leaf
+implements and integrates the slice by selecting specific semantic edits;
+the MCP realizes each selected edit. Trust its summaries until independent
+slice acceptance. Runtime context
+continuation does not change the admitted dependency map or accept an outer unit.
 
 - route review-only work to `$evidence-efficient-review`;
 - route repeated review and remediation to `$review-fixpoint`;
@@ -160,19 +157,19 @@ independently selected risk probes sufficient for its package decisions;
 context savings do not transfer scope, architecture, authorization,
 acceptance, or independent-review authority.
 
-Consume a SIL leaf disposition without reproducing its mechanics; apply it at
-the replan boundary below. Do not copy SIL turnover fields, telemetry
-interpretation, or recovery procedure into the outer package record.
+For semantic implementation, the parent retains the edit sequence and integration
+reasoning. Let the MCP own source adaptation, local checks, repairs, and execution
+within the selected edit, plus context reuse. The parent uses each summary to
+choose the next specific edit without inspecting patches or rerunning checks.
+Complete package context does not delegate completion of the package. Independent
+probes belong at the completed slice boundary. Necessary scope expansion returns
+to the parent. For changed direction during execution, use SIL's active-edit
+control and recovery contract; an ended wait does not establish writer settlement.
+Do not wrap the tool in the previous implementer supervision loop.
 
-For a long delegated unit, establish its progress envelope in the initial
-assignment: expected duration class, self-reported milestones, immediate
-blocker conditions, first credible stall threshold, and intermediate decisions
-that require the primary. Wait for mailbox events with the longest useful
-bounded timeout allowed by the next real checkpoint, user-communication policy,
-and active platform. A timeout reports only that no event arrived; continue
-waiting while the unit remains inside its envelope. Inspect progress only when
-the result can change routing, scope, safety, acceptance, or a dependent
-decision, and batch the narrow evidence needed for that decision.
+For other long delegated leaves, use their progress interface and bounded
+notifications rather than status-only parent turns. The semantic MCP requires
+no implementation-agent mailbox management by this coordinator.
 
 Treat every mutation as bounded by existing authority. A reviewable unit does
 not authorize a commit, push, publication, deployment, message, destructive
@@ -205,25 +202,16 @@ checks already processed by a capable delegated owner without supporting a new
 primary decision. Expand primary inspection only around consequential risk,
 contradictory evidence, or an authority the primary must exercise.
 
-Replan the coordination pattern when parent continuations are dominated by
-status timeouts, routine agent listings, or progress probes that do not change
-a decision. Preserve the delegated unit and its accepted context; replace the
-polling loop with its progress envelope, event-driven waits, and milestone- or
-risk-triggered inspection.
-
-When a supervised-implementation leaf reports `renew-at-boundary`, preserve
-the accepted SIL delivery packages and only those outer-unit and dependency
-decisions whose exit evidence remains valid. Renewal occurs only after parent
-acceptance at an admitted delivery-package boundary; do not treat the whole
-complex-work unit as accepted merely because an inner SIL delivery package was
-accepted. When it reports `stop-and-rebaseline`, replan only the affected
-outer unit and its dependents from the leaf's last accepted boundary.
-Complex-work consumes the disposition and leaves SIL turnover mechanics out of
-the outer replan.
+When semantic realization returns a design blocker, replan the affected unit
+and dependencies. An execution failure instead follows the MCP's recorded
+operation recovery; do not silently switch to native-agent implementation or
+replay an uncertain mutation. Preserve accepted slices and partial useful work.
+Runtime continuation or compaction does not accept a slice or an outer unit.
 
 ## Verify And Finish
 
-Run focused checks while a unit is unstable when they can cheaply disprove it.
+Let the semantic MCP run focused implementation checks while a slice is unstable.
+The parent checks the accumulated result independently at slice acceptance.
 Run expensive complete gates at meaningful package checkpoints, according to
 repository policy and the selected leaf owner's acceptance rules. Do not defer
 all validation until the end.

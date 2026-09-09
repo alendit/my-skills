@@ -90,18 +90,18 @@ Never declare a fixed point immediately after Tock. Only the persistent
 reviewer's following independent Tick can establish it. Finish and verify
 remediation before starting that Tick; do not review a partially edited tree or
 insert Tick ceremonies between mechanical implementation units. If a later
-Tick produces a correction, reuse the current implementer context with a
-delta when its SIL disposition is `continue`; otherwise route the correction
-through SIL's authorized renewal or rebaseline path. SIL owns that continuity
-decision and its turnover or recovery mechanics. Reopen only contract cells
+Tick produces a correction, let the parent compose its remediation as specific
+edits through SIL's MCP context; a finding may require several edits.
+The MCP owns context reuse and exceptional execution recovery; this outer loop
+does not manage implementer messages or turnover. Reopen only contract cells
 and evidence invalidated by the correction when prior coverage remains
-trustworthy and impact is bounded; otherwise follow the existing
-phase-selection and rebaseline rules before the next required exact-revision
-Tick.
+trustworthy and impact is bounded; otherwise follow the existing phase-selection
+and rebaseline rules before the next required exact-revision Tick.
 
-An implementer turnover inside SIL is not a Tick, independent review, phase
-boundary, or fixed-point witness. It does not change the exact-revision gates,
-the persistent reviewer's independence, or any fixed-point rule.
+MCP operation completion and context continuation are not a Tick, a phase
+boundary, or a fixed-point witness. Trust operation summaries during remediation;
+independent checking occurs at slice acceptance and the required outer Tick,
+without per-call review or repeated low-level replay.
 
 ## Use One Contract And Evidence Boundary
 
@@ -191,9 +191,11 @@ boundary.
 
 Turn the findings into one coherent remediation package when they share a
 target and can be ordered into dependent slices. For a non-trivial Tock, route
-through `$supervised-implementer-loop`: SIL owns one active implementation
-writer at a time and may use sequential authorized contexts at accepted
-delivery-package boundaries. Give SIL the complete outcome, current
+through `$supervised-implementer-loop`: the parent uses SIL to choose and integrate
+specific semantic edits with reused backend context and independent
+delivery-package acceptance. The
+MCP owns the source writer and local iteration within each selected edit.
+Give SIL the complete outcome, current
 implementation-plan identity, and accepted delivery-package map; SIL owns
 delivery-package admission and execution. Let the primary accept each delivery
 package, and finish package verification before returning here. Handle a small

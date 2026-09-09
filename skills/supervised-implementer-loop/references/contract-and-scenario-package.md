@@ -59,8 +59,11 @@ delivered, not a second set of contracts.
 - A **design checkpoint** records a decision needed by later work but need not
   produce behavior. Its acceptance does not make it a delivery package.
 - An **internal step** is implementation work inside one delivery package. It
-  may receive focused parent evidence, but it is not a separately gated
-  delivery package by default.
+  is chosen and integrated by the parent through specific semantic edits, each
+  with an owner, behavior, constraints, and local completion condition. It
+  receives realizer-local checks. Parent reads during implementation serve an
+  explicit design decision or blocker; independent checks wait for slice
+  acceptance. It is not a separately gated delivery package.
 
 Every contract ID has exactly one establishing delivery package, and every
 delivery package establishes at least one complete contract ID. No checkpoint,
@@ -93,12 +96,15 @@ following evidence and a current decision:
 At pre-edit completeness, the disposition must contain a concrete feasible plan
 for the applicable dimensions above. During implementation and handoff, planned
 entries are replaced by actual source and assertion evidence. Missing or
-unproved coverage remains visible and blocks the current pre-edit, handoff, or
-parent-acceptance decision; an implementer summary, adjacent success, names,
-or a broad gate cannot satisfy the row.
+unproved coverage remains visible and blocks pre-edit readiness or independent
+slice acceptance. Between semantic calls the parent trusts operation summaries;
+this does not clear independent acceptance. At that boundary a summary, adjacent
+success, names, or a broad gate cannot satisfy a missing evidence row.
 
-Carry the complete relation once in the initial assignment. Later corrections,
-handoffs, and follow-ups carry only changed dispositions and the contract IDs
+Carry the complete relation once in the initial MCP assignment. The realizer
+maintains evidence during operations and returns it in the aggregate slice packet.
+Later semantic corrections and acceptance deltas carry only changed dispositions
+and the contract IDs
 whose dependencies changed. An unchanged disposition remains current only when
 its plan, owner, design, and evidence dependencies are unchanged.
 
@@ -118,7 +124,7 @@ This skill consumes that durable decision and owns the final edit-admission
 check; it does not create a fixed-point vocabulary, select a result level, or
 infer plan readiness from a checkpoint.
 
-Before spawning an implementer or permitting production edits, require all of
+Before the first realization operation or permitting production edits, require all of
 the following:
 
 1. The latest durable review result is exactly
@@ -129,7 +135,7 @@ the following:
    that determine the delivery relation, package records, closure fields, and
    dependency order.
 3. Every plan cell is cleared and the delivery map is complete in both
-   directions. Refuse admission and do not spawn when the result is missing,
+   directions. Refuse admission and do not call realization when the result is missing,
    contract-only, stale, invalidated, changed, or has any unknown plan cell.
 4. The map has been checked against the record below before the first edit.
 
@@ -156,41 +162,31 @@ boundary locally; return the missing plan cell to the plan-review owner.
 
 After the result, identity, and map pass these checks, admit the work package
 before the first edit. Carry the complete accepted map and plan identity to the
-first active implementation context once. Record the admission in the package
-handoff and continue in dependency order only after the parent accepts the
-admission boundary. The active context may continue into a later accepted
-package, or SIL may renew it under
-[implementer-continuity.md](implementer-continuity.md); a fresh context receives
-the current plan identity and accepted delivery-package map with its next
-package assignment once, and renewal does not change this map or its package
-authority.
+MCP context once. Record admission in the package handoff. The parent accepts
+completed delivery packages in dependency order. Runtime context reuse does
+not alter this map, create a package, or establish acceptance.
 
 ## Execute ordered delivery packages
 
-For each admitted delivery package:
+For each admitted delivery package (a slice in the semantic workflow):
 
-1. Confirm its prerequisites are accepted earlier packages or decisions and
-   assign the complete package record and its contract IDs to the active
-   implementation context. A fresh context may receive this assignment only
-   after the preceding package is parent-accepted and SIL has verified the
-   continuity handoff.
-2. Build the useful owner/public behavior through its real composition path.
-   Keep state, lifetime, transaction, recovery, public surface, and focused
-   evidence closed around the package's primary reason to change.
-3. Let the parent use focused checks for internal steps. Keep those steps
-   inside their establishing package; they do not receive separate canonical
-   gates or package IDs automatically.
-4. Accept the package only when its complete contract IDs, stopping-point
-   behavior, closure fields, evidence, deferred-work boundary, and causal
-   split/combine decision are all resolved. A later package may extend behavior
-   but may not repair an earlier package's incomplete semantics.
-5. Send corrections within the admitted package to the active implementation
-   context as delta-only follow-ups. Do not renew for an ordinary correction,
-   resend the package map, or turn an internal step into a new package unless
-   product authority accepts a contract split and a fresh reviewed plan assigns
-   it. A verified continuity renewal is an allowed transition only after parent
-   acceptance of the current delivery package; it starts the next admitted
-   package and leaves this package record authoritative.
+1. Confirm its prerequisites are accepted and supply the complete relevant
+   package record, contract IDs, design, and scenarios to the semantic MCP once.
+2. The parent implements the slice by choosing and integrating specific edits.
+   Each call authorizes one such change, not completion of the remaining package;
+   the complete package record remains background. The realizer runs focused
+   checks and repairs within that edit, returning necessary expansion to the
+   parent. The parent chooses the next edit from the result and remaining
+   obligations, without inspecting source, diffs, or tests to double-check it.
+3. Keep internal steps within their establishing package. They do not receive
+   parent acceptance gates or new package IDs merely because a tool call ended.
+4. At slice acceptance, obtain the aggregate packet and independently verify
+   complete contract IDs, stopping-point behavior, closure fields, source and
+   assertion evidence, deferred work, and causal split/combine decisions. A later
+   slice may extend behavior but may not repair accepted incomplete semantics.
+5. Send semantic corrections through the same MCP context and accept the revised
+   aggregate. Context reuse and execution recovery belong to the runtime. A new
+   package boundary still requires the existing accepted contract and plan change.
 
 Package acceptance is distinct from `deterministic-fixed-point`; the latter's
 result effects and exact-revision semantics remain with review-fixpoint. A

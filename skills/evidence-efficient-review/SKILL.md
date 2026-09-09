@@ -438,6 +438,12 @@ or authorize production edits.
 
 ## Interaction With Outer Workflows
 
+For semantic MCP implementation, review the accumulated slice or selected
+whole-scope target at its acceptance boundary. Operation summaries orient the
+review but do not replace independently selected source and behavioral evidence.
+Do not interpose reviews between successful semantic calls or replay every local
+implementation step. Acceptance corrections return through the same MCP context.
+
 When called by a fixpoint orchestrator, this skill performs only the review
 phase and returns its decision. The orchestrator owns review numbering,
 commits, remediation selection, repetition, and the final stop condition.
