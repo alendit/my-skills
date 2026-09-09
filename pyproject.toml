@@ -1,0 +1,20 @@
+[project]
+name = "semantic-edit-mcp"
+version = "0.1.0"
+description = "Persistent semantic implementation operations over MCP"
+requires-python = ">=3.11"
+dependencies = ["mcp>=1.12,<2", "jsonschema>=4.23,<5"]
+
+[project.scripts]
+semantic-edit-mcp = "semantic_edit_mcp.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "pytest-asyncio>=0.25,<2"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

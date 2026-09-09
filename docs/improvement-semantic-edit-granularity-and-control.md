@@ -188,3 +188,17 @@ This incident provides no measured token savings, general latency conclusion,
 or M3 completion result. It establishes an incorrect scope choice and a missing
 control surface. Existing unrelated work and the installed plugin snapshot are
 outside this documentation change.
+
+
+## Follow-up disposition
+
+The later user clarification makes avoidance of direct code reads advisory,
+not a prohibition. The historical observations and quotations above remain the
+incident record. Targeted direct reads are permitted when useful; semantic
+inspection is the preferred way to keep implementation detail out of the parent
+context.
+
+The [runtime remediation](remediation-semantic-edit-runtime-controls.md) implements
+semantic inspection and request-specific cancellation. Its steering tool reports
+that the CLI backend requires stop-and-resume; it does not claim in-flight delivery.
+Source changes do not update an installed plugin snapshot automatically.

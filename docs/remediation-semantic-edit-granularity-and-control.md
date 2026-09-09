@@ -113,3 +113,13 @@ The subsequent user correction makes this inspection guidance advisory. Earlier
 scenario results above describe the prior stricter wording. The correction retains
 independent acceptance and writer-safety requirements while allowing targeted
 parent reads; it does not introduce a permission gate for those reads.
+
+
+## Runtime follow-through
+
+The source runtime now exposes `inspect_semantics`, `cancel_change`, and
+`steer_change`. The implementation plan and scope are recorded in
+[runtime remediation](remediation-semantic-edit-runtime-controls.md). Earlier
+statements above about missing tools describe the prior skill-only commits.
+The CLI backend supports explicit stop-and-resume steering, not in-flight
+correction delivery. Installed plugin snapshots remain unchanged by source edits.

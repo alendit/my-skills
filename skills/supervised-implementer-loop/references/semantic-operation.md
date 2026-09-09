@@ -53,6 +53,11 @@ to avoid unnecessary implementation detail in the parent context.
 
 ## Obtain Semantic Facts
 
+Use `inspect_semantics(question, expected_state?)` when exposed by the runtime.
+It uses a fresh read-only context and returns source-referenced facts, explicit
+uncertainty, and inspected state without changing the editing context. It supplies
+evidence; it does not replace a required independent reviewer.
+
 Before a design decision, recovery decision, or acceptance challenge needs code
 facts, ask an available read-only semantic inspection capability a bounded
 question about behavior, interfaces, ownership, state, ordering, or failure
@@ -102,6 +107,16 @@ replace a stale state token just to force an operation through.
 
 ## Control An Active Edit
 
+The current CLI runtime exposes `steer_change(control_id, request_id, correction)`
+and `cancel_change(request_id)`. Steering records an immutable correction and
+returns `requires_stop_and_resume`; it has no in-flight delivery channel. After
+that response, request cancellation and await the operation result or retrieve
+`operation_status`. A cancellation response of `requested` does not establish
+settlement. A later `cancel_change` response of `settled` includes the exact result
+and `context_resumable`: if false, cancellation preceded durable backend identity
+and a fresh context must be selected explicitly. Never claim same-thread resume
+in that case. A different server instance may report control `unavailable`.
+
 When the user changes direction or the parent detects incorrect scope, stop
 issuing dependent edits and inspect the available control capabilities. If
 steering is supported, address a bounded correction to the active request in
@@ -116,8 +131,7 @@ bounded request. Preserve partial work, context identity, evidence, and writer
 exclusion. Cancellation does not imply rollback. If completion wins the race,
 use the recorded completion result rather than claiming cancellation.
 
-These instructions do not assert that the installed runtime provides either
-capability. If the needed control is unavailable, report the limitation, avoid
+Installed snapshots may predate these tools; check their actual inventory. If the needed control is unavailable, report the limitation, avoid
 claims of successful steering or cancellation, and use the documented status
 and recovery path once the writer settles. Terminating an outer wait does not
 establish backend cancellation. `UNKNOWN`, unknown mutation, a missing state,
