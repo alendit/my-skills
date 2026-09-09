@@ -107,11 +107,10 @@ replace a stale state token just to force an operation through.
 
 ## Control An Active Edit
 
-The current CLI runtime exposes `steer_change(control_id, request_id, correction)`
-and `cancel_change(request_id)`. Steering records an immutable correction and
-returns `requires_stop_and_resume`; it has no in-flight delivery channel. After
-that response, request cancellation and await the operation result or retrieve
-`operation_status`. A cancellation response of `requested` does not establish
+The CLI runtime uses `cancel_change(request_id)` followed by a new bounded
+`realize_change` request to change direction. It has no in-flight steering channel
+and exposes no separate steering tool. Request cancellation, then await the edit
+result or retrieve `operation_status`. A response of `requested` does not establish
 settlement. A later `cancel_change` response of `settled` includes the exact result
 and `context_resumable`: if false, cancellation preceded durable backend identity
 and a fresh context must be selected explicitly. Never claim same-thread resume

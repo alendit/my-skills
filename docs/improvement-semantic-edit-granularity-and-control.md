@@ -199,6 +199,7 @@ inspection is the preferred way to keep implementation detail out of the parent
 context.
 
 The [runtime remediation](remediation-semantic-edit-runtime-controls.md) implements
-semantic inspection and request-specific cancellation. Its steering tool reports
-that the CLI backend requires stop-and-resume; it does not claim in-flight delivery.
+semantic inspection and request-specific cancellation. Changing direction with
+the CLI backend uses cancellation followed by a new edit; no separate steering
+tool is exposed because the backend cannot deliver an in-flight correction.
 Source changes do not update an installed plugin snapshot automatically.

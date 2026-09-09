@@ -10,7 +10,7 @@ Project terminology follows [the glossary](glossary.md).
 |---|---|---|
 | C1: one selected edit | Backend prompt distinguishes current edit from slice background and returns scope expansion as BLOCKED. | Composition tests and prompt inspection |
 | C2: cancellation with truthful settlement | Runtime owns a shielded backend task, one-shot cancellation, subprocess-spawn cleanup, and writer lock through final snapshot/journal. Early cancellation reports when no resumable thread exists. | Before/after mutation, duplicate, caller cancellation during cleanup, completion race, delayed spawn, other-server control |
-| C3: bounded steering | Separate immutable control record; CLI returns requires_stop_and_resume, never claims in-flight application. Parent cancels and resumes a new bounded request. | Immutable retry, rejected settled target, partial-work stop/resume in the same durable thread, MCP transport |
+| C3: change direction | Parent cancels and resumes a new bounded request. No separate steering tool is exposed without an in-flight delivery capability. | Partial-work stop/resume in the same durable thread, immutable edit retry, MCP transport |
 | C4: semantic inspection | Fresh read-only backend, structured source references and uncertainty, exclusive state-bound observation. No editing-context reuse or acceptance authority. | Read-only arguments, fresh context, stale state, busy writer, malformed response, mutation detection, MCP transport |
 
 C1–C4 form one runtime delivery package because they share execution lifecycle
@@ -39,3 +39,14 @@ The runtime commit includes its previously uncommitted base implementation and
 Python package prerequisites. Separate plugin/export work remains uncommitted.
 The full workspace test count includes those existing export tests; the committed
 runtime test module is independently runnable. No installed plugin was refreshed.
+
+
+Tool-surface review removed `steer_change`: it could only record an undelivered
+correction and advise cancellation, adding no execution capability. Six tools
+remain: edit, inspect, status, cancel, acknowledge interruption, and summarize a
+slice. Status remains read-only; cancellation stops active work; acknowledgment
+finalizes interrupted work only after writer exclusion. Keeping these distinct
+avoids hiding mutation behind a read-oriented status call. Existing stored control
+records are left untouched, but new databases no longer create that unused table.
+Descriptions state selection purpose, key inputs, result meaning, and the relevant
+scope or recovery boundary. No replacement tool or optional mode was added.

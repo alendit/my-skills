@@ -134,7 +134,7 @@ async def test_actual_stdio_tools(setup):
         async with ClientSession(read, write) as client:
             await client.initialize()
             names = {t.name for t in (await client.list_tools()).tools}
-            assert names == {'realize_change', 'slice_summary', 'operation_status', 'acknowledge_interruption', 'cancel_change', 'steer_change', 'inspect_semantics'}
+            assert names == {'realize_change', 'slice_summary', 'operation_status', 'acknowledge_interruption', 'cancel_change', 'inspect_semantics'}
             response = await client.call_tool('realize_change', {'request_id': 'wire1', 'slice_id': 'slice', 'specification': 'EDIT'})
             assert not response.isError
             result = json.loads(response.content[0].text)
@@ -300,12 +300,6 @@ async def test_explicit_control_partial_duplicate_and_resume(setup):
     runtime, config = setup
     task = asyncio.create_task(runtime.realize_change('active', 'slice', 'PARTIAL_SLEEP'))
     await wait_until(lambda: (config.repository / 'partial.txt').exists())
-    steer = await runtime.steer_change('control-1', 'active', 'Add one diagnostic operation')
-    assert steer['control_status'] == 'requires_stop_and_resume'
-    assert steer['applied'] is False and steer['delivered'] is False
-    assert await runtime.steer_change('control-1', 'active', 'Add one diagnostic operation') == steer
-    with pytest.raises(ValueError, match='different payload'):
-        await runtime.steer_change('control-1', 'active', 'Different correction')
     for _ in range(2):
         assert (await runtime.cancel_change('active'))['control_status'] == 'requested'
     with pytest.raises(ValueError, match='busy'):
@@ -321,7 +315,6 @@ async def test_explicit_control_partial_duplicate_and_resume(setup):
     assert corrected['status'] == 'APPLIED' and corrected['context_id'] == result['context_id']
     calls = [json.loads(x) for x in (config.repository.parent / 'calls').read_text().splitlines()]
     assert calls[-1][calls[-1].index('resume') + 1] == 'thread-exact-123'
-    assert (await runtime.steer_change('late', 'active', 'correction'))['control_status'] == 'rejected'
     assert runtime.row('active')['fingerprint'] == digest(['active', 'slice', 'PARTIAL_SLEEP', None, None, None])
 
 
@@ -435,10 +428,6 @@ async def test_stdio_active_control_and_inspection(setup):
             pending = asyncio.create_task(client.call_tool('realize_change',
                 {'request_id': 'wire-active', 'slice_id': 's', 'specification': 'PARTIAL_SLEEP'}))
             await wait_until(lambda: (config.repository / 'partial.txt').exists())
-            steering = await client.call_tool('steer_change', {'control_id': 'wire-control',
-                'request_id': 'wire-active', 'correction': 'One bounded correction'})
-            assert not steering.isError
-            assert json.loads(steering.content[0].text)['control_status'] == 'requires_stop_and_resume'
             cancelled = await client.call_tool('cancel_change', {'request_id': 'wire-active'})
             assert not cancelled.isError
             finished = await pending

@@ -117,9 +117,9 @@ parent reads; it does not introduce a permission gate for those reads.
 
 ## Runtime follow-through
 
-The source runtime now exposes `inspect_semantics`, `cancel_change`, and
-`steer_change`. The implementation plan and scope are recorded in
+The source runtime exposes `inspect_semantics` and `cancel_change` alongside its
+existing editing, status, recovery, and slice-summary tools. The implementation plan and scope are recorded in
 [runtime remediation](remediation-semantic-edit-runtime-controls.md). Earlier
 statements above about missing tools describe the prior skill-only commits.
-The CLI backend supports explicit stop-and-resume steering, not in-flight
-correction delivery. Installed plugin snapshots remain unchanged by source edits.
+The CLI backend supports changing direction through cancellation and a new edit,
+not in-flight correction delivery. The redundant steering-record tool was removed. Installed plugin snapshots remain unchanged by source edits.

@@ -131,18 +131,14 @@ context but cannot resume a thread that never became durable; explicitly select
 a fresh context in that case. An execution owned by another server instance
 returns `unavailable`; the tool does not kill a process from a journal PID.
 
-`steer_change(control_id, request_id, correction)` records one bounded correction
-separately from the immutable original request. Identical control retries return
-the recorded disposition; changing a control ID's payload is rejected. This CLI
-backend has no in-flight steering channel, so active steering returns
-`requires_stop_and_resume`, with `delivered: false` and `applied: false`. A settled
-target returns `rejected`. It does not silently launch a second edit.
+The CLI backend has no in-flight steering channel. To change direction, cancel
+the active request, establish settlement, then pass the bounded correction to
+`realize_change` with a new request ID, recovered state, and the same durable
+context when available. There is no separate steering tool: recording a correction
+that cannot be delivered would add a call without changing execution.
 
-After `requires_stop_and_resume`, cancel the active request, establish settlement,
-and send the correction through `realize_change` with a new request ID, recovered
-state, and the same durable context when available. Stopping the outer caller wait
-alone still does not prove backend cancellation. These tools provide exceptional
-control, not a routine supervision loop.
+Stopping the outer caller wait alone still does not prove backend cancellation.
+These tools provide exceptional control, not a routine supervision loop.
 
 ## Recover an interrupted request
 
@@ -209,7 +205,7 @@ uv run --frozen pytest
 
 Tests exercise the MCP transport and a controlled Codex subprocess to establish
 context reuse, retry behavior, blockers, partial failures, and state boundaries.
-The cancellation/inspection regressions also cover duplicate controls, partial
+The cancellation/inspection regressions also cover duplicate cancellation, partial
 mutation, completion races, repeated caller cancellation, and subprocess creation.
 Run `uv run python scripts/smoke_semantic_inspection.py` for a disposable live
 read-only inspection compatibility probe.

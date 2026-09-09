@@ -106,8 +106,6 @@ class Runtime:
         self.db.row_factory = sqlite3.Row
         self.db.executescript('''
             PRAGMA journal_mode=WAL;
-            CREATE TABLE IF NOT EXISTS controls (
-              id TEXT PRIMARY KEY, fingerprint TEXT, result TEXT);
             CREATE TABLE IF NOT EXISTS binding (id INTEGER PRIMARY KEY, value TEXT);
             CREATE TABLE IF NOT EXISTS contexts (id TEXT PRIMARY KEY, thread TEXT, state TEXT);
             CREATE TABLE IF NOT EXISTS operations (
@@ -224,34 +222,6 @@ class Runtime:
         return {'control_status': 'requested', 'writer_stopped': False,
                 'request_id': request_id,
                 'summary': 'Await the recorded operation result for settlement and exact state; cancellation does not roll back partial work.'}
-
-    async def steer_change(self, control_id: str, request_id: str, correction: str):
-        """Record steering disposition without changing an immutable edit request."""
-        if not control_id.strip() or not correction.strip():
-            raise ValueError('control_id and correction must be nonempty')
-        fingerprint = digest([request_id, correction])
-        old = self.db.execute('SELECT * FROM controls WHERE id=?', (control_id,)).fetchone()
-        if old:
-            if old['fingerprint'] != fingerprint:
-                raise ValueError('control_id reused with different payload')
-            return json.loads(old['result'])
-        row = self.row(request_id)
-        if not row:
-            raise ValueError('unknown request_id')
-        if row['result']:
-            disposition = 'rejected'
-            reason = 'Target already settled; issue a new bounded request using the recorded state.'
-        elif request_id not in self.active:
-            disposition = 'unavailable'
-            reason = 'This server does not own the execution; no steering delivered.'
-        else:
-            disposition = 'requires_stop_and_resume'
-            reason = 'The CLI backend has no in-flight steering channel. Cancel this request, establish settlement, then submit this correction as a new bounded request in the durable context.'
-        result = {'control_id': control_id, 'request_id': request_id,
-                  'control_status': disposition, 'applied': False, 'delivered': False,
-                  'context_id': row['context'], 'correction': correction, 'summary': reason}
-        self.db.execute('INSERT INTO controls VALUES (?,?,?)', (control_id, fingerprint, encoded(result)))
-        return result
 
     async def inspect_semantics(self, question: str, expected_state: str | None = None):
         """Answer a bounded question in a fresh, read-only backend context."""
