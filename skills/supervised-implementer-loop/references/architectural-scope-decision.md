@@ -8,10 +8,10 @@ implementer supplies evidence and proposals but never accepts its own branch.
 
 In the semantic MCP workflow, realization returns architectural contradictions
 and proposals as bounded semantic feedback. The parent resolves that decision;
-it obtains implementation facts through semantic inspection, never direct
-code reads. Source-inspection procedures below belong behind tools or with the
-independent reviewer. At slice acceptance, that reviewer supplies source-grounded
-non-worsening evidence without raw code for the parent to evaluate. A design change invalidates affected evidence at its owning boundary.
+it preferably obtains implementation facts through semantic inspection. Apply
+the source-inspection procedures below behind tools or with the independent
+reviewer when practical; targeted parent code reads remain available when needed. At slice acceptance, that reviewer supplies source-grounded
+non-worsening evidence, normally without raw code, for the parent to evaluate. A design change invalidates affected evidence at its owning boundary.
 
 ## Contents
 

@@ -24,10 +24,10 @@ acceptance of the complete slice.
 
 After each successful result, the parent retains the changed behavior, relevant
 interfaces, checks, and unresolved questions as its abstract program state, then
-chooses the next edit against remaining obligations. It neither reads nor emits implementation code, including during design, recovery,
-and acceptance. Tools or an independent reviewer inspect code and return semantic
+chooses the next edit against remaining obligations. It avoids routine implementation-code reading and output during design, recovery,
+and acceptance, while retaining targeted direct reads when needed. Tools or an independent reviewer inspect code and return semantic
 facts. Independent source and behavior checks occur at slice acceptance, where
-the parent evaluates evidence without receiving raw code.
+the parent preferably evaluates compact semantic evidence.
 
 For example, first add a typed diagnostic operation using an existing text-value
 representation. Use that result to choose the next dispatch edit and its required
@@ -36,25 +36,26 @@ rotation, tests, and documentation merely because the context knows the slice.
 
 ## Semantic inspection boundary
 
-The follow-up feedback removes the former direct-source-read exceptions for
-new design decisions, contradictions, recovery, and aggregate acceptance. SIL’s
-semantic operation contract owns the replacement: ask a bounded read-only
+The user clarified that semantic inspection is advice, not a prohibition on
+direct code reading. Prefer it for design decisions, contradictions, recovery,
+and aggregate acceptance. SIL’s semantic operation contract owns that guidance: ask a bounded read-only
 question, obtain compact facts about behavior, interfaces, ownership, state,
 ordering, or failure boundaries, and use those facts to decide the next edit.
 
 Responses identify inspected state and source locations, distinguish observations
-from inference, and expose uncertainty without raw code, patches, or code-bearing
-logs. Inspection does not authorize repair or a second writer. At acceptance,
+from inference, and expose uncertainty, preferably without raw code, patches, or
+code-bearing logs. Bounded excerpts can help resolve a concrete question. Inspection does not authorize repair or a second writer. At acceptance,
 an independent reviewer inspects source and assertions; the parent evaluates and
 can challenge its claims. Editing-context summaries remain working premises and
 cannot establish independent acceptance on their own.
 
-The coordinator, package, architecture, and fixed-point guidance assign code
-inspection to tools or the reviewer. This role boundary also governs source-read
-procedures in their supporting references. No new review gate is added between
+The coordinator, package, architecture, and fixed-point guidance prefer code
+inspection through tools or the reviewer. The same preference applies to
+source-read procedures in their supporting references. No new review gate is added between
 edits. If a semantic inspection capability is missing, an authorized independent
-reviewer can supply facts. If neither is available, report the gap and preserve
-unknowns without direct parent code reads.
+reviewer can supply facts. If neither is available, report the gap and use targeted
+direct reads as needed. Missing inspection capability alone does not block work.
+Keep evidence uncertainty and required reviewer independence intact.
 
 A dedicated semantic inspection tool remains runtime work, alongside cancellation
 and steering. The skill contract selects required behavior, not an API name or
@@ -107,3 +108,8 @@ reference checks. An independent agent simulated design blockers, settled partia
 work, self-report-only acceptance, reviewer fallback, and absence of both
 inspection paths. It found no conflicting role boundary; no runtime capability
 was exercised or inferred from these simulations.
+
+The subsequent user correction makes this inspection guidance advisory. Earlier
+scenario results above describe the prior stricter wording. The correction retains
+independent acceptance and writer-safety requirements while allowing targeted
+parent reads; it does not introduce a permission gate for those reads.

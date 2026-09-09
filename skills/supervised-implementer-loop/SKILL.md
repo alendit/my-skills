@@ -5,8 +5,8 @@ description: >-
   the MCP, with reused context and independent slice acceptance. Use for dependent
   implementation slices where the parent chooses and integrates each edit and
   the tool realizes it. Trust operation summaries between calls; inspect accumulated
-  semantic evidence at slice acceptance without directly reading implementation
-  code. Does not own broader review convergence.
+  semantic evidence at slice acceptance. Prefer tool-supplied code facts over
+  direct implementation reads. Does not own broader review convergence.
 ---
 
 # Supervised Implementer Loop
@@ -80,15 +80,15 @@ explicitly selected alternative workflow, not a silent fallback for B.
    ID and expected state on subsequent calls. A request may span files that
    implement the same specific behavior. Use the granularity guidance in
    [the semantic operation contract](references/semantic-operation.md#bound-one-edit).
-4. On `APPLIED`, rely on the summary to compose the next operation. Do not read
-   its patch, source, successful logs, or tests to double-check it. Do not rerun
-   the realizer's checks. Local iteration and detailed evidence remain inside
+4. On `APPLIED`, rely on the summary to compose the next operation. Avoid routinely
+   rereading its patch, source, successful logs, or tests, or rerunning the
+   realizer's checks merely to double-check it. Local iteration and detailed evidence remain inside
    the MCP until slice acceptance. Update the parent's abstract program state
    from the changed behavior, interfaces, checks, and unresolved questions;
    choose the next edit from that result and the remaining slice obligations.
 5. On `BLOCKED`, resolve the returned semantic question at its owning boundary.
-   Obtain the needed code facts through semantic inspection, not direct source
-   reads. The realizer can challenge a feasible but unnecessarily complex design; it cannot implement a changed
+   Prefer semantic inspection for the needed code facts; use a targeted direct
+   read when needed. The realizer can challenge a feasible but unnecessarily complex design; it cannot implement a changed
    design before acceptance of that decision. Invalidate affected plan or
    evidence dependencies, then send the accepted delta using the same context.
 6. On `FAILED`, recover the recorded operation state under the semantic contract.
@@ -101,10 +101,11 @@ explicitly selected alternative workflow, not a silent fallback for B.
 
 The parent obtains implementation facts through
 [semantic inspection](references/semantic-operation.md#obtain-semantic-facts),
-including design questions, recovery, and acceptance. It neither reads nor emits
-implementation code. Apply referenced source-inspection procedures behind tools
-or through an independent reviewer; do not treat them as exceptions to this
-parent boundary. Transport waiting belongs to the tool call;
+including design questions, recovery, and acceptance, as the preferred workflow.
+Avoid routinely reading or emitting implementation code. Direct reads remain
+available when needed to resolve a concrete question; keep them targeted. Prefer
+applying referenced source-inspection procedures behind tools or through an
+independent reviewer. Transport waiting belongs to the tool call;
 ordinary parent continuations should not manage status polls or milestones.
 When the user changes direction or an active call exceeds its intended scope,
 use [active-edit control](references/semantic-operation.md#control-an-active-edit).
@@ -137,7 +138,7 @@ At this boundary, evaluate semantic evidence against complete slice contracts.
 Select consequential owner boundaries and behavioral questions independently of
 the realizer's choices. Have an independent reviewer inspect the resulting code
 and assertions and return source-grounded claims, probe outcomes, state identity,
-and explicit uncertainty without raw code. Challenge incomplete or contradictory
+and explicit uncertainty, normally without raw code. Challenge incomplete or contradictory
 claims through further bounded tool questions. The parent retains acceptance;
 the editing context's self-report alone cannot establish it.
 

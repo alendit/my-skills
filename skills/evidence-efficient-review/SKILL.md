@@ -444,7 +444,8 @@ review but do not replace independently selected source and behavioral evidence.
 Do not interpose reviews between successful semantic calls or replay every local
 implementation step. The independent reviewer may inspect code; return compact
 source-grounded claims, inspected state, probe outcomes, and explicit uncertainty
-to the semantic parent without raw implementation code or patches. The parent
+to the semantic parent, preferably without raw implementation code or patches.
+Bounded excerpts and targeted parent reads may help resolve a concrete question. The parent
 retains acceptance and may challenge claims through bounded inspection questions.
 The editing context’s self-report alone cannot establish independent acceptance.
 Acceptance corrections return through the same MCP context.

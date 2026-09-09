@@ -47,9 +47,9 @@ understanding of the program and choose the next edit:
   partial state rather than assuming no edits occurred.
 
 Mutation state is separate from semantic status. Evidence references identify
-private logs and recorded deltas. The parent does not fetch raw
-code, patches, or code-bearing logs, including for design, recovery, or acceptance.
-Use the semantic inspection boundary below for necessary implementation facts.
+private logs and recorded deltas. Prefer semantic facts over fetching raw code, patches, or code-bearing logs,
+including for design, recovery, and acceptance. Use the inspection guidance below
+to avoid unnecessary implementation detail in the parent context.
 
 ## Obtain Semantic Facts
 
@@ -58,12 +58,13 @@ facts, ask an available read-only semantic inspection capability a bounded
 question about behavior, interfaces, ownership, state, ordering, or failure
 boundaries. State the decision the answer must support and the relevant scope.
 For example: “Can failed publication expose a callable before rollback, and
-which owner establishes that ordering?” Do not request a source dump.
+which owner establishes that ordering?” Prefer a focused answer to a source dump.
 
 Require compact source-grounded facts, source-location references for traceability,
 the inspected revision or worktree state, and explicit uncertainty or missing
 coverage. Keep observed behavior distinct from inference and proposed changes.
-The response must not carry raw implementation code, diffs, or code-bearing logs.
+Prefer responses without raw code, diffs, or code-bearing logs. Include a bounded
+excerpt when it materially helps resolve the question.
 Inspection authorizes no mutation, repair, acceptance, or second writer. Evidence
 from a changing or unresolved worktree cannot establish settled current state.
 
@@ -77,9 +78,12 @@ during implementation does not create a new slice gate or outer Tick.
 Check actual capability availability. This contract does not introduce a tool
 name or claim that the installed MCP offers semantic inspection. If neither an
 appropriate inspection tool nor an authorized independent reviewer is available,
-report the capability gap and leave the dependent decision unresolved. Continue
-independent work when possible. Do not substitute direct parent source reads,
-raw-code output through a generic tool, or an edit call masquerading as inspection.
+report the capability gap and use a targeted direct read when needed to progress.
+Direct parent code reads are permitted, including when semantic evidence is
+insufficient or a precise detail matters; keep them bounded to the decision and
+avoid routine replay of successful edits. Missing inspection capability alone is
+not a blocker. Preserve uncertainty when evidence remains insufficient, and keep
+required reviewer independence. An edit call is not a read-only inspection path.
 
 ## Accept A Slice
 
@@ -87,7 +91,7 @@ Call `slice_summary(context_id, slice_id)` when the accumulated slice is ready.
 It returns the operation summaries and evidence references bound to the resulting
 state. This is a read-only aggregate packet, not self-approval. An independent
 reviewer checks behavior, source boundaries, and applicable assertions and returns
-semantic evidence without raw code. The parent evaluates that evidence and can
+semantic evidence, normally without raw code. The parent evaluates that evidence and can
 challenge specific claims through further inspection questions.
 Send any resulting semantic correction through the same context; review the
 corrected aggregate at acceptance rather than every corrective tool call.

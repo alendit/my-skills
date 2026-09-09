@@ -182,7 +182,7 @@ For each admitted delivery package (a slice in the semantic workflow):
 3. Keep internal steps within their establishing package. They do not receive
    parent acceptance gates or new package IDs merely because a tool call ended.
 4. At slice acceptance, obtain the aggregate packet and independent reviewer
-   evidence without raw code. The parent evaluates that evidence to verify
+   evidence, preferably without raw code. The parent evaluates that evidence to verify
    complete contract IDs, stopping-point behavior, closure fields, source and
    assertion evidence, deferred work, and causal split/combine decisions. A later
    slice may extend behavior but may not repair accepted incomplete semantics.

@@ -102,11 +102,12 @@ MCP operation completion and context continuation are not a Tick, a phase
 boundary, or a fixed-point witness. Trust operation summaries during remediation;
 independent checking occurs at slice acceptance and the required outer Tick,
 without per-call review or repeated low-level replay. In the semantic workflow,
-the parent obtains all implementation facts through semantic inspection or the
-independent reviewer, including phase selection, design blockers, and recovery.
-Source and diff inspection prescribed below belongs to that reviewer or behind
-tools; return semantic claims and uncertainty without raw code to the parent.
-Missing inspection capability does not authorize fallback parent source reads.
+the parent preferably obtains implementation facts through semantic inspection
+or the independent reviewer, including phase selection, design blockers, and
+recovery. Prefer source and diff inspection behind tools or with that reviewer,
+returning semantic claims and uncertainty. Targeted direct parent reads remain
+available when needed, including when inspection capability is missing; they
+do not replace the required independent Tick.
 
 ## Use One Contract And Evidence Boundary
 
