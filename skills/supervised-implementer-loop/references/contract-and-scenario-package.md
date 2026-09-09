@@ -61,9 +61,10 @@ delivered, not a second set of contracts.
 - An **internal step** is implementation work inside one delivery package. It
   is chosen and integrated by the parent through specific semantic edits, each
   with an owner, behavior, constraints, and local completion condition. It
-  receives realizer-local checks. Parent reads during implementation serve an
-  explicit design decision or blocker; independent checks wait for slice
-  acceptance. It is not a separately gated delivery package.
+  receives realizer-local checks. The parent obtains code facts for design
+  decisions or blockers through semantic inspection; independent acceptance
+  checks wait for the slice boundary. It is not a separately gated delivery
+  package.
 
 Every contract ID has exactly one establishing delivery package, and every
 delivery package establishes at least one complete contract ID. No checkpoint,
@@ -180,7 +181,8 @@ For each admitted delivery package (a slice in the semantic workflow):
    obligations, without inspecting source, diffs, or tests to double-check it.
 3. Keep internal steps within their establishing package. They do not receive
    parent acceptance gates or new package IDs merely because a tool call ended.
-4. At slice acceptance, obtain the aggregate packet and independently verify
+4. At slice acceptance, obtain the aggregate packet and independent reviewer
+   evidence without raw code. The parent evaluates that evidence to verify
    complete contract IDs, stopping-point behavior, closure fields, source and
    assertion evidence, deferred work, and causal split/combine decisions. A later
    slice may extend behavior but may not repair accepted incomplete semantics.
@@ -224,8 +226,9 @@ delivery packages, record a compact package-local structural baseline:
 - production and test separation; and
 - the intended destination for each relevant delivery package.
 
-Use module indexes, bounded outlines, and exact reads; do not load a complete
-large owner merely to build the profile. Report material structural delta after
+Have semantic inspection tools or the independent reviewer use module indexes,
+bounded outlines, and exact reads, returning semantic facts to the parent. Do not
+load a complete large owner merely to build the profile. Report material structural delta after
 each relevant delivery package and compare the final owner with the baseline
 before package acceptance. Inspect bounded history only when repeated placement across
 earlier packages is material. The profile is implementation evidence, not a

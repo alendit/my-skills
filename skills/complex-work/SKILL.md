@@ -106,7 +106,10 @@ When routing a unit to `$supervised-implementer-loop`, carry material host
 binding and configuration constraints. The parent acting through the leaf
 implements and integrates the slice by selecting specific semantic edits;
 the MCP realizes each selected edit. Trust its summaries until independent
-slice acceptance. Runtime context
+slice acceptance. The semantic parent does not read or emit implementation code;
+route code-fact questions, including recovery and acceptance, through SIL’s
+semantic inspection contract. Source inspection in other leaf procedures belongs
+behind tools or with the independent reviewer. Runtime context
 continuation does not change the admitted dependency map or accept an outer unit.
 
 - route review-only work to `$evidence-efficient-review`;
@@ -211,7 +214,8 @@ Runtime continuation or compaction does not accept a slice or an outer unit.
 ## Verify And Finish
 
 Let the semantic MCP run focused implementation checks while a slice is unstable.
-The parent checks the accumulated result independently at slice acceptance.
+The parent evaluates independent semantic evidence at slice acceptance; code
+inspection belongs to tools or an independent reviewer, not the parent.
 Run expensive complete gates at meaningful package checkpoints, according to
 repository policy and the selected leaf owner's acceptance rules. Do not defer
 all validation until the end.

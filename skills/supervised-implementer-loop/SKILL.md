@@ -5,7 +5,8 @@ description: >-
   the MCP, with reused context and independent slice acceptance. Use for dependent
   implementation slices where the parent chooses and integrates each edit and
   the tool realizes it. Trust operation summaries between calls; inspect accumulated
-  work at slice acceptance. Does not own broader review convergence.
+  semantic evidence at slice acceptance without directly reading implementation
+  code. Does not own broader review convergence.
 ---
 
 # Supervised Implementer Loop
@@ -33,9 +34,9 @@ edits, require applicable capability, information, transaction, scenario, and
 design-dependency cells to have a concrete feasible plan. A missing or stale
 plan returns to its owning review boundary.
 
-Inspect user requirements, repository instructions, relevant design owners,
-and existing dirty work. Preserve unrelated edits. Carry the package outcome,
-non-goals, contract/plan references, material design decisions, applicable
+Read user requirements and repository instructions. Obtain facts about design
+owners and existing dirty implementation through semantic inspection. Preserve
+unrelated edits. Carry the package outcome, non-goals, contract/plan references, material design decisions, applicable
 structural profile, and authorization limits into the initial specification.
 A tool-call boundary does not invent a slice or split a contract.
 
@@ -86,8 +87,8 @@ explicitly selected alternative workflow, not a silent fallback for B.
    from the changed behavior, interfaces, checks, and unresolved questions;
    choose the next edit from that result and the remaining slice obligations.
 5. On `BLOCKED`, resolve the returned semantic question at its owning boundary.
-   Read only evidence needed for that decision. The realizer can challenge a
-   feasible but unnecessarily complex design; it cannot implement a changed
+   Obtain the needed code facts through semantic inspection, not direct source
+   reads. The realizer can challenge a feasible but unnecessarily complex design; it cannot implement a changed
    design before acceptance of that decision. Invalidate affected plan or
    evidence dependencies, then send the accepted delta using the same context.
 6. On `FAILED`, recover the recorded operation state under the semantic contract.
@@ -98,9 +99,12 @@ explicitly selected alternative workflow, not a silent fallback for B.
    proceed to independent acceptance. Successful internal steps are trusted
    working premises; they are not separately accepted delivery packages.
 
-The parent retains read/search access for design. Use it when a new decision
-requires repository facts or a returned contradiction needs resolution, not as
-routine intermediate verification. Transport waiting belongs to the tool call;
+The parent obtains implementation facts through
+[semantic inspection](references/semantic-operation.md#obtain-semantic-facts),
+including design questions, recovery, and acceptance. It neither reads nor emits
+implementation code. Apply referenced source-inspection procedures behind tools
+or through an independent reviewer; do not treat them as exceptions to this
+parent boundary. Transport waiting belongs to the tool call;
 ordinary parent continuations should not manage status polls or milestones.
 When the user changes direction or an active call exceeds its intended scope,
 use [active-edit control](references/semantic-operation.md#control-an-active-edit).
@@ -129,11 +133,13 @@ strengthened, replaced, or deleted rather than freezing obsolete mechanisms.
 
 ## Independently Accept The Slice
 
-At this boundary, inspect the aggregate packet and resulting source against
-complete slice contracts. Select consequential owner boundaries and behavioral
-probes independently of the realizer's choices. Expand investigation when the
-aggregate evidence is incomplete or contradictory. Do not replay every internal
-call's patches, searches, compiler errors, or test runs.
+At this boundary, evaluate semantic evidence against complete slice contracts.
+Select consequential owner boundaries and behavioral questions independently of
+the realizer's choices. Have an independent reviewer inspect the resulting code
+and assertions and return source-grounded claims, probe outcomes, state identity,
+and explicit uncertainty without raw code. Challenge incomplete or contradictory
+claims through further bounded tool questions. The parent retains acceptance;
+the editing context's self-report alone cannot establish it.
 
 Require current source and assertion evidence for the applicable realization
 dimensions; a tool summary alone does not establish independent acceptance.
@@ -148,7 +154,8 @@ required behavior, and invalid workaround to avoid. Return the corrected slice
 to acceptance with its evidence delta; do not add per-call inspections during
 the correction. Carry forward evidence whose dependencies remain valid.
 
-Run required package checks at the meaningful acceptance checkpoint. Only then
+Have tools or the reviewer run required package checks at the meaningful
+acceptance checkpoint and return semantic outcomes. Only then
 begin the next slice. The MCP never accepts its own work; the parent records
 acceptance under the existing package authority. Commit or other external-write
 authority is separate. Serialize authorized Git writes outside active realization

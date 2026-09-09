@@ -24,13 +24,42 @@ acceptance of the complete slice.
 
 After each successful result, the parent retains the changed behavior, relevant
 interfaces, checks, and unresolved questions as its abstract program state, then
-chooses the next edit against remaining obligations. It does not replay patches,
-logs, or tests. Independent source and behavior checks occur at slice acceptance.
+chooses the next edit against remaining obligations. It neither reads nor emits implementation code, including during design, recovery,
+and acceptance. Tools or an independent reviewer inspect code and return semantic
+facts. Independent source and behavior checks occur at slice acceptance, where
+the parent evaluates evidence without receiving raw code.
 
 For example, first add a typed diagnostic operation using an existing text-value
 representation. Use that result to choose the next dispatch edit and its required
 interface. Do not ask one continuation to finish diagnostics, dispatch, rollback,
 rotation, tests, and documentation merely because the context knows the slice.
+
+## Semantic inspection boundary
+
+The follow-up feedback removes the former direct-source-read exceptions for
+new design decisions, contradictions, recovery, and aggregate acceptance. SIL’s
+semantic operation contract owns the replacement: ask a bounded read-only
+question, obtain compact facts about behavior, interfaces, ownership, state,
+ordering, or failure boundaries, and use those facts to decide the next edit.
+
+Responses identify inspected state and source locations, distinguish observations
+from inference, and expose uncertainty without raw code, patches, or code-bearing
+logs. Inspection does not authorize repair or a second writer. At acceptance,
+an independent reviewer inspects source and assertions; the parent evaluates and
+can challenge its claims. Editing-context summaries remain working premises and
+cannot establish independent acceptance on their own.
+
+The coordinator, package, architecture, and fixed-point guidance assign code
+inspection to tools or the reviewer. This role boundary also governs source-read
+procedures in their supporting references. No new review gate is added between
+edits. If a semantic inspection capability is missing, an authorized independent
+reviewer can supply facts. If neither is available, report the gap and preserve
+unknowns without direct parent code reads.
+
+A dedicated semantic inspection tool remains runtime work, alongside cancellation
+and steering. The skill contract selects required behavior, not an API name or
+transport. Neither this document nor skill validation claims that the installed
+MCP now provides those capabilities.
 
 ## Execution control and runtime boundary
 
@@ -72,3 +101,9 @@ responses through status recovery before any permitted identical resubmission.
 
 The skill commit includes the pending semantic-MCP skill migration on which this
 remediation depends. Unrelated runtime and packaging work remains in the worktree.
+
+The semantic-inspection follow-up also passed the four skill validators and local
+reference checks. An independent agent simulated design blockers, settled partial
+work, self-report-only acceptance, reviewer fallback, and absence of both
+inspection paths. It found no conflicting role boundary; no runtime capability
+was exercised or inferred from these simulations.

@@ -6,8 +6,8 @@ The parent implements the slice by composing specific semantic edits. The MCP
 is the editing tool used in that implementation. Each call should request one
 specific edit: perhaps a function, an operation, or a small behavioral change.
 The parent retains the implementation sequence and integration reasoning while
-working at the level of abstract behavior rather than routinely reading and
-outputting the code itself.
+working at the level of abstract behavior without directly reading or outputting
+the implementation code. The tools must supply the code facts the parent needs.
 
 This records the user's correction during the 2026-09-09 Stage 2 M3 continuation
 in `clojure-wasm`. It documents an observed misuse, guidance gaps, and requested
@@ -56,12 +56,14 @@ issue was resolved; plugin isolation alone did not prevent it.
 4. The MCP returns a compact result describing the changed behavior, relevant
    interfaces, checks, and unresolved questions. The parent uses the result as a
    working premise and chooses the next edit.
-5. The parent composes the edits into the slice and independently inspects the
-   accumulated source and behavior at the established acceptance boundary.
+5. The parent composes the edits into the slice and independently evaluates
+   semantic evidence at the established acceptance boundary. Code inspection
+   belongs behind tools or with the independent reviewer; the parent needs
+   evidence sufficient to challenge the result without reading the code itself.
    The outer exact-revision gate and independent Tick remain separate.
 
-The intended saving is removal of routine low-level code processing from the
-parent's edit loop. It does not transfer slice implementation responsibility.
+The intended saving is removal of direct implementation-code processing from
+the parent's workflow, including recovery, design questions, and acceptance. It does not transfer slice implementation responsibility.
 The parent must retain enough abstract knowledge of the evolving program to
 choose and integrate the next edit. Re-reading successful patches, logs, and
 tests after every call would defeat this purpose.
@@ -100,6 +102,34 @@ the [complex-work coordinator](../skills/complex-work/SKILL.md), and the
 
 Examples, tool descriptions, and backend instructions need the same distinction.
 Changing only the outer skill would leave conflicting cues in the tool contract.
+
+## Missing semantic inspection surface
+
+The user subsequently clarified:
+
+> “The idea to provide tools for the parent to avoid direct code reading altogether.”
+
+The parent had read targeted source after cancellation and a design blocker,
+then described those reads as an exception to the ordinary summary-based loop.
+That exception also missed the intended design. Recovery and design questions
+must obtain the necessary code facts through tools, rather than cause the
+parent to reconstruct concrete implementation details.
+
+The parent needs a semantic inspection capability that answers bounded questions
+about existing behavior, interfaces, ownership, state, ordering, and failure
+boundaries. It should return compact, source-grounded facts and explicit
+uncertainty that the parent can use to choose an edit. It must distinguish
+inspection from mutation and preserve independent acceptance: an editing tool's
+self-report alone cannot prove correctness. An independent reviewer may inspect
+code and provide evidence; the parent retains the decision and can challenge
+specific claims through further tool questions.
+
+The observed native MCP inventory has no dedicated semantic inspection tool.
+That is a capability gap, not authorization for fallback direct source reads.
+The proposed tools should cover parent information needs as well as edits and
+execution control. Exact API names, result shapes, and implementation remain
+unselected. Source-location references may support traceability without sending
+raw code to the parent.
 
 ## Missing cancellation and steering
 

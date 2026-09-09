@@ -442,7 +442,12 @@ For semantic MCP implementation, review the accumulated slice or selected
 whole-scope target at its acceptance boundary. Operation summaries orient the
 review but do not replace independently selected source and behavioral evidence.
 Do not interpose reviews between successful semantic calls or replay every local
-implementation step. Acceptance corrections return through the same MCP context.
+implementation step. The independent reviewer may inspect code; return compact
+source-grounded claims, inspected state, probe outcomes, and explicit uncertainty
+to the semantic parent without raw implementation code or patches. The parent
+retains acceptance and may challenge claims through bounded inspection questions.
+The editing context’s self-report alone cannot establish independent acceptance.
+Acceptance corrections return through the same MCP context.
 
 When called by a fixpoint orchestrator, this skill performs only the review
 phase and returns its decision. The orchestrator owns review numbering,
