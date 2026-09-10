@@ -2,10 +2,11 @@
 name: supervised-implementer-loop
 description: >-
   Implement one non-trivial work package through ordered, dependent slices
-  using one active implementation context at a time while the main agent
-  independently reviews, corrects, validates, and accepts each slice. Reuse
-  that context through an admitted delivery package and its corrections; an
-  authorized renewal may start the next package with the same configuration.
+  composed of specific semantic edits, using one active implementation context
+  at a time while the main agent independently reviews, corrects, validates,
+  and accepts each slice. Reuse that context through an admitted delivery
+  package and its corrections; an authorized renewal may start the next
+  package with the same configuration.
   Use when the user asks to reuse one implementer, review every implementation
   slice, make later work rely on accepted earlier fixes, or keep implementation
   token-efficient. Do not use for review-only work, small direct edits, or
@@ -200,6 +201,47 @@ context, when authorized at an accepted boundary, receives the verified
 turnover envelope and next admitted package once rather than a transcript or
 raw-log replay.
 
+## Compose Specific Semantic Edits
+
+The complete delivery-package map supplied to the implementer is context and
+an authority boundary. It does not authorize the implementer to execute every
+edit in that map. The parent selects the currently named edit inside the
+admitted delivery package. Each assignment names:
+
+- the semantic owner and the required behavior or interface result;
+- accepted prerequisites and the current state on which the edit may rely;
+- constraints, dependencies, ordering, transaction or recovery guarantees,
+  and permitted implementation freedoms;
+- explicit exclusions, including later edits, unrelated cleanup, and package
+  or design decisions that remain with the parent; and
+- local completion evidence: the owner-level invariant, focused scenarios or
+  assertions, and checks that must pass for this edit.
+
+One semantic edit may span several files when they jointly realize that
+behavior. Choose the boundary by responsibility, behavior, and local evidence;
+do not impose a numeric size, line-count, file-count, or duration limit. The
+implementer resolves source details and performs source, fixture, import, and
+compiler adaptation plus repairs directly caused by the assigned edit. It does
+not choose later edits, reorder the admitted package, or expand the package
+contract.
+
+Require a compact result for every edit: outcome; attributed changed paths and
+owner or interface delta; local checks and scenarios; the evidence phase for
+each check (expected reproduction or final verification); and unresolved
+questions or risks. Establish the assignment baseline before editing so
+inherited dirty state, same-file edits, and concurrent or ambiguous attribution
+are reported rather than credited automatically. Local completion is separate
+from delivery-package acceptance: zero selected tests, stale passes, adjacent
+success, or missing required assertions do not establish it. Any out-of-scope
+change is never credited to the edit or package; classify it explicitly and
+have its authorized owner resolve it before acceptance.
+
+After a successful edit, use that result as the parent's working premise for
+selecting the next edit. Do not routinely reread its implementation, patch, or
+successful logs between edits. A targeted parent read remains allowed when it
+answers a concrete design or acceptance question, resolves contradictory
+evidence, or investigates attribution or scope.
+
 ## Design Tests To Survive Simplification
 
 Use the reference's scenario portfolio, evidence lanes, and test-stability
@@ -241,6 +283,15 @@ package. The implementer supplies evidence and a proposal but has no acceptance
 or scope-expansion authority. If no bounded non-worsening route fits, stop for
 the caller's scope decision before production changes.
 
+Record a repeated architectural-mismatch trigger when the same accepted owner
+or design assumption fails again; no numeric threshold is required. Pause
+further design-sensitive edits and require a concrete design checkpoint before
+resuming: the intended owner, producer and consumer information flow, state and
+lifetime, ordering or transaction boundary, failure and recovery path, and
+decisive source or behavior evidence. If that checkpoint cannot be accepted
+within the current authority, return to the architecture or package owner
+instead of dispatching another local correction.
+
 Do not accept a safe-deferral branch until the current contract passes, every
 applicable non-worsening disposition is proved, and the authorized durable
 follow-up is read back. External or otherwise separately controlled ledger
@@ -265,12 +316,15 @@ or an implementer summary cannot satisfy an unresolved row.
    initial assignment, use follow-up messages containing only new requirements,
    evidence, and corrections. Do not replace that context for an ordinary
    correction.
-2. Let the implementer edit and run focused validation. Do not perform
+2. Let the implementer perform the assigned semantic edit and run focused
+   validation. Do not perform
    overlapping writes or Git operations in the shared workspace. Non-mutating
    preparation may continue, but formally review only a completed delivery
    package. At handoff, planned realization entries are replaced with actual
    source and assertion evidence; a design change marks dependent entries
-   stale before continued work or acceptance.
+   stale before continued work or acceptance. The result must distinguish
+   expected pre-fix failures from final checks and must attribute changes
+   against the assignment baseline.
 3. Require a compact delivery-package acceptance packet: changed paths and
    resulting owner boundary; contract IDs established; intended behavior or
    interface changes, or an explicit statement that none were intended;
@@ -285,7 +339,10 @@ or an implementer summary cannot satisfy an unresolved row.
    external-evidence, architectural-decision, and follow-up dispositions only
    when they apply. For a selected glossary, also include changed or still-
    material scope-fit and candidate dispositions; under opt-out, include only
-   the marker. The implementer does not approve its own work.
+   the marker. Preserve the original failure and any cleanup failure as
+   separate evidence. Label observed facts, hypotheses, and runtime witnesses
+   separately; a plausible explanation is not an execution witness. The
+   implementer does not approve its own work.
 4. Independently inspect the packet, changed owner topology, and the few
    boundaries where defects would be consequential. For a modularization
    package, verify that each extracted module is cohesive, the root lost the
@@ -302,6 +359,11 @@ or an implementer summary cannot satisfy an unresolved row.
    follow-up read-back. At parent acceptance, select a few high-risk probes
    independently at those consequential boundaries. Do not accept the
    implementer's summary as evidence by itself.
+   Before dispatching corrections aimed at package acceptance, consolidate one
+   bounded inspection of every changed owner, affected consumer, and material
+   residual-topology cluster. Sequence the corrections from that complete
+   finding set and its dependencies instead of dispatching a new correction
+   after each isolated discovery.
 5. When the review finds a defect, send corrective guidance to the active
    implementation context. State:
    - the concrete evidence;
@@ -309,13 +371,26 @@ or an implementer summary cannot satisfy an unresolved row.
    - the owning boundary and required result;
    - the state or public behavior that must be proved; and
    - any tempting but invalid workaround to avoid.
+   Before requiring rollback or recovery, identify the mutation boundary, the
+   failure point, the transaction owner, and the commit or publication
+   boundary. Keep a failure inside an uncommitted transaction distinct from
+   cleanup after an earlier commit; do not infer rollback requirements from a
+   cleanup symptom alone.
 6. Repeat implementation and parent review until the delivery package is
    correct. Confirm that parent acceptance has a current, complete realization
    disposition for every contract ID; do not advance because one narrow test
    passes.
-7. Run independent validation proportional to the delivery package. Checkpoint
-   accepted work according to user and repository policy, with all Git writes
-   serialized by the main agent unless explicitly delegated.
+7. Run independent validation proportional to the delivery package. A verified
+   milestone commit before package acceptance is permitted only when existing
+   caller or repository policy grants commit authority. The main agent
+   serializes that write and stages only attributable, coherent, locally
+   checked state. Preserve the original review and package base and map across
+   the checkpoint. Record the commit as verified-but-unaccepted in the handoff
+   and acceptance packet; it does not establish slice or package acceptance,
+   plan readiness, or a fixed point.
+   Interrupted, partial, unverified, or ambiguous work is not checkpointed.
+   Without existing commit authority, preserve the verified work as dirty
+   state.
 8. Only then begin the next reviewed delivery package. Treat accepted earlier
    invariants as stable; do not rediscover or restate them unless new evidence
    challenges them. At this accepted boundary, apply the continuity
@@ -399,6 +474,13 @@ credible safety or scope signal appears. Batch one narrow probe around the
 decision it can change; ordinary dirty state while the writer is active is not
 progress-quality evidence.
 
+An event-driven wait completes only when a completion, checkpoint, blocker, or
+decision event is delivered. A timeout, caller-side wait interruption, or
+missing event says nothing about whether the writer has stopped or whether the
+edit changed the tree. Do not create repeated reassurance turns or treat a
+completion result as package acceptance; use the result to resume the parent's
+assignment and acceptance flow.
+
 Use the interaction capability that matches the state:
 
 - queue a delta or correction to an active implementer without restarting its
@@ -427,6 +509,18 @@ when its disposition remains `continue`, or when `renew-at-boundary` still
 permits safe completion of the current admitted package. Otherwise use the
 bounded stop-and-rebaseline procedure. Do not create repeated status-only
 turns.
+
+When the current direction is invalidated, stop dependent assignments and
+interrupt the active writer. Wait for explicit settlement or stopped-writer
+evidence, then inspect the resulting state and classify it as accepted,
+complete-but-unaccepted, partial, or obsolete before issuing a replacement
+assignment. Interruption does not imply rollback, no mutation, or a reusable
+clean state; preserve partial work and evidence, and never replay an unresolved
+edit or overlap writers.
+
+Stopped-writer evidence means harness lifecycle evidence showing no active turn,
+plus settlement of any writer-owned subprocess or cleanup. A timeout or caller
+interruption alone does not establish that evidence.
 
 ## Accept The Package
 
