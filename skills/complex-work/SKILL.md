@@ -15,6 +15,12 @@ from its leaf owners. Keep the primary agent responsible for the package
 outcome, scope, cross-unit ordering, shared constraints, authorization
 boundaries, integration, acceptance, and final handoff.
 
+At establishment, unit acceptance, and final handoff, apply
+[request completion and runtime goals](../supervised-implementer-loop/references/request-completion.md).
+An accepted leaf result returns control here; it does not end the user's larger
+request. Keep optional runtime-goal authorization distinct from the behavioral
+goal record below, and continue remaining authorized units before final delivery.
+
 ## Establish The Package
 
 1. Read the user request, applicable repository guidance, current state, and

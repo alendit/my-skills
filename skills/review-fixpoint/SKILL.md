@@ -431,27 +431,17 @@ candidate or add another glossary or prose pass in this outer workflow.
 
 ## Optional Goal Persistence
 
-When the user explicitly asks to continue until fixed point and goal tools are
-available:
+Apply [request completion and runtime goals](../supervised-implementer-loop/references/request-completion.md)
+at loop establishment, phase boundaries, and before final delivery. Continue from
+a completed Tock to the required independent Tick; do not end the request at a
+remediation handoff. A single requested review still ends at its own boundary.
 
-1. Create one goal whose objective is to alternate remediation and independent
-   review until the Fixed-Point Rule is satisfied. A suitable objective is:
-   `Alternate remediation and independent review for the selected work package
-   until the current review artifact reports zero P0-P3 functional or
-   architectural findings, deterministic gates pass, and required external
-   capability status is reported without conflating availability with product
-   failure.` Do not set a token budget unless the user supplied one.
-2. On later continuations, inspect the active goal and resume from the latest
-   review artifact and current tree instead of restarting.
-3. Mark the goal complete only after the zero-finding Tick and any external
-   confirmation required by the user's objective. Do not mark it complete
-   because a Tock passed tests, deterministic fixed point left required initial
-   capability unconfirmed, or the budget is low.
-4. Follow the goal tool's own blocked-state rules; difficulty or a long-running
-   remediation is not a blocker.
-
-Do not create a goal for a single requested Tick, Tock, or skill-maintenance
-task.
+When runtime-goal creation is explicitly authorized, its objective covers the
+selected work package through the Fixed-Point Rule and any external confirmation
+required by the user. A request to continue until fixed point alone does not
+authorize creating a goal. Reuse the shared reference's consent, continuity,
+budget, completion, and blocked-state rules; goal status never substitutes for
+the independent review and evidence required here.
 
 ## Example Invocations
 

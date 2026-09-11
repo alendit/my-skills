@@ -19,9 +19,11 @@ Complete one bounded work package through a repeated implement-review-correct
 loop. The main agent is the acceptance authority; one active implementation
 context owns the edits and first-pass validation at a time.
 
-This skill ends when the requested work package is implemented and accepted.
-It does not initiate broader reviews, invent adjacent work, or define an outer
-project-completion process.
+This skill returns when its assigned work package is implemented and accepted.
+The primary follows [request completion and runtime goals](references/request-completion.md)
+at establishment and acceptance boundaries: a completed edit or leaf package
+does not end a larger authorized request. This skill does not initiate broader
+reviews, invent adjacent work, or take completion authority from an outer owner.
 
 When an outer fixpoint workflow invokes this skill for remediation, return the
 accepted package to that orchestrator. Delivery-package acceptance proves the
@@ -555,5 +557,8 @@ After the final delivery package:
    material edit through that skill's revision-after-change behavior rather
    than applying a second outer prose pass.
 
-Stop when this package is accepted. Do not continue into unrelated cleanup or
-a broader review unless the user separately requests it.
+Return an accepted package to its caller. Before ending the user-facing turn,
+apply the linked request-completion decision: continue any remaining work in the
+authorized outer request, or stop when the requested outcome is accepted, the
+user directs a different boundary, or a concrete blocker requires input. Do not
+continue into unrelated cleanup or an unrequested broader review.
