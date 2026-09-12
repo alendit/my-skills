@@ -248,7 +248,8 @@ bundled execution instructions instead of a conflicting named role. The complete
 supplies task context; configuration, repository instructions, and the available
 skill catalog still apply. Keep subsequent messages delta-only in the same child.
 
-The role must be installed in a Codex agent directory; merely including it in
+The role must be installed as a regular file in a Codex agent directory;
+symlinks can be advertised but fail at spawn time. Merely including it in
 the plugin does not register it. Use the repository's
 [role installation procedure](../../../README.md#codex-implementer-role).
 If the role is unavailable in the current tool catalog, do not send an undeclared

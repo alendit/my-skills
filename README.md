@@ -71,8 +71,10 @@ codex plugin list --marketplace <marketplace-name> --json
 Read back the installed/cache manifest, `SOURCE_REVISION`, eight-skill inventory,
 and `build-manifest.json` hashes. The cachebuster changes the exported manifest
 version after `build-manifest.json` was produced, so account for that one expected
-hash difference or regenerate the staged build manifest before comparing. Start
-a fresh Codex thread so the new catalog is loaded.
+hash difference or regenerate the staged build manifest before comparing.
+If the implementer role is installed, refresh its regular-file copy using the
+[role installation procedure](#codex-implementer-role). Start a fresh Codex thread
+so the new catalog is loaded.
 
 ## Codex Implementer Role
 
@@ -82,24 +84,34 @@ single file; the parent workflow owns assignment, acceptance, and lifecycle.
 Within authorized work, initial spawning and same-configuration respawning need
 no additional user confirmation. Explicit identity restrictions still apply.
 
-After installing the plugin, link the role from the stable marketplace source
-directory into Codex's personal agents directory. Set `PLUGIN_SOURCE_ROOT` to the
+After installing or updating the plugin, copy the role from the verified source
+into Codex's personal agents directory as a **regular file**. Codex can advertise
+a symlinked role, but its spawn-time reader rejects the link with
+`agent type is currently not available` (the underlying macOS error is
+`Too many levels of symbolic links`).
+
+Inspect an existing destination before replacing it. Move an old symlink or
+locally modified role to a recoverable backup outside the agents directory;
+preserve local customizations deliberately. Set `PLUGIN_SOURCE_ROOT` to the
 source path verified above; the standard personal location is shown here:
 
 ```sh
 PLUGIN_SOURCE_ROOT="$HOME/plugins/my-skills"
+ROLE_DESTINATION="${CODEX_HOME:-$HOME/.codex}/agents/implementer.toml"
 mkdir -p "${CODEX_HOME:-$HOME/.codex}/agents"
-ln -s "$PLUGIN_SOURCE_ROOT/skills/supervised-implementer-loop/assets/implementer.toml" \
-  "${CODEX_HOME:-$HOME/.codex}/agents/implementer.toml"
+test ! -L "$ROLE_DESTINATION" &&
+  cp "$PLUGIN_SOURCE_ROOT/skills/supervised-implementer-loop/assets/implementer.toml" \
+    "$ROLE_DESTINATION"
+test -f "$ROLE_DESTINATION" && test ! -L "$ROLE_DESTINATION" &&
+  cmp "$PLUGIN_SOURCE_ROOT/skills/supervised-implementer-loop/assets/implementer.toml" \
+    "$ROLE_DESTINATION"
 ```
 
-Inspect an existing destination before replacing it; keep a matching link.
-The link follows future complete source replacements, so ordinary plugin updates
-also update this role without copying instructions or linking to a versioned
-cache. Verify that the link resolves to the exported role, then start a fresh
-Codex session. Plugin installation alone does not register custom agents.
-Remove this link when retiring the role; disabling the plugin alone does not
-disable a separately installed personal agent.
+The bundled file remains the maintained source; repeat the copy and comparison
+on plugin updates. Start a fresh Codex session after installation. Plugin
+installation alone does not register custom agents, and disabling the plugin
+does not disable this separately installed personal agent. Remove the installed
+copy when retiring the role.
 
 The parent selects `agent_type: "implementer"` and explicitly sets
 `fork_turns: "none"` for every spawn and respawn. The self-contained assignment
