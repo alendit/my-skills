@@ -483,6 +483,14 @@ expected evidence; request findings and a recommendation before dependent
 edits. The parent resolves that decision without repeating the investigation
 unless its evidence leaves a concrete gap or contradiction.
 
+For diagnostic work, have the implementer locate the actual dependency or
+artifact and inspect the relevant API before building the smallest probe that
+distinguishes its hypothesis. Reuse discovered paths. If repeated attempts fail
+without narrowing the cause, request a checkpoint with observations, failed
+attempts, and the proposed next experiment; resolve that direction before
+continuing the investigation. Do not impose a fixed attempt count on productive
+diagnosis or routine checks.
+
 Set a completion or meaningful-checkpoint window, immediate blockers, decision
 events, and the first credible stall deadline. The mailbox timeout is a generous
 failsafe beyond the expected event, within the tool limit. Illustrative starting
