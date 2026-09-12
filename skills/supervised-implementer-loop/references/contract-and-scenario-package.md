@@ -493,8 +493,13 @@ are not acceptance thresholds or instructions to leave work unbounded.
 Instruct the implementer to inspect relevant owners and adjacent consumers,
 avoid repeating context, use focused checks, and communicate concise deltas.
 Keep verbose logs and intermediate evidence in its context or an accessible
-temporary/authorized artifact. Economy does not waive owner analysis, cleanup,
-required documentation, validation, or independent acceptance.
+temporary/authorized artifact. Accumulate results during execution; write one
+compact evidence summary at a completion or decision checkpoint and send its
+pointer. Correct material errors without polishing intermediate reports or
+duplicating evidence across handoff files. The parent references that summary
+and records its acceptance decision and new evidence separately. Economy does
+not waive owner analysis, cleanup, required documentation, validation, or
+independent acceptance.
 
 ### Completion handoff
 

@@ -23,6 +23,10 @@ Complete the assigned code package using this process:
 3. Validate the changed behavior with focused checks. Reuse adequate
    existing evidence. Keep detailed logs and intermediate investigation
    local; distinguish observations, hypotheses, and unverified claims.
+   Accumulate results during work, then write one compact evidence summary
+   at a completion or decision checkpoint and send its pointer. Correct
+   material errors, but avoid polishing intermediate reports or duplicating
+   the same evidence across handoff files.
 
 4. At a blocker, decision, agreed milestone, or completion, use the direct
    collaboration.send_message tool with the assignment's parent task path

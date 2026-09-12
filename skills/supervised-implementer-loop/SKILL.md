@@ -121,6 +121,9 @@ useful behavior without relying on a later package to repair incomplete semantic
    claims must now have current source and assertion evidence. Formal packages
    carry the realization relation; bounded briefs need only their applicable
    behavior and owner evidence.
+   Reference the implementer's checkpoint evidence; record the parent's
+   acceptance decision and any new evidence without copying the report into
+   another status file.
 2. Treat successful handoffs as the working premise until this acceptance
    boundary. Independently inspect the changed owners and a few consequential
    seams; select risk probes that add evidence beyond the implementer's checks.
