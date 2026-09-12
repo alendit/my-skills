@@ -11,9 +11,9 @@ description: >-
 # Supervised Implementer Loop
 
 The parent owns scope, design decisions, sequencing, and acceptance. One active
-implementer owns code edits and focused checks. Accept coherent owner-level or
-public behavior, letting the implementer complete its internal edits without
-a separate assignment for each function or file.
+implementer owns routine code investigation, edits, and focused checks. Accept
+coherent owner-level or public behavior, letting the implementer complete its
+internal edits without a separate assignment for each function or file.
 
 ## 1. Establish And Admit The Package
 
@@ -22,6 +22,12 @@ State the outcome, non-goals, acceptance evidence, and authorization boundaries;
 preserve unrelated work. Keep prose-heavy authorship with the parent. For mixed
 work, delegate the admitted code package and its directly supporting tests,
 fixtures, comments, and documentation.
+
+Inspect enough to establish scope, likely owners, and the admission route.
+Assign routine owner tracing, adjacent-consumer inspection, and focused evidence
+gathering to the implementer with the code package. If missing facts block a
+design decision, bound an investigation checkpoint first; the parent decides
+from its findings before dependent edits begin.
 
 Select [admission depth](references/contract-and-scenario-package.md#choose-admission-depth)
 before spawning. For bounded work with established behavior, ownership, and
@@ -72,8 +78,11 @@ as starting points, not work limits or acceptance thresholds.
 
 ## 3. Wait For An Event
 
-Let the implementer edit and run focused checks. Do independent work outside its
-owned scope or wait; avoid mirroring its source, diff, and successful-log reads.
+Let the implementer investigate, edit, and run focused checks. Do independent
+work when it advances the authorized request, such as parent-owned prose or a
+pending design decision. Otherwise wait. Prefer waiting to broad exploration of
+future packages merely to occupy the interval; delegate that routine work when
+its package is assigned. Avoid mirroring source, diff, and successful-log reads.
 Serialize Git writes and avoid overlapping edits.
 
 1. On an empty timeout inside the agreed envelope, wait again directly. The

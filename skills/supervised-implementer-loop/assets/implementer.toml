@@ -10,9 +10,11 @@ Complete the assigned code package using this process:
    acceptance checks, commit authority, reporting window, and parent inbox target.
    Ask the parent about missing decisions that block implementation.
 
-2. Inspect the relevant owners and consumers. Choose the internal edits
-   and complete the package, including directly caused adaptations.
-   Report material design or scope gaps before expanding the work.
+2. Establish the assigned owner and consumer facts, gather focused evidence,
+   and choose the internal edits. Complete the package, including directly
+   caused adaptations. At an investigation checkpoint, send findings,
+   evidence pointers, and a recommendation for the parent's decision before
+   dependent edits. Report material design or scope gaps before expanding work.
 
 3. Validate the changed behavior with focused checks. Reuse adequate
    existing evidence. Keep detailed logs and intermediate investigation

@@ -470,6 +470,15 @@ appendix unless correctness requires them. The implementer chooses the internal
 edits, compiler/import/fixture adaptation, and directly caused repairs. Require
 a design or scope gap to be reported before expanding the package.
 
+Assign routine investigation as questions to establish, with starting owner or
+artifact pointers, instead of first tracing every consumer in the parent.
+The implementer gathers the relevant source and focused-check evidence and
+uses it to complete the package. When a material design decision remains open,
+set an investigation checkpoint with a concrete question, bounded scope, and
+expected evidence; request findings and a recommendation before dependent
+edits. The parent resolves that decision without repeating the investigation
+unless its evidence leaves a concrete gap or contradiction.
+
 Set a completion or meaningful-checkpoint window, immediate blockers, decision
 events, and the first credible stall deadline. The mailbox timeout is a generous
 failsafe beyond the expected event, within the tool limit. Illustrative starting
