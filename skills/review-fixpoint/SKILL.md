@@ -25,9 +25,10 @@ diff, owners, tests, and history before asking. Preserve historical findings:
 use numbered immutable reviews or the repository's declared ledger convention.
 
 Read the [contract and evidence boundary](references/contract-and-evidence-boundary.md#preserve-one-contract-authority)
-through “Carry result levels and plan identity.” Carry the existing contract
-matrix, goal record, and current [glossary state](../clear-technical-writing/references/project-glossaries.md#resolve-glossary-state-in-order)
-into each leaf; later inputs carry material deltas only.
+through “Carry result levels and plan identity.” Carry the accepted brief or
+formal contract/goal records into each leaf; later inputs carry material deltas
+only. Include [glossary state](../clear-technical-writing/references/project-glossaries.md#resolve-glossary-state-in-order)
+only when shared terminology affects that leaf; otherwise omit the payload.
 
 For specification scope, retain the selected review level. A contract-level
 result does not itself authorize implementation. Apply the [admission-depth decision](../supervised-implementer-loop/references/contract-and-scenario-package.md#choose-admission-depth):

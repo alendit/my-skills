@@ -22,7 +22,8 @@ Bypass this coordinator when one leaf skill can own the entire result.
 
 Carry the request's outcome and direct scenario, reusing existing goal/contract
 IDs. For formal or design-sensitive work, use the [behavioral goal record](../evidence-efficient-review/references/behavioral-design-trace.md#establish-the-behavioral-trace).
-Resolve or consume [glossary state](../clear-technical-writing/references/project-glossaries.md#resolve-glossary-state-in-order).
+When shared terminology affects the work, resolve or consume [glossary state](../clear-technical-writing/references/project-glossaries.md#resolve-glossary-state-in-order).
+Otherwise omit glossary setup and handoff data.
 Reference existing authorities; update status from accepted evidence.
 
 ## 2. Divide And Route The Work
