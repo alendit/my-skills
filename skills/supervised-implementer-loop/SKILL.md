@@ -30,9 +30,10 @@ reviewed plan when required by the caller/repository or when material contract,
 architecture, recovery, or delivery dependencies remain unresolved. Preserve
 existing review requirements and return invalidated decisions to their owner.
 
-Use [the goal record](references/contract-and-scenario-package.md#carry-the-behavioral-goal-record)
-to carry the package's direct behavioral scenario separately from
-mechanism progress. Resolve or consume [glossary state](../clear-technical-writing/references/project-glossaries.md#resolve-glossary-state-in-order)
+For bounded delivery, carry the brief's outcome and direct scenario, reusing
+goal/contract IDs only when they already exist. Formal or design-sensitive work
+uses [the goal record](references/contract-and-scenario-package.md#carry-the-behavioral-goal-record).
+Keep behavior separate from mechanism progress. Resolve or consume [glossary state](../clear-technical-writing/references/project-glossaries.md#resolve-glossary-state-in-order)
 once, carrying only its applicable material changes thereafter.
 
 At setup, select the relevant package-reference sections: “Profile

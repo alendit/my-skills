@@ -23,7 +23,10 @@ mechanism is defensive.
 
 ## Establish The Behavioral Trace
 
-Begin with one short record that can survive equivalent implementations:
+For bounded work whose design is settled, reuse the accepted brief's outcome,
+direct scenario, authority, and evidence. Existing IDs may be carried forward;
+their absence does not require a new matrix or record. The fuller record below
+applies when formal planning or evolving supporting design needs stable tracing:
 
 ```text
 Goal ID: <stable package-level identifier>

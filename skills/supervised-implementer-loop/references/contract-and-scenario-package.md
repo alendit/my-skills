@@ -231,7 +231,11 @@ material decision, not merely to manufacture another internal checkpoint.
 
 ## Carry the behavioral goal record
 
-Instantiate the package-level goal record from the shared
+For bounded delivery, the accepted brief's outcome, direct scenario, and current
+evidence suffice; carry goal or contract IDs only when they already exist. Do
+not create a matrix or formal behavioral record to fill handoff fields.
+
+For formal or design-sensitive work, instantiate the package-level goal record from the shared
 [behavioral design trace and rebaseline authority](../../evidence-efficient-review/references/behavioral-design-trace.md)
 alongside the matrix. Mechanism rows reference its stable goal ID. Carry the
 record through delivery-package assignments, corrections, handoffs, and
