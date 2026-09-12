@@ -37,8 +37,10 @@ the target repository, but preserve the outcomes without duplicating them.
   appropriate, then place cohesive internal state, operations, transactions,
   ABI adaptation, and evidence behind private source boundaries. Use shared
   access to a central type, state, lifecycle, transaction, or ABI to shape those
-  boundaries. A retained colocated responsibility names the causal invariant
-  that the smallest plausible complete private boundary would break.
+  boundaries. When physical decomposition is explicitly in scope or a causal
+  decomposition defect is qualified, a retained colocated responsibility names
+  the invariant that the smallest plausible complete private boundary would
+  break. Ordinary changes need only explain their changed owner's cohesion.
 - Make dependencies point from unstable shells and adapters toward stable,
   domain-owned contracts. Keep side effects at shell or adapter boundaries and
   do not combine unrelated domains in one coordinator.
@@ -62,14 +64,21 @@ the target repository, but preserve the outcomes without duplicating them.
 
 ## Required self-check for design-sensitive changes
 
+Check the questions relevant to the changed decisions and their affected
+dependencies. Reuse current evidence for unchanged decisions; do not generate
+an answer or not-applicable record for every question on every edit. Expand to
+the full affected scope when evidence invalidates that boundary or repository
+policy explicitly requires it. These applicability instructions belong in the
+installed policy alongside the questions.
+
 1. Is this package a useful stopping point, and what final direction does it
    advance?
 2. Which decisions are likely, uncertain, or stable, and are uncertain choices
    local and reversible?
 3. Who owns each changed behavior, does that owner remain cohesive, and which
    source boundary receives it? Does the change improve, preserve, or worsen
-   reviewable physical decomposition? For each responsibility retained in a
-   composition root or large semantic owner, what causal invariant requires
+   reviewable physical decomposition? When decomposition is selected or a
+   causal defect is qualified, for each affected retained responsibility what invariant requires
    colocation after challenging the smallest plausible complete private
    boundary? Have central state, lifecycle, transactions, ABI work, and private
    access been treated as design inputs rather than automatic exemptions?

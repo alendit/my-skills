@@ -40,6 +40,9 @@ rationale wholesale into a target file.
    required dependency.
 5. Use one owning statement for each rule. Later questions may reference the
    rule's concept but must not restate it as a second normative definition.
+   Preserve the self-check's applicability instructions: ordinary edits check
+   changed decisions, while qualified decomposition work receives the deeper
+   boundary challenge. Do not install an unconditional twelve-question ritual.
 6. After the policy contract and self-check are complete, apply one compact
    [clear technical writing pass](../clear-technical-writing/SKILL.md) without
    changing rule ownership or expanding policy scope.
