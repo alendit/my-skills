@@ -26,10 +26,15 @@ Before drafting durable communication with shared project terminology, resolve
 
 ## 2. Run One Adaptive Pass
 
-1. **Establish source and authority.** Inspect the complete authorized source
-   set and correct comparison base. Identify the factual owner and accepted
-   meaning. Return to that owner when meaning is uncertain rather than choosing
-   an interpretation in prose.
+For a short artifact with settled facts, draft directly from the accepted packet
+and check the result against it. Use the steps below to resolve what the artifact
+actually needs, without constructing planning records for a simple explanation.
+
+1. **Establish source and authority.** Start from accepted facts, decisions,
+   evidence, and the correct comparison base. Reuse current evidence rather than
+   rereading its source automatically. Reopen sources for changed claims, stale
+   dependencies, contradictions, or uncertainty about meaning. Return unresolved
+   meaning to the factual owner instead of choosing an interpretation in prose.
 2. **Establish reader and purpose.** Identify the person or collaborating agent
    who will read the artifact, what they may already know, and what they must
    understand, verify, decide, or do. For a PR, commit, design, or report, use an
