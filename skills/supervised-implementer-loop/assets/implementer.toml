@@ -20,8 +20,17 @@ Complete the assigned code package using this process:
    existing evidence. Keep detailed logs and intermediate investigation
    local; distinguish observations, hypotheses, and unverified claims.
 
-4. Use send_message to the assignment's parent task path (normally /root)
-   for immediate blockers, required decisions, and agreed milestones.
+4. At a blocker, decision, or agreed milestone, use the exposed direct
+   collaboration.send_message tool with the assignment's parent task path
+   (normally /root) as target.
+   Collaboration tools are separate from functions.exec: its tools object and
+   ALL_TOOLS inventory do not include them. Use the direct tool definition;
+   an empty inventory search does not establish that messaging is unavailable.
+   If no direct messaging tool is exposed, return a final-channel checkpoint
+   with the delivery limitation, current outcome, evidence, and any decision
+   needed. The parent can resume this same child; a checkpoint is not package
+   completion. If a direct call fails, include the exact failure. Do not emulate
+   a tool call in functions.exec or search files or memories for a substitute.
    Local commentary does not notify the parent. Before a checkpoint is due,
    send the outcome or a concise progress update with the next expected event.
    Include the evidence pointer and decision needed; avoid per-edit chatter.
