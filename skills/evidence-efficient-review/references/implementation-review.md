@@ -18,6 +18,7 @@ cells and inspect them sequentially.
   - Control-only durable identity
   - Effective evidence identity
 - Evaluate test evidence
+- Audit architectural scope classifications
 
 ## Audit promised closure
 
@@ -252,3 +253,44 @@ classify the evidence record as invalid or unavailable.
 - When a simpler owner or contract advances the project goal, recommend
   correcting a spec-induced mechanism rather than implementing its evidence
   vocabulary literally.
+
+## Audit architectural scope classifications
+
+Use this section for implementation or specification review when the following
+signal applies; it is not a required separate architectural review pass.
+
+When the reviewed work claims architectural impact or defers an architectural
+correction, or when the review itself encounters non-local impact, uncertain
+ownership, mechanism-coupled tests, physical source structure that may hide
+distinct responsibilities, or a local fix that may preserve an architectural
+problem, read
+[the architectural scope decision authority](../../supervised-implementer-loop/references/architectural-scope-decision.md)
+completely. Use it only to audit evidence and classification. A reviewer never
+selects remediation, accepts a deferral, creates or mutates a follow-up record,
+or authorizes package scope.
+
+When this trigger applies but the required decision record is absent, keep the
+issue `candidate` when source evidence shows a concrete possible defect that
+still needs proof, or `unknown` when missing evidence prevents required
+coverage from being cleared. Do not synthesize the missing record or a branch,
+accept deferral, authorize expanded scope, or mutate the ledger.
+
+Require causal source, dependency, state, or test evidence before accepting a
+non-local impact as an architecture signal; effort, file count, inherent public
+composition, and implementation friction are insufficient. Audit the recorded
+proper-correction bound without expanding it into a redesign.
+
+For a claimed deferral, independently verify current-contract satisfaction,
+every applicable non-worsening disposition, stable semantic identity and
+deduplication, authorized durable read-back, current lifecycle state, activation
+state, and handoff visibility. Report records created, updated, closed, stale,
+or unchanged-but-relevant as observed deltas; never perform those mutations.
+
+Classify a source-proven current contract violation, unresolved P0-P3 defect,
+worsening correction, valid external `product-contract-failure`, or activated
+follow-up as a current finding under the caller's severity policy. Keep missing
+required evidence `unknown`. An evidenced improvement outside the current
+contract is not a P2 merely because it is attractive: report it as a non-gating
+architectural improvement only when the linked authority qualifies it, and
+otherwise omit it or retain the concrete unanswered question. Never relabel a
+current finding or unknown as a follow-up to produce a zero-finding decision.

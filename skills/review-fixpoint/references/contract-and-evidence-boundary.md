@@ -12,6 +12,7 @@ fixpoint workflow consumes that authority.
 - Apply evidence classes to completion
 - Separate external scenarios
 - Keep tests stable across redesigns
+- Sequence external diagnostics and acceptance
 
 ## Preserve one contract authority
 
@@ -123,3 +124,36 @@ Whenever a specification or owning design changes, classify affected tests as
 independently designed correct implementation could pass before retaining a
 test. A conformance label is only an index; evidence must name the observable
 invariant its assertions establish.
+
+## Sequence external diagnostics and acceptance
+
+Treat live external execution during Tock as diagnostic unless every
+repository-controlled owner material to the evidence record has already passed
+an independent Tick. Owner clearance alone does not make a run authoritative;
+the exact-revision sequence below also applies.
+
+1. Prove repository-controlled owner and composition behavior deterministically.
+2. Commit the accepted implementation and run its exact-revision deterministic
+   gate.
+3. Run the independent Tick before generating authoritative external acceptance
+   evidence.
+4. If live behavior is needed earlier to localize a defect, label that run
+   diagnostic and non-reusable. Do not update capability ledgers from it.
+5. After a zero-finding repository Tick, run each required external scenario
+   once against the exact accepted implementation commit. An availability
+   failure keeps the capability unconfirmed; it does not fail deterministic
+   acceptance.
+6. Update evidence and status ledgers from the authoritative attempt, then run
+   a bounded incremental Tick limited to the changed evidence owner and
+   documentation.
+7. Invalidate affected records after any change to a material request,
+   response, identity, capture, or finalization owner.
+
+If diagnostic or acceptance execution reveals a repository defect, return to
+Tock. Do not retain the run as acceptance evidence merely because unrelated
+fields passed. A valid external `product-contract-failure` reopens design or
+remediation and prevents `deterministic-fixed-point`; an availability failure
+preserves `capability-unconfirmed` without reopening deterministic acceptance.
+After the bounded evidence-owner Tick, report `capability-confirmed`,
+`capability-unconfirmed`, or `external-contract-failed` separately from the
+deterministic decision.

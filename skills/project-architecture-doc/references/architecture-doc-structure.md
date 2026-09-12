@@ -11,6 +11,19 @@ Use this structure for `docs/architecture.md`. Adapt names to the repository, bu
 
 ## Required Order
 
+Preserve accurate existing sections and replace stale structure in place.
+Combine or omit empty optional sections. Above 200 lines, put a concise table
+of contents after the opening description and verify stable heading-anchor
+links; never use maintained line ranges for navigation. Use absolute or
+repo-root-relative source paths consistently with the repository's docs style.
+
+Keep durable architecture facts in the main document. Include private fields,
+collection shape, diagnostic plumbing, and other volatile representation detail
+in an implementation appendix only when it materially helps maintainers. Make
+an exact limit normative only with its correctness role, workload basis,
+resource estimate, boundary consequence, and revision trigger; otherwise label
+it a private implementation default.
+
 1. `# Architecture`
 2. `## Project Overview`
    - 1-3 short paragraphs explaining what the project does and who/what uses it.

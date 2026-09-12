@@ -3,8 +3,14 @@
 Use this reference with the
 [delivery-package authority](contract-and-scenario-package.md) when an
 implementation work package may outlive one useful context. It defines
-context lifetime and renewal; it does not define another contract matrix,
-delivery-package record, review phase, or fixed-point result.
+selection, context lifetime, and renewal; it does not define another contract
+matrix, delivery-package record, review phase, or fixed-point result.
+
+Read [selection](#select-the-implementer) at setup. Use the
+[continuity sequence](#executable-continuity-sequence) when crossing packages or
+reliability is in doubt, [missed events](#handle-a-missed-event) after the agreed
+stall deadline, and [exceptional recovery](#exceptional-stop-and-rebaseline)
+when the active course must stop.
 
 ## Local terms and authority
 
@@ -210,3 +216,47 @@ Before ordinary renewal, verify all of the following:
 For exceptional recovery, also verify that the dirty-tree classification,
 invalidated assumptions, preserved edits, and rebaseline authority are recorded
 before any new implementation delta.
+
+## Select the implementer
+
+Before spawning, use the environment's memory instructions for a narrow lookup
+of repository-, task-, and user-specific configuration. Current instructions
+outrank memory. Confirm that the requested model is available; do not silently
+substitute it. Ask when model or reasoning selection remains unclear,
+conflicting, stale, or unavailable.
+
+Prefer the leanest capable model consistent with that selection, with enough
+reasoning for owner-level work. Luna with high or maximum reasoning is an option
+when current capabilities and user preferences support it. Record a material
+cost asymmetry only when supplied or established; do not invent prices. Keep
+exhaustive mechanical work and verbose evidence with the cheaper capable owner.
+Use normal execution; fast mode requires the user's explicit request for this
+task and cannot be inferred from urgency, efficiency, or memory.
+
+Resolve the [caller's continuity policy](#1-establish-the-callers-continuity-policy)
+at selection. A named identity requires authorization before replacement;
+role/model persistence supplies standing renewal authority for its recorded
+scope and configuration. Do not repeat that permission request at each accepted
+boundary. Read the remaining renewal steps only when crossing packages or
+context reliability makes a continuity decision necessary.
+
+## Handle a missed event
+
+Use this procedure after a promised event misses the agreed stall deadline, or
+when concrete safety, scope, or lifecycle evidence warrants intervention.
+
+1. Make one narrow check that can change the decision. A timeout or its count
+   alone is not evidence of a stall.
+2. After that check, send at most one status request. Queue substantive deltas
+   to an active turn; trigger a new turn only when it is idle and work is ready.
+3. Interrupt at most once when the course is unsafe, invalidated, or credibly
+   stalled. Establish writer and subprocess settlement before inspecting stable
+   partial edits or resuming work; an interrupt acknowledgement is insufficient.
+4. Resume with a delta when disposition remains `continue`, or when
+   `renew-at-boundary` still permits safe completion of the current package.
+   Otherwise follow [exceptional stop and rebaseline](#exceptional-stop-and-rebaseline).
+   Avoid repeated status-only turns.
+
+When telemetry is available, distinguish raw input, cached reads/writes, and
+newly appended context. Do not infer savings from a timeout duration or invent
+runtime behavior when telemetry is absent.

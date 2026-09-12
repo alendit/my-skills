@@ -1,125 +1,73 @@
 ---
 name: technical-note-series
 description: >-
-  Write, rewrite, or extend a source-grounded educational technical-note series
-  for experienced software developers who are new to a project and its
-  languages, runtimes, compilers, or other foundations. Use for coherent
-  architecture and implementation notes with an open-ended reader journey. Do
-  not use for API reference, changelogs, implementation plans, release notes,
-  or marketing copy.
+  Write, revise, or extend a source-grounded educational technical-note series
+  for experienced developers new to a project and its underlying technology.
+  Use for a coherent reader journey, not API reference, changelogs, plans,
+  release notes, or marketing copy.
 ---
 
 # Technical Note Series
 
-Produce a source-backed series that teaches a project through observable
-behavior and progressively refined mental models. Assume strong general
-software-engineering experience, but no project or specialist-technology
-background. Treat each request as a publication pass over an evolving series,
-not a permanently closed account.
+Teach a project through observable behavior and progressively refined mental
+models. Assume general engineering experience, but no project or specialist
+background. Each request is a publication pass over an evolving series.
+The caller owns scope, destination, authorization, and reviewer constraints.
 
-This skill owns repository research, reader journey, series structure, drafting,
-cross-note coherence, and documentation-specific validation. The caller owns
-scope, destination, authorization, commit policy, and explicit reviewer/model
-constraints. `$evidence-efficient-review` owns review mechanics;
-`$review-fixpoint` owns review numbering, commits, remediation repetition,
-reviewer selection, and stop mechanics when the caller requests that workflow.
+## 1. Establish The Publication Pass
 
-## Establish The Publication Pass
+Recover audience, learning outcomes, described revision, selected notes, stable
+filenames/links, validation expectations, and non-goals. Inspect repository
+status and preserve unrelated work.
 
-Before drafting:
+Use [research and reader journey](references/research-and-reader-journey.md)
+to build source evidence, verify a running example, and order concepts by
+prerequisite. Update the guide before individual notes. It owns series reading
+paths, example identity, and introduction order; link existing project terms
+and normative contracts to their owners rather than redefining them.
 
-1. Identify audience, learning outcomes, described revision, selected note
-   scope, stable filename/link requirements, validation expectations, and
-   explicit non-goals. Recover discoverable facts before asking questions.
-2. Inspect repository status and preserve unrelated work.
-3. Read
-   [references/research-and-reader-journey.md](references/research-and-reader-journey.md)
-   completely. Build source evidence, verify one running example, order concepts
-   by prerequisite, and update the guide before individual notes.
-4. Make the guide the single authority only for series-owned reading paths,
-   running-example identity, series-only terms, reader-specific introduction
-   order and first-use explanations, series scope, and navigation. Notes own
-   distinct reader questions and link to guide-owned material. When glossary
-   state selects a source, link project-wide terms to it instead of maintaining
-   a competing canonical definition. Otherwise keep necessary definitions local
-   without requiring glossary access or persistence. When a project or feature
-   goal already has a normative contract, link stable contract IDs to its owning
-   source. Keep plain-language goal and architecture orientation explicitly
-   explanatory, never a second acceptance authority.
-5. Keep the foundational path compact, published extensions evidence-backed,
-   and future candidates explicitly provisional. The latest published note is
-   a frontier, not the end of the series.
+## 2. Draft And Reconcile
 
-## Draft And Reconcile The Series
+Use [drafting and coherence](references/drafting-and-coherence.md) for each
+selected note: answer one reader question, introduce unfamiliar technology when
+needed, explain semantic owners and crossing data, and reuse the verified
+example. Keep volatile implementation detail separate from durable concepts.
 
-Read
-[references/drafting-and-coherence.md](references/drafting-and-coherence.md)
-before writing. Teach unfamiliar technology only when the reader needs it,
-explain semantic owners and crossing data, reuse the verified example, and
-isolate volatile private implementation detail from durable concepts.
+After each note, reconcile the selected series against the guide. Repair shared
+material at its owner and replace duplicates with links. Keep current facts,
+rationale, limitations, non-goals, and future direction distinct. The latest
+published note is a frontier; future extensions remain provisional.
 
-After each note, reconcile the complete selected series against the guide.
-When a glossary is selected, replace competing project-wide definitions with
-links. Otherwise preserve necessary local definitions without presenting them
-as a durable project-wide authority. Remove duplicate series-only definitions
-and compensating navigation; repair the owning guide or note once and replace
-copies with links. Preserve current facts, rationale, limitations, non-goals,
-and future direction as distinct claim classes.
+After the journey, example, ownership, and navigation are coherent, apply one
+[clear-writing pass](../clear-technical-writing/SKILL.md), preserving those
+teaching decisions.
 
-Once the reader journey, running example, ownership, series scope, and
-navigation are coherent, apply one final
-[clear technical writing pass](../clear-technical-writing/SKILL.md). Preserve
-the accepted teaching decisions and do not add another prose pass in an outer
-review workflow.
+## 3. Validate And Independently Review
 
-## Validate And Review
+Apply [source validation](references/validation-and-review.md#validate-source-backed-claims)
+to claims, code references, observed example results, links, diagrams, and scope.
+Then use the reference's “Normalize the series review contract” and “Compose
+with repository review workflows” sections to obtain an independent EER review
+for every publication pass.
 
-Read
-[references/validation-and-review.md](references/validation-and-review.md)
-completely. Validate claims, code references, the running example, links,
-diagrams, and repository scope before review.
+Repair actionable findings and required `candidate` or `unknown` cells at their
+owning guide or note, rerun affected validation, and continue through
+`review-fixpoint` until required publication coverage clears. That skill owns
+review numbering, commits, reviewer selection, repetition, and stopping.
+Keep those mechanics out of the published notes.
 
-After validation, require an independent `$evidence-efficient-review` for
-every publication pass. Supply one normalized matrix for the audience,
-learning, factual accuracy, boundary ownership, example, time/certainty,
-coherence, traceability, scope, and navigation cells defined in the reference.
-Consume its evidence classes and coverage statuses.
+If a correction changes accepted facts or dependent prose after the writing
+pass, use [revision after change](../clear-technical-writing/references/revision-after-change.md)
+on the affected complete unit before review. Do not add an outer style rewrite.
 
-If any required publication cell is `candidate` or `unknown`, repair its owning
-guide or note, rerun affected validation, and continue through
-`$review-fixpoint` until its review clears every required cell. This skill
-supplies the publication contract; `$review-fixpoint` owns review numbering,
-commits, reviewer selection, remediation repetition, and stop mechanics. Keep
-those mechanics out of the guide and notes. A cleared publication pass does not
-declare the open-ended series permanently complete.
+## 4. Accept And Hand Off
 
-If specialized validation or a review correction changes a source fact,
-conclusion, or dependent prose after the clear-writing pass, apply
-[revision-after-change](../clear-technical-writing/references/revision-after-change.md)
-to the affected complete unit before the next review. This is leaf-artifact
-revalidation, not a recursive style review or a second outer prose pass.
+Use the [publication gate and handoff](references/validation-and-review.md#apply-the-publication-gate).
+Confirm that a newcomer can trace the example, unfamiliar concepts precede use,
+claims match their sources, and the guide and notes form coherent reading paths.
+Report selected files, verified example, validation/review actually performed,
+remaining uncertainty, and the current reading frontier.
 
-## Operating Rules
-
-- Ground current implementation claims in current source, executable config,
-  and tests; use authoritative external sources only for underlying technology.
-- Mark illustrative pseudocode, diagrams, or simplified representations and
-  keep their relationships exact.
-- Never claim generality, portability, safety, authority, or isolation beyond
-  the named owner and evidence.
-- Preserve historical files as historical evidence when applicable; do not
-  silently rewrite history as current behavior.
-- Keep private fields, versions, counts, and paths in implementation maps or an
-  appendix unless they are necessary to teach a durable contract.
-- Do not turn the series into an API inventory, source walkthrough, roadmap,
-  task list, changelog, or generic technology textbook.
-- Do not claim independent review, verification, or observed output that did
-  not occur.
-
-## Handoff
-
-Report the selected files, guide-owned reading paths, latest frontier, verified
-running example, major ownership boundaries, factual and mechanical checks,
-review actually performed, open-ended extension posture, remaining uncertainty,
-and unrelated repository state. Do not commit unless requested; when authorized,
-stage only the selected documentation scope.
+Acceptance closes this publication pass, not the series. Commit only when
+requested or authorized by the caller's selected workflow, and stage only its
+selected scope.

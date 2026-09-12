@@ -61,6 +61,11 @@ Do not force every document to use this exact Markdown table. A database,
 Org-mode table, or other compact ledger is equivalent when it preserves one
 normative authority and stable IDs.
 
+Review ordered documents one at a time. Carry cleared cells forward so later
+documents build on accepted earlier decisions. Reopen an earlier decision only
+when a downstream join or current-source fact invalidates it; document order
+does not justify rereading or redeciding cleared contracts.
+
 ## Distinguish contract and delivery-plan review levels
 
 Record the selected review level and return contract-cell and plan-cell

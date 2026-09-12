@@ -18,6 +18,11 @@ change the route.
 
 ## Resolve Overlap
 
+For general editorial, marketing, or customer prose, use the general `writing`
+skill when available; otherwise the caller handles it directly. This skill is
+not a fallback for that work. Use neither for private reasoning, raw evidence
+collection, or a request with no prose artifact.
+
 Route by the artifact's purpose and factual owner, not by whether the subject is
 technical or the audience is external. When the user names both writing skills,
 choose one transformation process. A non-conflicting check from the other skill

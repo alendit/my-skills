@@ -1,8 +1,9 @@
 # Contract and Scenario Package
 
-Use this reference when establishing the package, assigning each delivery
-package, and accepting handoffs. Keep the package matrix as the sole
-requirement authority.
+Read the matrix, terms, realization, and admission sections at setup; use the
+assignment/handoff section at those boundaries. Read structural profiles,
+external diagnostics, and exact-limit procedures only when their named scope
+applies. Keep the package matrix as the sole requirement authority.
 
 ## Contents
 
@@ -20,6 +21,7 @@ requirement authority.
 - Localize Before Repeating External Scenarios
 - Justify exact limits
 - Keep tests stable across redesigns
+- Assign and hand off a delivery package
 
 ## Build the contract-first package matrix
 
@@ -206,6 +208,15 @@ record through delivery-package assignments, corrections, handoffs, and
 acceptance, and report its direct scenario's behavioral status separately from
 mechanism status.
 
+When literal specification choices or cumulative evidence challenge supporting
+mechanisms, use that authority's aggregate comparison and rebaseline procedure.
+The implementer supplies the trace and smallest faithful alternative; the
+parent accepts mechanism-only correction within package scope, while product
+authority accepts behavioral changes. Reconcile affected design dependencies
+before resuming. Apply [economic actionability](../../evidence-efficient-review/references/economic-actionability.md)
+when a defensive requirement would add or preserve product machinery or lasting
+mechanism-coupled tests.
+
 ## Keep private mechanisms conditional
 
 Put collection shape, fields, counters, diagnostic plumbing, helper names,
@@ -382,3 +393,71 @@ exercise a later defensive ceiling. Test the earliest observable public
 contract publicly and keep unreachable serializer or ABI limits owner-local.
 A conformance label names evidence but does not replace the scenario's
 observable invariant.
+
+## Assign and hand off a delivery package
+
+Use the existing map, contract matrix, and realization relation as the source
+of assignment fields. Send them once, then carry changed dispositions and
+affected IDs. A fresh authorized context receives the verified turnover
+envelope and next package once; do not replay transcripts or raw logs.
+
+### Initial assignment
+
+Supply the work-package outcome, reviewed map and plan identity, current
+package's owner/behavior, established prerequisites, exclusions, architectural
+invariants, accepted behavior that must not regress, scenario portfolio,
+realization disposition, focused completion checks, evidence locations, and
+questions requiring a parent decision. Include base revision, commit authority,
+selected configuration, continuity policy, and the progress envelope.
+
+Include only applicable additions:
+
+- structural baseline and intended source destination for changed owners;
+- residual-topology inventory for physical decomposition;
+- external evidence status and shared capture/localization helpers;
+- architectural decisions and follow-up IDs, including ledger-write authority;
+- the [glossary state's](../../clear-technical-writing/references/project-glossaries.md)
+  opt-out marker alone, or selected source and material scope/term dispositions.
+
+Keep representation and numeric defaults in the conditional implementation
+appendix unless correctness requires them. The implementer chooses the internal
+edits, compiler/import/fixture adaptation, and directly caused repairs. Require
+a design or scope gap to be reported before expanding the package.
+
+Set a completion or meaningful-checkpoint window, immediate blockers, decision
+events, and the first credible stall deadline. The mailbox timeout is a generous
+failsafe beyond the expected event, within the tool limit. Illustrative starting
+points are about 30 minutes for substantial work, 45–60 minutes for long builds
+or checks, and 10–15 minutes for smaller packages. Adjust to actual work; these
+are not acceptance thresholds or instructions to leave work unbounded.
+
+Instruct the implementer to inspect relevant owners and adjacent consumers,
+avoid repeating context, use focused checks, and communicate concise deltas.
+Keep verbose logs and intermediate evidence in its context or an accessible
+temporary/authorized artifact. Economy does not waive owner analysis, cleanup,
+required documentation, validation, or independent acceptance.
+
+### Completion handoff
+
+Report base revision and handoff SHA when committed, changed paths and owner
+boundary, intended behavior/interface change (or none), established contract
+IDs, goal and direct-scenario status, mechanism progress, focused checks with
+pass/fail status, unresolved concerns, and the detailed-evidence location.
+Replace planned realization entries with actual source/assertion evidence;
+report changed entries and unresolved rows after the first complete relation.
+
+Include material exceptions to mechanical equivalence and, when activated,
+structural/residual-topology deltas, affected-test dispositions, external
+evidence, architectural decisions and verified follow-up deltas. Carry material
+terminology state under the shared glossary authority, not a copied glossary.
+
+Distinguish expected pre-fix reproduction from final verification, observations
+from hypotheses and execution witnesses, and the original failure from cleanup
+failure. Zero selected tests, stale passes, and missing assertions remain
+missing evidence. The implementer cannot accept its own work.
+
+Before an authorized commit, settle editing/checking processes and validate the
+coherent handoff. The message describes durable behavior and reason, with a
+short useful validation summary; the inbox supplies SHA and transient evidence.
+Label incomplete checkpoints unaccepted and retain the original package review
+base. Parent acceptance covers the entire original-base-to-final range.

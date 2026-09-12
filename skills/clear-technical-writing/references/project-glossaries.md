@@ -45,6 +45,13 @@ architecture evidence and authority.
 
 ## Check Material Coverage At The Existing Boundary
 
+At assignments, corrections, and handoffs, carry the explicit opt-out marker
+alone or the selected source and changed or still-material dispositions below.
+Under opt-out, do not access a glossary or calculate, request, transfer, recover,
+or report scope fit or candidates. For a selected source, missing or stale state
+blocks only the affected handoff or decision: recover it here and recheck
+material terms, without starting a repository audit or a parallel ledger.
+
 When active work materially changes scope, or an existing selected glossary is
 reused at a durable-artifact or package boundary, compare its declared scope,
 when present, with the active work. Report a material mismatch while retaining

@@ -27,7 +27,9 @@ rationale wholesale into a target file.
    adding a duplicate. If none exists, add `## Architecture Guidance` with
    compact `### Hard Constraints` and
    `### Required Self-Check For Design-Sensitive Changes` subsections.
-3. Adapt the guidance contract into concise, self-contained instructions. Give
+3. Adapt the guidance contract into the smallest self-contained policy block
+   that preserves its constraints and self-check. Include rationale only when
+   needed to disambiguate a constraint or prevent misuse. Give
    target readers the local explanations they need; never make a look-aside
    glossary an undeclared runtime dependency. Keep architecture policy separate
    from product requirements, implementation plans, workflow mechanics, TDD
@@ -41,9 +43,6 @@ rationale wholesale into a target file.
 6. After the policy contract and self-check are complete, apply one compact
    [clear technical writing pass](../clear-technical-writing/SKILL.md) without
    changing rule ownership or expanding policy scope.
-
-Prefer the smallest policy block that preserves the contract. Include rationale
-only where omitting it would make a constraint ambiguous or easy to misuse.
 
 ## Verify
 
