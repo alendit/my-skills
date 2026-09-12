@@ -45,18 +45,22 @@ Use the external-scenario and exact-limit procedures only when they apply.
 
 ## 2. Select And Assign One Implementer
 
-Resolve the authorized model, reasoning, execution mode, and continuity policy
-using [implementer selection](references/implementer-continuity.md#select-the-implementer).
-Honor explicit choices and standing authorization; use normal execution unless
-fast mode is explicitly requested. Keep one implementation writer active through
-the delivery package, corrections, and parent acceptance.
+Use [implementer selection](references/implementer-continuity.md#select-the-implementer)
+to select the configured role and any explicit overrides. Default to
+`role/model-persistent` continuity: spawn and respawn within the authorized work
+without asking again. Honor explicit identity restrictions and use normal
+execution unless fast mode is explicitly requested. Keep one implementation
+writer active through the delivery package, corrections, and parent acceptance.
 
 Send the [initial assignment](references/contract-and-scenario-package.md#assign-and-hand-off-a-delivery-package)
 once: accepted brief or formal map and current package, owner and behavior, prerequisites,
 exclusions, focused checks, decision boundaries, base revision, and commit
-authority. Use the smallest sufficient context fork. Record starting paths and
-diff only when inherited dirt or overlapping changes make attribution uncertain.
-Keep verbose working evidence with the implementer or in a referenced artifact.
+authority. Start with no parent conversation history; in Codex, explicitly set
+`fork_turns: "none"` on every spawn or respawn. Supply a self-contained brief and
+relevant artifact pointers instead of the parent transcript or orchestration
+references. Record starting paths and diff only when inherited dirt or
+overlapping changes make attribution uncertain. Keep verbose working evidence
+with the implementer or in a referenced artifact.
 
 Bound the work up front with an expected completion or checkpoint window,
 milestones, immediate blocker conditions, and a credible stall deadline. Select

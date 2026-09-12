@@ -19,12 +19,13 @@ for bounded delivery, use the accepted brief, its revision, and established
 outcomes wherever the formal route carries map, plan, and contract identities.
 Renewal does not require upgrading a bounded brief into formal plan review.
 
-- A **continuity mode** records whether the caller requires a particular
+- A **continuity mode** records whether the caller explicitly requires an
   identity or only a role and exact runtime configuration. `identity-persistent`
-  means that a named implementer may not be replaced without explicit
-  permission. `role/model-persistent` means that a fresh context may be used at
-  an authorized boundary, but it must preserve the selected role, model,
-  reasoning effort, and normal or fast mode.
+  means that the required identity may not be replaced without explicit
+  permission; an agent name alone does not select this mode.
+  `role/model-persistent` is the default: a fresh context may be used at an
+  authorized boundary while preserving the selected role, model, reasoning
+  effort, and normal or fast mode.
 - A **persistence interval** is the lifetime of one active implementation
   context through one admitted delivery package, its corrections, and parent
   acceptance. At that boundary the parent may begin another interval with the
@@ -52,9 +53,13 @@ independent inspection, correction, acceptance, and authorization.
 
 ### 1. Establish the caller's continuity policy
 
-At package setup, record the caller's exact requirements for:
+At package setup, apply explicit caller requirements and otherwise use the
+configured implementer with `role/model-persistent` continuity. This supplies
+standing authority for initial spawning and same-configuration respawning
+within the authorized work; do not ask the user to confirm routine lifecycle
+actions. Record:
 
-- implementer identity, when one is named;
+- implementer identity, when the caller explicitly requires preserving it;
 - model, reasoning effort, and normal or fast execution mode;
 - continuity mode and who may authorize replacement;
 - the admitted delivery-package map, plan identity, and goal identity;
@@ -68,12 +73,12 @@ If the runtime cannot provide the authorized configuration, renewal is
 unavailable: continue in the current context when it remains trustworthy, or
 stop and ask for the required rebaseline or replacement authority.
 
-Recording `role/model-persistent` continuity is standing renewal authority for
-the recorded work-package scope unless the caller explicitly limits it. At a
-later parent-accepted delivery-package boundary, exercise that existing
-authority by recreating the implementer with the exact recorded configuration;
-do not stop to request the same permission again. Ask only when identity,
-configuration, or authorized scope must change.
+At a parent-accepted delivery-package boundary, exercise that standing authority
+by recreating the implementer with the exact recorded configuration. The same
+authority covers exceptional recovery after writer settlement and parent
+rebaseline below. Ask only when an explicit identity restriction, configuration
+change, or scope expansion needs new authority. Lifecycle authority does not
+expand permission to edit, commit, publish, or perform external actions.
 
 Do not add turnover ceremony to a small package expected to finish in one
 coherent context.
@@ -163,8 +168,10 @@ absence of an overlapping writer before retiring the context.
 
 For an authorized `role/model-persistent` renewal, retire the old context and
 start exactly one fresh implementer with the same selected role, model,
-reasoning effort, and execution mode. Give it the verified turnover envelope,
-the current accepted package map, and the next admitted package as one
+reasoning effort, and execution mode, without asking again. In Codex, use
+`agent_type: "implementer"` and `fork_turns: "none"` for the default role.
+Give it the verified turnover envelope, the current accepted package map,
+and the next admitted package as one
 complete bounded assignment. Later communication is delta-only.
 
 The old context is historical evidence, not a fallback or comparison path. Do
@@ -197,9 +204,11 @@ delivery package, classify observable work as:
 
 Preserve useful edits and evidence. Do not discard them merely to obtain a
 clean conversational restart, and do not treat complete-but-unaccepted work
-as accepted. The parent records the invalidated assumption, selects the
-smallest recovery boundary, and obtains any required identity or configuration
-authority before resuming. A fresh context receives a new complete bounded
+as accepted. The parent records the invalidated assumption and selects the
+smallest recovery boundary. For the default continuity mode, the parent may
+respawn with the same configuration and scope without another user approval;
+obtain new authority only for an explicit identity restriction or a required
+configuration or scope change. A fresh context receives a new complete bounded
 assignment only after that rebaseline and any applicable package admission
 remain valid.
 
@@ -214,8 +223,8 @@ Before ordinary renewal, verify all of the following:
 - the turnover envelope is a verified composition of existing records rather
   than a second ledger;
 - required post-renewal evidence is reachable outside the retiring context;
-- the fresh context will receive one complete assignment followed by deltas;
-  and
+- the fresh context will receive one complete assignment followed by deltas,
+  with no parent conversation history; and
 - no reviewer lifecycle, Tick/Tock, or independent-review authority changed.
 
 For exceptional recovery, also verify that the dirty-tree classification,
@@ -224,26 +233,35 @@ before any new implementation delta.
 
 ## Select the implementer
 
-Before spawning, use the environment's memory instructions for a narrow lookup
-of repository-, task-, and user-specific configuration. Current instructions
-outrank memory. Confirm that the requested model is available; do not silently
-substitute it. Ask when model or reasoning selection remains unclear,
-conflicting, stale, or unavailable.
+Use the installed `implementer` role: `gpt-5.6-luna` with `max` reasoning.
+Its [role file](../assets/implementer.toml) owns the child's execution process.
+Explicit task or repository choices override this default; honor applicable
+memory instructions without reopening an already resolved selection. Use normal
+execution unless fast mode is explicitly requested.
 
-Prefer the leanest capable model consistent with that selection, with enough
-reasoning for owner-level work. Luna with high or maximum reasoning is an option
-when current capabilities and user preferences support it. Record a material
-cost asymmetry only when supplied or established; do not invent prices. Keep
-exhaustive mechanical work and verbose evidence with the cheaper capable owner.
-Use normal execution; fast mode requires the user's explicit request for this
-task and cannot be inferred from urgency, efficiency, or memory.
+In Codex, explicitly pass `agent_type: "implementer"` and `fork_turns: "none"`
+on the initial spawn and every respawn. The role fixes model and reasoning, so
+do not pass conflicting model overrides. For an explicitly different configured
+role, select that role with the same history-free spawn. An explicit configuration
+without a matching role uses the runtime's model and reasoning fields and the
+bundled execution instructions instead of a conflicting named role. The complete assignment
+supplies task context; configuration, repository instructions, and the available
+skill catalog still apply. Keep subsequent messages delta-only in the same child.
 
-Resolve the [caller's continuity policy](#1-establish-the-callers-continuity-policy)
-at selection. A named identity requires authorization before replacement;
-role/model persistence supplies standing renewal authority for its recorded
-scope and configuration. Do not repeat that permission request at each accepted
-boundary. Read the remaining renewal steps only when crossing packages or
-context reliability makes a continuity decision necessary.
+The role must be installed in a Codex agent directory; merely including it in
+the plugin does not register it. Use the repository's
+[role installation procedure](../../../README.md#codex-implementer-role).
+If the role is unavailable in the current tool catalog, do not send an undeclared
+parameter. For this same authorized configuration, start a history-free child
+with explicit Luna Max settings and instruct it to read the bundled role's
+execution process once. If the runtime cannot provide the required configuration,
+report that concrete blocker instead of silently changing models.
+
+Other harnesses use their named-role and clean-context equivalents, or the same
+explicit configuration and bundled execution instructions. Apply the default
+[continuity policy](#1-establish-the-callers-continuity-policy) without a separate
+approval prompt. Read recovery details only when crossing packages or context
+reliability requires a decision.
 
 ## Handle a missed event
 

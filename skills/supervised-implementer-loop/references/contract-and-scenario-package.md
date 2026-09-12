@@ -437,6 +437,11 @@ envelope and next package once; do not replay transcripts or raw logs.
 
 ### Initial assignment
 
+Start the child without parent conversation history (`fork_turns: "none"` in
+Codex). Supply a self-contained brief and relevant artifact pointers, including
+decisions the child cannot recover from those artifacts. Do not copy the parent
+transcript or load its orchestration skills into the assignment.
+
 Supply the work-package outcome, accepted bounded brief or formal reviewed map
 and plan identity, current
 package's owner/behavior, established prerequisites, exclusions, architectural
