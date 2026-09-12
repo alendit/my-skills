@@ -49,6 +49,7 @@ def package_files(repository, revision):
     selected = {path for path in available if path.startswith("skills/")}
     if not selected:
         raise ValueError("Revision contains no skills")
+    selected.update(path for path in available if path.startswith("hooks/"))
 
     pending = [path for path in selected if path.endswith(".md")]
     inspected = set()

@@ -1,0 +1,16 @@
+{
+  "description": "Allow event-driven parent waits during supervised implementation.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat \"${PLUGIN_ROOT}/hooks/delegated-wait-context.json\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

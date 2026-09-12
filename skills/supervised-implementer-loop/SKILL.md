@@ -83,9 +83,11 @@ Serialize Git writes and avoid overlapping edits.
    or lifecycle evidence changes the decision, use the [stall procedure](references/implementer-continuity.md#handle-a-missed-event).
    Timeout count alone is not a stall signal.
 
-When a higher-priority harness rule caps waits or requires commentary, give the
-minimum update and resume waiting. Do not turn that wakeup into inspection or
-another assignment; report the constraint when it prevents long waits.
+The Codex plugin's session hook supplies a developer-level exception for these
+delegated waits. If it is absent or another higher-priority rule still caps waits
+or requires commentary, give the minimum update and resume waiting. Do not turn
+that wakeup into inspection or another assignment; report the constraint when
+it prevents long waits.
 
 ## 4. Inspect, Correct, Or Accept
 

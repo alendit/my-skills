@@ -1,5 +1,7 @@
 import importlib.util
 import json
+import os
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -45,6 +47,34 @@ def make_repository(root, broken=False):
 
 
 class PluginExportTests(unittest.TestCase):
+    def test_exported_session_hook_runs_without_repository_or_working_directory(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            repository = make_repository(root)
+            shutil.copytree(ROOT / "hooks", repository / "hooks")
+            run(repository, "add", "hooks")
+            run(repository, "commit", "-m", "bundle session hook")
+            destination = root / "installed plugin with spaces"
+            EXPORT_PLUGIN.build(repository, destination)
+            shutil.rmtree(repository)
+
+            config = json.loads((destination / "hooks/hooks.json").read_text())
+            handler = config["hooks"]["SessionStart"][0]["hooks"][0]
+            result = subprocess.run(
+                ["/bin/sh", "-c", handler["command"]],
+                env={**os.environ, "PLUGIN_ROOT": str(destination)},
+                cwd=root,
+                input='{"hook_event_name":"SessionStart","source":"startup"}',
+                text=True, capture_output=True, check=True,
+                timeout=handler["timeout"],
+            )
+            output = json.loads(result.stdout)["hookSpecificOutput"]
+            self.assertEqual(output["hookEventName"], "SessionStart")
+            self.assertTrue(output["additionalContext"].strip())
+            self.assertEqual(result.stderr, "")
+            manifest = json.loads((destination / "build-manifest.json").read_text())
+            self.assertEqual(manifest["files_sha256"], EXPORT_PLUGIN.inventory(destination))
+
     def test_exports_closed_revision_with_provenance(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

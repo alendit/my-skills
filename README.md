@@ -1,8 +1,9 @@
 # My Skills
 
-Reusable engineering workflows packaged as a Codex plugin with eight skills
-and a bundled implementer role. The plugin registers no MCP server or additional
-tools; one Codex configuration entry makes the role available for spawning.
+Reusable engineering workflows packaged as a Codex plugin with eight skills,
+a bundled implementer role, and a session hook. The plugin registers no MCP
+server or additional tools; one Codex configuration entry makes the role
+available for spawning.
 
 ## Build
 
@@ -12,9 +13,10 @@ Export an immutable committed revision to a new directory:
 python3 scripts/export_plugin.py /tmp/my-skills --revision HEAD
 ```
 
-The exporter includes all eight skills and their transitive repository-local
-Markdown references. It rejects unresolved or escaping references and existing
-destinations. `SOURCE_REVISION` records the exact commit; `build-manifest.json`
+The exporter includes all eight skills, their transitive repository-local
+Markdown references, and the bundled hooks. It rejects unresolved or escaping
+references and existing destinations. `SOURCE_REVISION` records the exact commit;
+`build-manifest.json`
 records hashes for the exported files. The exported plugin version includes the
 source commit as its Codex cache key.
 
@@ -75,6 +77,24 @@ hash difference or regenerate the staged build manifest before comparing.
 Verify that the [role registration](#codex-implementer-role) still points to the
 bundled file in the updated source. Start a fresh Codex thread so the new catalog
 and role configuration are loaded.
+
+## Codex Delegated Waits
+
+Codex discovers [hooks/hooks.json](hooks/hooks.json) automatically when the plugin
+and hooks feature are enabled. Its synchronous `SessionStart` command emits a
+static `additionalContext` payload, which Codex inserts as a developer message.
+This supplies a scoped exception to the default 60-second commentary and wait
+guidance while the parent awaits an active implementer's agreed events. The
+workflow chooses a generous timeout, usually about 30 minutes for substantial
+work, with an up-front checkpoint window and stall deadline.
+
+The hook reads only its bundled payload; it adds no tool, network request, or
+global instruction file. It runs at session lifecycle boundaries, including
+resume and compaction, rather than every turn or tool call. Start a fresh thread
+after installing. Check hook discovery and successful `SessionStart` execution
+if the exception is absent; skill text alone cannot override developer rules.
+Without the hook, retain the harness-constrained fallback in the workflow.
+Disabling the plugin disables this hook.
 
 ## Codex Implementer Role
 
