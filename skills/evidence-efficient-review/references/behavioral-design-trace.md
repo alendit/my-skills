@@ -38,9 +38,11 @@ Behavioral status: <unavailable | partial | passing | failing>
 ```
 
 Choose a direct scenario that demonstrates the goal through a real composition,
-not through an internal field, record, callback, or metric. Carry the same goal,
-goal ID, scenario identity, product authority, and owning contract through
-specification, implementation, review, and acceptance. Refine its evidence and
+not through an internal field, record, callback, or metric. Carry the same
+outcome, scenario, and authority through implementation and acceptance. Formal
+or design-sensitive work also carries its stable goal ID and owning contract;
+bounded work references its accepted brief and only reuses IDs already present.
+Refine the evidence and
 status as the work advances without rewriting the goal in terms of the chosen
 design.
 
@@ -139,9 +141,11 @@ Report two independently visible lanes throughout the work:
 
 Mechanism completion supports the result but does not stand in for behavioral
 progress and cannot establish behavioral acceptance. At each package handoff
-and acceptance decision, report the goal ID and direct scenario status
-separately from mechanism status. A package can claim behavioral acceptance
-only when the direct scenario has the status required by the owning contract.
+and acceptance decision, report the accepted outcome and direct scenario status
+separately from mechanism status. Include the goal ID/owning contract for formal
+or design-sensitive work, or when already present in a bounded brief. A package
+can claim behavioral acceptance only when the direct scenario satisfies the
+accepted brief or owning contract.
 Unavailable external capability retains its explicit evidence status rather
 than being inferred from internal gates.
 
@@ -149,9 +153,9 @@ than being inferred from internal gates.
 
 Use this checklist after performing the process:
 
-- [ ] one stable goal ID, plain-language behavioral goal, direct public
-      scenario, product authority, owning contract, and behavioral status
-      remain the package-level trace authority through acceptance;
+- [ ] the bounded brief's outcome, direct scenario, authority, status, and
+      evidence remain sufficient through acceptance; formal or design-sensitive
+      work additionally preserves its stable goal ID and owning contract;
 - [ ] every material vocabulary item, semantic owner, durable state, lifetime,
       coordination boundary, public surface, and mechanism-coupled test is
       traced to accepted behavior or marked replaceable;
