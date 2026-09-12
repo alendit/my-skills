@@ -42,7 +42,9 @@ and reuse the same reviewer across later rounds until that dispute is resolved.
 Use enough reasoning depth for independent defect discovery. Honor explicit
 reviewer-model instructions; otherwise follow current environment selection and
 memory guidance. Do not enable fast mode unless the user requests it for this
-task. Run independent QA on each new review or substantial remediation. If the
+task. Verify material review claims and request additional QA only for a
+concrete unresolved risk; a new review does not automatically require another
+review layer. If the
 persistent reviewer becomes unavailable, report the continuity loss and ask the
 user before selecting a replacement; do not replace it merely to obtain a fresh
 context.
@@ -64,13 +66,12 @@ A Tock is not ready for Tick until the exact-commit gate passes. On failure,
 return to remediation, checkpoint the correction under repository policy, and
 rerun the gate before review.
 
-At minimum preserve:
-
-- focused owner tests and public regressions;
-- applicable repository-declared formatting, lint, and compile checks;
-- the project-declared complete deterministic gate;
-- conformance or fixture checks relevant to changed contracts; and
-- benchmark assertions only where the contract names a performance bound.
+Choose focused evidence from the defect and changed boundary. Reuse current
+checks whose assertions establish the required behavior; add or strengthen
+regressions where a gap remains. Use documentation/source/link checks for prose
+defects rather than manufacturing runtime tests. Preserve applicable repository
+formatting, lint, compile, conformance, fixture, and complete deterministic gates;
+benchmark assertions apply only to named performance bounds.
 
 Keep verbose successful output out of review context. Record revision, command,
 exit status, concise counts or identity, and only the failure tail needed for
@@ -92,9 +93,12 @@ For each finding:
 3. Trace the invariant to its owner. Fix the representation, state lifetime,
    dependency direction, or algorithm there.
 4. Remove the obsolete path made unnecessary by the fix.
-5. Add an owner-level regression and a public composed regression. For a defect
-   class, add bounded property, partition, schedule, or scaling coverage rather
-   than only the named example. Classify affected existing tests and apply the
+5. Select evidence that would detect this defect at its real boundary. Reuse
+   adequate existing coverage; add or strengthen owner-level or public-composed
+   regressions when their distinct behavior needs proof. Require both only when
+   each covers a material gap. Use bounded property, partition, schedule, or
+   scaling coverage when the defect class warrants it. For prose-only findings,
+   validate the corrected claim and affected references. Classify existing tests and apply the
    [alternate-implementation check](contract-and-evidence-boundary.md#keep-tests-stable-across-redesigns)
    before adding new witnesses.
 6. Update the repository-declared architecture authority and the selected work
