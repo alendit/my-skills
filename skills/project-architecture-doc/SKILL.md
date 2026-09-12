@@ -10,6 +10,13 @@ description: >-
 Create or update `docs/architecture.md` as a source-backed navigation map of the
 repository's current architecture.
 
+For a narrow update, start from the existing map and accepted architecture
+decisions. Inspect the changed owners and consumers needed to verify the edit,
+then update and check the affected sections and links. Preserve trustworthy
+unchanged material without remapping the repository or regenerating the whole
+discussion. Use the full process below for creation, broad refresh, or evidence
+that invalidates the existing map; widen only the affected scope when possible.
+
 ## 1. Establish Sources And Review Lens
 
 Read applicable repository guidance and existing architecture documents. Use the
