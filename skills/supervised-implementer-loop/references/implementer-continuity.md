@@ -248,10 +248,10 @@ bundled execution instructions instead of a conflicting named role. The complete
 supplies task context; configuration, repository instructions, and the available
 skill catalog still apply. Keep subsequent messages delta-only in the same child.
 
-The role must be installed as a regular file in a Codex agent directory;
-symlinks can be advertised but fail at spawn time. Merely including it in
-the plugin does not register it. Use the repository's
-[role installation procedure](../../../README.md#codex-implementer-role).
+Register the bundled regular file through `agents.implementer.config_file`;
+use the repository's [role registration procedure](../../../README.md#codex-implementer-role).
+The plugin supplies the role contents; the configuration entry makes it
+discoverable without a separate copy or symlink.
 If the role is unavailable in the current tool catalog, do not send an undeclared
 parameter. For this same authorized configuration, start a history-free child
 with explicit Luna Max settings and instruct it to read the bundled role's

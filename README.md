@@ -1,8 +1,8 @@
 # My Skills
 
-Reusable engineering workflow skills packaged as a skills-only Codex plugin.
-The plugin registers no MCP server or additional tools. It also carries an
-implementer role that is installed separately into Codex's agent directory.
+Reusable engineering workflows packaged as a Codex plugin with eight skills
+and a bundled implementer role. The plugin registers no MCP server or additional
+tools; one Codex configuration entry makes the role available for spawning.
 
 ## Build
 
@@ -72,9 +72,9 @@ Read back the installed/cache manifest, `SOURCE_REVISION`, eight-skill inventory
 and `build-manifest.json` hashes. The cachebuster changes the exported manifest
 version after `build-manifest.json` was produced, so account for that one expected
 hash difference or regenerate the staged build manifest before comparing.
-If the implementer role is installed, refresh its regular-file copy using the
-[role installation procedure](#codex-implementer-role). Start a fresh Codex thread
-so the new catalog is loaded.
+Verify that the [role registration](#codex-implementer-role) still points to the
+bundled file in the updated source. Start a fresh Codex thread so the new catalog
+and role configuration are loaded.
 
 ## Codex Implementer Role
 
@@ -84,34 +84,26 @@ single file; the parent workflow owns assignment, acceptance, and lifecycle.
 Within authorized work, initial spawning and same-configuration respawning need
 no additional user confirmation. Explicit identity restrictions still apply.
 
-After installing or updating the plugin, copy the role from the verified source
-into Codex's personal agents directory as a **regular file**. Codex can advertise
-a symlinked role, but its spawn-time reader rejects the link with
-`agent type is currently not available` (the underlying macOS error is
-`Too many levels of symbolic links`).
+Register the bundled file directly in `$CODEX_HOME/config.toml` (normally
+`~/.codex/config.toml`). For the standard source at `~/plugins/my-skills`:
 
-Inspect an existing destination before replacing it. Move an old symlink or
-locally modified role to a recoverable backup outside the agents directory;
-preserve local customizations deliberately. Set `PLUGIN_SOURCE_ROOT` to the
-source path verified above; the standard personal location is shown here:
-
-```sh
-PLUGIN_SOURCE_ROOT="$HOME/plugins/my-skills"
-ROLE_DESTINATION="${CODEX_HOME:-$HOME/.codex}/agents/implementer.toml"
-mkdir -p "${CODEX_HOME:-$HOME/.codex}/agents"
-test ! -L "$ROLE_DESTINATION" &&
-  cp "$PLUGIN_SOURCE_ROOT/skills/supervised-implementer-loop/assets/implementer.toml" \
-    "$ROLE_DESTINATION"
-test -f "$ROLE_DESTINATION" && test ! -L "$ROLE_DESTINATION" &&
-  cmp "$PLUGIN_SOURCE_ROOT/skills/supervised-implementer-loop/assets/implementer.toml" \
-    "$ROLE_DESTINATION"
+```toml
+[agents.implementer]
+config_file = "../plugins/my-skills/skills/supervised-implementer-loop/assets/implementer.toml"
 ```
 
-The bundled file remains the maintained source; repeat the copy and comparison
-on plugin updates. Start a fresh Codex session after installation. Plugin
-installation alone does not register custom agents, and disabling the plugin
-does not disable this separately installed personal agent. Remove the installed
-copy when retiring the role.
+The path resolves relative to the configuration directory; adjust it to the
+verified marketplace source when either location differs. Point to the stable
+source directory, whose contents plugin updates replace, rather than a versioned
+cache. Codex reads the name, description, model, and instructions from that file.
+No separate role copy or symlink is needed.
+
+When migrating an earlier installation, inspect and move the old
+`~/.codex/agents/implementer.toml` outside agent discovery, preserving any local
+customizations before replacing them. Verify that the registration resolves to
+the bundled regular file and start a fresh Codex session. A symlink at the role
+file itself is rejected at spawn time. Remove the registration when retiring the
+role; disabling the plugin alone does not remove a configured agent.
 
 The parent selects `agent_type: "implementer"` and explicitly sets
 `fork_turns: "none"` for every spawn and respawn. The self-contained assignment

@@ -9,7 +9,7 @@
   "interface": {
     "displayName": "My Skills",
     "shortDescription": "Reusable engineering workflow skills.",
-    "longDescription": "Adds coordinated workflow skills for implementation, review, architecture, and technical writing.",
+    "longDescription": "Adds workflow skills for implementation, review, architecture, and technical writing, plus a bundled code implementer role.",
     "developerName": "Local developer",
     "category": "Productivity",
     "capabilities": [],
