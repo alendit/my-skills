@@ -59,7 +59,7 @@ logs, complete files, and remediation narratives outside the dossier unless
 needed for a concrete decision.
 
 Use the [review record](references/review-record.md#build-the-dossier) for
-conditional fields and the existing incremental-review evidence budget.
+conditional fields and task-sized evidence planning.
 Implementer inventories and normalized comparisons can locate questions; verify
 them against source or behavior before crediting them as independent proof.
 

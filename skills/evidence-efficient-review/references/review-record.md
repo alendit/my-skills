@@ -3,7 +3,8 @@
 Use the dossier section while collecting evidence, the coverage schema while
 reviewing cells, and the result fields at handoff. Include conditional fields
 only when they apply; reference existing records rather than creating parallel
-requirements. The verification section preserves the incremental-review budget.
+requirements. Honor explicit caller budgets while sizing ordinary evidence work
+to the actual review.
 
 ## Contents
 
@@ -43,17 +44,17 @@ Keep dossier commands query-sized. Search a patch for filenames, symbols, and
 hunk headers instead of loading a large patch body. When changed symbols or
 exact ranges are already known, read those ranges directly rather than
 outlining an entire large owner. Cap outlines and source reads to the smallest
-result that can answer the current question; do not combine several large
-ranges in one tool call.
+result that can answer the current question. Batch independent narrow reads
+when useful; avoid bundles whose output hides the evidence needed next.
 
-Treat tool output as review cost. For an incremental post-remediation review,
-default to at most 20 evidence-producing tool calls before the final gate when
-the caller supplies no tighter budget. Keep individual source/outline results
-under roughly 200 lines. If required coverage cannot be completed within the
-budget, return the remaining cells as unknown instead of expanding context
-without bound. Do not read every target document again when the prior review
-already records its contract; reopen only changed authorities and sections
-needed for a live closure question.
+Treat tool output as review cost. Plan compact evidence batches from scope,
+known findings, and uncertain dependencies. Call counts and output size are
+signals to improve evidence collection, not automatic stopping thresholds.
+Continue while additional evidence is needed to complete required coverage.
+Honor an explicit caller time/token/call budget; if it prevents completion,
+report uncovered cells as unknown and state the budget boundary. Do not reread
+every target document when prior review records its contract; reopen changed
+authorities and sections needed for a live closure question.
 
 The dossier supplies facts and routing, not the remediation author's suspected
 answer. It may include concise implementer-produced inventories, normalized
@@ -143,9 +144,11 @@ failure tail when needed. Do not rerun an overlapping complete gate merely to
 obtain another presentation of the same evidence.
 
 Run each final gate in the foreground and wait on that execution instead of
-starting background jobs and polling their logs. Final verification should add
-at most three tool calls beyond the evidence budget unless a gate fails and its
-failure needs bounded diagnosis.
+starting background jobs and polling their logs. Reuse current equivalent gate
+evidence when its revision and dependencies match. Additional calls should
+finish required verification or diagnose a concrete failure, not reproduce an
+already sufficient result. Respect an explicit caller budget without inventing
+a separate final-gate call limit.
 
 Record revision-dependent evidence as such. Do not treat counts, identities,
 timings, or a clean worktree from another revision as current facts.
