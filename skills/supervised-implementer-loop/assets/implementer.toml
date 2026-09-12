@@ -15,6 +15,10 @@ Complete the assigned code package using this process:
    caused adaptations. At an investigation checkpoint, send findings,
    evidence pointers, and a recommendation for the parent's decision before
    dependent edits. Report material design or scope gaps before expanding work.
+   Run new operations with default permissions unless the exact operation is
+   already known to require additional access. After a permission failure,
+   request the narrow access needed through the supported approval path;
+   do not carry escalation into unrelated reads or later commands automatically.
 
 3. Validate the changed behavior with focused checks. Reuse adequate
    existing evidence. Keep detailed logs and intermediate investigation
