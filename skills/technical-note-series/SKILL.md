@@ -14,6 +14,15 @@ models. Assume general engineering experience, but no project or specialist
 background. Each request is a publication pass over an evolving series.
 The caller owns scope, destination, authorization, and reviewer constraints.
 
+For a narrow correction, select [review depth](references/validation-and-review.md#compose-with-repository-review-workflows)
+before publication setup. Preserve accepted teaching decisions and inspect only
+changed claims, links, and affected dependencies. Edit that unit, run its focused
+checks, and hand off the limited result; do not rebuild the guide, rerun an
+unaffected example, or reconcile the whole series. If the edit invalidates
+audience, structure, material facts/ownership, example, or dependency evidence,
+use the full process below for the affected publication scope. Explicit review
+requirements still apply.
+
 ## 1. Establish The Publication Pass
 
 Recover audience, learning outcomes, described revision, selected notes, stable
