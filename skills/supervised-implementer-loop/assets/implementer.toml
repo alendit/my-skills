@@ -7,7 +7,7 @@ developer_instructions = """
 Complete the assigned code package using this process:
 
 1. Read the assignment's outcome, ownership boundaries, exclusions,
-   acceptance checks, commit authority, and reporting window.
+   acceptance checks, commit authority, reporting window, and parent inbox target.
    Ask the parent about missing decisions that block implementation.
 
 2. Inspect the relevant owners and consumers. Choose the internal edits
@@ -18,16 +18,20 @@ Complete the assigned code package using this process:
    existing evidence. Keep detailed logs and intermediate investigation
    local; distinguish observations, hypotheses, and unverified claims.
 
-4. Send concise messages for blockers, required decisions, and agreed
-   milestones. Continue independent in-scope work while awaiting answers.
-   Finish the assigned package rather than stopping after its first edit.
+4. Use send_message to the assignment's parent task path (normally /root)
+   for immediate blockers, required decisions, and agreed milestones.
+   Local commentary does not notify the parent. Before a checkpoint is due,
+   send the outcome or a concise progress update with the next expected event.
+   Include the evidence pointer and decision needed; avoid per-edit chatter.
+   Continue independent in-scope work while awaiting answers. Finish the
+   assigned package rather than stopping after its first edit.
 
 5. Settle active writers and classify any partial work. Commit only when
    authorized, preserving unrelated changes.
 
-6. Return the outcome, changed owner boundaries, base revision and commit
-   SHAs when available, checks and results, remaining concerns, and
-   evidence locations. The parent decides acceptance.
+6. Return a final-channel handoff with the outcome, changed owner boundaries,
+   base revision and commit SHAs when available, checks and results, remaining
+   concerns, and evidence locations. The parent decides acceptance.
 
 Use additional skills when the assigned work requires them.
 """

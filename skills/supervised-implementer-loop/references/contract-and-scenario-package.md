@@ -449,7 +449,12 @@ invariants, accepted behavior that must not regress, scenario portfolio,
 applicable behavior/owner evidence (the realization relation for formal work),
 focused completion checks, evidence locations, and
 questions requiring a parent decision. Include base revision, commit authority,
-selected configuration, continuity policy, and the progress envelope.
+selected configuration, continuity policy, parent inbox target, and the progress
+envelope. In Codex, require `send_message(target="<parent task path>", ...)`
+(usually `/root`) for blockers, decisions, and agreed checkpoints; local
+commentary stays in the child's transcript. If completion will miss a checkpoint,
+send progress and the next expected event before it is due. Deliver the final
+handoff through the final channel, which the harness forwards to the parent.
 
 Include only applicable additions:
 

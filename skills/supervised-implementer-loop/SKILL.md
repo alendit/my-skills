@@ -62,6 +62,8 @@ references. Record starting paths and diff only when inherited dirt or
 overlapping changes make attribution uncertain. Keep verbose working evidence
 with the implementer or in a referenced artifact.
 
+Supply the parent inbox target and require explicit inbox messages for agreed
+milestones, blockers, and decisions; child-local commentary is not delivery.
 Bound the work up front with an expected completion or checkpoint window,
 milestones, immediate blocker conditions, and a credible stall deadline. Select
 a generous mailbox timeout beyond the expected event window within the runtime's
