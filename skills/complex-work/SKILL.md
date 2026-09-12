@@ -92,6 +92,18 @@ qualification, and fixed-point rules.
 Route a unit to the applicable specialized skill, then follow that skill's
 interface and acceptance rules without restating or replacing its mechanics:
 
+1. Classify whether the unit's main work is prose authorship, code
+   implementation, review, or another specialized artifact.
+2. Keep specifications, plans, skills, design proposals, and other prose-heavy
+   artifacts with the primary agent, using the applicable writing skill. A
+   specialized skill does not by itself require a subagent. Preserve an
+   independent reviewer when review is required.
+3. Route an admitted code-heavy package to `$supervised-implementer-loop` when
+   delegated exploration, editing, adaptation, and focused checks are useful.
+   For mixed work, the primary owns design/specification decisions and the
+   implementer owns the admitted code package and its directly supporting
+   tests, fixtures, comments, and documentation.
+
 During package establishment and routing, consume the current reviewed result
 level and plan identity for every unit that can produce production edits. If
 implementation-plan coverage is missing, contract-only, stale, invalidated,
@@ -114,7 +126,7 @@ map.
 
 - route review-only work to `$evidence-efficient-review`;
 - route repeated review and remediation to `$review-fixpoint`;
-- route dependent implementation requiring the supervised implementation
+- route dependent code implementation requiring the supervised implementation
   workflow to `$supervised-implementer-loop`;
 - route an educational technical-note series to `$technical-note-series`;
 - route repository architecture documentation to
@@ -148,10 +160,10 @@ that evidence without copying the leaf's scanning or architecture-scope
 mechanics.
 
 Delegate only when the user requests delegation, the selected leaf requires
-it, an active execution-cost profile identifies a cheaper capable implementation
-owner/configuration for suitable mechanical or evidence-producing work, or packages are
-genuinely independent. Do not fan out or delegate all work merely because the
-package is large.
+it, an active execution-cost profile identifies a cheaper capable owner for
+suitable code-heavy, mechanical, or evidence-producing work, or packages are
+genuinely independent. Do not delegate prose-heavy authorship or fan out work
+merely because the package is large.
 
 When the execution-cost profile identifies a cheaper capable implementation
 owner/configuration, keep exhaustive mechanical work, iteration, and verbose
@@ -164,25 +176,23 @@ Consume a SIL leaf disposition without reproducing its mechanics; apply it at
 the replan boundary below. Do not copy SIL turnover fields, telemetry
 interpretation, or recovery procedure into the outer package record.
 
-For a long delegated unit, establish its progress envelope in the initial
-assignment: expected duration class, self-reported milestones, immediate
-blocker conditions, first credible stall threshold, and intermediate decisions
-that require the primary. Wait for mailbox events with the longest useful
-bounded timeout allowed by the next real checkpoint, user-communication policy,
-and active platform. A timeout reports only that no event arrived; continue
-waiting while the unit remains inside its envelope. Inspect progress only when
-the result can change routing, scope, safety, acceptance, or a dependent
-decision, and batch the narrow evidence needed for that decision.
+For a supervised implementation unit, establish the progress envelope once and
+consume SIL's event-driven waiting process. An empty timeout does not change
+routing and must not trigger source, status, or diff inspection. Inspect only
+after a promised event misses its agreed stall deadline or an event supplies
+concrete evidence that can change scope, safety, acceptance, or a dependent
+decision.
 
 Treat every mutation as bounded by existing authority. A reviewable unit does
 not authorize a commit, push, publication, deployment, message, destructive
 action, or other external write. Checkpoint only when user and repository
 policy authorize it, and preserve unrelated worktree changes.
 
-When an authorized unit changes an installed skill source, inventory the exact
-destination first, preserve the previous standalone source recoverably until
-read-back succeeds, link the installed entry to the accepted repository
-package, and verify both the resolved target and readable `SKILL.md`.
+When an authorized unit changes an installed skill source, first determine
+whether its selected distribution is standalone or plugin-based. Inventory the
+resolved source and installed cache, preserve the previous source recoverably,
+update through that distribution's supported flow, and verify readable skills,
+reference closure, revision provenance, and resolved cache contents.
 
 ## Replan At The Broken Boundary
 
@@ -242,3 +252,7 @@ Finish with one integrated handoff that reports:
 - the explicit opt-out marker alone, or the selected glossary identity,
   declared-scope fit, and changed or still-material unresolved candidates; and
 - pending actions that still require authorization.
+
+Before ending the user-facing turn, continue the next unmet unit in the
+authorized request. Finish when the full requested outcome is accepted, the
+user chooses another boundary, or a concrete blocker requires input.

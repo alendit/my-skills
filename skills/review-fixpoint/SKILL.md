@@ -16,9 +16,9 @@ Drive one repository-local loop with two alternating phases:
   the current implementation and create or update the review artifact required
   by repository guidance.
 - **Tock — remediate:** address every actionable finding in the latest review
-  artifact at its owning architectural boundary. Use
-  `$supervised-implementer-loop` when the remediation is one non-trivial package
-  with ordered dependent slices.
+  artifact at its owning architectural boundary. The primary authors prose-heavy
+  remediation. Use `$supervised-implementer-loop` when the remediation is one
+  non-trivial code package with ordered dependent slices.
 
 Prefer a new immutable numbered review when the project declares that
 convention; otherwise use its append-only Tick ledger or other explicit review
@@ -36,8 +36,9 @@ implementation mechanics. Slice acceptance during Tock is not the independent
 Tick and cannot establish a fixed point.
 
 Commit every completed phase. After parent acceptance and focused Tock
-verification, create one coherent remediation commit and run the canonical gate
-on that exact clean revision; the Tock is complete only when it passes. After
+verification, reuse an eligible coherent handoff commit that represents exactly
+the accepted phase, or create the remediation commit, then run the canonical
+gate on that exact clean revision; the Tock is complete only when it passes. After
 each Tick has produced its required durable review artifact and the evidence is
 verified, create one review-artifact commit. Keep the worktree clean
 between phases, preserve unrelated user work in the same intentional checkpoint
@@ -190,15 +191,17 @@ authority, classify affected tests, and resume at the accepted rebaseline
 boundary.
 
 Turn the findings into one coherent remediation package when they share a
-target and can be ordered into dependent slices. For a non-trivial Tock, route
-through `$supervised-implementer-loop`: SIL owns one active implementation
-writer at a time and may use sequential authorized contexts at accepted
-delivery-package boundaries. Give SIL the complete outcome, current
-implementation-plan identity, and accepted delivery-package map; SIL owns
-delivery-package admission and execution. Let the primary accept each delivery
-package, and finish package verification before returning here. Handle a small
-direct fix directly, and do not force genuinely independent packages through
-one artificial sequence.
+target and can be ordered into dependent slices. Classify the package before
+delegating. The primary authors specification, plan, skill, design-prose, and
+other prose-heavy remediation, while an independent reviewer may review it. For
+a non-trivial code Tock, route through `$supervised-implementer-loop`: SIL owns
+one active implementation writer at a time and may use sequential authorized
+contexts at accepted delivery-package boundaries. Give SIL the complete
+outcome, current implementation-plan identity, and accepted delivery-package
+map; SIL owns delivery-package admission and execution. Let the primary accept
+each delivery package, and finish package verification before returning here.
+Handle a small direct fix directly, and do not force genuinely independent
+packages through one artificial sequence.
 Pass the explicit opt-out marker alone or, for a selected glossary, its identity,
 declared-scope fit, and material term-to-semantic-source relationships and
 unresolved candidates into the Tock leaf. For selected-source state, retain its
@@ -429,29 +432,10 @@ a selected glossary, its identity, declared-scope fit, and changed or still-
 material unresolved candidates from the last Tick/Tock result. Do not resolve a
 candidate or add another glossary or prose pass in this outer workflow.
 
-## Optional Goal Persistence
-
-When the user explicitly asks to continue until fixed point and goal tools are
-available:
-
-1. Create one goal whose objective is to alternate remediation and independent
-   review until the Fixed-Point Rule is satisfied. A suitable objective is:
-   `Alternate remediation and independent review for the selected work package
-   until the current review artifact reports zero P0-P3 functional or
-   architectural findings, deterministic gates pass, and required external
-   capability status is reported without conflating availability with product
-   failure.` Do not set a token budget unless the user supplied one.
-2. On later continuations, inspect the active goal and resume from the latest
-   review artifact and current tree instead of restarting.
-3. Mark the goal complete only after the zero-finding Tick and any external
-   confirmation required by the user's objective. Do not mark it complete
-   because a Tock passed tests, deterministic fixed point left required initial
-   capability unconfirmed, or the budget is low.
-4. Follow the goal tool's own blocked-state rules; difficulty or a long-running
-   remediation is not a blocker.
-
-Do not create a goal for a single requested Tick, Tock, or skill-maintenance
-task.
+After fixed point, return control to the authorized outer request. Continue any
+remaining required unit before ending; stop at the accepted requested outcome,
+a user-directed boundary, or a concrete blocker requiring input. Platform goal
+tools remain governed by their own contract and are not part of this workflow.
 
 ## Example Invocations
 

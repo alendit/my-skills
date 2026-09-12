@@ -168,6 +168,13 @@ silently broadens that authority.
 ## Exceptional stop and rebaseline
 
 When `stop-and-rebaseline` is selected, stop issuing implementation deltas.
+Request interruption when the active course must stop, then obtain lifecycle
+evidence that the active turn and writer-owned subprocesses or cleanup have
+settled. A timeout or interrupt acknowledgement alone does not prove settlement.
+Do not inspect/replay the mutable handoff state or start a replacement writer
+until settlement is established. If settlement cannot be established, preserve
+the known state and do not overlap writers.
+
 The parent inspects the bounded dirty tree and shared evidence without relying
 on an untrustworthy outgoing summary. Starting from the last parent-accepted
 delivery package, classify observable work as:

@@ -50,9 +50,11 @@ When the primary did not author or supervise the implementation, it may apply
 ## Verify each Tock
 
 Run focused checks proportional to each changed owner during implementation.
-After parent acceptance, create the Tock phase commit, then run the repository-
-declared canonical clean-revision command set once on that exact commit. Do not
-run equivalent complete suites immediately before and after the phase commit
+After parent acceptance, reuse a coherent handoff commit when it represents
+exactly the accepted Tock and existing authority permits it; otherwise create
+the Tock phase commit. Run the repository-declared canonical clean-revision
+command set once on that exact commit. Do not create an empty acceptance commit
+or run equivalent complete suites immediately before and after the phase commit
 merely to reproduce the same evidence.
 
 A Tock is not ready for Tick until the exact-commit gate passes. On failure,

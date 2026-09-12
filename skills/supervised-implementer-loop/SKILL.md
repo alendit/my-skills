@@ -1,15 +1,12 @@
 ---
 name: supervised-implementer-loop
 description: >-
-  Implement one non-trivial work package through ordered, dependent slices
-  using one active implementation context at a time while the main agent
-  independently reviews, corrects, validates, and accepts each slice. Reuse
-  that context through an admitted delivery package and its corrections; an
-  authorized renewal may start the next package with the same configuration.
-  Use when the user asks to reuse one implementer, review every implementation
-  slice, make later work rely on accepted earlier fixes, or keep implementation
-  token-efficient. Do not use for review-only work, small direct edits, or
-  genuinely independent parallel packages.
+  Implement a non-trivial code work package through ordered, dependent delivery
+  packages with one persistent implementer and parent acceptance. Use when code
+  exploration, editing, and focused validation benefit from delegated execution.
+  Keep prose-heavy specification, design, and skill authoring with the parent
+  unless the user explicitly requests delegation. Do not use for review-only
+  work, small direct edits, or genuinely independent parallel packages.
 ---
 
 # Supervised Implementer Loop
@@ -18,9 +15,10 @@ Complete one bounded work package through a repeated implement-review-correct
 loop. The main agent is the acceptance authority; one active implementation
 context owns the edits and first-pass validation at a time.
 
-This skill ends when the requested work package is implemented and accepted.
-It does not initiate broader reviews, invent adjacent work, or define an outer
-project-completion process.
+This skill returns when its assigned work package is implemented and accepted.
+The primary then continues any remaining work in the authorized outer request.
+It does not initiate broader reviews, invent adjacent work, or take completion
+authority from an outer workflow.
 
 When an outer fixpoint workflow invokes this skill for remediation, return the
 accepted package to that orchestrator. Delivery-package acceptance proves the
@@ -110,6 +108,20 @@ rather than using easy stateless extractions as a proxy for package completion.
 
 ## Select The Implementer
 
+Classify the work before spawning. The primary authors and revises
+specifications, implementation plans, skills, design proposals, and other
+prose-heavy artifacts with the applicable writing skill. Use this loop for a
+code-heavy package whose exploration, editing, adaptation, and focused checks
+benefit from delegated execution. For mixed work, keep design and specification
+decisions with the primary and delegate the admitted code package; comments,
+fixtures, tests, and documentation directly needed to explain that code may
+remain with its implementer. Classify the work rather than its file extension.
+Explicit user delegation overrides this default.
+
+Following a specialized skill does not itself require another agent. Review
+ownership remains independent of authorship, so a read-only reviewer may assess
+primary-authored prose.
+
 Before spawning an implementer:
 
 1. Consult available memory according to the environment's memory instructions
@@ -177,6 +189,35 @@ Give the implementer enough context once:
   reports without prompting, immediate blocker conditions, the first credible
   stall threshold, and any intermediate decision the parent must make; and
 - whether the implementer may commit.
+
+Within the admitted delivery package, name the current owner or observable
+behavior, accepted prerequisites, explicit exclusions, focused completion
+checks, and questions that require a parent decision. Let the implementer
+choose and complete the internal source edits, compiler/import/fixture
+adaptation, and directly caused repairs. Do not require a parent assignment for
+each function, file, or internal semantic edit. The implementer reports a
+material design or scope gap before expanding the package.
+
+Use the assignment's base revision as the ordinary attribution boundary. When
+inherited dirt, same-file overlap, or another actor makes attribution uncertain,
+also record the relevant starting paths and diff. Resolve ambiguity before
+acceptance rather than adding provenance ceremony to every clean assignment.
+
+Agree on the expected completion or meaningful checkpoint window, the first
+credible stall deadline, and immediate blocker or decision events. Set the
+mailbox timeout slightly beyond the expected event window, within the tool's
+actual limit. Prefer a generous failsafe because an inbox event returns early;
+the timeout is not the work boundary. As illustrative starting points, use
+about 30 minutes for substantial work, 45–60 minutes for known long builds or
+checks, and 10–15 minutes for clearly smaller work. Adjust to the actual package
+and platform; do not turn these examples into acceptance thresholds.
+
+When commit authority is delegated, require the implementer to settle its
+editing and checking processes before committing a coherent, locally validated
+handoff. The commit message states the durable behavior change and reason, with
+a short validation summary when useful. The inbox message supplies the SHA,
+outcome, focused checks, and transient risks or decisions. A commit makes the
+revision reviewable; it does not establish parent acceptance.
 
 Under an explicit opt-out, instruct the implementer not to ask another
 placement question, access a glossary, calculate or carry scope fit or glossary
@@ -247,6 +288,12 @@ follow-up is read back. External or otherwise separately controlled ledger
 writes require their own authorization. Preserve the resulting decision record
 and follow-up delta for slice and package handoff.
 
+When the same accepted owner or design assumption fails again, pause dependent
+changes and invoke this decision before sending another local correction.
+Establish the intended owner, producer/consumer information flow, state and
+lifetime, ordering or transaction boundary, failure and recovery path, and the
+decisive source or behavior evidence. Resume only from the accepted decision.
+
 ## Run Each Delivery Package
 
 For every admitted delivery package:
@@ -266,11 +313,12 @@ or an implementer summary cannot satisfy an unresolved row.
    evidence, and corrections. Do not replace that context for an ordinary
    correction.
 2. Let the implementer edit and run focused validation. Do not perform
-   overlapping writes or Git operations in the shared workspace. Non-mutating
-   preparation may continue, but formally review only a completed delivery
-   package. At handoff, planned realization entries are replaced with actual
-   source and assertion evidence; a design change marks dependent entries
-   stale before continued work or acceptance.
+   overlapping writes or Git operations in the shared workspace. Independent
+   work outside the writer-owned scope may continue; do not mirror its source,
+   diff, or successful-log inspection while it is active. Formally review only
+   a completed delivery package. At handoff, planned realization entries are
+   replaced with actual source and assertion evidence; a design change marks
+   dependent entries stale before continued work or acceptance.
 3. Require a compact delivery-package acceptance packet: changed paths and
    resulting owner boundary; contract IDs established; intended behavior or
    interface changes, or an explicit statement that none were intended;
@@ -285,7 +333,12 @@ or an implementer summary cannot satisfy an unresolved row.
    external-evidence, architectural-decision, and follow-up dispositions only
    when they apply. For a selected glossary, also include changed or still-
    material scope-fit and candidate dispositions; under opt-out, include only
-   the marker. The implementer does not approve its own work.
+   the marker. Include the assignment base and handoff SHA when committed.
+   When relevant, distinguish expected pre-fix reproduction from final
+   verification; observations from hypotheses and execution witnesses; and the
+   original failure from a cleanup failure. Zero selected tests, stale passes,
+   or a missing required assertion remain missing evidence. The implementer
+   does not approve its own work.
 4. Independently inspect the packet, changed owner topology, and the few
    boundaries where defects would be consequential. For a modularization
    package, verify that each extracted module is cohesive, the root lost the
@@ -297,25 +350,41 @@ or an implementer summary cannot satisfy an unresolved row.
    dependency searches, narrow changed ranges, and focused witnesses selected
    independently from the implementer's checks over complete moved-body or log
    rereads. Expand inspection when evidence is contradictory, incomplete, or
-   implausible. For a routed architectural
-   decision, verify its causal evidence, correction bound, branch, and durable
-   follow-up read-back. At parent acceptance, select a few high-risk probes
-   independently at those consequential boundaries. Do not accept the
+   implausible. For a routed architectural decision, verify its causal evidence,
+   correction bound, branch, and durable follow-up read-back. Treat a successful
+   handoff as the working premise until this meaningful acceptance boundary.
+   Read earlier only for a concrete design, contradiction, attribution, scope,
+   safety, or acceptance question. At parent acceptance, select a few high-risk
+   probes independently at consequential boundaries. Consolidate findings from
+   this bounded inspection before sending corrections. Do not accept the
    implementer's summary as evidence by itself.
 5. When the review finds a defect, send corrective guidance to the active
-   implementation context. State:
+   implementation context as one ordered correction set. State:
    - the concrete evidence;
    - the violated invariant;
    - the owning boundary and required result;
    - the state or public behavior that must be proved; and
    - any tempting but invalid workaround to avoid.
+   Before requiring rollback or cleanup, identify the mutation boundary,
+   failure point, transaction owner, and commit or publication boundary. Keep a
+   failure inside an uncommitted transaction distinct from cleanup after an
+   earlier commit.
 6. Repeat implementation and parent review until the delivery package is
    correct. Confirm that parent acceptance has a current, complete realization
    disposition for every contract ID; do not advance because one narrow test
    passes.
-7. Run independent validation proportional to the delivery package. Checkpoint
-   accepted work according to user and repository policy, with all Git writes
-   serialized by the main agent unless explicitly delegated.
+7. Run independent validation proportional to the delivery package. Use a
+   coherent handoff commit as the review anchor when existing authority permits
+   it; otherwise preserve the settled attributable diff. The inbox carries the
+   SHA and transient evidence, while the commit message carries the durable
+   behavioral change and reason. The parent still accepts the package. Avoid
+   per-function commits and commit polling. Serialize all Git writes and stage
+   only attributable work.
+   If authority permits a checkpoint before full package acceptance, retain
+   the original package and review base, label the checkpoint unaccepted in the
+   handoff, and keep later acceptance responsible for the complete original-
+   base-to-final-head range. Never advance the acceptance base merely because
+   an intermediate revision was committed.
 8. Only then begin the next reviewed delivery package. Treat accepted earlier
    invariants as stable; do not rediscover or restate them unless new evidence
    challenges them. At this accepted boundary, apply the continuity
@@ -385,38 +454,32 @@ component, or other mechanism without its own semantic owner.
 
 ### Event-Driven Progress And Stall Protocol
 
-Establish the progress envelope in the initial assignment, then wait for a
-completion, checkpoint, blocker, or decision request instead of asking for
-reassurance. Use the longest useful bounded mailbox wait permitted by the next
-real checkpoint, user-communication policy, and active platform. A longer wait
-must return early when an event arrives, so it does not delay a prompt handoff.
+Follow the event named by the progress envelope:
 
-Treat a wait timeout only as absence of a message during that interval. Wait
-again while the work remains inside its progress envelope. Inspect the shared
-tree or process state only after a promised milestone is missing, the stall
-threshold is crossed, a dependent decision needs current evidence, or another
-credible safety or scope signal appears. Batch one narrow probe around the
-decision it can change; ordinary dirty state while the writer is active is not
-progress-quality evidence.
+1. While the writer owns the unit, wait for completion, a promised checkpoint,
+   a blocker, or a decision request. Use the generous failsafe selected in the
+   initial assignment; an event returns early.
+2. An empty timeout inside the agreed envelope leads directly to another wait.
+   It carries no new repository or lifecycle evidence. Do not inspect source,
+   diffs, logs, agent topology, or process state, and do not send reassurance.
+3. If a higher-priority harness instruction caps waits or requires periodic
+   commentary, emit the minimum update and resume waiting. Do not turn that
+   wakeup into inspection or a new assignment. Record the harness constraint
+   when it prevents the requested long-wait behavior.
+4. On a progress-only event, update the expected checkpoint and wait again. On
+   a blocker or decision request, answer the named question using the smallest
+   necessary evidence. On completion, let the handoff finish before beginning
+   acceptance.
+5. After a promised event misses the agreed stall deadline, or a concrete
+   safety, scope, or lifecycle signal appears, make one narrow check that can
+   change the decision. Repeated timeout count alone is not a stall signal.
+6. Queue a delta to an active implementer. Trigger a new turn only when it is
+   idle and substantive work is ready. Interrupt only when the course is unsafe,
+   invalidated, or credibly stalled.
 
-Use the interaction capability that matches the state:
-
-- queue a delta or correction to an active implementer without restarting its
-  work or resending package context;
-- trigger a new turn for an idle active implementer only when real follow-up
-  work is ready;
-- wait on mailbox events for completion and checkpoints;
-- inspect agent topology only when lifecycle state is uncertain; and
-- interrupt only when the active course should stop because it is unsafe,
-  invalidated, or credibly stalled.
-
-If the active runtime publishes a reusable-prefix lifetime, a bounded wait may
-be selected slightly below it when no earlier checkpoint applies. Treat this as
-a runtime profile, not a permanent duration: a 25-minute bound is longer than a
-5-minute bound, but neither alone proves cache savings. When telemetry exists,
-separate raw input, cached reads and writes, and newly appended context. When
-cache behavior is unknown, use event-driven waiting without inventing a timer
-or savings claim.
+When telemetry exists, separate raw input, cached reads and writes, and newly
+appended context. Do not infer savings from a timeout duration or invent a
+timer when runtime behavior is unknown.
 
 The implementer does not start a broad or complete suite until the parent has
 accepted the focused delivery package unless its contract requires otherwise.
@@ -461,5 +524,8 @@ After the final delivery package:
    material edit through that skill's revision-after-change behavior rather
    than applying a second outer prose pass.
 
-Stop when this package is accepted. Do not continue into unrelated cleanup or
-a broader review unless the user separately requests it.
+Return the accepted package to its caller. Before ending the user-facing turn,
+continue the next unmet step in the authorized outer request. Finish when the
+full requested outcome is accepted, the user chooses another boundary, or a
+concrete blocker requires input. Do not continue into unrelated cleanup or an
+unrequested broader review.
