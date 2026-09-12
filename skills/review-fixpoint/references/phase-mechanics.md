@@ -138,7 +138,7 @@ the remediation author's claims. Supply a repository-specific review request:
   boundary;
 - the fixed-point eligibility checks below and required external-capability status as
   the whole-scope completion contract;
-- the explicit glossary opt-out marker alone or, for a selected glossary, its
+- material `local-only` or `opt-out` status, or for a selected glossary, its
   identity, declared-scope fit, and material term-to-semantic-source
   relationships and unresolved candidates needed by the review leaf; and
 - the repository-declared review-artifact destination and required shape.
@@ -177,7 +177,7 @@ The review artifact must:
   non-gating architectural follow-ups, and report follow-up IDs created,
   updated, closed, stale, or unchanged-but-relevant;
 - list focused supporting evidence and the required architecture self-check;
-- carry the explicit glossary opt-out marker alone or, for a selected glossary,
+- carry material `local-only` or `opt-out` status, or for a selected glossary,
   its state, declared-scope fit, changed or still-material candidates,
   terminology continuity, and the leaf review's clear-writing-pass status; and
 - avoid security framing, validation-date disputes, Git cleanliness, README

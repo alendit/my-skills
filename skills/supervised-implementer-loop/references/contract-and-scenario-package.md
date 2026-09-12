@@ -449,7 +449,7 @@ Include only applicable additions:
 - external evidence status and shared capture/localization helpers;
 - architectural decisions and follow-up IDs, including ledger-write authority;
 - the [glossary state's](../../clear-technical-writing/references/project-glossaries.md)
-  opt-out marker alone, or selected source and material scope/term dispositions.
+  material `local-only` or `opt-out` status, or selected source and term dispositions.
 
 Keep representation and numeric defaults in the conditional implementation
 appendix unless correctness requires them. The implementer chooses the internal

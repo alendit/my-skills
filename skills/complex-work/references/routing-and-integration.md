@@ -32,9 +32,10 @@ replacement authority. Consume SIL's result without copying turnover records.
 ## Terminology at handoffs
 
 Resolve or consume [glossary state](../../clear-technical-writing/references/project-glossaries.md)
-at establishment; pass its opt-out marker alone or selected source and material
-dispositions to leaves. Carry only changed or still-material state afterward.
-Recover stale selected-source state at the affected routing or handoff boundary.
+at establishment when relevant; pass `local-only`, `opt-out`, or selected source
+and material dispositions to leaves. Carry only changed or still-material state
+afterward. Refresh selected-source evidence only for affected term decisions;
+absent glossary metadata does not block otherwise valid work.
 Technical owners retain meaning; this transport does not authorize glossary
 writes or new implementation mechanisms.
 

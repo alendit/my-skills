@@ -1,9 +1,7 @@
 # Project Glossaries
 
-Use this reference before durable engineering communication uses or establishes
-terminology shared across artifacts, sessions, people, or collaborating agents.
-Do not trigger glossary placement work for an unrelated task that neither uses
-nor establishes shared project terminology.
+Use this reference when shared project terminology is material to the artifact.
+Ordinary writing does not require a glossary, placement decision, or new file.
 
 ## Resolve Glossary State In Order
 
@@ -14,16 +12,24 @@ matching branch:
    file, or persist a term. Explain the concept locally in the artifact.
 2. **Selected existing source:** use that glossary. Reuse a prior selection only
    when it is recoverable for the same project and scope.
-3. **Explicitly selected absent path:** treat placement as resolved, but do not
-   infer permission to create the file or write a term. The task's ordinary
-   authorization boundary still applies.
-4. **Competing plausible sources:** ask which glossary governs. Do not merge or
-   choose them automatically.
-5. **No source or placement selection:** ask whether to create a glossary inside
-   the project or at a user-selected look-aside location. Do not create or
-   persist anything until the user answers. For a project-local choice, use an
-   established documentation path or ask for the exact path. For a look-aside
-   choice, obtain its exact location and intended scope. Never invent either.
+3. **Explicitly selected absent path:** placement is resolved. Create it only
+   when the task authorizes glossary creation; otherwise explain needed concepts
+   locally and continue without treating a missing file as missing semantics.
+4. **Competing plausible sources:** keep claims grounded in their semantic
+   owners and explain terms locally. Ask which glossary governs only when a
+   material terminology decision or requested canonical edit depends on it.
+   Do not merge or silently select competing canonical authorities.
+5. **No source or placement selection:** use established terms from the accepted
+   facts and explain unfamiliar concepts locally. Continue the writing task;
+   do not ask a placement question or create a glossary. If glossary creation
+   is itself requested, recover an authorized destination from the request and
+   repository conventions, asking only for a material unresolved location or
+   scope decision.
+
+When terminology state matters to a handoff, distinguish `local-only` (no usable
+selected source) from the user's explicit `opt-out`. Neither calls for glossary
+coverage or persistence work. Do not report routine glossary status when it
+does not affect the artifact or continuation.
 
 ## Use Terminology Without Replacing Meaning
 
@@ -45,12 +51,14 @@ architecture evidence and authority.
 
 ## Check Material Coverage At The Existing Boundary
 
-At assignments, corrections, and handoffs, carry the explicit opt-out marker
-alone or the selected source and changed or still-material dispositions below.
-Under opt-out, do not access a glossary or calculate, request, transfer, recover,
-or report scope fit or candidates. For a selected source, missing or stale state
-blocks only the affected handoff or decision: recover it here and recheck
-material terms, without starting a repository audit or a parallel ledger.
+At relevant assignments, corrections, and handoffs, carry `local-only`,
+`opt-out`, or the selected source and material dispositions below. Under opt-out,
+do not access a glossary; neither no-source branch calculates or carries scope
+fit or candidates. For a selected source, refresh stale material evidence only
+where it affects the artifact. Continue unaffected work. Block only a required
+term decision whose meaning or requested canonical form remains unresolved,
+not the writing task merely because glossary metadata is absent. Do not start
+a repository audit or a parallel ledger.
 
 When active work materially changes scope, or an existing selected glossary is
 reused at a durable-artifact or package boundary, compare its declared scope,
@@ -92,10 +100,10 @@ Add a glossary entry only when all of these conditions hold:
   and
 - the current task authorizes the edit scope.
 
-If any condition is missing, leave the glossary unchanged, report the term as a
-candidate, define it locally, and preserve any preferred-term or alias
-uncertainty. A new label never authorizes a new field, state, limit, component,
-or other mechanism.
+If any condition is missing, leave the glossary unchanged and define the term
+locally. For a selected source, report a material candidate or alias uncertainty;
+without a selected source, do not create a candidate backlog. A new label never
+authorizes a new field, state, limit, component, or other mechanism.
 
 For an authorized entry, give one concept one preferred term, point aliases to
 it, explain it in ordinary language, and state the project-specific distinction.

@@ -24,7 +24,7 @@ compact evidence:
   structural delta for a design-sensitive owner;
 - the authoritative contract matrix, architecture ownership, and public entry
   points;
-- the explicit glossary opt-out marker alone or, for a selected glossary, its
+- material `local-only` or `opt-out` status, or for a selected glossary, its
   identity, declared-scope fit, and only the material term-to-semantic-source
   relationships and inherited unresolved candidates;
 - prior finding identifiers and dispositions;
@@ -172,7 +172,7 @@ Return or draft the caller's requested artifact with:
   including stable IDs, read-back/lifecycle state, and any laundering rejection;
 - unresolved unknowns, if any;
 - focused and complete verification evidence;
-- the explicit glossary opt-out marker alone or, for a selected glossary, its
+- material `local-only` or `opt-out` status, or for a selected glossary, its
   identity, declared-scope fit, and changed or still-material unresolved
   candidates; and
 - the behavioral goal ID and direct scenario status, mechanism progress reported
