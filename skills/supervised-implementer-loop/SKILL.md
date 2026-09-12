@@ -23,12 +23,12 @@ preserve unrelated work. Keep prose-heavy authorship with the parent. For mixed
 work, delegate the admitted code package and its directly supporting tests,
 fixtures, comments, and documentation.
 
-Use the [package matrix and admission procedure](references/contract-and-scenario-package.md#build-the-contract-first-package-matrix)
-through “Record and admit the delivery-package plan.” Require a current
-`implementation-plan-fixed-point`, unchanged plan identity, complete reviewed
-delivery map, and feasible realization evidence for every applicable contract
-dimension before spawning or permitting production edits. Return missing or
-invalidated plan decisions to their review owner; do not invent boundaries.
+Select [admission depth](references/contract-and-scenario-package.md#choose-admission-depth)
+before spawning. For bounded work with established behavior, ownership, and
+checks, the parent accepts a compact delivery brief. Use the formal matrix and
+reviewed plan when required by the caller/repository or when material contract,
+architecture, recovery, or delivery dependencies remain unresolved. Preserve
+existing review requirements and return invalidated decisions to their owner.
 
 Use [the goal record](references/contract-and-scenario-package.md#carry-the-behavioral-goal-record)
 to carry the package's direct behavioral scenario separately from
@@ -50,7 +50,7 @@ fast mode is explicitly requested. Keep one implementation writer active through
 the delivery package, corrections, and parent acceptance.
 
 Send the [initial assignment](references/contract-and-scenario-package.md#assign-and-hand-off-a-delivery-package)
-once: accepted map and current package, owner and behavior, prerequisites,
+once: accepted brief or formal map and current package, owner and behavior, prerequisites,
 exclusions, focused checks, decision boundaries, base revision, and commit
 authority. Use the smallest sufficient context fork. Record starting paths and
 diff only when inherited dirt or overlapping changes make attribution uncertain.
@@ -90,7 +90,9 @@ useful behavior without relying on a later package to repair incomplete semantic
 1. Consume the compact [handoff](references/contract-and-scenario-package.md#assign-and-hand-off-a-delivery-package):
    base/head or settled diff, behavior and owner changes, established contracts,
    focused results, unresolved questions, and detailed-evidence location. Planned
-   realization entries must now have current source and assertion evidence.
+   claims must now have current source and assertion evidence. Formal packages
+   carry the realization relation; bounded briefs need only their applicable
+   behavior and owner evidence.
 2. Treat successful handoffs as the working premise until this acceptance
    boundary. Independently inspect the changed owners and a few consequential
    seams; select risk probes that add evidence beyond the implementer's checks.
@@ -124,7 +126,7 @@ per-function commits and commit polling; stage only attributable changes.
 
 ## 5. Continue And Finish
 
-After acceptance, send the next reviewed delivery package as a delta. Reuse the
+After acceptance, send the next admitted delivery package as a delta. Reuse the
 context while it remains trustworthy. When context pressure or continuity loss
 requires a decision, follow [continuity and recovery](references/implementer-continuity.md#executable-continuity-sequence).
 Ordinary renewal occurs only after parent acceptance; replacement requires the

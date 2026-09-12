@@ -1,12 +1,14 @@
 # Contract and Scenario Package
 
-Read the matrix, terms, realization, and admission sections at setup; use the
-assignment/handoff section at those boundaries. Read structural profiles,
+Choose admission depth at setup. Read matrix, realization, and formal admission
+sections only for the formal route; use the assignment/handoff section for both
+routes. Read structural profiles,
 external diagnostics, and exact-limit procedures only when their named scope
 applies. Keep the package matrix as the sole requirement authority.
 
 ## Contents
 
+- Choose admission depth
 - Build the contract-first package matrix
 - Define work package and delivery package terms
 - Keep the realization disposition current
@@ -22,6 +24,34 @@ applies. Keep the package matrix as the sole requirement authority.
 - Justify exact limits
 - Keep tests stable across redesigns
 - Assign and hand off a delivery package
+
+## Choose admission depth
+
+The parent selects one route from the request and current evidence:
+
+1. **Bounded delivery:** behavior and semantic owner are established, affected
+   consumers and recovery behavior are understood, focused checks can establish
+   completion, and no material design or ordering decision remains. Record the
+   outcome, owner, affected boundary, prerequisites, exclusions, checks, base
+   revision, and authorization in one brief. Parent acceptance of that brief
+   admits execution; no formal matrix, invented contract IDs, or separate plan
+   review artifact is needed. Existing contract references remain authoritative.
+2. **Formal plan:** the caller/repository requires plan review, or material
+   contract, architectural, state/recovery, or cross-package dependency decisions
+   remain unresolved. Use the matrix, realization relation, and reviewed-plan
+   admission below. Do not use bounded delivery to bypass an explicit review
+   requirement, an invalidated formal plan, or a known required unknown.
+
+If exploration disproves a bounded brief's assumptions, pause only dependent
+edits and return the unresolved decision to the parent. Resolve it at the owning
+boundary; use formal plan review when the trigger above applies. Preserve valid
+work. Both routes retain one writer, focused evidence, parent acceptance,
+commit attribution, and request-level completion.
+
+For bounded delivery, follow the common entrypoint and execution/closure rules
+using the accepted brief; map and realization schemas below are formal-route
+records. Continuity handoffs carry the brief identity and accepted outcomes
+instead of manufacturing plan IDs or matrices.
 
 ## Build the contract-first package matrix
 
@@ -120,8 +150,8 @@ This skill consumes that durable decision and owns the final edit-admission
 check; it does not create a fixed-point vocabulary, select a result level, or
 infer plan readiness from a checkpoint.
 
-Before spawning an implementer or permitting production edits, require all of
-the following:
+For the formal route, before spawning an implementer or permitting production
+edits, require all of the following:
 
 1. The latest durable review result is exactly
    `implementation-plan-fixed-point`, not merely `contract-fixed-point`, and
@@ -403,10 +433,12 @@ envelope and next package once; do not replay transcripts or raw logs.
 
 ### Initial assignment
 
-Supply the work-package outcome, reviewed map and plan identity, current
+Supply the work-package outcome, accepted bounded brief or formal reviewed map
+and plan identity, current
 package's owner/behavior, established prerequisites, exclusions, architectural
 invariants, accepted behavior that must not regress, scenario portfolio,
-realization disposition, focused completion checks, evidence locations, and
+applicable behavior/owner evidence (the realization relation for formal work),
+focused completion checks, evidence locations, and
 questions requiring a parent decision. Include base revision, commit authority,
 selected configuration, continuity policy, and the progress envelope.
 
@@ -440,11 +472,13 @@ required documentation, validation, or independent acceptance.
 ### Completion handoff
 
 Report base revision and handoff SHA when committed, changed paths and owner
-boundary, intended behavior/interface change (or none), established contract
-IDs, goal and direct-scenario status, mechanism progress, focused checks with
+boundary, intended behavior/interface change (or none), established outcomes
+and existing contract IDs, goal and direct-scenario status, mechanism progress, focused checks with
 pass/fail status, unresolved concerns, and the detailed-evidence location.
-Replace planned realization entries with actual source/assertion evidence;
-report changed entries and unresolved rows after the first complete relation.
+For formal work, replace planned realization entries with actual source/assertion
+evidence; report changed entries and unresolved rows after the first complete
+relation. For bounded delivery, report the brief's focused evidence and any
+unresolved obligation without generating a matrix.
 
 Include material exceptions to mechanical equivalence and, when activated,
 structural/residual-topology deltas, affected-test dispositions, external

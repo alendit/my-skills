@@ -46,10 +46,11 @@ implementer owns admitted code and its directly supporting artifacts. Honor
 explicit user delegation. If no specialized skill owns a unit, keep the primary
 as its owner; do not invent a team because the package is large.
 
-Before routing production edits, consume the current
-`implementation-plan-fixed-point` and plan identity. Missing, contract-only,
-stale, changed, or unknown plan coverage returns to plan review; SIL performs
-final edit admission. Use the [conditional routing interfaces](references/routing-and-integration.md)
+Before routing production edits, use SIL's [admission-depth decision](../supervised-implementer-loop/references/contract-and-scenario-package.md#choose-admission-depth).
+Pass the accepted bounded brief or, when formal review applies, the current
+`implementation-plan-fixed-point` and plan identity. Missing or invalidated
+required plan coverage returns to review; SIL performs final edit admission.
+Use the [conditional routing interfaces](references/routing-and-integration.md)
 for cost-based delegation, continuity, terminology, or design-sensitive units.
 
 ## 3. Execute And Integrate

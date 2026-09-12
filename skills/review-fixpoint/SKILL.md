@@ -30,9 +30,10 @@ matrix, goal record, and current [glossary state](../clear-technical-writing/ref
 into each leaf; later inputs carry material deltas only.
 
 For specification scope, retain the selected review level. A contract-level
-result routes to delivery-plan review. Production implementation requires a
-current `implementation-plan-fixed-point` for unchanged plan-owning content
-and dependencies; a changed or unknown plan returns to review before editing.
+result does not itself authorize implementation. Apply the [admission-depth decision](../supervised-implementer-loop/references/contract-and-scenario-package.md#choose-admission-depth):
+bounded remediation can use a parent-accepted brief; formal-plan work requires
+a current `implementation-plan-fixed-point`. Required changed or unknown plan
+coverage returns to review before dependent edits.
 
 ## 2. Establish Independent Review
 
@@ -52,7 +53,7 @@ a required persistent reviewer; ordinary rounds do not need new reviewers.
    dependent work. Use the [finding-remediation procedure](references/phase-mechanics.md#remediate-findings)
    for history, regression evidence, compatibility, and authority updates.
 2. Keep prose-heavy remediation with the primary. Route non-trivial admitted
-   code packages through SIL with the current plan identity and accepted map;
+   code packages through SIL with the accepted brief or required reviewed map;
    handle small fixes directly. Parent acceptance of SIL packages completes
    remediation, not independent review.
 3. When the proposed fix changes supporting design or adds a defense, apply the

@@ -58,7 +58,7 @@ completion:
 | Result | Meaning |
 |---|---|
 | `contract-fixed-point` | A specification review has cleared the required stable contract cells and reported downstream delivery-plan unknowns separately. This result permits dependent architecture and package design, but never implementation admission. |
-| `implementation-plan-fixed-point` | A specification review has cleared the stable contract cells and the complete reviewed delivery-plan relation, including its applicable package-plan cells. This result is the plan-level prerequisite for the first delivery package; supervised implementation still owns edit admission. |
+| `implementation-plan-fixed-point` | A specification review has cleared the stable contract cells and the complete reviewed delivery-plan relation, including its applicable package-plan cells. This is the prerequisite when formal plan review applies; supervised implementation still owns edit admission. |
 | `deterministic-fixed-point` | An independent Tick by the loop's persistent reviewer finds no P0-P3 defect, all required deterministic cells are cleared, exact-revision gates pass, and no valid external product-contract failure or activated follow-up remains unresolved. Legitimate non-gating architectural follow-ups may remain visible. |
 | `capability-confirmed` | Every required external capability has current or reusable successful evidence under its identity and freshness rule. |
 | `capability-unconfirmed` | Required initial evidence is missing or has status `stale`, `unavailable`, `authentication-or-configuration-failure`, `provider-or-infrastructure-failure`, or `inconclusive-timeout`. The capability has not passed or failed. |
@@ -75,6 +75,10 @@ claim the capability or `Done`. A valid `product-contract-failure` prevents
 design or remediation.
 
 ## Carry result levels and plan identity
+
+Use these identity rules when [formal admission](../../supervised-implementer-loop/references/contract-and-scenario-package.md#choose-admission-depth)
+applies. A bounded brief is a parent admission decision, not a new fixed-point
+result. It cannot bypass an existing required plan review or its invalidation.
 
 Record the result level and the identity of the plan authority with every
 durable specification decision that could route implementation. Bind

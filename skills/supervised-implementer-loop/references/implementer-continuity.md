@@ -14,6 +14,11 @@ when the active course must stop.
 
 ## Local terms and authority
 
+Carry the record selected by [admission depth](contract-and-scenario-package.md#choose-admission-depth):
+for bounded delivery, use the accepted brief, its revision, and established
+outcomes wherever the formal route carries map, plan, and contract identities.
+Renewal does not require upgrading a bounded brief into formal plan review.
+
 - A **continuity mode** records whether the caller requires a particular
   identity or only a role and exact runtime configuration. `identity-persistent`
   means that a named implementer may not be replaced without explicit
