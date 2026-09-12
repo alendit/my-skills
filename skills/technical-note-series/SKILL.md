@@ -46,11 +46,13 @@ teaching decisions.
 
 Apply [source validation](references/validation-and-review.md#validate-source-backed-claims)
 to claims, code references, observed example results, links, diagrams, and scope.
-Then use the reference's “Normalize the series review contract” and “Compose
-with repository review workflows” sections to obtain an independent EER review
-for every publication pass.
+Use [review-depth selection](references/validation-and-review.md#compose-with-repository-review-workflows)
+to distinguish a narrow correction from a new or substantially revised
+publication. Carry forward trustworthy unchanged coverage for small corrections;
+new teaching structure, examples, or material factual/ownership changes require
+independent EER review. Honor any explicit caller review requirement.
 
-Repair actionable findings and required `candidate` or `unknown` cells at their
+When independent review is activated, repair findings and required `candidate` or `unknown` cells at their
 owning guide or note, rerun affected validation, and continue through
 `review-fixpoint` until required publication coverage clears. That skill owns
 review numbering, commits, reviewer selection, repetition, and stopping.

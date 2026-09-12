@@ -64,8 +64,21 @@ not be silently converted into passing evidence.
 
 ## Compose with repository review workflows
 
-After validation, use `$evidence-efficient-review` for an independent
-review of every selected publication pass. Supply audience, learning outcomes,
+Select review depth after validating the affected scope:
+
+1. For a narrow correction preserving the accepted teaching decisions,
+   audience, scope, and example, check changed claims and links directly and
+   carry forward trustworthy unchanged evidence. Do not start a whole-series
+   review for spelling, navigation repair, or a locally verifiable clarification.
+   Report the limited validation scope; do not imply new whole-series acceptance.
+2. For a new publication, substantial restructuring, material factual or owner
+   changes, uncertain dependency impact, or explicit caller/repository review
+   requirements, use independent `$evidence-efficient-review`. Use incremental
+   coverage when prior review remains trustworthy; otherwise rebaseline only
+   the selected publication scope. If a narrow correction exposes such a
+   problem, escalate the affected scope to this branch.
+
+For independent review, supply audience, learning outcomes,
 revision, files, guide authority, running example, known uncertainties,
 validation, severity policy, and the matrix above. Request actionable factual,
 pedagogical, structural, and coherence findings rather than stylistic
@@ -96,7 +109,7 @@ selected publication scope.
 
 ## Apply the publication gate
 
-Accept the selected pass only when an experienced newcomer can state the
+For a substantial publication, accept the selected pass only when an experienced newcomer can state the
 project goal and trace the example, specialist terms precede use, major behavior
 has explicit owners and non-owners, time/certainty classes remain distinct, the
 guide and notes form coherent open-ended paths, implementation maps are current,
@@ -104,7 +117,9 @@ project-wide terms follow a selected glossary or remain locally defined when
 glossary use is declined or no authorized source is available, every unfamiliar
 term receives a local first-use explanation, examples and applicable links are
 checked, unrelated changes remain untouched, and every required review cell is
-cleared or explicitly not applicable.
+cleared or explicitly not applicable. A narrow correction instead requires its
+changed claims and links to pass focused checks, unchanged dependencies to
+remain trustworthy, and its limited acceptance scope to be explicit.
 
 Acceptance closes this publication pass, not the series. A later pass
 revalidates changed notes and any existing note whose prerequisites, shared
