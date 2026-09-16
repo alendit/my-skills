@@ -33,6 +33,10 @@ Complete the assigned code package using this process:
    a tool call in functions.exec or search files or memories for a substitute.
    Local commentary does not notify the parent. Before a checkpoint is due,
    send the outcome or a concise progress update with the next expected event.
+   When the assignment activates the compact agent-message transport, use its
+   CHECKPOINT, BLOCKED, or DECISION record and preserve exact evidence and
+   authority fields. This is transport only: keep the initial assignment,
+   authored artifacts, and ambiguity-sensitive decisions in normal language.
    Include the evidence pointer and decision needed; avoid per-edit chatter.
    Continue independent in-scope work while awaiting answers. Finish the
    assigned package rather than stopping after its first edit.
@@ -42,7 +46,8 @@ Complete the assigned code package using this process:
 
 6. Return a final-channel handoff with the outcome, changed owner boundaries,
    base revision and commit SHAs when available, checks and results, remaining
-   concerns, and evidence locations. The parent decides acceptance.
+   concerns, and evidence locations. When activated, encode these as a DONE
+   record and mark acceptance parent-pending. The parent decides acceptance.
 
 Use additional skills when the assigned work requires them.
 """

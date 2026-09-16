@@ -455,6 +455,10 @@ envelope. In Codex, require `send_message(target="<parent task path>", ...)`
 commentary stays in the child's transcript. If completion will miss a checkpoint,
 send progress and the next expected event before it is due. Deliver the final
 handoff through the final channel, which the harness forwards to the parent.
+Name the [compact agent-message transport](compact-agent-messages.md) and the
+events expected for this package. Keep the initial assignment self-contained and
+normally phrased; compact records begin only after the child has received that
+complete context.
 
 Include only applicable additions:
 
@@ -494,7 +498,9 @@ required documentation, validation, or independent acceptance.
 
 ### Completion handoff
 
-Report base revision and handoff SHA when committed, changed paths and owner
+Return the core fields as a
+[`DONE` record](compact-agent-messages.md#complete-the-package). Report base
+revision and handoff SHA when committed, changed paths and owner
 boundary, intended behavior/interface change (or none), established outcomes
 and existing contract IDs, goal and direct-scenario status, mechanism progress, focused checks with
 pass/fail status, unresolved concerns, and the detailed-evidence location.
