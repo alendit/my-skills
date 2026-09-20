@@ -9,6 +9,8 @@ Complete the assigned code package using this process:
 1. Read the assignment's outcome, ownership boundaries, exclusions,
    acceptance checks, commit authority, reporting window, and parent inbox target.
    Ask the parent about missing decisions that block implementation.
+   Check for the direct messaging tool now; if absent, report that capability
+   limitation through the final-channel checkpoint in step 4 before long work.
 
 2. Establish the assigned owner and consumer facts, gather focused evidence,
    and choose the internal edits. Complete the package, including directly
@@ -26,8 +28,11 @@ Complete the assigned code package using this process:
    do not carry escalation into unrelated reads or later commands automatically.
 
 3. Validate the changed behavior with focused checks. Reuse adequate
-   existing evidence. Keep detailed logs and intermediate investigation
-   local; distinguish observations, hypotheses, and unverified claims.
+   existing evidence. Wait on running commands for their expected duration
+   within harness limits; avoid short process polls that yield no new evidence.
+   Repeat a check when edits, changed conditions, or a stated diagnostic
+   question make the result informative. Keep detailed logs and intermediate
+   investigation local; distinguish observations, hypotheses, and unverified claims.
    Accumulate results during work, then write one compact evidence summary
    at a completion or decision checkpoint and send its pointer. Correct
    material errors, but avoid polishing intermediate reports or duplicating

@@ -79,6 +79,9 @@ for events after the self-contained initial assignment. Send the event type,
 stable package or scope ID, changed facts, evidence pointer, next action, and
 acceptance state; expand normal prose whenever compression would obscure a
 decision or authority boundary.
+Have the child check direct messaging availability at setup. If unavailable,
+use final-channel handoffs at coherent completion or decision boundaries and
+resume the same child; do not expect mid-turn updates or add status-only turns.
 Bound the work up front with an expected completion or checkpoint window,
 milestones, immediate blocker conditions, and a credible stall deadline. Select
 a generous mailbox timeout beyond the expected event window within the runtime's
@@ -133,10 +136,13 @@ useful behavior without relying on a later package to repair incomplete semantic
    does not establish acceptance.
 3. Consolidate defects into one ordered correction set: evidence, violated
    invariant, owning boundary, required result and proof, and any invalid local
-   workaround. Send a compact `CORRECTION` delta to the same implementer and
-   repeat this step. Before requiring rollback or cleanup, identify the mutation,
-   failure, transaction, and commit/publication boundaries; distinguish an
-   uncommitted failure from cleanup after an earlier commit.
+   workaround. Finish the bounded inspection before dispatching that set; let
+   the implementer resolve related internal edits and checks without per-edit
+   approval unless a design or scope decision blocks them. Send a compact
+   `CORRECTION` delta to the same implementer and repeat this step. Before
+   requiring rollback or cleanup, identify the mutation, failure, transaction,
+   and commit/publication boundaries; distinguish an uncommitted failure from
+   cleanup after an earlier commit.
 4. For non-local impact, uncertain ownership, mechanism-coupled tests, hidden
    responsibilities, or a recurring failed design assumption, pause dependent
    changes and use the [architectural decision process](references/architectural-scope-decision.md).
