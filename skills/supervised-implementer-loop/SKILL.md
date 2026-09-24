@@ -67,6 +67,9 @@ relevant artifact pointers instead of the parent transcript or orchestration
 references. Record starting paths and diff only when inherited dirt or
 overlapping changes make attribution uncertain. Keep verbose working evidence
 with the implementer or in a referenced artifact.
+Carry the full package map only as sequencing context. Admit only the current
+parent-acceptable package; future packages remain unassigned until the parent
+accepts the current package.
 
 Supply the parent inbox target and require explicit inbox messages for agreed
 milestones, blockers, and decisions; child-local commentary is not delivery.
@@ -97,7 +100,10 @@ Serialize Git writes and avoid overlapping edits.
 3. On `DONE`, let the handoff finish, then begin acceptance.
 4. If a promised event misses its stall deadline, or concrete safety, scope,
    or lifecycle evidence changes the decision, use the [stall procedure](references/implementer-continuity.md#handle-a-missed-event).
-   Timeout count alone is not a stall signal.
+   Timeout count alone is not a stall signal. If the first recovery turn fails,
+   apply [bounded recovery](references/implementer-continuity.md#bound-recovery-attempts):
+   stop issuing deltas and rebaseline instead of returning the same context to
+   another correction cycle.
 
 The Codex plugin's session hook supplies a developer-level exception for these
 delegated waits. If it is absent or another higher-priority rule still caps waits

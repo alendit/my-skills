@@ -91,6 +91,11 @@ handoff, parent corrections, and acceptance. Corrections remain delta-only;
 the parent does not resend the package map or create a replacement for an
 ordinary correction.
 
+Carry the complete delivery-package map only as sequencing context. Assign one
+current parent-acceptable package; do not ask the implementer to complete later
+unaccepted packages in the same assignment. Admit the next package only after
+the parent accepts the current one.
+
 Queue a delta to an active turn. Trigger a new turn only when the implementer
 is idle and a substantive correction or accepted boundary is ready. Do not use
 status-only turns as a substitute for a continuity decision. No other
@@ -268,6 +273,31 @@ reliability requires a decision.
 
 Use this procedure after a promised event misses the agreed stall deadline, or
 when concrete safety, scope, or lifecycle evidence warrants intervention.
+
+### Bound recovery attempts
+
+A missed event does not by itself invalidate the implementer or its edits. After
+the first missed milestone, allow at most one recovery turn when the narrow
+check below still supports `continue`. Bound that turn to restoring the promised
+checkpoint or handoff; it is not another open-ended correction cycle.
+
+Select `stop-and-rebaseline` if that recovery:
+
+- misses its promised event;
+- leaves source that does not parse or compile;
+- broadens failures outside the assigned owner;
+- omits acceptance evidence it claims to have completed; or
+- requires the parent to repair implementation before acceptance.
+
+Do not send another correction to that context. Settle the writer and its
+subprocesses, classify the preserved dirty tree, and choose the smaller capable
+completion route: finish locally when the remaining correction is small and
+bounded, or respawn the same authorized configuration with `fork_turns: "none"`
+from the verified rebaseline envelope.
+
+Exhausting this recovery budget invalidates the supervised communication
+channel, not the correctness or usefulness of the preserved edits. A timeout or
+its count still does not establish an implementation defect.
 
 1. Make one narrow check that can change the decision. A timeout or its count
    alone is not evidence of a stall.
