@@ -93,14 +93,14 @@ global instruction file. It runs at session lifecycle boundaries, including
 resume and compaction, rather than every turn or tool call. Start a fresh thread
 after installing. Check hook discovery and successful `SessionStart` execution
 if the exception is absent; skill text alone cannot override developer rules.
-Without the hook, retain the harness-constrained fallback in the workflow.
 Disabling the plugin disables this hook.
 
 ## Codex Implementer Role
 
 The bundled [implementer role](skills/supervised-implementer-loop/assets/implementer.toml)
-uses Luna Max for bounded code packages. Its execution instructions live in that
-single file; the parent workflow owns assignment, acceptance, and lifecycle.
+uses GPT-6 Luna Max for bounded code packages. Its execution instructions live
+in that single file; the parent workflow owns assignment, acceptance, and
+lifecycle.
 Within authorized work, initial spawning and same-configuration respawning need
 no additional user confirmation. Explicit identity restrictions still apply.
 
@@ -129,5 +129,5 @@ The parent selects `agent_type: "implementer"` and explicitly sets
 `fork_turns: "none"` for every spawn and respawn. The self-contained assignment
 supplies task context; later messages carry only deltas to the same child. The
 spawn default is a full history fork, so leaving the parameter out would copy
-the parent conversation. See [implementer selection](skills/supervised-implementer-loop/references/implementer-continuity.md#select-the-implementer)
-for the same-configuration fallback when a session has not loaded the role yet.
+the parent conversation. The implementer sends checkpoints, blockers, decisions,
+and the final `DONE` handoff directly to the parent's inbox.

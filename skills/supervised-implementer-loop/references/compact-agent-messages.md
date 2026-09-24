@@ -100,8 +100,7 @@ only report authority the parent already has; this record cannot create it.
 
 ## Complete The Package
 
-Return one `DONE` record in the final channel. Use the same fields in an inbox
-message only when a separate completion event was agreed:
+Send one `DONE` record to the parent inbox before finishing the turn:
 
 ```text
 DONE <package-or-scope-id>

@@ -238,7 +238,7 @@ before any new implementation delta.
 
 ## Select the implementer
 
-Use the installed `implementer` role: `gpt-5.6-luna` with `max` reasoning.
+Use the installed `implementer` role: `gpt-6-luna` with `max` reasoning.
 Its [role file](../assets/implementer.toml) owns the child's execution process.
 Explicit task or repository choices override this default; honor applicable
 memory instructions without reopening an already resolved selection. Use normal
@@ -247,9 +247,7 @@ execution unless fast mode is explicitly requested.
 In Codex, explicitly pass `agent_type: "implementer"` and `fork_turns: "none"`
 on the initial spawn and every respawn. The role fixes model and reasoning, so
 do not pass conflicting model overrides. For an explicitly different configured
-role, select that role with the same history-free spawn. An explicit configuration
-without a matching role uses the runtime's model and reasoning fields and the
-bundled execution instructions instead of a conflicting named role. The complete assignment
+role, select that role with the same history-free spawn. The complete assignment
 supplies task context; configuration, repository instructions, and the available
 skill catalog still apply. Keep subsequent messages delta-only in the same child.
 
@@ -257,17 +255,11 @@ Register the bundled regular file through `agents.implementer.config_file`;
 use the repository's [role registration procedure](../../../README.md#codex-implementer-role).
 The plugin supplies the role contents; the configuration entry makes it
 discoverable without a separate copy or symlink.
-If the role is unavailable in the current tool catalog, do not send an undeclared
-parameter. For this same authorized configuration, start a history-free child
-with explicit Luna Max settings and instruct it to read the bundled role's
-execution process once. If the runtime cannot provide the required configuration,
-report that concrete blocker instead of silently changing models.
-
-Other harnesses use their named-role and clean-context equivalents, or the same
-explicit configuration and bundled execution instructions. Apply the default
+Apply the default
 [continuity policy](#1-establish-the-callers-continuity-policy) without a separate
-approval prompt. Read recovery details only when crossing packages or context
-reliability requires a decision.
+approval prompt. If the role is unavailable in the current tool catalog, report
+that concrete blocker. Read recovery details only when crossing packages or
+context reliability requires a decision.
 
 ## Handle a missed event
 

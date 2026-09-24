@@ -72,7 +72,8 @@ parent-acceptable package; future packages remain unassigned until the parent
 accepts the current package.
 
 Supply the parent inbox target and require explicit inbox messages for agreed
-milestones, blockers, and decisions; child-local commentary is not delivery.
+milestones, blockers, decisions, and the final `DONE` handoff; child-local
+commentary is not delivery.
 Use the [compact agent-message transport](references/compact-agent-messages.md)
 for events after the self-contained initial assignment. Send the event type,
 stable package or scope ID, changed facts, evidence pointer, next action, and
@@ -106,10 +107,7 @@ Serialize Git writes and avoid overlapping edits.
    another correction cycle.
 
 The Codex plugin's session hook supplies a developer-level exception for these
-delegated waits. If it is absent or another higher-priority rule still caps waits
-or requires commentary, give the minimum update and resume waiting. Do not turn
-that wakeup into inspection or another assignment; report the constraint when
-it prevents long waits.
+delegated waits. Verify that it is active before using the extended wait window.
 
 ## 4. Inspect, Correct, Or Accept
 

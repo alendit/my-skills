@@ -451,10 +451,10 @@ focused completion checks, evidence locations, and
 questions requiring a parent decision. Include base revision, commit authority,
 selected configuration, continuity policy, parent inbox target, and the progress
 envelope. In Codex, require `send_message(target="<parent task path>", ...)`
-(usually `/root`) for blockers, decisions, and agreed checkpoints; local
+(usually `/root`) for blockers, decisions, agreed checkpoints, and `DONE`; local
 commentary stays in the child's transcript. If completion will miss a checkpoint,
 send progress and the next expected event before it is due. Deliver the final
-handoff through the final channel, which the harness forwards to the parent.
+handoff to the parent inbox before finishing the child turn.
 Name the [compact agent-message transport](compact-agent-messages.md) and the
 events expected for this package. Keep the initial assignment self-contained and
 normally phrased; compact records begin only after the child has received that
