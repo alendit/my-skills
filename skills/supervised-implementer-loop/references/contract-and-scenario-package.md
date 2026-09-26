@@ -449,12 +449,14 @@ invariants, accepted behavior that must not regress, scenario portfolio,
 applicable behavior/owner evidence (the realization relation for formal work),
 focused completion checks, evidence locations, and
 questions requiring a parent decision. Include base revision, commit authority,
-selected configuration, continuity policy, parent inbox target, and the progress
-envelope. In Codex, require `send_message(target="<parent task path>", ...)`
-(usually `/root`) for blockers, decisions, agreed checkpoints, and `DONE`; local
-commentary stays in the child's transcript. If completion will miss a checkpoint,
-send progress and the next expected event before it is due. Deliver the final
-handoff to the parent inbox before finishing the child turn.
+selected configuration, continuity policy, parent inbox target, the verified
+shared progress-log path, and the progress envelope. In Codex, require
+`send_message(target="<parent task path>", ...)` (usually `/root`) only when a
+parent-owned decision is needed or progress cannot continue efficiently. Append
+routine checkpoints and `DONE` to the log; local commentary stays in the
+child's transcript. If completion will miss a checkpoint, log progress and the
+next expected event before it is due. Finish with a final response pointing to
+the `DONE` log entry so the parent can begin acceptance.
 Name the [compact agent-message transport](compact-agent-messages.md) and the
 events expected for this package. Keep the initial assignment self-contained and
 normally phrased; compact records begin only after the child has received that
@@ -492,8 +494,9 @@ continuing the investigation. Do not impose a fixed attempt count on productive
 diagnosis or routine checks.
 
 Set a completion or meaningful-checkpoint window, immediate blockers, decision
-events, and the first credible stall deadline. The mailbox timeout is a generous
-failsafe beyond the expected event, within the tool limit. Illustrative starting
+events, an agreed log-review time, and the first credible stall deadline. The
+mailbox timeout reaches the next agreed review or stall deadline, within the
+tool limit. Illustrative starting
 points are about 30 minutes for substantial work, 45–60 minutes for long builds
 or checks, and 10–15 minutes for smaller packages. Adjust to actual work; these
 are not acceptance thresholds or instructions to leave work unbounded.
@@ -501,8 +504,9 @@ are not acceptance thresholds or instructions to leave work unbounded.
 Instruct the implementer to inspect relevant owners and adjacent consumers,
 avoid repeating context, use focused checks, and communicate concise deltas.
 Keep verbose logs and intermediate evidence in its context or an accessible
-temporary/authorized artifact. Accumulate results during execution; write one
-compact evidence summary at a completion or decision checkpoint and send its
+temporary/authorized artifact. Append concise progress and evidence pointers
+to the shared log. Accumulate detailed results during execution; write one
+compact evidence summary at completion or a decision checkpoint and log its
 pointer. Correct material errors without polishing intermediate reports or
 duplicating evidence across handoff files. The parent references that summary
 and records its acceptance decision and new evidence separately. Economy does
@@ -512,7 +516,7 @@ independent acceptance.
 ### Completion handoff
 
 Return the core fields as a
-[`DONE` record](compact-agent-messages.md#complete-the-package). Report base
+[`DONE` log record](compact-agent-messages.md#complete-the-package). Report base
 revision and handoff SHA when committed, changed paths and owner
 boundary, intended behavior/interface change (or none), established outcomes
 and existing contract IDs, goal and direct-scenario status, mechanism progress, focused checks with
@@ -534,6 +538,6 @@ missing evidence. The implementer cannot accept its own work.
 
 Before an authorized commit, settle editing/checking processes and validate the
 coherent handoff. The message describes durable behavior and reason, with a
-short useful validation summary; the inbox supplies SHA and transient evidence.
+short useful validation summary; the shared log supplies SHA and transient evidence.
 Label incomplete checkpoints unaccepted and retain the original package review
 base. Parent acceptance covers the entire original-base-to-final range.

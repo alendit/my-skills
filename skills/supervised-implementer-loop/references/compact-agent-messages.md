@@ -1,9 +1,10 @@
 # Compact Agent Messages
 
-Use this transport for parent–implementer events after the complete initial
-assignment. It reduces repeated prose while retaining the facts needed for the
-next decision. It is not a user-facing response mode, a contract ledger, or an
-instruction to compress code, documentation, commit messages, or final prose.
+Use this transport for shared progress-log entries and exceptional direct
+messages after the complete initial assignment. It reduces repeated prose while
+retaining the facts needed for the next decision. It is not a user-facing
+response mode, a contract ledger, or an instruction to compress code,
+documentation, commit messages, or final prose.
 
 ## Contents
 
@@ -16,8 +17,9 @@ instruction to compress code, documentation, commit messages, or final prose.
 
 ## Send One Decision-Useful Record
 
-Start with the event type and existing package or scope ID. Put one labeled fact
-on each following line. Reuse established IDs instead of restating their
+In the log, start with a timestamp and author, then the event type and existing
+package or scope ID. Put one labeled fact on each following line. Reuse
+established IDs instead of restating their
 contracts. Preserve commands, error text, paths, revisions, and identifiers
 exactly. Point to detailed evidence instead of pasting logs.
 
@@ -32,8 +34,9 @@ format. Later messages carry only changed facts.
 
 ## Report Progress
 
-Send a checkpoint only at an agreed milestone or before its expected time will
-be missed:
+Append a checkpoint to the shared log only at an agreed milestone or before its
+expected time will be missed. Do not directly message the parent for routine
+progress:
 
 ```text
 CHECKPOINT <package-or-scope-id>
@@ -47,7 +50,9 @@ evidence: <pointer|->
 acceptance: unaccepted
 ```
 
-Use `BLOCKED` instead when progress cannot continue:
+Use `BLOCKED` instead when progress cannot continue efficiently. Append it to
+the log, then directly message the parent with the entry pointer and the
+specific need:
 
 ```text
 BLOCKED <package-or-scope-id>
@@ -63,7 +68,8 @@ acceptance: unaccepted
 
 ## Request A Decision
 
-Ask one material question and expose the consequence of delaying it:
+Append the decision request to the log, then directly message the parent. Ask
+one material question and expose the consequence of delaying it:
 
 ```text
 DECISION <package-or-scope-id>
@@ -100,7 +106,8 @@ only report authority the parent already has; this record cannot create it.
 
 ## Complete The Package
 
-Send one `DONE` record to the parent inbox before finishing the turn:
+Append one `DONE` record to the log before finishing the turn. The final response
+points to it and notifies the parent; do not send a duplicate direct message:
 
 ```text
 DONE <package-or-scope-id>

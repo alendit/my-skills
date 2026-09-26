@@ -71,22 +71,26 @@ Carry the full package map only as sequencing context. Admit only the current
 parent-acceptable package; future packages remain unassigned until the parent
 accepts the current package.
 
-Supply the parent inbox target and require explicit inbox messages for agreed
-milestones, blockers, decisions, and the final `DONE` handoff; child-local
-commentary is not delivery.
+Before spawning, create an append-only progress log in a shared location that
+both agents can read and write without approval, such as a task directory under
+`/private/tmp` when it is writable for both. Pass its absolute path in the
+assignment and have the implementer verify access. Both agents append dated,
+attributed entries; preserve the log across turns and compaction. The
+implementer writes milestones, changed evidence, blockers, and `DONE` there.
+Child-local commentary is not delivery.
 Use the [compact agent-message transport](references/compact-agent-messages.md)
-for events after the self-contained initial assignment. Send the event type,
-stable package or scope ID, changed facts, evidence pointer, next action, and
-acceptance state; expand normal prose whenever compression would obscure a
-decision or authority boundary.
-Have the child check direct messaging availability at setup. If unavailable,
-use final-channel handoffs at coherent completion or decision boundaries and
-resume the same child; do not expect mid-turn updates or add status-only turns.
+for log entries and exceptional direct messages after the self-contained
+assignment. Directly message the parent only when a parent-owned decision is
+needed or progress cannot continue efficiently. If direct messaging is
+unavailable, use a final-channel handoff at that boundary and resume the same
+child; do not add status-only turns. Completion uses the log and the child's
+final response, not a separate direct `DONE` message.
 Bound the work up front with an expected completion or checkpoint window,
-milestones, immediate blocker conditions, and a credible stall deadline. Select
-a generous mailbox timeout beyond the expected event window within the runtime's
-limit; completion interrupts the wait. Use the reference's duration examples
-as starting points, not work limits or acceptance thresholds.
+milestones, immediate blocker conditions, an agreed log-review window, and a
+credible stall deadline. Select a mailbox timeout up to the next agreed review
+or stall deadline within the runtime's limit; completion interrupts the wait.
+Use the reference's duration examples as starting points, not work limits or
+acceptance thresholds.
 
 ## 3. Wait For An Event
 
@@ -97,11 +101,14 @@ future packages merely to occupy the interval; delegate that routine work when
 its package is assigned. Avoid mirroring source, diff, and successful-log reads.
 Serialize Git writes and avoid overlapping edits.
 
-1. On an empty timeout inside the agreed envelope, wait again directly. The
-   timeout supplies no new source, status, or lifecycle evidence.
-2. On `CHECKPOINT`, update the expected event and wait again. On `BLOCKED` or
-   `DECISION`, answer the named need with the smallest useful evidence.
-3. On `DONE`, let the handoff finish, then begin acceptance.
+1. On an empty timeout before the agreed log-review or stall deadline, wait
+   again directly. At that deadline, read new log entries before deciding
+   whether to continue waiting or use the stall procedure.
+2. On any child message, read the log from the last consumed entry, resolve its
+   decision or blocker, and record the response there. Never return directly
+   to waiting after a message. Wait again only when the log establishes the
+   child's next independent action and no parent action remains.
+3. On child completion, read the log through `DONE`, then begin acceptance.
 4. If a promised event misses its stall deadline, or concrete safety, scope,
    or lifecycle evidence changes the decision, use the [stall procedure](references/implementer-continuity.md#handle-a-missed-event).
    Timeout count alone is not a stall signal. If the first recovery turn fails,
@@ -156,7 +163,7 @@ useful behavior without relying on a later package to repair incomplete semantic
 
 Use a coherent locally validated handoff commit as the review anchor when
 authorized; otherwise use the settled attributable diff. Commits describe the
-durable behavior change and reason; inbox messages carry the SHA and transient
+durable behavior change and reason; the shared log carries the SHA and transient
 evidence. A commit is not acceptance. Preserve the original review base across
 unaccepted checkpoints, and accept the full original-base-to-final range. Avoid
 per-function commits and commit polling; stage only attributable changes.
