@@ -291,9 +291,9 @@ Exhausting this recovery budget invalidates the supervised communication
 channel, not the correctness or usefulness of the preserved edits. A timeout or
 its count still does not establish an implementation defect.
 
-1. Read the shared progress log from the last consumed entry, then make one
-   narrow check that can change the decision. A timeout or its count alone is
-   not evidence of a stall.
+1. Make one narrow check that can change the decision. A timeout or its count
+   alone is not evidence of a stall and does not trigger a log read. If log
+   context is needed, ask the child to identify the relevant line range.
 2. After that check, send at most one status request. Queue substantive deltas
    to an active turn; trigger a new turn only when it is idle and work is ready.
 3. Interrupt at most once when the course is unsafe, invalidated, or credibly

@@ -10,8 +10,8 @@ Complete the assigned code package using this process:
    acceptance checks, commit authority, reporting window, parent inbox target,
    and shared progress-log path. Verify that both you and the parent can read
    and append to that log without approval before long work.
-   Create the log if absent; you are its only writer. The parent reads it and
-   sends decisions and instructions directly to you.
+   Create the log if absent; you are its only writer. Tell the parent whether
+   it needs to read the log and which lines; it sends decisions directly to you.
    Ask the parent about missing decisions that block implementation.
    Check for the direct messaging tool now; if absent, continue independent
    work and use a final-channel handoff if a decision or blocker arises.
@@ -51,12 +51,14 @@ Complete the assigned code package using this process:
    the same evidence across handoff files.
 
 4. Put agreed milestones, changed results, and `DONE` in the shared log. Before
-   a review window is due, append the outcome or a concise progress entry with
+   a checkpoint is due, append the outcome or a concise progress entry with
    the next expected event. Directly use collaboration.send_message with the
    parent task path (normally /root) only when you need a parent-owned decision
-   or cannot progress efficiently. Point to the new log entry and name the
-   specific decision or blocker. Collaboration tools are separate from
-   functions.exec; call the exposed tool directly. If direct messaging is
+   or cannot progress efficiently. Name the specific decision or blocker. In
+   every direct message and final response, include `log-read: none` if it is
+   self-contained, or `log-read: <absolute-path>:<start-line>-<end-line>` with
+   verified 1-based line numbers for the needed context. Collaboration tools are
+   separate from functions.exec; call the exposed tool directly. If direct messaging is
    unavailable or fails at such a boundary, stop and report the exact delivery
    failure in the final response. Local commentary does not notify the parent.
    Use the compact transport without losing evidence or authority fields.
@@ -70,8 +72,8 @@ Complete the assigned code package using this process:
    outcome, changed owner boundaries, base revision and commit SHAs when
    available, checks and results, remaining concerns, and evidence locations.
    Mark acceptance parent-pending. The parent decides acceptance. Then finish
-   the turn with a concise final response pointing to the log entry; the final
-   response itself notifies the parent.
+   the turn with a concise final response and the applicable `log-read`
+   instruction; the final response itself notifies the parent.
 
 Use additional skills when the assigned work requires them.
 """

@@ -75,9 +75,10 @@ Before spawning, choose an append-only progress-log path in a shared location th
 both agents can read and write without approval, such as a task directory under
 `/private/tmp` when it is writable for both. Pass its absolute path in the
 assignment and have the implementer create the log and verify access. Only the
-implementer appends dated progress entries; the parent reads the log and replies
-directly to the child. Preserve the log across turns and compaction. The
-implementer writes milestones, changed evidence, blockers, and `DONE` there.
+implementer appends dated progress entries; the parent reads only the range
+requested by the child and replies directly. Preserve the log across turns and
+compaction. The implementer writes milestones, changed evidence, blockers, and
+`DONE` there.
 Child-local commentary is not delivery.
 Use the [compact agent-message transport](references/compact-agent-messages.md)
 for log entries and exceptional direct messages after the self-contained
@@ -87,9 +88,11 @@ unavailable, use a final-channel handoff at that boundary and resume the same
 child; do not add status-only turns. Completion uses the log and the child's
 final response, not a separate direct `DONE` message.
 Bound the work up front with an expected completion or checkpoint window,
-milestones, immediate blocker conditions, an agreed log-review window, and a
-credible stall deadline. Select a mailbox timeout up to the next agreed review
-or stall deadline within the runtime's limit; completion interrupts the wait.
+milestones, immediate blocker conditions, and a credible stall deadline. Every
+child message and final handoff specifies `log-read: none` when self-contained,
+or `log-read: <absolute-path>:<start-line>-<end-line>` with 1-based line numbers
+when context is needed. Select a mailbox timeout up to the stall deadline within
+the runtime's limit; completion interrupts the wait.
 Use the reference's duration examples as starting points, not work limits or
 acceptance thresholds.
 
@@ -102,16 +105,16 @@ future packages merely to occupy the interval; delegate that routine work when
 its package is assigned. Avoid mirroring source, diff, and successful-log reads.
 Serialize Git writes and avoid overlapping edits.
 
-1. On an empty timeout before the agreed log-review or stall deadline, wait
-   again directly. At that deadline, read new log entries before deciding
-   whether to continue waiting or use the stall procedure.
-2. On a child decision or blocker message, read the log from the last consumed
-   entry and reply directly to the child. Use `send_message` for an active child
-   or `followup_task` to resume the same idle child with the decision. The parent
+1. On an empty timeout before the agreed stall deadline, wait again directly.
+   At that deadline, use the stall procedure; do not automatically read the log.
+2. On a child decision or blocker message, follow its `log-read` instruction
+   and reply directly to the child. If that instruction is missing and more
+   context is needed, ask the child for the range. Use `send_message` for an active
+   child or `followup_task` to resume the same idle child with the decision. The parent
    writes no log entries. Never return directly to waiting after a message;
    wait again only after delivering the response and establishing the child's
    next action with no parent action remaining.
-3. On child completion, read the log through `DONE`, then begin acceptance.
+3. On child completion, follow its `log-read` instruction, then begin acceptance.
 4. If a promised event misses its stall deadline, or concrete safety, scope,
    or lifecycle evidence changes the decision, use the [stall procedure](references/implementer-continuity.md#handle-a-missed-event).
    Timeout count alone is not a stall signal. If the first recovery turn fails,

@@ -32,6 +32,12 @@ The initial assignment remains self-contained. It names this reference and the
 events expected for the package; it does not encode the package itself in this
 format. Later messages carry only changed facts.
 
+Every child direct message and final response includes `log-read: none` when
+self-contained, or `log-read: <absolute-path>:<start-line>-<end-line>` when the
+parent needs log context. Verify the 1-based line numbers after appending. The
+parent reads only that range; receipt of a message or completion does not itself
+require a log read.
+
 ## Report Progress
 
 Append a checkpoint to the shared log only at an agreed milestone or before its
@@ -51,8 +57,8 @@ acceptance: unaccepted
 ```
 
 Use `BLOCKED` instead when progress cannot continue efficiently. Append it to
-the log, then directly message the parent with the entry pointer and the
-specific need:
+the log, then directly message the parent with the specific need and `log-read`
+instruction:
 
 ```text
 BLOCKED <package-or-scope-id>
@@ -109,7 +115,8 @@ only report authority the parent already has; this record cannot create it.
 ## Complete The Package
 
 Append one `DONE` record to the log before finishing the turn. The final response
-points to it and notifies the parent; do not send a duplicate direct message:
+includes the applicable `log-read` instruction and notifies the parent; do not
+send a duplicate direct message:
 
 ```text
 DONE <package-or-scope-id>

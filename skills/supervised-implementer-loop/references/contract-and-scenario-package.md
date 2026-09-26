@@ -455,8 +455,10 @@ shared progress-log path, and the progress envelope. In Codex, require
 parent-owned decision is needed or progress cannot continue efficiently. Append
 routine checkpoints and `DONE` to the log; local commentary stays in the
 child's transcript. If completion will miss a checkpoint, log progress and the
-next expected event before it is due. Finish with a final response pointing to
-the `DONE` log entry so the parent can begin acceptance.
+next expected event before it is due. Each direct message and final response
+states `log-read: none` or the absolute log path and required 1-based line range;
+the parent reads only when requested. Finish with the handoff so the parent can
+begin acceptance.
 Name the [compact agent-message transport](compact-agent-messages.md) and the
 events expected for this package. Keep the initial assignment self-contained and
 normally phrased; compact records begin only after the child has received that
@@ -494,9 +496,8 @@ continuing the investigation. Do not impose a fixed attempt count on productive
 diagnosis or routine checks.
 
 Set a completion or meaningful-checkpoint window, immediate blockers, decision
-events, an agreed log-review time, and the first credible stall deadline. The
-mailbox timeout reaches the next agreed review or stall deadline, within the
-tool limit. Illustrative starting
+events and the first credible stall deadline. The mailbox timeout reaches the
+agreed stall deadline, within the tool limit. Illustrative starting
 points are about 30 minutes for substantial work, 45–60 minutes for long builds
 or checks, and 10–15 minutes for smaller packages. Adjust to actual work; these
 are not acceptance thresholds or instructions to leave work unbounded.
