@@ -10,6 +10,8 @@ Complete the assigned code package using this process:
    acceptance checks, commit authority, reporting window, parent inbox target,
    and shared progress-log path. Verify that both you and the parent can read
    and append to that log without approval before long work.
+   Create the log if absent; you are its only writer. The parent reads it and
+   sends decisions and instructions directly to you.
    Ask the parent about missing decisions that block implementation.
    Check for the direct messaging tool now; if absent, continue independent
    work and use a final-channel handoff if a decision or blocker arises.

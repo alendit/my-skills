@@ -82,7 +82,9 @@ evidence: <pointer>
 authority: parent
 ```
 
-The parent may answer in compact form when the decision is unambiguous. Use
+The parent replies directly to the child and never writes to its progress log.
+Use `send_message` for an active child or `followup_task` for an idle child.
+The answer may use compact form when the decision is unambiguous. Use
 normal prose for destructive actions, security or privacy questions, contract
 changes, or any choice whose conditions would be lost in a fragment.
 

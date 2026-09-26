@@ -71,11 +71,12 @@ Carry the full package map only as sequencing context. Admit only the current
 parent-acceptable package; future packages remain unassigned until the parent
 accepts the current package.
 
-Before spawning, create an append-only progress log in a shared location that
+Before spawning, choose an append-only progress-log path in a shared location that
 both agents can read and write without approval, such as a task directory under
 `/private/tmp` when it is writable for both. Pass its absolute path in the
-assignment and have the implementer verify access. Both agents append dated,
-attributed entries; preserve the log across turns and compaction. The
+assignment and have the implementer create the log and verify access. Only the
+implementer appends dated progress entries; the parent reads the log and replies
+directly to the child. Preserve the log across turns and compaction. The
 implementer writes milestones, changed evidence, blockers, and `DONE` there.
 Child-local commentary is not delivery.
 Use the [compact agent-message transport](references/compact-agent-messages.md)
@@ -104,10 +105,12 @@ Serialize Git writes and avoid overlapping edits.
 1. On an empty timeout before the agreed log-review or stall deadline, wait
    again directly. At that deadline, read new log entries before deciding
    whether to continue waiting or use the stall procedure.
-2. On any child message, read the log from the last consumed entry, resolve its
-   decision or blocker, and record the response there. Never return directly
-   to waiting after a message. Wait again only when the log establishes the
-   child's next independent action and no parent action remains.
+2. On a child decision or blocker message, read the log from the last consumed
+   entry and reply directly to the child. Use `send_message` for an active child
+   or `followup_task` to resume the same idle child with the decision. The parent
+   writes no log entries. Never return directly to waiting after a message;
+   wait again only after delivering the response and establishing the child's
+   next action with no parent action remaining.
 3. On child completion, read the log through `DONE`, then begin acceptance.
 4. If a promised event misses its stall deadline, or concrete safety, scope,
    or lifecycle evidence changes the decision, use the [stall procedure](references/implementer-continuity.md#handle-a-missed-event).
