@@ -17,16 +17,25 @@ Complete the assigned code package using this process:
    work and use a final-channel handoff if a decision or blocker arises.
 
 2. Establish the assigned owner and consumer facts, gather focused evidence,
-   and choose the internal edits. Complete the package, including directly
-   caused adaptations. At an investigation checkpoint, log findings, evidence
-   pointers, and a recommendation, then directly request the parent's decision
-   before dependent edits. Report material design or scope gaps before
-   expanding work.
+   and choose the internal edits, including directly caused adaptations.
+   Follow the assigned implementer-owned
+   checkpoints: verify each outcome with its focused evidence before dependent
+   work, correct failures locally, log the result, and continue within the same
+   package. Checkpoints add no parent approvals, full gates, or shippable product
+   requirements; package acceptance and required gates remain unchanged.
+   When an investigation needs a parent-owned decision, log findings, evidence
+   pointers, and a recommendation, then request
+   that decision before dependent edits. Report material design or scope gaps
+   before expanding work.
    Before building a diagnostic probe, locate the actual dependency or artifact,
    inspect the relevant API, and state the hypothesis and smallest experiment
-   that distinguishes it. Reuse discovered paths. If repeated attempts fail
-   without narrowing the cause, checkpoint with observations, failed attempts,
-   and the proposed next experiment before continuing that investigation.
+   that distinguishes it. Reuse discovered paths. After a patch-context miss,
+   refresh the exact target range and rebuild the edit against current source;
+   repeated misses require a revised editing approach. Another diagnostic
+   attempt needs a changed hypothesis, improved observation, or changed
+   implementation. If attempts stop narrowing the cause, revise the local
+   approach; report observations and a proposed next experiment to the parent
+   only when a parent-owned decision is needed or progress remains blocked.
    For Cargo work, put its download cache under the project's ignored target
    directory (for example, CARGO_HOME=<project>/target/cargo-home) and use that
    setting for every Cargo command, including probes with separate manifests.
@@ -39,8 +48,15 @@ Complete the assigned code package using this process:
    do not carry escalation into unrelated reads or later commands automatically.
 
 3. Validate the changed behavior with focused checks. Reuse adequate
-   existing evidence. Wait on running commands for their expected duration
-   within harness limits; avoid short process polls that yield no new evidence.
+   existing evidence. For consequential new or replacement witnesses, check
+   that execution reaches the intended operation, assertions distinguish the
+   likely defect, and expectations follow the accepted contract or baseline.
+   If unclear, use a selective negative control or temporary fault to confirm
+   the witness fails, then restore the implementation. Names, inventory counts,
+   and adjacent successes are insufficient. Preserve applicable baseline
+   assertions alongside each owner change. Wait on running commands for their
+   expected duration within harness limits; avoid short process polls that
+   yield no new evidence.
    Repeat a check when edits, changed conditions, or a stated diagnostic
    question make the result informative. Append concise, dated progress and
    evidence pointers to the shared log at meaningful milestones. Distinguish
@@ -70,7 +86,8 @@ Complete the assigned code package using this process:
 
 6. Append the completed handoff to the shared log as a DONE record with the
    outcome, changed owner boundaries, base revision and commit SHAs when
-   available, checks and results, remaining concerns, and evidence locations.
+   available, checkpoint outcomes, check results, consequential witness/assertion
+   pointers, remaining concerns, and evidence locations.
    Mark acceptance parent-pending. The parent decides acceptance. Then finish
    the turn with a concise final response and the applicable `log-read`
    instruction; the final response itself notifies the parent.

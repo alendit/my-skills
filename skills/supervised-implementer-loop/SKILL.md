@@ -60,7 +60,8 @@ writer active through the delivery package, corrections, and parent acceptance.
 
 Send the [initial assignment](references/contract-and-scenario-package.md#assign-and-hand-off-a-delivery-package)
 once: accepted brief or formal map and current package, owner and behavior, prerequisites,
-exclusions, focused checks, decision boundaries, base revision, and commit
+exclusions, ordered implementer-owned checkpoints with focused evidence,
+decision boundaries, base revision, and commit
 authority. Start with no parent conversation history; in Codex, explicitly set
 `fork_turns: "none"` on every spawn or respawn. Supply a self-contained brief and
 relevant artifact pointers instead of the parent transcript or orchestration
@@ -70,6 +71,9 @@ with the implementer or in a referenced artifact.
 Carry the full package map only as sequencing context. Admit only the current
 parent-acceptable package; future packages remain unassigned until the parent
 accepts the current package.
+Checkpoints guide execution inside that package: the implementer verifies them
+before dependent work and continues without routine parent approval. They do not
+create delivery packages, canonical gates, or independently shippable states.
 
 Before spawning, choose an append-only progress-log path in a shared location that
 both agents can read and write without approval, such as a task directory under

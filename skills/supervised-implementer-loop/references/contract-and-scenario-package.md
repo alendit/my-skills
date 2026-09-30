@@ -93,6 +93,11 @@ delivered, not a second set of contracts.
 - An **internal step** is implementation work inside one delivery package. It
   may receive focused parent evidence, but it is not a separately gated
   delivery package by default.
+- An **implementer-owned checkpoint** is an internal step with an assigned
+  observable outcome and focused evidence. The implementer checks it before
+  dependent work, logs the result, and continues within the same package.
+  It does not establish parent acceptance, a turnover boundary, or a shippable
+  product state.
 
 Every contract ID has exactly one establishing delivery package, and every
 delivery package establishes at least one complete contract ID. No checkpoint,
@@ -428,6 +433,15 @@ contract publicly and keep unreachable serializer or ABI limits owner-local.
 A conformance label names evidence but does not replace the scenario's
 observable invariant.
 
+For consequential new or replacement witnesses, identify how execution reaches
+the intended operation, which assertions distinguish the likely defect, and
+which accepted contract or baseline assertion supplies the expectation. If that
+decision power is unclear, use a selective negative control or temporary fault
+to confirm the witness fails, then restore the implementation. Test names,
+inventory counts, and adjacent successes are insufficient. Preserve applicable
+baseline assertions alongside each owner change rather than postponing their
+reconciliation until integration is complete.
+
 ## Assign and hand off a delivery package
 
 Use the existing map, contract matrix, and realization relation as the source
@@ -464,6 +478,17 @@ events expected for this package. Keep the initial assignment self-contained and
 normally phrased; compact records begin only after the child has received that
 complete context.
 
+Supply a compact ordered list of implementer-owned checkpoints: observable
+outcome, established prerequisites, and focused evidence for each. Choose
+boundaries where a failure would invalidate dependent work; keep related edits
+together. The implementer owns the checks and local corrections, records results
+in the existing progress log, and continues without status-only handoffs or
+routine parent inspection. A failed checkpoint blocks work that relies on its
+unproved outcome; independent in-scope work may continue on proved prerequisites.
+Request a parent decision only for a design/scope change or
+when progress cannot continue efficiently. Package scope, acceptance, and
+required complete gates remain unchanged.
+
 Include only applicable additions:
 
 - structural baseline and intended source destination for changed owners;
@@ -489,11 +514,14 @@ unless its evidence leaves a concrete gap or contradiction.
 
 For diagnostic work, have the implementer locate the actual dependency or
 artifact and inspect the relevant API before building the smallest probe that
-distinguishes its hypothesis. Reuse discovered paths. If repeated attempts fail
-without narrowing the cause, request a checkpoint with observations, failed
-attempts, and the proposed next experiment; resolve that direction before
-continuing the investigation. Do not impose a fixed attempt count on productive
-diagnosis or routine checks.
+distinguishes its hypothesis. Reuse discovered paths. After a patch-context miss,
+refresh the exact target range and rebuild the edit against current source;
+repeated misses require a revised editing approach. Another diagnostic attempt
+needs a changed hypothesis, improved observation, or changed implementation.
+When attempts stop narrowing the cause, revise the local approach before
+continuing; request a parent decision with observations and the proposed next
+experiment only when that decision is needed or progress remains blocked.
+Do not impose a fixed attempt count on productive diagnosis or routine checks.
 
 Set a completion or meaningful-checkpoint window, immediate blockers, decision
 events and the first credible stall deadline. The mailbox timeout reaches the
@@ -520,7 +548,8 @@ Return the core fields as a
 [`DONE` log record](compact-agent-messages.md#complete-the-package). Report base
 revision and handoff SHA when committed, changed paths and owner
 boundary, intended behavior/interface change (or none), established outcomes
-and existing contract IDs, goal and direct-scenario status, mechanism progress, focused checks with
+and existing contract IDs, goal and direct-scenario status, mechanism progress, checkpoint outcomes,
+focused checks and consequential witness/assertion pointers with
 pass/fail status, unresolved concerns, and the detailed-evidence location.
 For formal work, replace planned realization entries with actual source/assertion
 evidence; report changed entries and unresolved rows after the first complete
