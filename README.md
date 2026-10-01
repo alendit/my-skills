@@ -84,9 +84,12 @@ Codex discovers [hooks/hooks.json](hooks/hooks.json) automatically when the plug
 and hooks feature are enabled. Its synchronous `SessionStart` command emits a
 static `additionalContext` payload, which Codex inserts as a developer message.
 This supplies a scoped exception to the default 60-second commentary and wait
-guidance while the parent awaits an active implementer's agreed events. The
-workflow chooses a generous timeout, usually about 30 minutes for substantial
-work, with an up-front checkpoint window and stall deadline.
+guidance while awaiting an active implementer, reviewer, or long-running
+verification command. Agree on milestones and a stall deadline, then choose a
+generous timeout within runtime limits. Keep routine process polling inside the
+executor or an existing cheaper capable worker; a persistent exec cell still
+causes model turns when recurring status output or short observation windows
+return control to the model. Completion and material decisions wake the parent.
 
 The hook reads only its bundled payload; it adds no tool, network request, or
 global instruction file. It runs at session lifecycle boundaries, including

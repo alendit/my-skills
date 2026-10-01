@@ -87,9 +87,13 @@ signal appears, use [architectural classification review](references/implementat
 The reviewer audits evidence and classification; it does not approve scope,
 select remediation, accept deferral, or mutate follow-up records.
 
-For a delegated review lasting several minutes, send a compact checkpoint after
-material cell clusters and before the final gate: coverage status, active
-command, and next question. A checkpoint is not a finding or final decision.
+For a delegated review lasting several minutes, agree on a completion or
+checkpoint window, immediate decision/blocker reporting, and a stall deadline.
+Use event-driven mailbox waits under the Codex plugin's waiting exception.
+Send compact checkpoints after material cell clusters and before the final
+gate: coverage status, active command, and next question. Avoid status-only
+turns or updates merely because time passed. A checkpoint is not a finding or
+final decision.
 Return available candidate dispositions promptly; a status request does not
 justify repeating completed coverage.
 

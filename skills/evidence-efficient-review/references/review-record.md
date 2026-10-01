@@ -143,10 +143,17 @@ temporary log and retain only the command, exit status, concise test counts, and
 failure tail when needed. Do not rerun an overlapping complete gate merely to
 obtain another presentation of the same evidence.
 
-Run each final gate in the foreground and wait on that execution instead of
-starting background jobs and polling their logs. Reuse current equivalent gate
-evidence when its revision and dependencies match. Additional calls should
-finish required verification or diagnose a concrete failure, not reproduce an
+Run each final gate in the foreground. Keep routine polling inside the executor
+or an existing cheaper capable worker and return completion, failure, a material
+decision, or agreed milestone/stall evidence. The parent retains acceptance of
+the exact revision, command, exit status, and material evidence. In Codex, use
+the session hook's extended waiting exception within runtime limits. A live
+exec cell does not eliminate model turns: avoid `yield_control()`, `notify()`,
+recurring status output, and short outer exec/wait windows merely to report
+that a process is running. Preserve user interruption and bound the wait by a
+credible stall deadline. Reuse current equivalent gate evidence when its
+revision and dependencies match. Additional calls should finish required
+verification or diagnose a concrete failure, not reproduce an
 already sufficient result. Respect an explicit caller budget without inventing
 a separate final-gate call limit.
 

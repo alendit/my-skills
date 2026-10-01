@@ -62,6 +62,12 @@ command set once on that exact commit. Do not create an empty acceptance commit
 or run equivalent complete suites immediately before and after the phase commit
 merely to reproduce the same evidence.
 
+Use the [gate waiting procedure](../../evidence-efficient-review/references/review-record.md#verify-within-the-evidence-budget)
+for long canonical runs. Keep mechanical monitoring inside the executor or an
+existing cheaper capable worker; the parent verifies completion evidence and
+retains acceptance. Review-only mailbox waits also use the Codex plugin's
+waiting exception, with agreed events and a credible stall deadline.
+
 A Tock is not ready for Tick until the exact-commit gate passes. On failure,
 return to remediation, checkpoint the correction under repository policy, and
 rerun the gate before review.

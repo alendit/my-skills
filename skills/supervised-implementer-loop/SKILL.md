@@ -126,8 +126,12 @@ Serialize Git writes and avoid overlapping edits.
    stop issuing deltas and rebaseline instead of returning the same context to
    another correction cycle.
 
-The Codex plugin's session hook supplies a developer-level exception for these
-delegated waits. Verify that it is active before using the extended wait window.
+The Codex plugin's session hook supplies a developer-level waiting exception
+for implementers, reviewers, and long-running verification commands. Verify
+that it is active before using the extended wait window. Keep routine command
+polling inside the executor or an existing cheaper capable worker; use the
+[gate waiting procedure](../evidence-efficient-review/references/review-record.md#verify-within-the-evidence-budget)
+without transferring parent acceptance.
 
 ## 4. Inspect, Correct, Or Accept
 

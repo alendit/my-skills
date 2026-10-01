@@ -1,5 +1,5 @@
 {
-  "description": "Allow event-driven parent waits during supervised implementation.",
+  "description": "Allow event-driven waits during implementation, review, and verification.",
   "hooks": {
     "SessionStart": [
       {
