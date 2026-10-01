@@ -70,10 +70,15 @@ Complete the assigned code package using this process:
    a checkpoint is due, append the outcome or a concise progress entry with
    the next expected event. Directly use collaboration.send_message with the
    parent task path (normally /root) only when you need a parent-owned decision
-   or cannot progress efficiently. Name the specific decision or blocker. In
-   every direct message and final response, include `log-read: none` if it is
-   self-contained, or `log-read: <absolute-path>:<start-line>-<end-line>` with
-   verified 1-based line numbers for the needed context. Collaboration tools are
+   or cannot progress efficiently. Name the specific decision or blocker. Send
+   no direct DONE or status message. Append each log record with one command:
+   take the start line from `wc -l` before the append, write a header line
+   stamped by `date -u` and a quoted-heredoc body, then print the 1-based range
+   from `wc -l` after it. Copy revisions from Git output. Do not re-read or edit
+   earlier records; append an AMEND record naming the corrected lines instead.
+   In every direct message and final response, include `log-read: none` if it
+   is self-contained, or `log-read: <absolute-path>:<start-line>-<end-line>`
+   with that printed range for the needed context. Collaboration tools are
    separate from functions.exec; call the exposed tool directly. If direct messaging is
    unavailable or fails at such a boundary, stop and report the exact delivery
    failure in the final response. Local commentary does not notify the parent.
@@ -87,10 +92,11 @@ Complete the assigned code package using this process:
 6. Append the completed handoff to the shared log as a DONE record with the
    outcome, changed owner boundaries, base revision and commit SHAs when
    available, checkpoint outcomes, check results, consequential witness/assertion
-   pointers, remaining concerns, and evidence locations.
+   pointers, a read-only live-state probe when acceptance depends on live or
+   deployed state, remaining concerns, and evidence locations.
    Mark acceptance parent-pending. The parent decides acceptance. Then finish
    the turn with a concise final response and the applicable `log-read`
-   instruction; the final response itself notifies the parent.
+   instruction; the final response is the only completion notice.
 
 Use additional skills when the assigned work requires them.
 """

@@ -132,5 +132,6 @@ The parent selects `agent_type: "implementer"` and explicitly sets
 `fork_turns: "none"` for every spawn and respawn. The self-contained assignment
 supplies task context; later messages carry only deltas to the same child. The
 spawn default is a full history fork, so leaving the parameter out would copy
-the parent conversation. The implementer sends checkpoints, blockers, decisions,
-and the final `DONE` handoff directly to the parent's inbox.
+the parent conversation. The implementer appends checkpoints and the `DONE`
+record to the shared progress log. It messages the parent's inbox only for a
+decision or blocker; its final response is the completion notice.

@@ -69,6 +69,8 @@ actions. Record:
 When the caller has not required a particular identity, a fresh context is
 permitted only if the runtime can actually preserve the selected model,
 reasoning effort, and execution mode. Do not silently substitute any of them.
+A reported [missing-role fallback](#select-the-implementer) becomes the
+configuration that renewal preserves.
 If the runtime cannot provide the authorized configuration, renewal is
 unavailable: continue in the current context when it remains trustworthy, or
 stop and ask for the required rebaseline or replacement authority.
@@ -257,9 +259,16 @@ The plugin supplies the role contents; the configuration entry makes it
 discoverable without a separate copy or symlink.
 Apply the default
 [continuity policy](#1-establish-the-callers-continuity-policy) without a separate
-approval prompt. If the role is unavailable in the current tool catalog, report
-that concrete blocker. Read recovery details only when crossing packages or
-context reliability requires a decision.
+approval prompt. Read recovery details only when crossing packages or context
+reliability requires a decision.
+
+If the role is unavailable in the current tool catalog, spawn the runtime's
+default agent without parent history. In Codex, use `agent_type: "default"`
+with `fork_turns: "none"`, and pass the role's model and reasoning effort when
+the tool accepts them; a full-history fork drops the role's model. Include the
+role file's `developer_instructions` in the assignment, because the fallback
+agent does not load them. Tell the user once which configuration was requested
+and which model resolved, or that the runtime does not report it.
 
 ## Handle a missed event
 

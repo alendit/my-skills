@@ -34,9 +34,29 @@ format. Later messages carry only changed facts.
 
 Every child direct message and final response includes `log-read: none` when
 self-contained, or `log-read: <absolute-path>:<start-line>-<end-line>` when the
-parent needs log context. Verify the 1-based line numbers after appending. The
-parent reads only that range; receipt of a message or completion does not itself
-require a log read.
+parent needs log context. The parent reads only that range; receipt of a message
+or completion does not itself require a log read.
+
+The child appends each record with one command that stamps the current time and
+prints the record's 1-based range. The quoted heredoc keeps `$` and backticks in
+evidence text literal; copy revisions from Git output, not memory:
+
+```sh
+log=<absolute-log-path>
+start=$(( $(wc -l < "$log") + 1 ))
+{
+  printf '%s implementer CHECKPOINT P2\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  cat <<'EOF'
+state: testing
+...
+EOF
+} >> "$log"
+printf 'log-read: %s:%d-%d\n' "$log" "$start" "$(( $(wc -l < "$log") ))"
+```
+
+The printed range is the check; do not re-read or edit earlier records. To fix
+one, append `AMEND <package-or-scope-id>` with `lines: <start>-<end>` and the
+corrected fields.
 
 ## Report Progress
 
@@ -115,8 +135,8 @@ only report authority the parent already has; this record cannot create it.
 ## Complete The Package
 
 Append one `DONE` record to the log before finishing the turn. The final response
-includes the applicable `log-read` instruction and notifies the parent; do not
-send a duplicate direct message:
+includes the applicable `log-read` instruction and is the only completion
+notice; send no direct `DONE` or status message:
 
 ```text
 DONE <package-or-scope-id>
@@ -128,6 +148,7 @@ changed: <paths and owner boundary>
 behavior: <interface or behavior change|none>
 contracts: <established existing IDs|->
 checks: <command => PASS|FAIL with concise counts>
+live-probe: <read-only command that shows the change in live state|->
 unknowns: <remaining concern|->
 evidence: <detailed-evidence pointer|->
 commit: <sha|none>

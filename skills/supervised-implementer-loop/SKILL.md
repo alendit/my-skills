@@ -23,11 +23,14 @@ preserve unrelated work. Keep prose-heavy authorship with the parent. For mixed
 work, delegate the admitted code package and its directly supporting tests,
 fixtures, comments, and documentation.
 
-Inspect enough to establish scope, likely owners, and the admission route.
-Assign routine owner tracing, adjacent-consumer inspection, and focused evidence
-gathering to the implementer with the code package. If missing facts block a
-design decision, bound an investigation checkpoint first; the parent decides
-from its findings before dependent edits begin.
+Inspect enough to establish scope and the admission route. Trace owners only
+for the first delivery package, and stop once you can name its outcome, owner,
+and acceptance check; later packages are traced when assigned. Assign routine
+owner tracing, adjacent-consumer inspection, and focused evidence gathering to
+the implementer with the code package. If missing facts block a design
+decision, before or between packages, assign the implementer a bounded
+investigation checkpoint first; the parent decides from its findings before
+dependent edits begin.
 
 Select [admission depth](references/contract-and-scenario-package.md#choose-admission-depth)
 before spawning. For bounded work with established behavior, ownership, and
@@ -102,15 +105,27 @@ acceptance thresholds.
 
 ## 3. Wait For An Event
 
-Let the implementer investigate, edit, and run focused checks. Do independent
-work when it advances the authorized request, such as parent-owned prose or a
-pending design decision. Otherwise wait. Prefer waiting to broad exploration of
-future packages merely to occupy the interval; delegate that routine work when
-its package is assigned. Avoid mirroring source, diff, and successful-log reads.
-Serialize Git writes and avoid overlapping edits.
+Let the implementer investigate, edit, and run focused checks. Before the first
+wait, state the send time and stall deadline as absolute times in the parent's
+update so they survive compaction. Until that deadline, silence and an
+unchanged tree or log are normal: do not inspect them for progress, and never
+resend the package assignment. Corrections and replies stay deltas.
+
+Do independent work when it advances the authorized request, such as a pending
+design decision or parent-owned prose drafted outside the implementer's tree
+(for example, beside the progress log). Otherwise wait. Prefer waiting to broad
+exploration of future packages merely to occupy the interval; delegate that
+routine work when its package is assigned. Avoid mirroring source, diff, and successful-log reads. While a
+package is active, make no edits in the implementer's tree, even to files it
+does not own; its checks and commit would absorb them. Apply parent edits
+between packages, after acceptance and before the next assignment. Serialize
+Git writes.
 
 1. On an empty timeout before the agreed stall deadline, wait again directly.
    At that deadline, use the stall procedure; do not automatically read the log.
+   After compaction or resume, recover the send time and deadline before
+   reacting to silence. If they are lost, check the child's status once
+   (`list_agents` in Codex); if it is still running, start a fresh stall window.
 2. On a child decision or blocker message, follow its `log-read` instruction
    and reply directly to the child. If that instruction is missing and more
    context is needed, ask the child for the range. Use `send_message` for an active

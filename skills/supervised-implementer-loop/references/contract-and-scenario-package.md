@@ -464,15 +464,18 @@ applicable behavior/owner evidence (the realization relation for formal work),
 focused completion checks, evidence locations, and
 questions requiring a parent decision. Include base revision, commit authority,
 selected configuration, continuity policy, parent inbox target, the verified
-shared progress-log path, and the progress envelope. In Codex, require
-`send_message(target="<parent task path>", ...)` (usually `/root`) only when a
-parent-owned decision is needed or progress cannot continue efficiently. Append
-routine checkpoints and `DONE` to the log; local commentary stays in the
-child's transcript. If completion will miss a checkpoint, log progress and the
-next expected event before it is due. Each direct message and final response
-states `log-read: none` or the absolute log path and required 1-based line range;
-the parent reads only when requested. Finish with the handoff so the parent can
-begin acceptance.
+shared progress-log path, and the progress envelope.
+
+State the messaging rule in every assignment; the child receives no parent hook
+text and may run without the role file. The child directly messages the parent
+only when a parent-owned decision is needed or progress cannot continue
+efficiently (in Codex, `send_message(target="<parent task path>", ...)`, usually
+`/root`). It appends routine checkpoints and `DONE` to the log and sends no
+direct `DONE` or status message; its final response is the only completion
+notice. Local commentary stays in the child's transcript. If completion will
+miss a checkpoint, log progress and the next expected event before it is due.
+Each direct message and final response states `log-read: none` or the absolute
+log path and required 1-based line range; the parent reads only when requested.
 Name the [compact agent-message transport](compact-agent-messages.md) and the
 events expected for this package. Keep the initial assignment self-contained and
 normally phrased; compact records begin only after the child has received that
@@ -551,6 +554,8 @@ boundary, intended behavior/interface change (or none), established outcomes
 and existing contract IDs, goal and direct-scenario status, mechanism progress, checkpoint outcomes,
 focused checks and consequential witness/assertion pointers with
 pass/fail status, unresolved concerns, and the detailed-evidence location.
+When acceptance depends on live or deployed state, name a read-only command that
+shows the change there.
 For formal work, replace planned realization entries with actual source/assertion
 evidence; report changed entries and unresolved rows after the first complete
 relation. For bounded delivery, report the brief's focused evidence and any
