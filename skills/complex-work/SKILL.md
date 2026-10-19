@@ -72,6 +72,11 @@ meaningful checkpoints. A reviewable unit does not expand authorization for
 commits, external writes, or publication. If the request includes updating an
 installed skill, use the [distribution update procedure](references/routing-and-integration.md#update-an-installed-skill).
 
+Before an expensive integration rerun, name its unresolved question or changed
+dependency in the existing brief. Carry forward unaffected acceptance evidence
+using SIL's [acceptance rules](../supervised-implementer-loop/SKILL.md#4-inspect-correct-or-accept),
+and retain required final gates for the exact candidate.
+
 ## 4. Replan The Invalidated Boundary
 
 When evidence contradicts a route, identify the failed assumption and replan

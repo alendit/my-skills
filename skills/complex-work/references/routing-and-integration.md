@@ -12,10 +12,20 @@ authorship with the primary unless explicitly delegated.
 
 When material cost differences are supplied or observable, record the selected
 cheaper capable owner/configuration and retain exhaustive mechanical work and
-verbose evidence there. Include parent waiting, polling, and interpretation
-cost when material; distinguish raw input, cache effects, and new context only
-when telemetry permits. Do not invent prices or savings. The coordinator
-consumes configuration rather than selecting a default model or team.
+verbose evidence there. Compare model-weighted fresh/cached input and output,
+including applicable context and service tiers, when telemetry and sourced
+rates permit. Include parent interpretation, acceptance, and rework; keep
+latency and machine costs separate. Cheap local retries can be economical:
+prioritize those that trigger parent work, invalidate acceptance, or block
+delivery rather than ranking raw token or failure counts. Do not invent prices
+or savings. The coordinator consumes configuration rather than selecting a
+default model or team.
+
+When stronger-model escalation is justified, bound it to the unresolved design
+or diagnosis, required evidence, and return condition; retain routine execution
+with the cheaper capable owner. Honor explicit model and continuity choices.
+Same-usage repricing compares rates, not another model's likely workload or
+quality; verify improvements against accepted outcomes and total supervision.
 
 ## Continuity across units
 

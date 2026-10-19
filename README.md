@@ -1,6 +1,6 @@
 # My Skills
 
-Reusable engineering workflows packaged as a Codex plugin with eight skills,
+Reusable engineering workflows packaged as a Codex plugin with nine skills,
 a bundled implementer role, and a session hook. The plugin registers no MCP
 server or additional tools; one Codex configuration entry makes the role
 available for spawning.
@@ -13,7 +13,7 @@ Export an immutable committed revision to a new directory:
 python3 scripts/export_plugin.py /tmp/my-skills --revision HEAD
 ```
 
-The exporter includes all eight skills, their transitive repository-local
+The exporter includes all nine skills, their transitive repository-local
 Markdown references, and the bundled hooks. It rejects unresolved or escaping
 references and existing destinations. `SOURCE_REVISION` records the exact commit;
 `build-manifest.json`
@@ -70,13 +70,20 @@ Verify discovery and installation with:
 codex plugin list --marketplace <marketplace-name> --json
 ```
 
-Read back the installed/cache manifest, `SOURCE_REVISION`, eight-skill inventory,
+Read back the installed/cache manifest, `SOURCE_REVISION`, nine-skill inventory,
 and `build-manifest.json` hashes. The cachebuster changes the exported manifest
 version after `build-manifest.json` was produced, so account for that one expected
 hash difference or regenerate the staged build manifest before comparing.
 Verify that the [role registration](#codex-implementer-role) still points to the
 bundled file in the updated source. Start a fresh Codex thread so the new catalog
 and role configuration are loaded.
+
+## Session Audit
+
+Use [Session Audit](skills/session-audit/SKILL.md) to assess long session trees
+without loading whole transcripts. The bundled
+[analyzer](scripts/codex_session_audit.py) builds a local evidence index, separates
+agent roles and token accounting, and retrieves bounded source excerpts.
 
 ## Codex Delegated Waits
 

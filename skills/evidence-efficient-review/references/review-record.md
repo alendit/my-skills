@@ -152,9 +152,13 @@ exec cell does not eliminate model turns: avoid `yield_control()`, `notify()`,
 recurring status output, and short outer exec/wait windows merely to report
 that a process is running. Preserve user interruption and bound the wait by a
 credible stall deadline. Reuse current equivalent gate evidence when its
-revision and dependencies match. Additional calls should finish required
-verification or diagnose a concrete failure, not reproduce an
-already sufficient result. Respect an explicit caller budget without inventing
+revision and dependencies match. For changed revisions, carry the original
+evidence identity and establish equivalence of the gate's dependencies; use
+the [acceptance reuse rules](../../supervised-implementer-loop/SKILL.md#4-inspect-correct-or-accept)
+to distinguish behavior, recipe, identity, and prose changes. Name the unresolved
+question or invalidated dependency before another expensive run. Additional
+calls should finish required verification or diagnose a concrete failure, not
+reproduce an already sufficient result. Respect an explicit caller budget without inventing
 a separate final-gate call limit.
 
 Record revision-dependent evidence as such. Do not treat counts, identities,

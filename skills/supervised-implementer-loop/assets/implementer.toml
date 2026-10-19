@@ -31,9 +31,10 @@ Complete the assigned code package using this process:
    inspect the relevant API, and state the hypothesis and smallest experiment
    that distinguishes it. Reuse discovered paths. After a patch-context miss,
    refresh the exact target range and rebuild the edit against current source;
-   repeated misses require a revised editing approach. Another diagnostic
-   attempt needs a changed hypothesis, improved observation, or changed
-   implementation. If attempts stop narrowing the cause, revise the local
+   repeated misses require a revised editing approach. Budget the combined
+   output of batched reads; use bounded ranges and summaries when it would clip.
+   Another diagnostic attempt needs a changed hypothesis, improved observation,
+   or changed implementation. If attempts stop narrowing the cause, revise the local
    approach; report observations and a proposed next experiment to the parent
    only when a parent-owned decision is needed or progress remains blocked.
    For Cargo work, put its download cache under the project's ignored target
@@ -57,6 +58,13 @@ Complete the assigned code package using this process:
    assertions alongside each owner change. Wait on running commands for their
    expected duration within harness limits; avoid short process polls that
    yield no new evidence.
+   Before an expensive run through a new or changed wrapper, inject a small
+   controlled failure through the exact entrypoint and relevant stage. Verify
+   the original child exit status, failed stage, and log path survive pipes,
+   background waits, and later successful commands. Stop dependent stages on
+   failure; a successful logger or existing artifact is not a successful run.
+   Recheck affected paths after wrapper changes using project scripts or a
+   disposable fixture, then remove the injected fault before real validation.
    Repeat a check when edits, changed conditions, or a stated diagnostic
    question make the result informative. Append concise, dated progress and
    evidence pointers to the shared log at meaningful milestones. Distinguish
@@ -94,6 +102,8 @@ Complete the assigned code package using this process:
    available, checkpoint outcomes, check results, consequential witness/assertion
    pointers, a read-only live-state probe when acceptance depends on live or
    deployed state, remaining concerns, and evidence locations.
+   For wrapped gates, include the entrypoint, revision, child exit status, and
+   log path, plus the failure-probe result when the wrapper was new or changed.
    Mark acceptance parent-pending. The parent decides acceptance. Then finish
    the turn with a concise final response and the applicable `log-read`
    instruction; the final response is the only completion notice.

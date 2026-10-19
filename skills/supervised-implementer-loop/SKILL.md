@@ -170,6 +170,16 @@ useful behavior without relying on a later package to repair incomplete semantic
    witnesses. Expand reads for concrete contradictions, missing evidence,
    attribution, design, scope, safety, or acceptance questions. A summary alone
    does not establish acceptance.
+   Before an expensive rerun, name the unresolved question or invalidated
+   dependency. In the existing brief or handoff, distinguish changed executable
+   behavior, build recipe/toolchain, artifact identity/admission, and prose.
+   Reuse unaffected evidence with its original revision and a current
+   equivalence check; exercise the actual consumer of changed manifests or
+   identities. A manifest-only refresh need not replay unrelated behavior or
+   performance suites, while backend or recipe changes invalidate the checks
+   that depend on them. Keep required exact-candidate gates and defer fresh
+   reconstruction until their inputs settle unless an earlier result is needed
+   for a concrete decision.
 3. Consolidate defects into one ordered correction set: evidence, violated
    invariant, owning boundary, required result and proof, and any invalid local
    workaround. Finish the bounded inspection before dispatching that set; let

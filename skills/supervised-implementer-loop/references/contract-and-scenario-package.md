@@ -554,6 +554,9 @@ boundary, intended behavior/interface change (or none), established outcomes
 and existing contract IDs, goal and direct-scenario status, mechanism progress, checkpoint outcomes,
 focused checks and consequential witness/assertion pointers with
 pass/fail status, unresolved concerns, and the detailed-evidence location.
+For wrapped gates, identify the exact entrypoint, tested revision, actual child
+status and log path; include the role's failure-probe result for new or changed
+wrappers. Logging success and artifact presence do not establish gate success.
 When acceptance depends on live or deployed state, name a read-only command that
 shows the change there.
 For formal work, replace planned realization entries with actual source/assertion

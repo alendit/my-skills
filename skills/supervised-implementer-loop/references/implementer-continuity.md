@@ -112,6 +112,12 @@ omitting accepted adjacent contracts. These observations are diagnostic only:
 compaction alone does not fail a package, and no invented number establishes a
 renewal or failure decision.
 
+When prices and usage are available, weigh continued cached context and any
+long-context premium against renewal's fresh input, reorientation, and parent
+verification. Consider economical renewal at an accepted delivery boundary;
+token volume or a pricing threshold alone does not require turnover. Preserve
+the caller's continuity authority and measure total accepted-delivery cost.
+
 Choose exactly one disposition:
 
 - **`continue`** — the current context remains coherent and trustworthy enough
@@ -170,6 +176,9 @@ than copying their contract or closure fields. The outgoing implementer may
 provide deltas or point to evidence, but its summary is not authoritative.
 The parent verifies material claims, reachability of shared evidence, and the
 absence of an overlapping writer before retiring the context.
+Keep the compact handoff and required build inputs reachable independently of
+disposable caches; check referenced paths and symlink targets before authorized
+cache cleanup or turnover.
 
 ### 6. Renew once, without replay
 

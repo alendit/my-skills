@@ -1,0 +1,4 @@
+interface:
+  display_name: "Session Audit"
+  short_description: "Audit long sessions and improve workflow skills"
+  default_prompt: "Use $session-audit to assess this session tree with bounded evidence and prioritize supported workflow improvements."
